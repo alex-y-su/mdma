@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import PATHS from "router/paths";
 
 import { getPathWithQueryParams } from "utilities/url";
@@ -18,6 +19,8 @@ const MissingHosts = ({
   selectedPlatformLabelId,
   currentTeamId,
 }: IMissingHostsProps): JSX.Element => {
+  const { t } = useTranslation();
+
   // build the manage hosts URL filtered by missing and platform
   const queryParams = {
     status: "missing",
@@ -33,8 +36,8 @@ const MissingHosts = ({
     <HostCountCard
       iconName="missing-hosts"
       count={missingCount}
-      title="Missing hosts"
-      tooltip="Hosts that have not been online in 30 days or more."
+      title={t("dashboard:missingHosts.title")}
+      tooltip={t("dashboard:missingHosts.tooltip")}
       path={path}
       className={baseClass}
       iconPosition="left"

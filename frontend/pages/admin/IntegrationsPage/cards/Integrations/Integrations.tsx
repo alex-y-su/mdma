@@ -1,5 +1,6 @@
 import React, { useState, useContext, useCallback, useMemo } from "react";
 import { useQuery } from "react-query";
+import { useTranslation } from "react-i18next";
 
 import { NotificationContext } from "context/notification";
 import { IConfig } from "interfaces/config";
@@ -32,14 +33,8 @@ import {
 const baseClass = "integrations-management";
 const noIntegrationsClass = "no-integrations";
 
-const VALIDATION_FAILED_ERROR =
-  "There was a problem with the information you provided.";
-const BAD_REQUEST_ERROR =
-  "Invalid login credentials or URL. Please correct and try again.";
-const UNKNOWN_ERROR =
-  "We experienced an error when attempting to connect. Please try again later.";
-
 const Integrations = (): JSX.Element => {
+  const { t } = useTranslation();
   const { renderFlash } = useContext(NotificationContext);
 
   const [showAddIntegrationModal, setShowAddIntegrationModal] = useState(false);
@@ -307,10 +302,14 @@ const Integrations = (): JSX.Element => {
   };
 
   return (
-    <SettingsSection title="Ticket destinations" className={baseClass}>
+    <SettingsSection
+      title={t("settings:admin.integrations.ticketDestinations.title")}
+      className={baseClass}
+    >
       <PageDescription
-        content="Add or edit integrations to create tickets when Fleet detects new
-        vulnerabilities."
+        content={t(
+          "settings:admin.integrations.ticketDestinations.description"
+        )}
         variant="right-panel"
       />
       {renderTable()}

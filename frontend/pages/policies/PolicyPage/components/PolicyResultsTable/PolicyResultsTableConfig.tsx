@@ -3,6 +3,7 @@
 // definitions for the selection row for some reason when we dont really need it.
 import React from "react";
 import { memoize } from "lodash";
+import { TFunction } from "i18next";
 
 import { ColumnInstance } from "react-table";
 
@@ -38,10 +39,10 @@ interface IDataColumn {
 
 // NOTE: cellProps come from react-table
 // more info here https://react-table.tanstack.com/docs/api/useTable#cell-properties
-const generateTableHeaders = (): IDataColumn[] => {
+const generateTableHeaders = (t: TFunction): IDataColumn[] => {
   const tableHeaders: IDataColumn[] = [
     {
-      title: "Host",
+      title: t("policies:columns.host"),
       Header: (headerProps: IHeaderProps): JSX.Element => (
         <HeaderCell
           value={headerProps.column.title || headerProps.column.id}
@@ -56,7 +57,7 @@ const generateTableHeaders = (): IDataColumn[] => {
       sortType: "caseInsensitive",
     },
     {
-      title: "Status",
+      title: t("policies:columns.status"),
       Header: (headerProps: IHeaderProps) => (
         <HeaderCell
           value={headerProps.column.title || headerProps.column.id}
@@ -71,12 +72,12 @@ const generateTableHeaders = (): IDataColumn[] => {
           {cellProps.cell.value.length ? (
             <>
               <Icon name="success" />
-              <span className="status-header-text">Yes</span>
+              <span className="status-header-text">{t("policies:columns.yes")}</span>
             </>
           ) : (
             <>
               <Icon name="error" />
-              <span className="status-header-text">No</span>
+              <span className="status-header-text">{t("policies:columns.no")}</span>
             </>
           )}
         </>

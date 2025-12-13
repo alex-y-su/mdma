@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import Modal from "components/Modal";
 import Button from "components/buttons/Button";
@@ -18,23 +19,21 @@ const DeleteTeamModal = ({
   onSubmit,
   onCancel,
 }: IDeleteTeamModalProps): JSX.Element => {
+  const { t } = useTranslation();
+
   return (
     <Modal
-      title="Delete team"
+      title={t("settings:admin.teams.modals.deleteTeam.title")}
       onExit={onCancel}
       onEnter={onSubmit}
       className={baseClass}
     >
       <>
-        <p>
-          You are about to delete{" "}
-          <span className={`${baseClass}__name`}>{name}</span> from Fleet.
+        <p>{t("settings:admin.teams.modals.deleteTeam.message", { name })}</p>
+        <p>{t("settings:admin.teams.modals.deleteTeam.warning")}</p>
+        <p className={`${baseClass}__warning`}>
+          {t("settings:admin.teams.modals.deleteTeam.cannotUndo")}
         </p>
-        <p>
-          Users on this team who are not assigned to other teams will lose
-          access to Fleet.
-        </p>
-        <p className={`${baseClass}__warning`}>This action cannot be undone.</p>
         <div className="modal-cta-wrap">
           <Button
             type="button"
@@ -43,10 +42,10 @@ const DeleteTeamModal = ({
             className="delete-loading"
             isLoading={isUpdatingTeams}
           >
-            Delete
+            {t("settings:admin.teams.modals.deleteTeam.deleteButton")}
           </Button>
           <Button onClick={onCancel} variant="inverse-alert">
-            Cancel
+            {t("settings:admin.teams.modals.deleteTeam.cancelButton")}
           </Button>
         </div>
       </>

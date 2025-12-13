@@ -1,5 +1,6 @@
 import React from "react";
 import { noop } from "lodash";
+import { useTranslation } from "react-i18next";
 
 import { IPolicyHostResponse } from "interfaces/host";
 import TableContainer from "components/TableContainer";
@@ -23,11 +24,13 @@ const PolicyResultsTable = ({
   isLoading,
   resultsTitle,
 }: IPolicyResultsTableProps): JSX.Element => {
+  const { t } = useTranslation();
+
   return (
     <div className={baseClass}>
       <TableContainer
         resultsTitle={resultsTitle || "policies"}
-        columnConfigs={generateTableHeaders()}
+        columnConfigs={generateTableHeaders(t)}
         data={generateDataSet(hostResponses)}
         isLoading={isLoading}
         defaultSortHeader="query_results"

@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import Button from "components/buttons/Button";
 import { ILabel } from "interfaces/label";
@@ -22,6 +23,7 @@ const Labels = ({
   labels,
   className,
 }: ILabelsProps): JSX.Element => {
+  const { t } = useTranslation();
   const classNames = classnames(baseClass, className);
 
   const labelItems = labels.map((label: ILabel) => {
@@ -52,11 +54,9 @@ const Labels = ({
       paddingSize="xlarge"
       className={classNames}
     >
-      <CardHeader header="Labels" />
+      <CardHeader header={t("labels:hostDetails.title")} />
       {labels.length === 0 ? (
-        <p className="info-flex__item">
-          No labels are associated with this host.
-        </p>
+        <p className="info-flex__item">{t("labels:hostDetails.noLabels")}</p>
       ) : (
         <ul className="list">{labelItems}</ul>
       )}

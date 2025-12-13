@@ -109,5 +109,43 @@
   "munkiCard": {
     "description": "Munki is a tool for managing software on macOS devices.",
     "linkText": "Learn about Munki"
+  },
+  "lowDiskSpace": {
+    "title": "Low disk space hosts",
+    "tooltip": "Hosts that have {{gb}} GB or less disk space available.",
+    "notSupported": "Disk space info is not available for Chromebooks."
+  },
+  "missingHosts": {
+    "title": "Missing hosts",
+    "tooltip": "Hosts that have not been online in 30 days or more."
+  },
+  "activityAutomations": {
+    "title": "Manage automations",
+    "disabled": "Disabled",
+    "enabled": "Enabled",
+    "placeholder": "https://server.com/example",
+    "destinationUrl": "Destination URL",
+    "helpText": "Fleet will send a JSON payload to this URL whenever a new activity is generated.",
+    "hidePayload": "Hide example payload",
+    "showPayload": "Show example payload",
+    "docsText": "To see the data included in each activity, check out the documentation for",
+    "auditLogs": "audit logs"
+  },
+  "activityFeed": {
+    "emptyHeader": "No activities match the current criteria",
+    "emptyInfo": "Try editing a query, updating your policies, or running a live query."
+  },
+  "munki": {
+    "issuesTab": "Issues",
+    "versionsTab": "Versions",
+    "noIssuesHeader": "No Munki issues detected",
+    "noIssuesInfo": "This report is updated every hour to protect the performance of your devices.",
+    "noVersionsHeader": "Unable to detect Munki versions",
+    "noVersionsInfo": "To see Munki versions, deploy",
+    "fleetdLink": "Fleet's agent (fleetd)"
+  },
+  "operatingSystems": {
+    "emptyHeader": "No {{platform}} operating systems detected",
+    "emptyInfo": "This report is updated every hour to protect the performance of your devices."
   }
 }

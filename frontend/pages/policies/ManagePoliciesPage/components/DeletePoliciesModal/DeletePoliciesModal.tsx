@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import Modal from "components/Modal";
 import Button from "components/buttons/Button";
@@ -16,16 +17,17 @@ const DeletePoliciesModal = ({
   onCancel,
   onSubmit,
 }: IDeletePoliciesModalProps): JSX.Element => {
+  const { t } = useTranslation();
+
   return (
     <Modal
-      title="Delete policies"
+      title={t("policies:delete.title")}
       onExit={onCancel}
       onEnter={onSubmit}
       className={baseClass}
     >
       <div className={baseClass}>
-        Deleting these policies will disable any associated automations, such as
-        automatic software install or automatic script run.
+        {t("policies:delete.message")}
         <div className="modal-cta-wrap">
           <Button
             type="button"
@@ -34,10 +36,10 @@ const DeletePoliciesModal = ({
             className="delete-loading"
             isLoading={isUpdatingPolicies}
           >
-            Delete
+            {t("policies:delete.delete")}
           </Button>
           <Button onClick={onCancel} variant="inverse-alert">
-            Cancel
+            {t("policies:delete.cancel")}
           </Button>
         </div>
       </div>

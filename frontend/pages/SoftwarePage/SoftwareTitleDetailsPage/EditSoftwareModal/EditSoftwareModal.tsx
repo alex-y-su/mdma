@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { InjectedRouter } from "react-router";
 import { useQuery } from "react-query";
 import classnames from "classnames";
+import { useTranslation } from "react-i18next";
 
 import { ILabelSummary } from "interfaces/label";
 import {
@@ -68,6 +69,7 @@ const EditSoftwareModal = ({
   openViewYamlModal,
   isIosOrIpadosApp = false,
 }: IEditSoftwareModalProps) => {
+  const { t } = useTranslation();
   const { renderFlash } = useContext(NotificationContext);
 
   const [editSoftwareModalClasses, setEditSoftwareModalClasses] = useState(
@@ -171,7 +173,9 @@ const EditSoftwareModal = ({
     if (formData.software && formData.software.size > MAX_FILE_SIZE_BYTES) {
       renderFlash(
         "error",
-        `Couldn't edit software. The maximum file size is ${MAX_FILE_SIZE_MB} MB.`
+        t("software:modals.edit.errorMaxFileSize", {
+          maxSize: MAX_FILE_SIZE_MB,
+        })
       );
       setIsUpdatingSoftware(false);
       return;
@@ -202,9 +206,10 @@ const EditSoftwareModal = ({
         renderFlash(
           "success",
           <>
-            Successfully edited <b>{formData.software?.name}</b>.
+            {t("software:modals.edit.successMessage")}{" "}
+            <b>{formData.software?.name}</b>.
             {formData.selfService
-              ? " The end user can install from Fleet Desktop."
+              ? ` ${t("software:modals.edit.successSelfServiceSuffix")}`
               : ""}
           </>
         );
@@ -258,9 +263,9 @@ const EditSoftwareModal = ({
       renderFlash(
         "success",
         <>
-          Successfully edited <b>{software.name}</b>.
+          {t("software:modals.edit.successMessage")} <b>{software.name}</b>.
           {formData.selfService
-            ? " The end user can install from Fleet Desktop."
+            ? ` ${t("software:modals.edit.successSelfServiceSuffix")}`
             : ""}
         </>
       );
@@ -338,7 +343,11 @@ const EditSoftwareModal = ({
     <>
       <Modal
         className={editSoftwareModalClasses}
-        title={isSoftwarePackage(software) ? "Edit package" : "Edit app"}
+        title={
+          isSoftwarePackage(software)
+            ? t("software:modals.edit.titlePackage")
+            : t("software:modals.edit.titleApp")
+        }
         onExit={onExit}
         width="large"
       >

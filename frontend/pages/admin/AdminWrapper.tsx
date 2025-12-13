@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Tab, Tabs, TabList } from "react-tabs";
 import { InjectedRouter } from "react-router";
+import { useTranslation } from "react-i18next";
 import PATHS from "router/paths";
 import { AppContext } from "context/app";
 
@@ -10,7 +11,7 @@ import TabText from "components/TabText";
 import classnames from "classnames";
 
 interface ISettingSubNavItem {
-  name: string;
+  nameKey: string;
   pathname: string;
   exclude?: boolean;
 }
@@ -30,25 +31,26 @@ const AdminWrapper = ({
   location: { pathname },
   router,
 }: ISettingsWrapperProp): JSX.Element => {
+  const { t } = useTranslation();
   const { isPremiumTier, isSandboxMode } = useContext(AppContext);
 
   const settingsSubNav: ISettingSubNavItem[] = [
     {
-      name: "Organization settings",
+      nameKey: "settings:navigation.organization",
       pathname: PATHS.ADMIN_ORGANIZATION,
       exclude: isSandboxMode,
     },
     {
-      name: "Integrations",
+      nameKey: "settings:navigation.integrations",
       pathname: PATHS.ADMIN_INTEGRATIONS,
     },
     {
-      name: "Users",
+      nameKey: "settings:navigation.users",
       pathname: PATHS.ADMIN_USERS,
       exclude: isSandboxMode,
     },
     {
-      name: "Teams",
+      nameKey: "settings:navigation.teams",
       pathname: PATHS.ADMIN_TEAMS,
       exclude: !isPremiumTier,
     },
@@ -78,7 +80,7 @@ const AdminWrapper = ({
   return (
     <MainContent className={classNames}>
       <>
-        <h1 className="page-header">Settings</h1>
+        <h1 className="page-header">{t("settings:admin.pageHeader")}</h1>
         <TabNav>
           <Tabs
             selectedIndex={getTabIndex(pathname)}
@@ -88,9 +90,10 @@ const AdminWrapper = ({
               {filteredSettingsSubNav.map((navItem) => {
                 // Bolding text when the tab is active causes a layout shift
                 // so we add a hidden pseudo element with the same text string
+                const navName = t(navItem.nameKey);
                 return (
-                  <Tab key={navItem.name} data-text={navItem.name}>
-                    <TabText>{navItem.name}</TabText>
+                  <Tab key={navItem.nameKey} data-text={navName}>
+                    <TabText>{navName}</TabText>
                   </Tab>
                 );
               })}

@@ -2,6 +2,7 @@ import React, { useCallback, useContext, useState } from "react";
 import { InjectedRouter } from "react-router";
 import { useQuery } from "react-query";
 import { Tab, TabList, Tabs } from "react-tabs";
+import { useTranslation } from "react-i18next";
 
 import PATHS from "router/paths";
 import { IConfig } from "interfaces/config";
@@ -41,21 +42,21 @@ import {
 import SoftwareFiltersModal from "./components/modals/SoftwareFiltersModal";
 
 interface ISoftwareSubNavItem {
-  name: string;
+  nameKey: string;
   pathname: string;
 }
 
 const softwareSubNav: ISoftwareSubNavItem[] = [
   {
-    name: "Software",
+    nameKey: "software:tabs.titles",
     pathname: PATHS.SOFTWARE_TITLES,
   },
   {
-    name: "OS",
+    nameKey: "software:tabs.os",
     pathname: PATHS.SOFTWARE_OS,
   },
   {
-    name: "Vulnerabilities",
+    nameKey: "software:tabs.vulnerabilities",
     pathname: PATHS.SOFTWARE_VULNERABILITIES,
   },
 ];
@@ -64,7 +65,10 @@ const getTabIndex = (path: string): number => {
   return softwareSubNav.findIndex((navItem) => {
     // This check ensures that for software versions path we still
     // highlight the software tab.
-    if (navItem.name === "Software" && PATHS.SOFTWARE_VERSIONS === path) {
+    if (
+      navItem.nameKey === "software:tabs.titles" &&
+      PATHS.SOFTWARE_VERSIONS === path
+    ) {
       return true;
     }
     // tab stays highlighted for paths that start with same pathname
@@ -119,6 +123,8 @@ interface ISoftwarePageProps {
 }
 
 const SoftwarePage = ({ children, router, location }: ISoftwarePageProps) => {
+  const { t } = useTranslation();
+
   const {
     config: globalConfigFromContext,
     isFreeTier,
@@ -244,17 +250,11 @@ const SoftwarePage = ({ children, router, location }: ISoftwarePageProps) => {
     try {
       const request = configAPI.update(configSoftwareAutomations);
       await request.then(() => {
-        renderFlash(
-          "success",
-          "Successfully updated vulnerability automations."
-        );
+        renderFlash("success", t("software:page.updateAutomationsSuccess"));
         refetchSoftwareConfig();
       });
     } catch {
-      renderFlash(
-        "error",
-        "Could not update vulnerability automations. Please try again."
-      );
+      renderFlash("error", t("software:page.updateAutomationsError"));
     } finally {
       toggleManageAutomationsModal();
     }
@@ -333,7 +333,7 @@ const SoftwarePage = ({ children, router, location }: ISoftwarePageProps) => {
             underline={false}
             tipContent={
               <div className={`${baseClass}__header__tooltip`}>
-                Select &ldquo;All teams&rdquo; to manage automations.
+                {t("software:page.manageAutomationsTooltip")}
               </div>
             }
             disableTooltip={isAllTeamsSelected || isPrimoMode}
@@ -348,7 +348,7 @@ const SoftwarePage = ({ children, router, location }: ISoftwarePageProps) => {
               className={`${baseClass}__manage-automations`}
               variant="inverse"
             >
-              Manage automations
+              {t("software:page.manageAutomations")}
             </Button>
           </TooltipWrapper>
         )}
@@ -358,8 +358,8 @@ const SoftwarePage = ({ children, router, location }: ISoftwarePageProps) => {
             tipContent={
               <div className={`${baseClass}__header__tooltip`}>
                 {isPremiumTier
-                  ? "Select a team to add software."
-                  : "This feature is included in Fleet Premium."}
+                  ? t("software:page.addSoftwareTooltip")
+                  : t("software:page.addSoftwareTooltipFreeTier")}
               </div>
             }
             disableTooltip={!isAllTeamsSelected}
@@ -367,7 +367,7 @@ const SoftwarePage = ({ children, router, location }: ISoftwarePageProps) => {
             showArrow
           >
             <Button onClick={onAddSoftware} disabled={isAllTeamsSelected}>
-              <span>Add software</span>
+              <span>{t("software:manage.addSoftware")}</span>
             </Button>
           </TooltipWrapper>
         )}
@@ -378,12 +378,14 @@ const SoftwarePage = ({ children, router, location }: ISoftwarePageProps) => {
   const renderHeaderDescription = () => {
     let suffix;
     if (!isPrimoMode) {
-      suffix = isAllTeamsSelected ? " for all hosts" : " on this team";
+      suffix = isAllTeamsSelected
+        ? t("software:page.headerDescriptionAllTeams")
+        : t("software:page.headerDescriptionTeam");
     }
     return (
       <>
-        Manage software and search for installed software, OS, and
-        vulnerabilities{suffix}.
+        {t("software:page.headerDescription")}
+        {suffix}.
       </>
     );
   };
@@ -398,9 +400,10 @@ const SoftwarePage = ({ children, router, location }: ISoftwarePageProps) => {
           >
             <TabList>
               {softwareSubNav.map((navItem) => {
+                const tabName = t(navItem.nameKey);
                 return (
-                  <Tab key={navItem.name} data-text={navItem.name}>
-                    <TabText>{navItem.name}</TabText>
+                  <Tab key={navItem.nameKey} data-text={tabName}>
+                    <TabText>{tabName}</TabText>
                   </Tab>
                 );
               })}
@@ -446,7 +449,7 @@ const SoftwarePage = ({ children, router, location }: ISoftwarePageProps) => {
                       onTeamChange={onTeamChange}
                     />
                   ) : (
-                    <h1>Software</h1>
+                    <h1>{t("software:title")}</h1>
                   )}
                 </div>
               </div>

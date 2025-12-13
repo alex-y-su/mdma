@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState, useCallback } from "react";
 import { useQuery } from "react-query";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import { useTranslation } from "react-i18next";
 import {
   IAppStoreApp,
   isIpadOrIphoneSoftwareSource,
@@ -42,8 +43,6 @@ const ACCEPTED_EXTENSIONS = ".png";
 const MIN_DIMENSION = 120;
 const MAX_DIMENSION = 1024;
 const MAX_FILE_SIZE = 100 * 1024; // 100kb in bytes
-const UPLOAD_MESSAGE = `The icon must be a PNG file and square, with dimensions ranging from ${MIN_DIMENSION}x${MIN_DIMENSION} px to ${MAX_DIMENSION}x${MAX_DIMENSION} px.`;
-const DEFAULT_ERROR_MESSAGE = "Couldn't edit. Please try again.";
 
 const getFilenameFromContentDisposition = (header: string | null) => {
   if (!header) return null;
@@ -150,6 +149,7 @@ const EditIconModal = ({
   installerType,
   previewInfo,
 }: IEditIconModalProps) => {
+  const { t } = useTranslation();
   const { renderFlash, renderMultiFlash } = useContext(NotificationContext);
 
   const isSoftwarePackage = installerType === "package";
@@ -282,13 +282,13 @@ const EditIconModal = ({
 
       // Enforce filesize limit
       if (file.size > MAX_FILE_SIZE) {
-        renderFlash("error", "Couldn't edit. Icon must be 100KB or less.");
+        renderFlash("error", t("software:modals.editIcon.errorMaxFileSize"));
         return;
       }
 
       // Enforce PNG MIME type, even though FileUploader also enforces by extension
       if (file.type !== "image/png") {
-        renderFlash("error", "Couldn't edit. Must be a PNG file.");
+        renderFlash("error", t("software:modals.editIcon.errorPngOnly"));
         return;
       }
 
@@ -304,7 +304,10 @@ const EditIconModal = ({
           ) {
             renderFlash(
               "error",
-              `Couldn't edit. Icon must be square, between ${MIN_DIMENSION}x${MIN_DIMENSION}px and ${MAX_DIMENSION}x${MAX_DIMENSION}px.`
+              t("software:modals.editIcon.errorDimensions", {
+                minDim: MIN_DIMENSION,
+                maxDim: MAX_DIMENSION,
+              })
             );
             return;
           }
@@ -314,7 +317,7 @@ const EditIconModal = ({
         if (e.target && typeof e.target.result === "string") {
           img.src = e.target.result;
         } else {
-          renderFlash("error", "FileReader result was not a string.");
+          renderFlash("error", t("software:modals.editIcon.errorFileReader"));
         }
       };
       reader.readAsDataURL(file);
@@ -433,14 +436,18 @@ const EditIconModal = ({
                       colSpan={1}
                       role="columnheader"
                     >
-                      <div className="column-header">Version</div>
+                      <div className="column-header">
+                        {t("software:modals.editIcon.versionHeader")}
+                      </div>
                     </th>
                     <th
                       className="vulnerabilities__header"
                       colSpan={1}
                       role="columnheader"
                     >
-                      <div className="column-header">Vulnerabilities</div>
+                      <div className="column-header">
+                        {t("software:modals.editIcon.vulnerabilitiesHeader")}
+                      </div>
                     </th>
                   </tr>
                 </thead>
@@ -456,7 +463,7 @@ const EditIconModal = ({
                         data-for="86"
                       >
                         <span className="text-cell w250 italic-cell">
-                          20 vulnerabilities
+                          {t("software:modals.editIcon.vulnerabilitiesText")}
                         </span>
                       </div>
                     </td>
@@ -583,42 +590,47 @@ const EditIconModal = ({
   const renderForm = () => (
     <>
       <InputField
-        label="Display name"
+        label={t("software:modals.editIcon.displayNameLabel")}
         onChange={onInputChange}
         name="displayName"
         value={displayName}
         parseTarget
         helpText={
           <>
-            Optional. If left blank, Fleet will use{" "}
+            {t("software:modals.editIcon.displayNameHelpText")}{" "}
             <strong>{previewInfo.titleName}</strong>.
           </>
         }
         autofocus
       />
       <FileUploader
-        label="Icon"
+        label={t("software:modals.editIcon.iconLabel")}
         canEdit
         onDeleteFile={onDeleteFile}
         graphicName="file-png"
         accept={ACCEPTED_EXTENSIONS}
-        message={UPLOAD_MESSAGE}
+        message={t("software:modals.editIcon.iconMessage", {
+          minDim: MIN_DIMENSION,
+          maxDim: MAX_DIMENSION,
+        })}
         onFileUpload={onFileSelect}
-        buttonMessage="Choose file"
+        buttonMessage={t("software:modals.editIcon.chooseFileButton")}
         buttonType="brand-inverse-icon"
         className={`${baseClass}__file-uploader`}
         fileDetails={fileDetails}
         gitopsCompatible={false}
       />
-      <h2>Preview</h2>
+      <h2>{t("software:modals.editIcon.previewHeader")}</h2>
       <TabNav>
         <Tabs selectedIndex={previewTabIndex} onSelect={onTabChange}>
           <TabList>
             <Tab>
-              <TabText>Fleet</TabText>
+              <TabText>{t("software:modals.editIcon.previewFleetTab")}</TabText>
             </Tab>
             <Tab>
-              <TabText>Self-service</TabText>
+              <TabText>
+                {t("software:modals.editIcon.previewSelfServiceTab")}
+              </TabText>
             </Tab>
           </TabList>
           <TabPanel>{renderPreviewFleetCard()}</TabPanel>
@@ -651,7 +663,8 @@ const EditIconModal = ({
           iconSucceeded = true;
           iconSuccessMessage = (
             <>
-              Successfully removed icon from <b>{software?.name}</b>.
+              {t("software:modals.editIcon.successIconRemoved")}{" "}
+              <b>{software?.name}</b>.
             </>
           );
         } else if (iconState.status === "customUpload" && iconState.formData) {
@@ -663,12 +676,14 @@ const EditIconModal = ({
           iconSucceeded = true;
           iconSuccessMessage = (
             <>
-              Successfully edited <b>{previewInfo.name}</b>.
+              {t("software:modals.editIcon.successIconEdited")}{" "}
+              <b>{previewInfo.name}</b>.
             </>
           );
         }
       } catch (e) {
-        const errorMessage = getErrorReason(e) || DEFAULT_ERROR_MESSAGE;
+        const errorMessage =
+          getErrorReason(e) || t("software:modals.editIcon.errorGeneric");
         notifications.push({
           id: "icon-error",
           alertType: "error",
@@ -694,16 +709,20 @@ const EditIconModal = ({
           nameSuccessMessage =
             trimmedDisplayName === "" ? (
               <>
-                Successfully removed custom name for <b>{previewInfo.name}</b>.
+                {t("software:modals.editIcon.successNameRemoved")}{" "}
+                <b>{previewInfo.name}</b>.
               </>
             ) : (
               <>
-                Successfully renamed <b>{previewInfo.name}</b> to{" "}
+                {t("software:modals.editIcon.successNameChanged")}{" "}
+                <b>{previewInfo.name}</b>{" "}
+                {t("software:modals.editIcon.successNameChangedSuffix")}{" "}
                 <b>{trimmedDisplayName}</b>.
               </>
             );
         } catch (e) {
-          const errorMessage = getErrorReason(e) || DEFAULT_ERROR_MESSAGE;
+          const errorMessage =
+            getErrorReason(e) || t("software:modals.editIcon.errorGeneric");
           notifications.push({
             id: "name-error",
             alertType: "error",
@@ -721,7 +740,7 @@ const EditIconModal = ({
         renderFlash(
           "success",
           <>
-            Successfully edited{" "}
+            {t("software:modals.editIcon.successIconEdited")}{" "}
             <b>{displayName === "" ? previewInfo.name : displayName}</b>.
           </>
         );
@@ -740,7 +759,8 @@ const EditIconModal = ({
         onExitEditIconModal();
       }
     } catch (e) {
-      const errorMessage = getErrorReason(e) || DEFAULT_ERROR_MESSAGE;
+      const errorMessage =
+        getErrorReason(e) || t("software:modals.editIcon.errorGeneric");
       renderFlash("error", errorMessage);
     } finally {
       setIsUpdatingSoftwareInfo(false);
@@ -750,7 +770,7 @@ const EditIconModal = ({
   return (
     <Modal
       className={baseClass}
-      title="Edit software"
+      title={t("software:modals.editIcon.title")}
       onExit={onExitEditIconModal}
     >
       <>
@@ -767,7 +787,7 @@ const EditIconModal = ({
               isLoading={isUpdatingSoftwareInfo}
               disabled={!canSaveForm || isUpdatingSoftwareInfo}
             >
-              Save
+              {t("software:modals.editIcon.saveButton")}
             </Button>
           }
         />

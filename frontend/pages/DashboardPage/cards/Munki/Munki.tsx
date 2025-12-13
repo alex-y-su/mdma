@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 
 import {
@@ -37,6 +38,7 @@ const Munki = ({
   munkiVersionsData,
   selectedTeamId,
 }: IMunkiCardProps): JSX.Element => {
+  const { t } = useTranslation();
   const [navTabIndex, setNavTabIndex] = useState<number>(0);
 
   const tableHeaders = useMemo(
@@ -63,10 +65,10 @@ const Munki = ({
           <Tabs selectedIndex={navTabIndex} onSelect={onTabChange}>
             <TabList>
               <Tab>
-                <TabText>Issues</TabText>
+                <TabText>{t("dashboard:munki.issuesTab")}</TabText>
               </Tab>
               <Tab>
-                <TabText>Versions</TabText>
+                <TabText>{t("dashboard:munki.versionsTab")}</TabText>
               </Tab>
             </TabList>
             <TabPanel>
@@ -82,9 +84,8 @@ const Munki = ({
                   resultsTitle="Munki"
                   emptyComponent={() => (
                     <EmptyTable
-                      header="No Munki issues detected"
-                      info="This report is updated every hour to protect the performance of your
-      devices."
+                      header={t("dashboard:munki.noIssuesHeader")}
+                      info={t("dashboard:munki.noIssuesInfo")}
                     />
                   )}
                   showMarkAllPages={false}
@@ -109,13 +110,13 @@ const Munki = ({
                   resultsTitle="Munki"
                   emptyComponent={() => (
                     <EmptyTable
-                      header="Unable to detect Munki versions"
+                      header={t("dashboard:munki.noVersionsHeader")}
                       info={
                         <>
-                          To see Munki versions, deploy&nbsp;
+                          {t("dashboard:munki.noVersionsInfo")}&nbsp;
                           <CustomLink
                             url="https://fleetdm.com/learn-more-about/fleetd"
-                            text="Fleet's agent (fleetd)"
+                            text={t("dashboard:munki.fleetdLink")}
                             newTab
                           />
                           .

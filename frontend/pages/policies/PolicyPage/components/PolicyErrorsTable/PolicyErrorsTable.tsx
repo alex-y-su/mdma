@@ -1,5 +1,6 @@
 import React from "react";
 import { noop } from "lodash";
+import { useTranslation } from "react-i18next";
 
 import TableContainer from "components/TableContainer";
 import { ICampaignError } from "interfaces/campaign";
@@ -23,11 +24,13 @@ const PolicyErrorsTable = ({
   isLoading,
   resultsTitle,
 }: IPolicyErrorsTableProps): JSX.Element => {
+  const { t } = useTranslation();
+
   return (
     <div className={baseClass}>
       <TableContainer
         resultsTitle={resultsTitle || "policies"}
-        columnConfigs={generateTableHeaders()}
+        columnConfigs={generateTableHeaders(t)}
         data={generateDataSet(errorsList)}
         isLoading={isLoading}
         defaultSortHeader="name"

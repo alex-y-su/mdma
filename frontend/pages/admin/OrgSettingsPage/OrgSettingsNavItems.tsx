@@ -13,44 +13,44 @@ import Agents from "./cards/Agents";
 
 const ORG_SETTINGS_NAV_ITEMS: ISideNavItem<IAppConfigFormProps>[] = [
   {
-    title: "Organization info",
+    title: "settings:admin.orgSettings.navItems.info",
     urlSection: "organization",
     path: PATHS.ADMIN_ORGANIZATION_INFO,
     Card: Info,
   },
   {
-    title: "Fleet web address",
+    title: "settings:admin.orgSettings.navItems.webAddress",
     urlSection: "webaddress",
     path: PATHS.ADMIN_ORGANIZATION_WEBADDRESS,
     Card: WebAddress,
   },
   {
-    title: "SMTP options",
+    title: "settings:admin.orgSettings.navItems.smtp",
     urlSection: "smtp",
     path: PATHS.ADMIN_ORGANIZATION_SMTP,
     Card: Smtp,
   },
   {
-    title: "Agent options",
+    title: "settings:admin.orgSettings.navItems.agents",
     urlSection: "agents",
     path: PATHS.ADMIN_ORGANIZATION_AGENTS,
     Card: Agents,
   },
   {
-    title: "Usage statistics",
+    title: "settings:admin.orgSettings.navItems.statistics",
     urlSection: "statistics",
     path: PATHS.ADMIN_ORGANIZATION_STATISTICS,
     Card: Statistics,
   },
   {
-    title: "Fleet Desktop",
+    title: "settings:admin.orgSettings.navItems.fleetDesktop",
     urlSection: "fleet-desktop",
     path: PATHS.ADMIN_ORGANIZATION_FLEET_DESKTOP,
     // isPremium: true,
     Card: FleetDesktop,
   },
   {
-    title: "Advanced options",
+    title: "settings:admin.orgSettings.navItems.advanced",
     urlSection: "advanced",
     path: PATHS.ADMIN_ORGANIZATION_ADVANCED,
     Card: Advanced,

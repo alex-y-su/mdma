@@ -1,4 +1,5 @@
 import React, { useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { isEmpty } from "lodash";
 import { InjectedRouter } from "react-router";
@@ -99,6 +100,7 @@ const ActivityFeed = ({
   isPremiumTier,
   router,
 }: IActvityCardProps): JSX.Element => {
+  const { t } = useTranslation();
   const [pageIndex, setPageIndex] = useState(0);
   const [showShowQueryModal, setShowShowQueryModal] = useState(false);
   const [showScriptDetailsModal, setShowScriptDetailsModal] = useState(false);
@@ -296,8 +298,8 @@ const ActivityFeed = ({
   const renderNoActivities = () => {
     return (
       <EmptyTable
-        header="No activities match the current criteria"
-        info="Try editing a query, updating your policies, or running a live query."
+        header={t("dashboard:activityFeed.emptyHeader")}
+        info={t("dashboard:activityFeed.emptyInfo")}
       />
     );
   };

@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Column, Row } from "react-table";
+import { TFunction } from "i18next";
 
 import { IStringCellProps } from "interfaces/datatable_config";
 import { IHost } from "interfaces/host";
@@ -15,7 +16,8 @@ type ITableStringCellProps = IStringCellProps<IHost>;
 // NOTE: cellProps come from react-table
 // more info here https://react-table.tanstack.com/docs/api/useTable#cell-properties
 export const generateTableHeaders = (
-  handleRowRemove?: (value: Row<IHost>) => void
+  handleRowRemove?: (value: Row<IHost>) => void,
+  t?: TFunction
 ): ITargestInputHostTableConfig[] => {
   const deleteHeader = handleRowRemove
     ? [
@@ -34,17 +36,17 @@ export const generateTableHeaders = (
 
   return [
     {
-      Header: "Host",
+      Header: t ? t("labels:hostTable.host") : "Host",
       accessor: "display_name",
       Cell: (cellProps) => <TextCell value={cellProps.cell.value} />,
     },
     {
-      Header: "Hostname",
+      Header: t ? t("labels:hostTable.hostname") : "Hostname",
       accessor: "hostname",
       Cell: (cellProps) => <TextCell value={cellProps.cell.value} />,
     },
     {
-      Header: "Serial number",
+      Header: t ? t("labels:hostTable.serialNumber") : "Serial number",
       accessor: "hardware_serial",
       Cell: (cellProps) => <TextCell value={cellProps.cell.value} />,
     },

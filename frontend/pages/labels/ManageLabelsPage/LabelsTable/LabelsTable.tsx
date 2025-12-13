@@ -1,4 +1,5 @@
 import React, { memo } from "react";
+import { useTranslation } from "react-i18next";
 
 import { ILabel } from "interfaces/label";
 
@@ -19,7 +20,9 @@ interface ILabelsTable {
 }
 
 const LabelsTable = ({ labels, onClickAction, currentUser }: ILabelsTable) => {
-  const tableHeaders = generateTableHeaders(currentUser, onClickAction);
+  const { t } = useTranslation();
+
+  const tableHeaders = generateTableHeaders(currentUser, onClickAction, t);
 
   const tableData = generateDataSet(labels);
 
@@ -31,19 +34,22 @@ const LabelsTable = ({ labels, onClickAction, currentUser }: ILabelsTable) => {
       data={tableData}
       defaultSortHeader="name"
       defaultSortDirection="asc"
-      resultsTitle="labels"
+      resultsTitle={t("labels:table.resultsTitle")}
       showMarkAllPages={false}
       isAllPagesSelected={false}
       isClientSidePagination
       renderCount={() =>
         tableData.length ? (
-          <TableCount name="labels" count={tableData.length} />
+          <TableCount
+            name={t("labels:table.resultsTitle")}
+            count={tableData.length}
+          />
         ) : null
       }
       emptyComponent={() =>
         EmptyTable({
-          header: "No labels",
-          info: "Labels you create will appear here.",
+          header: t("labels:table.empty.title"),
+          info: t("labels:table.empty.description"),
         })
       }
     />

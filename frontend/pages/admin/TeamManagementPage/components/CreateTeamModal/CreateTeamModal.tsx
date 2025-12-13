@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 import { ITeamFormData } from "services/entities/teams";
 
@@ -23,6 +24,7 @@ const CreateTeamModal = ({
   backendValidators,
   isUpdatingTeams,
 }: ICreateTeamModalProps): JSX.Element => {
+  const { t } = useTranslation();
   const [name, setName] = useState("");
   const [errors, setErrors] = useState<{ [key: string]: string }>(
     backendValidators
@@ -51,7 +53,11 @@ const CreateTeamModal = ({
   );
 
   return (
-    <Modal title="Create team" onExit={onCancel} className={baseClass}>
+    <Modal
+      title={t("settings:admin.teams.modals.createTeam.title")}
+      onExit={onCancel}
+      className={baseClass}
+    >
       <form
         className={`${baseClass}__form`}
         onSubmit={onFormSubmit}
@@ -64,16 +70,16 @@ const CreateTeamModal = ({
           onBlur={() => {
             setName(name.trim());
           }}
-          label="Team name"
-          placeholder="Workstations"
+          label={t("settings:admin.teams.modals.createTeam.nameLabel")}
+          placeholder={t(
+            "settings:admin.teams.modals.createTeam.namePlaceholder"
+          )}
           value={name}
           error={errors.name}
           ignore1password
         />
         <InfoBanner className={`${baseClass}__sandbox-info`}>
-          To organize your hosts, create a team, like
-          &ldquo;Workstations,&rdquo; &ldquo;Servers,&rdquo; or &ldquo;Servers
-          (canary)&rdquo;.
+          {t("settings:admin.teams.modals.createTeam.infoBanner")}
         </InfoBanner>
         <div className="modal-cta-wrap">
           <Button
@@ -82,10 +88,10 @@ const CreateTeamModal = ({
             className="create-loading"
             isLoading={isUpdatingTeams}
           >
-            Create
+            {t("settings:admin.teams.modals.createTeam.createButton")}
           </Button>
           <Button onClick={onCancel} variant="inverse">
-            Cancel
+            {t("settings:admin.teams.modals.createTeam.cancelButton")}
           </Button>
         </div>
       </form>

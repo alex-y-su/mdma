@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useContext, useMemo } from "react";
 import { InjectedRouter } from "react-router";
 import { useQuery } from "react-query";
+import { useTranslation } from "react-i18next";
 
 import paths from "router/paths";
 import { IApiError } from "interfaces/errors";
@@ -28,17 +29,21 @@ import { NewUserType, IUserFormData } from "../UserForm/UserForm";
 import AddUserModal from "../AddUserModal";
 import EditUserModal from "../EditUserModal";
 
-const EmptyUsersTable = () => (
-  <EmptyTable
-    header="No users match the current criteria"
-    info="Expecting to see users? Try again in a few seconds as the system catches up."
-  />
-);
+const EmptyUsersTable = () => {
+  const { t } = useTranslation();
+  return (
+    <EmptyTable
+      header={t("settings:admin.users.emptyTable.header")}
+      info={t("settings:admin.users.emptyTable.info")}
+    />
+  );
+};
 
 interface IUsersTableProps {
   router: InjectedRouter; // v3
 }
 const UsersTable = ({ router }: IUsersTableProps): JSX.Element => {
+  const { t } = useTranslation();
   const { config, currentUser, isPremiumTier } = useContext(AppContext);
   const { renderFlash } = useContext(NotificationContext);
 
@@ -220,29 +225,32 @@ const UsersTable = ({ router }: IUsersTableProps): JSX.Element => {
       invitesAPI
         .create(requestData)
         .then(() => {
-          renderFlash("success", `${formData.name} has been invited!`);
+          renderFlash(
+            "success",
+            t("settings:admin.users.addSuccess", { name: formData.name })
+          );
           toggleAddUserModal();
           refetchInvites();
         })
         .catch((userErrors: { data: IApiError }) => {
           if (userErrors.data.errors[0].reason.includes("already exists")) {
             setAddUserErrors({
-              email: "A user with this email address already exists",
+              email: t("settings:admin.users.addErrorExists"),
             });
           } else if (
             userErrors.data.errors[0].reason.includes("required criteria")
           ) {
             setAddUserErrors({
-              password: "Password must meet the criteria below",
+              password: t("settings:admin.users.addErrorPassword"),
             });
           } else if (
             userErrors.data.errors?.[0].reason.includes("password too long")
           ) {
             setAddUserErrors({
-              password: "Password is over the character limit.",
+              password: t("settings:admin.users.addErrorPasswordTooLong"),
             });
           } else {
-            renderFlash("error", "Could not create user. Please try again.");
+            renderFlash("error", t("settings:admin.users.addError"));
           }
         })
         .finally(() => {
@@ -258,29 +266,34 @@ const UsersTable = ({ router }: IUsersTableProps): JSX.Element => {
       usersAPI
         .createUserWithoutInvitation(requestData)
         .then(() => {
-          renderFlash("success", `${requestData.name} has been created!`);
+          renderFlash(
+            "success",
+            t("settings:admin.users.addSuccessCreated", {
+              name: requestData.name,
+            })
+          );
           toggleAddUserModal();
           refetchUsers();
         })
         .catch((userErrors: { data: IApiError }) => {
           if (userErrors.data.errors[0].reason.includes("Duplicate")) {
             setAddUserErrors({
-              email: "A user with this email address already exists",
+              email: t("settings:admin.users.addErrorExists"),
             });
           } else if (
             userErrors.data.errors[0].reason.includes("required criteria")
           ) {
             setAddUserErrors({
-              password: "Password must meet the criteria below",
+              password: t("settings:admin.users.addErrorPassword"),
             });
           } else if (
             userErrors.data.errors?.[0].reason.includes("password too long")
           ) {
             setAddUserErrors({
-              password: "Password is over the character limit.",
+              password: t("settings:admin.users.addErrorPasswordTooLong"),
             });
           } else {
-            renderFlash("error", "Could not create user. Please try again.");
+            renderFlash("error", t("settings:admin.users.addError"));
           }
         })
         .finally(() => {
@@ -292,14 +305,22 @@ const UsersTable = ({ router }: IUsersTableProps): JSX.Element => {
   const onEditUser = (formData: IUserFormData) => {
     const userData = getUser(userEditing.type, userEditing.id);
 
-    let userUpdatedFlashMessage = `Successfully edited ${formData.name}`;
+    let userUpdatedFlashMessage = t("settings:admin.users.editSuccess", {
+      name: formData.name,
+    });
     if (userData?.email !== formData.email) {
-      userUpdatedFlashMessage += `. A confirmation email was sent to ${formData.email}.`;
+      userUpdatedFlashMessage = t(
+        "settings:admin.users.editSuccessEmailChanged",
+        { name: formData.name, email: formData.email }
+      );
     }
-    const userUpdatedEmailError =
-      "A user with this email address already exists";
-    const userUpdatedPasswordError = "Password must meet the criteria below";
-    const userUpdatedError = `Could not edit ${userEditing?.name}. Please try again.`;
+    const userUpdatedEmailError = t("settings:admin.users.editErrorExists");
+    const userUpdatedPasswordError = t(
+      "settings:admin.users.editErrorPassword"
+    );
+    const userUpdatedError = t("settings:admin.users.editError", {
+      name: userEditing?.name,
+    });
 
     // Do not update password to empty string
     const requestData = formData;
@@ -375,12 +396,15 @@ const UsersTable = ({ router }: IUsersTableProps): JSX.Element => {
       invitesAPI
         .destroy(userEditing.id)
         .then(() => {
-          renderFlash("success", `Successfully deleted ${userEditing?.name}.`);
+          renderFlash(
+            "success",
+            t("settings:admin.users.deleteSuccess", { name: userEditing?.name })
+          );
         })
         .catch(() => {
           renderFlash(
             "error",
-            `Could not delete ${userEditing?.name}. Please try again.`
+            t("settings:admin.users.deleteError", { name: userEditing?.name })
           );
         })
         .finally(() => {
@@ -392,12 +416,15 @@ const UsersTable = ({ router }: IUsersTableProps): JSX.Element => {
       usersAPI
         .destroy(userEditing.id)
         .then(() => {
-          renderFlash("success", `Successfully deleted ${userEditing?.name}.`);
+          renderFlash(
+            "success",
+            t("settings:admin.users.deleteSuccess", { name: userEditing?.name })
+          );
         })
         .catch(() => {
           renderFlash(
             "error",
-            `Could not delete ${userEditing?.name}. Please try again.`
+            t("settings:admin.users.deleteError", { name: userEditing?.name })
           );
         })
         .finally(() => {
@@ -421,10 +448,10 @@ const UsersTable = ({ router }: IUsersTableProps): JSX.Element => {
           }, 500);
           return;
         }
-        renderFlash("success", "Successfully reset sessions.");
+        renderFlash("success", t("settings:admin.users.resetSessionsSuccess"));
       })
       .catch(() => {
-        renderFlash("error", "Could not reset sessions. Please try again.");
+        renderFlash("error", t("settings:admin.users.resetSessionsError"));
       })
       .finally(() => {
         toggleResetSessionsUserModal();
@@ -435,13 +462,10 @@ const UsersTable = ({ router }: IUsersTableProps): JSX.Element => {
     return usersAPI
       .requirePasswordReset(user.id, { require: true })
       .then(() => {
-        renderFlash("success", "Successfully required a password reset.");
+        renderFlash("success", t("settings:admin.users.resetPasswordSuccess"));
       })
       .catch(() => {
-        renderFlash(
-          "error",
-          "Could not require a password reset. Please try again."
-        );
+        renderFlash("error", t("settings:admin.users.resetPasswordError"));
       })
       .finally(() => {
         toggleResetPasswordUserModal();
@@ -526,8 +550,8 @@ const UsersTable = ({ router }: IUsersTableProps): JSX.Element => {
   };
 
   const tableHeaders = useMemo(
-    () => generateTableHeaders(onActionSelect, isPremiumTier || false),
-    [onActionSelect, isPremiumTier]
+    () => generateTableHeaders(onActionSelect, isPremiumTier || false, t),
+    [onActionSelect, isPremiumTier, t]
   );
 
   const loadingTableData =
@@ -542,9 +566,9 @@ const UsersTable = ({ router }: IUsersTableProps): JSX.Element => {
       users &&
       invites &&
       currentUser?.id
-        ? combineDataSets(users, invites, currentUser.id)
+        ? combineDataSets(users, invites, currentUser.id, t)
         : [],
-    [loadingTableData, tableDataError, users, invites, currentUser?.id]
+    [loadingTableData, tableDataError, users, invites, currentUser?.id, t]
   );
 
   const renderUsersCount = useCallback(() => {
@@ -562,10 +586,10 @@ const UsersTable = ({ router }: IUsersTableProps): JSX.Element => {
           isLoading={loadingTableData}
           defaultSortHeader="name"
           defaultSortDirection="asc"
-          inputPlaceHolder="Search by name or email"
+          inputPlaceHolder={t("settings:admin.users.searchPlaceholder")}
           actionButton={{
             name: "add user",
-            buttonText: "Add user",
+            buttonText: t("settings:users.addUser"),
             onClick: toggleAddUserModal,
           }}
           onQueryChange={onTableQueryChange}

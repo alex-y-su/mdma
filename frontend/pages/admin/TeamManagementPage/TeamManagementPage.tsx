@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useContext, useMemo } from "react";
 import { useQuery } from "react-query";
 import { useErrorHandler } from "react-error-boundary";
+import { useTranslation } from "react-i18next";
 
 import { PRIMO_TOOLTIP } from "utilities/constants";
 import { getGitOpsModeTipContent } from "utilities/helpers";
@@ -32,6 +33,7 @@ const baseClass = "team-management";
 const noTeamsClass = "no-teams";
 
 const TeamManagementPage = (): JSX.Element => {
+  const { t } = useTranslation();
   const { renderFlash } = useContext(NotificationContext);
   const {
     currentTeam,
@@ -112,7 +114,10 @@ const TeamManagementPage = (): JSX.Element => {
       teamsAPI
         .create(formData)
         .then(() => {
-          renderFlash("success", `Successfully created ${formData.name}.`);
+          renderFlash(
+            "success",
+            t("settings:admin.teams.createSuccess", { name: formData.name })
+          );
           setBackendValidators({});
           toggleCreateTeamModal();
           refetchMe();
@@ -121,18 +126,18 @@ const TeamManagementPage = (): JSX.Element => {
         .catch((createError: { data: IApiError }) => {
           if (createError.data.errors[0].reason.includes("Duplicate")) {
             setBackendValidators({
-              name: "A team with this name already exists",
+              name: t("settings:admin.teams.createErrorExists"),
             });
           } else if (createError.data.errors[0].reason.includes("All teams")) {
             setBackendValidators({
-              name: `"All teams" is a reserved team name. Please try another name.`,
+              name: t("settings:admin.teams.createErrorAllTeams"),
             });
           } else if (createError.data.errors[0].reason.includes("No team")) {
             setBackendValidators({
-              name: `"No team" is a reserved team name. Please try another name.`,
+              name: t("settings:admin.teams.createErrorNoTeam"),
             });
           } else {
-            renderFlash("error", "Could not create team. Please try again.");
+            renderFlash("error", t("settings:admin.teams.createError"));
             toggleCreateTeamModal();
           }
         })
@@ -149,7 +154,10 @@ const TeamManagementPage = (): JSX.Element => {
       teamsAPI
         .destroy(teamEditing.id)
         .then(() => {
-          renderFlash("success", `Successfully deleted ${teamEditing.name}.`);
+          renderFlash(
+            "success",
+            t("settings:admin.teams.deleteSuccess", { name: teamEditing.name })
+          );
           if (currentTeam?.id === teamEditing.id) {
             setCurrentTeam(undefined);
           }
@@ -157,7 +165,7 @@ const TeamManagementPage = (): JSX.Element => {
         .catch(() => {
           renderFlash(
             "error",
-            `Could not delete ${teamEditing.name}. Please try again.`
+            t("settings:admin.teams.deleteError", { name: teamEditing.name })
           );
         })
         .finally(() => {
@@ -188,7 +196,7 @@ const TeamManagementPage = (): JSX.Element => {
           .then(() => {
             renderFlash(
               "success",
-              `Successfully updated team name to ${formData.name}.`
+              t("settings:admin.teams.renameSuccess", { name: formData.name })
             );
             setBackendValidators({});
             toggleRenameTeamModal();
@@ -198,22 +206,24 @@ const TeamManagementPage = (): JSX.Element => {
             console.error(updateError);
             if (updateError.data.errors[0].reason.includes("Duplicate")) {
               setBackendValidators({
-                name: "A team with this name already exists",
+                name: t("settings:admin.teams.renameErrorExists"),
               });
             } else if (
               updateError.data.errors[0].reason.includes("all teams")
             ) {
               setBackendValidators({
-                name: `"All teams" is a reserved team name.`,
+                name: t("settings:admin.teams.renameErrorAllTeams"),
               });
             } else if (updateError.data.errors[0].reason.includes("no team")) {
               setBackendValidators({
-                name: `"No team" is a reserved team name. Please try another name.`,
+                name: t("settings:admin.teams.renameErrorNoTeam"),
               });
             } else {
               renderFlash(
                 "error",
-                `Could not rename ${teamEditing.name}. Please try again.`
+                t("settings:admin.teams.renameError", {
+                  name: teamEditing.name,
+                })
               );
             }
           })
@@ -271,7 +281,7 @@ const TeamManagementPage = (): JSX.Element => {
         fallbackComponent={() => (
           <SandboxMessage
             variant="sales"
-            message="Teams is only available in Fleet premium."
+            message={t("settings:admin.teams.sandboxMessage")}
             utmSource="fleet-ui-teams-page"
             className={`${baseClass}__sandbox-message`}
           />
@@ -288,13 +298,13 @@ const TeamManagementPage = (): JSX.Element => {
             defaultSortDirection="asc"
             actionButton={{
               name: "create team",
-              buttonText: "Create team",
+              buttonText: t("settings:teams.addTeam"),
               variant: "default",
               onClick: toggleCreateTeamModal,
               hideButton: teams && teams.length === 0,
               disabledTooltipContent: disabledPrimaryActionTooltip,
             }}
-            resultsTitle="teams"
+            resultsTitle={t("settings:teams.title").toLowerCase()}
             emptyComponent={() => (
               <EmptyTeamsTable
                 className={noTeamsClass}

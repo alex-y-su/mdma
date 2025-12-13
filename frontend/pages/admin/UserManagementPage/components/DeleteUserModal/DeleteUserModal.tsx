@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import Button from "components/buttons/Button";
 import Modal from "components/Modal";
 
@@ -17,14 +18,19 @@ const DeleteUserModal = ({
   onCancel,
   isUpdatingUsers,
 }: IDeleteUserModal): JSX.Element => {
+  const { t } = useTranslation();
+
   return (
-    <Modal title="Delete user" onExit={onCancel} onEnter={onDelete}>
+    <Modal
+      title={t("settings:admin.users.modals.deleteUser.title")}
+      onExit={onCancel}
+      onEnter={onDelete}
+    >
       <div className={baseClass}>
-        <p>
-          You are about to delete{" "}
-          <span className={`${baseClass}__name`}>{name}</span> from Fleet.
+        <p>{t("settings:admin.users.modals.deleteUser.message", { name })}</p>
+        <p className={`${baseClass}__warning`}>
+          {t("settings:admin.users.modals.deleteUser.warning")}
         </p>
-        <p className={`${baseClass}__warning`}>This action cannot be undone.</p>
         <div className="modal-cta-wrap">
           <Button
             type="button"
@@ -33,10 +39,10 @@ const DeleteUserModal = ({
             className="delete-loading"
             isLoading={isUpdatingUsers}
           >
-            Delete
+            {t("settings:admin.users.modals.deleteUser.deleteButton")}
           </Button>
           <Button onClick={onCancel} variant="inverse-alert">
-            Cancel
+            {t("settings:admin.users.modals.deleteUser.cancelButton")}
           </Button>
         </div>
       </div>

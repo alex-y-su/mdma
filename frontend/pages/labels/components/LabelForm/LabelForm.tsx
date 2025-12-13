@@ -1,4 +1,5 @@
 import React, { ReactNode, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import validate_presence from "components/forms/validators/validate_presence";
 
@@ -30,6 +31,8 @@ const LabelForm = ({
   onCancel,
   onSave,
 }: ILabelFormProps) => {
+  const { t } = useTranslation();
+
   const [name, setName] = useState(defaultName);
   const [description, setDescription] = useState(defaultDescription);
   const [nameError, setNameError] = useState<string | null>("");
@@ -48,7 +51,7 @@ const LabelForm = ({
 
     let isFormValid = true;
     if (!validate_presence(name)) {
-      setNameError("Label name must be present");
+      setNameError(t("labels:form.nameRequired"));
       isFormValid = false;
     }
 
@@ -63,25 +66,25 @@ const LabelForm = ({
         onChange={onNameChange}
         value={name}
         inputClassName={`${baseClass}__label-title`}
-        label="Name"
-        placeholder="Label name"
+        label={t("labels:form.name")}
+        placeholder={t("labels:form.namePlaceholder")}
       />
       <InputField
         name="description"
         onChange={onDescriptionChange}
         value={description}
         inputClassName={`${baseClass}__label-description`}
-        label="Description"
+        label={t("labels:form.description")}
         type="textarea"
-        placeholder="Label description (optional)"
+        placeholder={t("labels:form.descriptionPlaceholder")}
       />
       {additionalFields}
       <div className="button-wrap">
         <Button onClick={onCancel} variant="inverse">
-          Cancel
+          {t("common:buttons.cancel")}
         </Button>
         <Button type="submit" isLoading={isUpdatingLabel}>
-          Save
+          {t("common:buttons.save")}
         </Button>
       </div>
     </form>

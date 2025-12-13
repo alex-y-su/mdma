@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import { ITeam } from "interfaces/team";
 import { IUserFormErrors, UserRole } from "interfaces/user";
@@ -53,9 +54,11 @@ const EditUserModal = ({
   isInvitePending,
   isUpdatingUsers,
 }: IEditUserModalProps): JSX.Element => {
+  const { t } = useTranslation();
+
   return (
     <Modal
-      title="Edit user"
+      title={t("settings:admin.users.modals.editUser.title")}
       onExit={onCancel}
       className={`${baseClass}__edit-user-modal`}
     >

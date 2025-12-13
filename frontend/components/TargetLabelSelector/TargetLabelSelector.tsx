@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
 import classnames from "classnames";
+import { useTranslation } from "react-i18next";
 
 import PATHS from "router/paths";
 import { IDropdownOption } from "interfaces/dropdownOption";
@@ -51,12 +52,14 @@ const TargetChooser = ({
   disableOptions = false,
   title,
 }: ITargetChooserProps) => {
+  const { t } = useTranslation();
+
   return (
     <div className="form-field">
       {title && <div className="form-field__label">{title}</div>}
       <Radio
         className={`${baseClass}__radio-input`}
-        label="All hosts"
+        label={t("labels:targetSelector.allHosts")}
         id="all-hosts-target-radio-btn"
         checked={!disableOptions && selectedTarget === "All hosts"}
         value="All hosts"
@@ -66,7 +69,7 @@ const TargetChooser = ({
       />
       <Radio
         className={`${baseClass}__radio-input`}
-        label="Custom"
+        label={t("labels:targetSelector.custom")}
         id="custom-target-radio-btn"
         checked={selectedTarget === "Custom"}
         value="Custom"
@@ -104,6 +107,8 @@ const LabelChooser = ({
   onSelectCustomTarget,
   onSelectLabel,
 }: ILabelChooserProps) => {
+  const { t } = useTranslation();
+
   const getHelpText = (value?: string) => {
     if (dropdownHelpText) return dropdownHelpText;
     return customTargetOptions.find((option) => option.value === value)
@@ -121,8 +126,11 @@ const LabelChooser = ({
   if (!labels.length) {
     return (
       <div className={`${baseClass}__no-labels`}>
-        <CustomLink url={PATHS.LABEL_NEW_DYNAMIC} text="Add label" /> to target
-        specific hosts.
+        <CustomLink
+          url={PATHS.LABEL_NEW_DYNAMIC}
+          text={t("labels:targetSelector.addLabel")}
+        />{" "}
+        {t("labels:targetSelector.toTargetSpecificHosts")}
       </div>
     );
   }

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { IAceEditor } from "react-ace/lib/types";
+import { useTranslation } from "react-i18next";
 
 import { validateQuery } from "components/forms/validators/validate_query";
 import SQLEditor from "components/SQLEditor";
@@ -12,9 +13,6 @@ import { ILabelFormData } from "../LabelForm/LabelForm";
 import PlatformField from "../PlatformField";
 
 const baseClass = "dynamic-label-form";
-
-const IMMUTABLE_QUERY_HELP_TEXT =
-  "Label queries are immutable. To change the query, delete this label and create a new one.";
 
 export interface IDynamicLabelFormData {
   name: string;
@@ -48,6 +46,8 @@ const DynamicLabelForm = ({
   onSave,
   onCancel,
 }: IDynamicLabelFormProps) => {
+  const { t } = useTranslation();
+
   const [query, setQuery] = useState(defaultQuery);
   const [platform, setPlatform] = useState(defaultPlatform);
   const [queryError, setQueryError] = useState<string | null>(null);
@@ -86,7 +86,7 @@ const DynamicLabelForm = ({
 
     return (
       <Button variant="inverse" onClick={onOpenSidebar}>
-        Schema
+        {t("labels:newLabel.schema")}
         <Icon name="info" size="small" />
       </Button>
     );
@@ -129,12 +129,12 @@ const DynamicLabelForm = ({
               name="query"
               onChange={onQueryChange}
               value={query}
-              label="Query"
+              label={t("labels:newLabel.query")}
               labelActionComponent={renderLabelComponent()}
               readOnly={isEditing}
               onLoad={onLoad}
               wrapperClassName={`${baseClass}__text-editor-wrapper form-field`}
-              helpText={isEditing ? IMMUTABLE_QUERY_HELP_TEXT : ""}
+              helpText={isEditing ? t("labels:form.queryImmutable") : ""}
               wrapEnabled
             />
             <PlatformField

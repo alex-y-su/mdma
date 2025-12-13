@@ -1,4 +1,5 @@
 import React, { useCallback, useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import softwareAPI from "services/entities/software";
 import { NotificationContext } from "context/notification";
@@ -10,11 +11,6 @@ import Button from "components/buttons/Button";
 import InfoBanner from "components/InfoBanner";
 
 const baseClass = "delete-software-modal";
-
-const DELETE_SW_USED_BY_POLICY_ERROR_MSG =
-  "Couldn't delete. Policy automation uses this software. Please disable policy automation for this software and try again.";
-const DELETE_SW_INSTALLED_DURING_SETUP_ERROR_MSG =
-  "Couldn't delete. This software is installed when new Macs boot. Please remove software in Controls > Setup experience and try again.";
 
 interface IDeleteSoftwareModalProps {
   softwareId: number;
@@ -35,6 +31,7 @@ const DeleteSoftwareModal = ({
   onSuccess,
   gitOpsModeEnabled,
 }: IDeleteSoftwareModalProps) => {
+  const { t } = useTranslation();
   const { renderFlash } = useContext(NotificationContext);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -42,66 +39,59 @@ const DeleteSoftwareModal = ({
     setIsDeleting(true);
     try {
       await softwareAPI.deleteSoftwareInstaller(softwareId, teamId);
-      renderFlash("success", "Software deleted successfully!");
+      renderFlash("success", t("software:modals.delete.successMessage"));
       onSuccess();
     } catch (error) {
       const reason = getErrorReason(error);
       if (reason.includes("Policy automation uses this software")) {
-        renderFlash("error", DELETE_SW_USED_BY_POLICY_ERROR_MSG);
+        renderFlash("error", t("software:modals.delete.errorPolicyUsed"));
       } else if (reason.includes("This software is installed when")) {
-        renderFlash("error", DELETE_SW_INSTALLED_DURING_SETUP_ERROR_MSG);
+        renderFlash("error", t("software:modals.delete.errorSetupExperience"));
       } else {
-        renderFlash("error", "Couldn't delete. Please try again.");
+        renderFlash("error", t("software:modals.delete.errorGeneric"));
       }
     }
     setIsDeleting(false);
     onExit();
-  }, [softwareId, teamId, renderFlash, onSuccess, onExit]);
+  }, [softwareId, teamId, renderFlash, onSuccess, onExit, t]);
 
   return (
     <Modal
       className={baseClass}
-      title="Delete software"
+      title={t("software:modals.delete.title")}
       onExit={onExit}
       isContentDisabled={isDeleting}
     >
       <>
         {gitOpsModeEnabled && (
           <InfoBanner className={`${baseClass}__gitops-warning`}>
-            You are currently in GitOps mode. If the package is defined in
-            GitOps, it will reappear when GitOps runs.
+            {t("software:modals.delete.gitopsWarning")}
           </InfoBanner>
         )}
         <p>
-          Are you sure you want to delete{" "}
+          {t("software:modals.delete.confirmText")}{" "}
           <strong>{softwareDisplayName || softwareTitleName}</strong>?
         </p>
         <ul>
+          <li>{t("software:modals.delete.warning1")}</li>{" "}
+          <li>{t("software:modals.delete.warning2")}</li>
           <li>
-            Software won&apos;t be uninstalled from existing hosts, but any
-            pending installs and uninstalls will be canceled.
-          </li>{" "}
-          <li>
-            Installs or uninstalls currently running on a host will still
-            complete, but results won&apos;t appear in Fleet.
-          </li>
-          <li>
-            Installed software will appear as{" "}
-            <strong>{softwareTitleName}</strong> in software inventories and
-            will use the default icon.
+            {t("software:modals.delete.warning3")}{" "}
+            <strong>{softwareTitleName}</strong>{" "}
+            {t("software:modals.delete.warning3Suffix")}
           </li>
         </ul>
-        <p>You cannot undo this action.</p>
+        <p>{t("software:modals.delete.warning4")}</p>
         <div className="modal-cta-wrap">
           <Button
             variant="alert"
             onClick={onDeleteSoftware}
             isLoading={isDeleting}
           >
-            Delete
+            {t("software:modals.delete.deleteButton")}
           </Button>
           <Button variant="inverse-alert" onClick={onExit}>
-            Cancel
+            {t("software:modals.delete.cancelButton")}
           </Button>
         </div>
       </>

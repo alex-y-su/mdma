@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { IWebhookActivities } from "interfaces/webhook";
 
@@ -32,6 +33,7 @@ const ActivityFeedAutomationsModal = ({
   onExit,
   isUpdating,
 }: IActivityFeedAutomationsModal) => {
+  const { t } = useTranslation();
   const { enable_activities_webhook: enabled, destination_url: url } =
     automationSettings || {};
 
@@ -116,12 +118,11 @@ const ActivityFeedAutomationsModal = ({
           }}
         />
         <div className="form-field__help-text">
-          To see the data included in each activity, check out the documentation
-          for{" "}
+          {t("dashboard:activityAutomations.docsText")}{" "}
           {
             <CustomLink
               url="https://fleetdm.com/learn-more-about/audit-logs"
-              text="audit logs"
+              text={t("dashboard:activityAutomations.auditLogs")}
               newTab
             />
           }
@@ -133,7 +134,7 @@ const ActivityFeedAutomationsModal = ({
   return (
     <Modal
       className={baseClass}
-      title="Manage automations"
+      title={t("dashboard:activityAutomations.title")}
       width="large"
       onExit={onExit}
       onEnter={onModalSubmit}
@@ -142,27 +143,27 @@ const ActivityFeedAutomationsModal = ({
         <Slider
           value={formData.enabled}
           onChange={onFeatureEnabledChange}
-          inactiveText="Disabled"
-          activeText="Enabled"
+          inactiveText={t("dashboard:activityAutomations.disabled")}
+          activeText={t("dashboard:activityAutomations.enabled")}
         />
         <div
           className={`form ${formData.enabled ? "" : "form-fields--disabled"}`}
         >
           <InputField
-            placeholder="https://server.com/example"
-            label="Destination URL"
+            placeholder={t("dashboard:activityAutomations.placeholder")}
+            label={t("dashboard:activityAutomations.destinationUrl")}
             onChange={onUrlChange}
             name="url"
             value={formData.url}
             error={formErrors.url}
-            helpText="Fleet will send a JSON payload to this URL whenever a new activity is generated."
+            helpText={t("dashboard:activityAutomations.helpText")}
             disabled={!formData.enabled}
           />
           <RevealButton
             isShowing={showExamplePayload}
             className={`${baseClass}__show-example-payload-toggle`}
-            hideText="Hide example payload"
-            showText="Show example payload"
+            hideText={t("dashboard:activityAutomations.hidePayload")}
+            showText={t("dashboard:activityAutomations.showPayload")}
             caretPosition="after"
             onClick={() => {
               setShowExamplePayload(!showExamplePayload);
@@ -179,10 +180,10 @@ const ActivityFeedAutomationsModal = ({
             isLoading={isUpdating}
             disabled={Object.keys(formErrors).length > 0}
           >
-            Save
+            {t("common:buttons.save")}
           </Button>
           <Button onClick={onExit} variant="inverse">
-            Cancel
+            {t("common:buttons.cancel")}
           </Button>
         </div>
       </div>

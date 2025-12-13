@@ -163,5 +163,162 @@
       "emailInvalid": "{{email}} is not a valid email",
       "nameRequired": "Full name field must be completed"
     }
+  },
+  "admin": {
+    "pageHeader": "Settings",
+    "orgSettings": {
+      "navItems": {
+        "info": "Organization info",
+        "webAddress": "Fleet web address",
+        "smtp": "SMTP options",
+        "agents": "Agent options",
+        "statistics": "Usage statistics",
+        "fleetDesktop": "Fleet Desktop",
+        "advanced": "Advanced options"
+      }
+    },
+    "integrations": {
+      "navItems": {
+        "ticketDestinations": "Ticket destinations",
+        "mdm": "MDM",
+        "calendars": "Calendars",
+        "changeManagement": "Change management",
+        "sso": "Single sign-on (SSO)",
+        "certificates": "Certificates",
+        "identityProvider": "Identity provider (IdP)",
+        "hostStatusWebhook": "Host status webhook",
+        "conditionalAccess": "Conditional access"
+      },
+      "ticketDestinations": {
+        "title": "Ticket destinations",
+        "description": "Add or edit integrations to create tickets when Fleet detects new vulnerabilities.",
+        "addIntegration": "Add integration",
+        "validationFailed": "There was a problem with the information you provided.",
+        "badRequest": "Invalid login credentials or URL. Please correct and try again.",
+        "unknownError": "We experienced an error when attempting to connect. Please try again later.",
+        "addSuccess": "Successfully added {{integration}}",
+        "addErrorExists": "Could not add {{integration}}. This integration already exists",
+        "addError": "Could not add {{integration}}. Please try again.",
+        "deleteSuccess": "Successfully deleted {{integration}}",
+        "deleteError": "Could not delete {{integration}}. Please try again.",
+        "emptyTable": {
+          "header": "No integrations",
+          "info": "Add integrations to create tickets when Fleet detects new vulnerabilities."
+        },
+        "table": {
+          "name": "Name",
+          "actions": "Actions"
+        },
+        "actions": {
+          "delete": "Delete"
+        }
+      },
+      "certificates": {
+        "title": "Certificates",
+        "description": "To help your end users connect to Wi-Fi or VPNs, you can add your certificate authority.",
+        "learnMore": "Learn more"
+      }
+    },
+    "users": {
+      "title": "Users",
+      "searchPlaceholder": "Search by name or email",
+      "emptyTable": {
+        "header": "No users match the current criteria",
+        "info": "Expecting to see users? Try again in a few seconds as the system catches up."
+      },
+      "addSuccess": "{{name}} has been invited!",
+      "addSuccessCreated": "{{name}} has been created!",
+      "addErrorExists": "A user with this email address already exists",
+      "addErrorPassword": "Password must meet the criteria below",
+      "addErrorPasswordTooLong": "Password is over the character limit.",
+      "addError": "Could not create user. Please try again.",
+      "editSuccess": "Successfully edited {{name}}",
+      "editSuccessEmailChanged": "Successfully edited {{name}}. A confirmation email was sent to {{email}}.",
+      "editErrorExists": "A user with this email address already exists",
+      "editErrorPassword": "Password must meet the criteria below",
+      "editError": "Could not edit {{name}}. Please try again.",
+      "deleteSuccess": "Successfully deleted {{name}}.",
+      "deleteError": "Could not delete {{name}}. Please try again.",
+      "resetSessionsSuccess": "Successfully reset sessions.",
+      "resetSessionsError": "Could not reset sessions. Please try again.",
+      "resetPasswordSuccess": "Successfully required a password reset.",
+      "resetPasswordError": "Could not require a password reset. Please try again.",
+      "table": {
+        "name": "Name",
+        "role": "Role",
+        "status": "Status",
+        "email": "Email",
+        "actions": "Actions"
+      },
+      "actions": {
+        "edit": "Edit",
+        "editMyAccount": "Edit my account",
+        "requirePasswordReset": "Require password reset",
+        "resetSessions": "Reset sessions",
+        "delete": "Delete"
+      },
+      "roleTooltips": {
+        "gitops": "The GitOps role is only available on the command-line when creating an API-only user. This user has no access to the UI.",
+        "observerPlus": "Users with the Observer+ role have access to all of the same functions as an Observer, with the added ability to run any live query against all hosts."
+      },
+      "statusValues": {
+        "noAccess": "No access",
+        "invitePending": "Invite pending",
+        "active": "Active"
+      },
+      "modals": {
+        "addUser": {
+          "title": "Add user"
+        },
+        "editUser": {
+          "title": "Edit user"
+        },
+        "deleteUser": {
+          "title": "Delete user",
+          "message": "You are about to delete <strong>{{name}}</strong> from Fleet.",
+          "warning": "This action cannot be undone.",
+          "deleteButton": "Delete",
+          "cancelButton": "Cancel"
+        }
+      }
+    },
+    "teams": {
+      "title": "Teams",
+      "emptyTable": {
+        "header": "No teams",
+        "info": "Create a team to organize your hosts."
+      },
+      "sandboxMessage": "Teams is only available in Fleet premium.",
+      "createSuccess": "Successfully created {{name}}.",
+      "createErrorExists": "A team with this name already exists",
+      "createErrorAllTeams": "\"All teams\" is a reserved team name. Please try another name.",
+      "createErrorNoTeam": "\"No team\" is a reserved team name. Please try another name.",
+      "createError": "Could not create team. Please try again.",
+      "deleteSuccess": "Successfully deleted {{name}}.",
+      "deleteError": "Could not delete {{name}}. Please try again.",
+      "renameSuccess": "Successfully updated team name to {{name}}.",
+      "renameErrorExists": "A team with this name already exists",
+      "renameErrorAllTeams": "\"All teams\" is a reserved team name.",
+      "renameErrorNoTeam": "\"No team\" is a reserved team name. Please try another name.",
+      "renameError": "Could not rename {{name}}. Please try again.",
+      "modals": {
+        "createTeam": {
+          "title": "Create team",
+          "nameLabel": "Team name",
+          "namePlaceholder": "Workstations",
+          "infoBanner": "To organize your hosts, create a team, like \"Workstations,\" \"Servers,\" or \"Servers (canary)\".",
+          "createButton": "Create",
+          "cancelButton": "Cancel"
+        },
+        "deleteTeam": {
+          "title": "Delete team",
+          "message": "You are about to delete <strong>{{name}}</strong> from Fleet.",
+          "warning": "Users on this team who are not assigned to other teams will lose access to Fleet.",
+          "cannotUndo": "This action cannot be undone.",
+          "deleteButton": "Delete",
+          "cancelButton": "Cancel"
+        }
+      }
+    }
   }
 }

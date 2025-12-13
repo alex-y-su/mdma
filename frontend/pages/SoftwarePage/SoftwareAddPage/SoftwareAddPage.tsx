@@ -2,6 +2,7 @@ import React, { useCallback, useContext } from "react";
 import { Tab, TabList, Tabs } from "react-tabs";
 import { InjectedRouter } from "react-router";
 import { Location } from "history";
+import { useTranslation } from "react-i18next";
 
 import PATHS from "router/paths";
 import { getPathWithQueryParams } from "utilities/url";
@@ -20,21 +21,21 @@ import QuerySidePanel from "components/side_panels/QuerySidePanel";
 const baseClass = "software-add-page";
 
 interface IAddSoftwareSubNavItem {
-  name: string;
+  nameKey: string;
   pathname: string;
 }
 
 const addSoftwareSubNav: IAddSoftwareSubNavItem[] = [
   {
-    name: "Fleet-maintained",
+    nameKey: "software:add.fleetMaintained",
     pathname: PATHS.SOFTWARE_ADD_FLEET_MAINTAINED,
   },
   {
-    name: "App store",
+    nameKey: "software:add.appStore",
     pathname: PATHS.SOFTWARE_ADD_APP_STORE,
   },
   {
-    name: "Custom package",
+    nameKey: "software:add.customPackage",
     pathname: PATHS.SOFTWARE_ADD_PACKAGE,
   },
 ];
@@ -65,6 +66,8 @@ const SoftwareAddPage = ({
   location,
   router,
 }: ISoftwareAddPageProps) => {
+  const { t } = useTranslation();
+
   const { selectedOsqueryTable, setSelectedOsqueryTable } = useContext(
     QueryContext
   );
@@ -108,12 +111,12 @@ const SoftwareAddPage = ({
         <MainContent className={baseClass}>
           <div className={`${baseClass}__header-links`}>
             <BackButton
-              text="Back to software"
+              text={t("software:page.backToSoftware")}
               path={backUrl}
               className={`${baseClass}__back-to-software`}
             />
           </div>
-          <h1>Add software</h1>
+          <h1>{t("software:add.title")}</h1>
           <TabNav>
             <Tabs
               selectedIndex={getTabIndex(location?.pathname || "")}
@@ -121,9 +124,10 @@ const SoftwareAddPage = ({
             >
               <TabList>
                 {addSoftwareSubNav.map((navItem) => {
+                  const tabName = t(navItem.nameKey);
                   return (
-                    <Tab key={navItem.name} data-text={navItem.name}>
-                      <TabText>{navItem.name}</TabText>
+                    <Tab key={navItem.nameKey} data-text={tabName}>
+                      <TabText>{tabName}</TabText>
                     </Tab>
                   );
                 })}

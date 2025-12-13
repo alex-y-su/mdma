@@ -4,6 +4,7 @@ import { useQuery } from "react-query";
 import { useDebouncedCallback } from "use-debounce";
 import { IAceEditor } from "react-ace/lib/types";
 import { Row } from "react-table";
+import { useTranslation } from "react-i18next";
 
 import PATHS from "router/paths";
 
@@ -48,19 +49,8 @@ import TargetsInput from "components/TargetsInput";
 import Radio from "components/forms/fields/Radio";
 import PlatformField from "../components/PlatformField";
 
-const availableCriteria: {
-  label: string;
-  value: LabelHostVitalsCriterion;
-}[] = [
-  { label: "Identity provider (IdP) group", value: "end_user_idp_group" },
-  { label: "IdP department", value: "end_user_idp_department" },
-];
-
 const baseClass = "new-label-page";
 
-export const LABEL_TARGET_HOSTS_INPUT_LABEL = "Select hosts";
-const LABEL_TARGET_HOSTS_INPUT_PLACEHOLDER =
-  "Search name, hostname, or serial number";
 const DEBOUNCE_DELAY = 500;
 
 interface ITargetsQueryKey {
@@ -91,19 +81,19 @@ interface INewLabelFormErrors {
   criteria?: string | null;
 }
 
-const validate = (newData: INewLabelFormData) => {
+const validate = (newData: INewLabelFormData, t: any) => {
   const errors: INewLabelFormErrors = {};
   const { name, type, labelQuery, vitalValue } = newData;
   if (!name) {
-    errors.name = "Label name must be present";
+    errors.name = t("labels:form.nameRequired");
   }
   if (type === "dynamic") {
     if (!labelQuery) {
-      errors.labelQuery = "Query text must be present";
+      errors.labelQuery = t("labels:newLabel.queryRequired");
     }
   } else if (type === "host_vitals") {
     if (!vitalValue) {
-      errors.criteria = "Label criteria must be completed";
+      errors.criteria = t("labels:newLabel.criteriaRequired");
     }
   }
   return errors;
@@ -115,6 +105,8 @@ const NewLabelPage = ({
   router,
   location,
 }: RouteComponentProps<never, never>) => {
+  const { t } = useTranslation();
+
   // page-level state
   const { selectedOsqueryTable, setSelectedOsqueryTable } = useContext(
     QueryContext
@@ -227,27 +219,22 @@ const NewLabelPage = ({
   );
   const idpConfigured = !!scimIdPDetails?.last_request?.requested_at;
 
+  const availableCriteria: {
+    label: string;
+    value: LabelHostVitalsCriterion;
+  }[] = [
+    { label: t("labels:newLabel.idpGroup"), value: "end_user_idp_group" },
+    {
+      label: t("labels:newLabel.idpDepartment"),
+      value: "end_user_idp_department",
+    },
+  ];
+
   let hostVitalsTooltipContent: React.ReactNode;
   if (!isPremiumTier) {
-    hostVitalsTooltipContent = (
-      <>
-        Currently, host vitals labels are based on
-        <br />
-        identity provider (IdP) groups or departments.
-        <br />
-        IdP integration available in Fleet Premium.
-      </>
-    );
+    hostVitalsTooltipContent = t("labels:tooltips.hostVitals");
   } else if (!idpConfigured) {
-    hostVitalsTooltipContent = (
-      <>
-        Currently, host vitals labels are based on
-        <br />
-        identity provider (IdP) groups or departments.
-        <br />
-        IdP has not been configured in integration settings.
-      </>
-    );
+    hostVitalsTooltipContent = t("labels:tooltips.idpConfig");
   }
 
   useEffect(() => {
@@ -272,7 +259,7 @@ const NewLabelPage = ({
   }: IInputFieldParseTarget) => {
     const newFormData = { ...formData, [fieldName]: value };
     setFormData(newFormData);
-    const newErrs = validate(newFormData);
+    const newErrs = validate(newFormData, t);
     // only set errors that are updates of existing errors
     // new errors are only set onBlur or submit
     const errsToSet: Record<string, string> = {};
@@ -293,7 +280,7 @@ const NewLabelPage = ({
     };
     setFormData(newFormData);
 
-    const newErrs = validate(newFormData);
+    const newErrs = validate(newFormData, t);
     const errsToSet: Record<string, string> = {};
     Object.keys(formErrors).forEach((k) => {
       // @ts-ignore
@@ -306,13 +293,13 @@ const NewLabelPage = ({
   };
 
   const onInputBlur = () => {
-    setFormErrors(validate(formData));
+    setFormErrors(validate(formData, t));
   };
 
   const onSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    const errs = validate(formData);
+    const errs = validate(formData, t);
     if (Object.keys(errs).length > 0) {
       setFormErrors(errs);
       return;
@@ -321,9 +308,9 @@ const NewLabelPage = ({
     try {
       await labelsAPI.create(formData);
       router.push(PATHS.MANAGE_LABELS);
-      renderFlash("success", "Label added successfully.");
+      renderFlash("success", t("labels:newLabel.success"));
     } catch {
-      renderFlash("error", "Couldn't add label. Please try again.");
+      renderFlash("error", t("labels:newLabel.error"));
     }
     setIsUpdating(false);
   };
@@ -378,8 +365,8 @@ const NewLabelPage = ({
       targetedHosts: targetedHosts.filter((h) => h.id !== row.original.id),
     }));
   };
-  const resultsTableConfig = generateTableHeaders();
-  const selectedHostsTableConfig = generateTableHeaders(onHostRemove);
+  const resultsTableConfig = generateTableHeaders(undefined, t);
+  const selectedHostsTableConfig = generateTableHeaders(onHostRemove, t);
 
   const renderVariableFields = () => {
     switch (type) {
@@ -392,11 +379,11 @@ const NewLabelPage = ({
               onChange={onQueryChange}
               onBlur={onInputBlur}
               value={labelQuery}
-              label="Query"
+              label={t("labels:newLabel.query")}
               labelActionComponent={
                 showOpenSidebarButton ? (
                   <Button variant="inverse" onClick={onOpenSidebar}>
-                    Schema
+                    {t("labels:newLabel.schema")}
                     <Icon name="info" size="small" />
                   </Button>
                 ) : null
@@ -427,7 +414,7 @@ const NewLabelPage = ({
         return (
           <div className={`${baseClass}__host_vitals-fields`}>
             <label className="form-field__label" htmlFor="criterion-and-value">
-              Label criteria
+              {t("labels:newLabel.labelCriteria")}
             </label>
             <span id="criterion-and-value">
               <Dropdown
@@ -440,7 +427,7 @@ const NewLabelPage = ({
                 classname={`${baseClass}__criteria-dropdown`}
                 wrapperClassName={`${baseClass}__form-field ${baseClass}__form-field--criteria`}
               />
-              <p>is equal to</p>
+              <p>{t("labels:newLabel.isEqualTo")}</p>
               <InputField
                 error={formErrors.criteria}
                 name="vitalValue"
@@ -449,14 +436,15 @@ const NewLabelPage = ({
                 value={vitalValue}
                 inputClassName={`${baseClass}__vital-value`}
                 placeholder={
-                  vital === "end_user_idp_group" ? "IT admins" : "Engineering"
+                  vital === "end_user_idp_group"
+                    ? t("labels:newLabel.idpPlaceholder")
+                    : t("labels:newLabel.departmentPlaceholder")
                 }
                 parseTarget
               />
             </span>
             <span className="form-field__help-text">
-              Currently, label criteria can be IdP group or department on macOS,
-              iOS, iPadOS, and Android hosts.
+              {t("labels:newLabel.criteriaHelp")}
             </span>
           </div>
         );
@@ -464,8 +452,8 @@ const NewLabelPage = ({
       case "manual":
         return (
           <TargetsInput
-            label={LABEL_TARGET_HOSTS_INPUT_LABEL}
-            placeholder={LABEL_TARGET_HOSTS_INPUT_PLACEHOLDER}
+            label={t("labels:manualLabel.selectHosts")}
+            placeholder={t("labels:manualLabel.searchPlaceholder")}
             searchText={targetsSearchQuery}
             searchResultsTableConfig={resultsTableConfig}
             selectedHostsTableConifg={selectedHostsTableConfig}
@@ -493,8 +481,8 @@ const NewLabelPage = ({
         onBlur={onInputBlur}
         value={name}
         inputClassName={`${baseClass}__label-name`}
-        label="Name"
-        placeholder="Label name"
+        label={t("labels:form.name")}
+        placeholder={t("labels:form.namePlaceholder")}
         parseTarget
       />
       <InputField
@@ -503,16 +491,16 @@ const NewLabelPage = ({
         onBlur={onInputBlur}
         value={description}
         inputClassName={`${baseClass}__label-description`}
-        label="Description"
+        label={t("labels:form.description")}
         type="textarea"
-        placeholder="Label description (optional)"
+        placeholder={t("labels:form.descriptionPlaceholder")}
         parseTarget
       />
       <div className="form-field type-field">
-        <div className="form-field__label">Type</div>
+        <div className="form-field__label">{t("labels:form.type")}</div>
         <Radio
           className={`${baseClass}__radio-input`}
-          label="Dynamic"
+          label={t("labels:types.dynamic")}
           id="dynamic"
           checked={type === "dynamic"}
           value="dynamic"
@@ -521,7 +509,7 @@ const NewLabelPage = ({
         />
         <Radio
           className={`${baseClass}__radio-input`}
-          label="Host vitals"
+          label={t("labels:types.hostVitals")}
           id="host_vitals"
           checked={type === "host_vitals"}
           value="host_vitals"
@@ -532,7 +520,7 @@ const NewLabelPage = ({
         />
         <Radio
           className={`${baseClass}__radio-input`}
-          label="Manual"
+          label={t("labels:types.manual")}
           id="manual"
           checked={type === "manual"}
           value="manual"
@@ -549,14 +537,14 @@ const NewLabelPage = ({
           variant="inverse"
           disabled={isUpdating}
         >
-          Cancel
+          {t("common:buttons.cancel")}
         </Button>
         <Button
           type="submit"
           isLoading={isUpdating}
           disabled={isUpdating || !!Object.entries(formErrors).length}
         >
-          Save
+          {t("common:buttons.save")}
         </Button>
       </div>
     </form>
@@ -567,9 +555,9 @@ const NewLabelPage = ({
       <>
         <MainContent className={baseClass}>
           <div className={`${baseClass}__header`}>
-            <h1 className="page-header">New label</h1>
+            <h1 className="page-header">{t("labels:newLabel.title")}</h1>
             <p className={`${baseClass}__page-description`}>
-              Create a new label for targeting and filtering hosts.
+              {t("labels:newLabel.description")}
             </p>
           </div>
           {renderLabelForm()}

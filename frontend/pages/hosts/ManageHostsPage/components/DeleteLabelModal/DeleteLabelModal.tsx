@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useTranslation } from "react-i18next";
 
 import { AppContext } from "context/app";
 
@@ -18,26 +19,21 @@ const DeleteLabelModal = ({
   onCancel,
   isUpdatingLabel,
 }: IDeleteLabelModalProps): JSX.Element => {
+  const { t } = useTranslation();
   const { isPremiumTier } = useContext(AppContext);
   return (
     <Modal
-      title="Delete label"
+      title={t("labels:deleteLabel.title")}
       onExit={onCancel}
       onEnter={onSubmit}
       className={baseClass}
     >
       <>
-        <p>Are you sure you wish to delete this label?</p>
+        <p>{t("labels:deleteLabel.confirm")}</p>
         {isPremiumTier && (
           <ul>
-            <li>
-              Configuration profiles that target this label will not be applied
-              to new hosts.
-            </li>
-            <li>
-              Queries and policies that target this label will continue to run,
-              but may target different hosts.
-            </li>
+            <li>{t("labels:deleteLabel.profilesWarning")}</li>
+            <li>{t("labels:deleteLabel.queriesWarning")}</li>
           </ul>
         )}
         <div className="modal-cta-wrap">
@@ -47,10 +43,10 @@ const DeleteLabelModal = ({
             className="delete-loading"
             isLoading={isUpdatingLabel}
           >
-            Delete
+            {t("common:buttons.delete")}
           </Button>
           <Button onClick={onCancel} variant="inverse-alert">
-            Cancel
+            {t("common:buttons.cancel")}
           </Button>
         </div>
       </>

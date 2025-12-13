@@ -3,6 +3,7 @@
 // definitions for the selection row for some reason when we dont really need it.
 import React from "react";
 import { memoize } from "lodash";
+import { TFunction } from "i18next";
 
 import { ICampaignError } from "interfaces/campaign";
 import sortUtils from "utilities/sort";
@@ -37,11 +38,11 @@ interface IDataColumn {
 
 // NOTE: cellProps come from react-table
 // more info here https://react-table.tanstack.com/docs/api/useTable#cell-properties
-const generateTableHeaders = (): IDataColumn[] => {
+const generateTableHeaders = (t: TFunction): IDataColumn[] => {
   const tableHeaders: IDataColumn[] = [
     {
-      title: "Host",
-      Header: "Host",
+      title: t("policies:columns.host"),
+      Header: t("policies:columns.host"),
       disableSortBy: true,
       accessor: "host_display_name",
       Cell: (cellProps: ICellProps): JSX.Element => (
@@ -49,8 +50,8 @@ const generateTableHeaders = (): IDataColumn[] => {
       ),
     },
     {
-      title: "Osquery version",
-      Header: "Osquery version",
+      title: t("policies:columns.osqueryVersion"),
+      Header: t("policies:columns.osqueryVersion"),
       disableSortBy: true,
       accessor: "osquery_version",
       Cell: (cellProps: ICellProps): JSX.Element => (
@@ -58,8 +59,8 @@ const generateTableHeaders = (): IDataColumn[] => {
       ),
     },
     {
-      title: "Error",
-      Header: "Error",
+      title: t("policies:columns.error"),
+      Header: t("policies:columns.error"),
       disableSortBy: true,
       accessor: "error",
       Cell: (cellProps: ICellProps): JSX.Element => (

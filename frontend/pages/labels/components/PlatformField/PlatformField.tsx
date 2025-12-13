@@ -1,24 +1,10 @@
 import React from "react";
 import { noop } from "lodash";
+import { useTranslation } from "react-i18next";
 
 // @ts-ignore
 import Dropdown from "components/forms/fields/Dropdown";
 import FormField from "components/forms/FormField";
-
-const PLATFORM_STRINGS: { [key: string]: string } = {
-  darwin: "macOS",
-  windows: "MS Windows",
-  ubuntu: "Ubuntu Linux",
-  centos: "CentOS Linux",
-};
-
-const platformOptions = [
-  { label: "All platforms", value: "" },
-  { label: "macOS", value: "darwin" },
-  { label: "Windows", value: "windows" },
-  { label: "Ubuntu", value: "ubuntu" },
-  { label: "Centos", value: "centos" },
-];
 
 const baseClass = "platform-field";
 
@@ -33,12 +19,29 @@ const PlatformField = ({
   isEditing = false,
   onChange = noop,
 }: IPlatformFieldProps) => {
+  const { t } = useTranslation();
+
+  const PLATFORM_STRINGS: { [key: string]: string } = {
+    darwin: t("labels:platforms.macos"),
+    windows: t("labels:platforms.windows"),
+    ubuntu: t("labels:platforms.ubuntu"),
+    centos: t("labels:platforms.centos"),
+  };
+
+  const platformOptions = [
+    { label: t("labels:platforms.all"), value: "" },
+    { label: t("labels:platforms.macos"), value: "darwin" },
+    { label: t("labels:platforms.windows"), value: "windows" },
+    { label: t("labels:platforms.ubuntu"), value: "ubuntu" },
+    { label: t("labels:platforms.centos"), value: "centos" },
+  ];
+
   return (
     <div className={baseClass}>
       {!isEditing ? (
         <div className="form-field form-field--dropdown">
           <Dropdown
-            label="Platform"
+            label={t("labels:form.platform")}
             name="platform"
             onChange={onChange}
             value={platform}
@@ -49,13 +52,16 @@ const PlatformField = ({
         </div>
       ) : (
         <FormField
-          label="Platform"
+          label={t("labels:form.platform")}
           name="platform"
-          helpText="Label platforms are immutable. To change the platform, delete this
-              label and create a new one."
+          helpText={t("labels:form.platformImmutable")}
         >
           <>
-            <p>{platform ? PLATFORM_STRINGS[platform] : "All platforms"}</p>
+            <p>
+              {platform
+                ? PLATFORM_STRINGS[platform]
+                : t("labels:platforms.all")}
+            </p>
           </>
         </FormField>
       )}

@@ -6,6 +6,7 @@ software/versions Software tab > Table (version toggle on)
 import React, { useCallback, useMemo } from "react";
 import { InjectedRouter } from "react-router";
 import { Row } from "react-table";
+import { useTranslation } from "react-i18next";
 
 import PATHS from "router/paths";
 import { getNextLocationPath } from "utilities/helpers";
@@ -99,6 +100,8 @@ const SoftwareTable = ({
   isLoading,
   onAddFiltersClick,
 }: ISoftwareTableProps) => {
+  const { t } = useTranslation();
+
   const currentPath = showVersions
     ? PATHS.SOFTWARE_VERSIONS
     : PATHS.SOFTWARE_TITLES;
@@ -261,20 +264,14 @@ const SoftwareTable = ({
         {tableData && data?.counts_updated_at && (
           <LastUpdatedText
             lastUpdatedAt={data.counts_updated_at}
-            customTooltipText={
-              <>
-                The last time software data was <br />
-                updated, including vulnerabilities <br />
-                and host counts.
-              </>
-            }
+            customTooltipText={t("software:table.lastUpdatedTooltip")}
           />
         )}
         <Slider
           value={showVersions}
           onChange={handleShowVersionsToggle}
-          inactiveText="Show versions"
-          activeText="Show versions"
+          inactiveText={t("software:table.showVersions")}
+          activeText={t("software:table.showVersions")}
         />
       </>
     );
@@ -327,10 +324,10 @@ const SoftwareTable = ({
 
   const renderTableHelpText = () => (
     <div>
-      Seeing unexpected software or vulnerabilities?{" "}
+      {t("software:table.helpText")}{" "}
       <CustomLink
         url={GITHUB_NEW_ISSUE_LINK}
-        text="File an issue on GitHub"
+        text={t("software:table.helpLink")}
         newTab
       />
     </div>
@@ -362,7 +359,7 @@ const SoftwareTable = ({
         isAllPagesSelected={false}
         disableNextPage={!data?.meta.has_next_results}
         searchable={showFilterHeaders}
-        inputPlaceHolder="Search by name or vulnerability (CVE)"
+        inputPlaceHolder={t("software:table.searchPlaceholder")}
         onQueryChange={onQueryChange}
         // additionalQueries serves as a trigger for the useDeepEffect hook
         // to fire onQueryChange for events happening outside of

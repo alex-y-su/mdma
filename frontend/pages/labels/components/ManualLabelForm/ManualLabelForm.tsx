@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { Row } from "react-table";
 import { useDebouncedCallback } from "use-debounce";
+import { useTranslation } from "react-i18next";
 
 import { IHost } from "interfaces/host";
 import targetsAPI, { ITargetsSearchResponse } from "services/entities/targets";
@@ -14,9 +15,6 @@ import { generateTableHeaders } from "./LabelHostTargetTableConfig";
 
 const baseClass = "ManualLabelForm";
 
-export const LABEL_TARGET_HOSTS_INPUT_LABEL = "Select hosts";
-const LABEL_TARGET_HOSTS_INPUT_PLACEHOLDER =
-  "Search name, hostname, or serial number";
 const DEBOUNCE_DELAY = 500;
 
 export interface IManualLabelFormData {
@@ -46,6 +44,8 @@ const ManualLabelForm = ({
   onSave,
   onCancel,
 }: IManualLabelFormProps) => {
+  const { t } = useTranslation();
+
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
   const [isDebouncing, setIsDebouncing] = useState(false);
@@ -120,8 +120,8 @@ const ManualLabelForm = ({
     setSearchQuery(value);
   };
 
-  const resultsTableConfig = generateTableHeaders();
-  const selectedHostsTableConfig = generateTableHeaders(onHostRemove);
+  const resultsTableConfig = generateTableHeaders(undefined, t);
+  const selectedHostsTableConfig = generateTableHeaders(onHostRemove, t);
 
   return (
     <div className={baseClass}>
@@ -132,8 +132,8 @@ const ManualLabelForm = ({
         onSave={onSaveNewLabel}
         additionalFields={
           <TargetsInput
-            label={LABEL_TARGET_HOSTS_INPUT_LABEL}
-            placeholder={LABEL_TARGET_HOSTS_INPUT_PLACEHOLDER}
+            label={t("labels:manualLabel.selectHosts")}
+            placeholder={t("labels:manualLabel.searchPlaceholder")}
             searchText={searchQuery}
             searchResultsTableConfig={resultsTableConfig}
             selectedHostsTableConifg={selectedHostsTableConfig}

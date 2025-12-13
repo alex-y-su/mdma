@@ -1,4 +1,5 @@
 import React from "react";
+import { TFunction } from "i18next";
 import { ILabel, LabelMembershipTypeToDisplayCopy } from "interfaces/label";
 import { IDropdownOption } from "interfaces/dropdownOption";
 
@@ -52,11 +53,12 @@ interface IDataColumn {
 
 const generateActionDropdownOptions = (
   currentUser: IUser,
-  label: ILabel
+  label: ILabel,
+  t: TFunction
 ): IDropdownOption[] => {
   const options: IDropdownOption[] = [
     {
-      label: "View all hosts",
+      label: t("labels:columns.viewAll"),
       disabled: false,
       value: "view_hosts",
     },
@@ -72,14 +74,14 @@ const generateActionDropdownOptions = (
   if (hasGlobalWritePermission || hasLabelAuthorWritePermission) {
     if (label.label_membership_type !== "host_vitals") {
       options.push({
-        label: "Edit",
+        label: t("common:buttons.edit"),
         disabled: false,
         value: "edit",
       });
     }
 
     options.push({
-      label: "Delete",
+      label: t("common:buttons.delete"),
       disabled: false,
       value: "delete",
     });
@@ -90,11 +92,12 @@ const generateActionDropdownOptions = (
 
 const generateTableHeaders = (
   currentUser: IUser,
-  onClickAction: (action: string, label: ILabel) => void
+  onClickAction: (action: string, label: ILabel) => void,
+  t: TFunction
 ): IDataColumn[] => {
   return [
     {
-      title: "Name",
+      title: t("labels:columns.name"),
       Header: (cellProps) => (
         <HeaderCell
           value={cellProps.column.title}
@@ -108,7 +111,7 @@ const generateTableHeaders = (
       ),
     },
     {
-      title: "Description",
+      title: t("labels:columns.description"),
       Header: (cellProps) => (
         <HeaderCell
           value={cellProps.column.title}
@@ -121,7 +124,7 @@ const generateTableHeaders = (
       ),
     },
     {
-      title: "Type",
+      title: t("labels:columns.type"),
       Header: (cellProps) => (
         <HeaderCell
           value={cellProps.column.title}
@@ -135,7 +138,7 @@ const generateTableHeaders = (
       },
     },
     {
-      title: "Actions",
+      title: t("labels:columns.actions"),
       Header: "",
       disableSortBy: true,
       accessor: "actions",
@@ -143,7 +146,8 @@ const generateTableHeaders = (
         const label = cellProps.row.original;
         const dropdownOptions = generateActionDropdownOptions(
           currentUser,
-          label
+          label,
+          t
         );
         return (
           <ViewAllHostsLink

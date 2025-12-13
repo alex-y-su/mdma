@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import PATHS from "router/paths";
 
 import { getPathWithQueryParams } from "utilities/url";
@@ -22,6 +23,8 @@ const LowDiskSpaceHosts = ({
   currentTeamId,
   notSupported = false, // default to supporting this feature
 }: ILowDiskSpaceHostsProps): JSX.Element => {
+  const { t } = useTranslation();
+
   // build the manage hosts URL filtered by low disk space only
   // currently backend cannot filter by both low disk space and label
   const endpoint = selectedPlatformLabelId
@@ -33,14 +36,14 @@ const LowDiskSpaceHosts = ({
   });
 
   const tooltipText = notSupported
-    ? "Disk space info is not available for Chromebooks."
-    : `Hosts that have ${lowDiskSpaceGb} GB or less disk space available.`;
+    ? t("dashboard:lowDiskSpace.notSupported")
+    : t("dashboard:lowDiskSpace.tooltip", { gb: lowDiskSpaceGb });
 
   return (
     <HostCountCard
       iconName="low-disk-space-hosts"
       count={lowDiskSpaceCount}
-      title="Low disk space hosts"
+      title={t("dashboard:lowDiskSpace.title")}
       tooltip={tooltipText}
       path={path}
       notSupported={notSupported}

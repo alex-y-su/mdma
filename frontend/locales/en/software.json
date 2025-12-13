@@ -75,5 +75,75 @@
     "title": "No software found",
     "description": "No software matches the current filters",
     "addFirst": "Add software to get started"
+  },
+  "page": {
+    "headerDescription": "Manage software and search for installed software, OS, and vulnerabilities",
+    "headerDescriptionAllTeams": " for all hosts",
+    "headerDescriptionTeam": " on this team",
+    "manageAutomations": "Manage automations",
+    "manageAutomationsTooltip": "Select \"All teams\" to manage automations.",
+    "addSoftwareTooltip": "Select a team to add software.",
+    "addSoftwareTooltipFreeTier": "This feature is included in Fleet Premium.",
+    "updateAutomationsSuccess": "Successfully updated vulnerability automations.",
+    "updateAutomationsError": "Could not update vulnerability automations. Please try again.",
+    "backToSoftware": "Back to software"
+  },
+  "table": {
+    "showVersions": "Show versions",
+    "searchPlaceholder": "Search by name or vulnerability (CVE)",
+    "lastUpdatedTooltip": "The last time software data was updated, including vulnerabilities and host counts.",
+    "helpText": "Seeing unexpected software or vulnerabilities?",
+    "helpLink": "File an issue on GitHub"
+  },
+  "modals": {
+    "delete": {
+      "title": "Delete software",
+      "confirmText": "Are you sure you want to delete",
+      "warning1": "Software won't be uninstalled from existing hosts, but any pending installs and uninstalls will be canceled.",
+      "warning2": "Installs or uninstalls currently running on a host will still complete, but results won't appear in Fleet.",
+      "warning3": "Installed software will appear as",
+      "warning3Suffix": "in software inventories and will use the default icon.",
+      "warning4": "You cannot undo this action.",
+      "gitopsWarning": "You are currently in GitOps mode. If the package is defined in GitOps, it will reappear when GitOps runs.",
+      "deleteButton": "Delete",
+      "cancelButton": "Cancel",
+      "successMessage": "Software deleted successfully!",
+      "errorPolicyUsed": "Couldn't delete. Policy automation uses this software. Please disable policy automation for this software and try again.",
+      "errorSetupExperience": "Couldn't delete. This software is installed when new Macs boot. Please remove software in Controls > Setup experience and try again.",
+      "errorGeneric": "Couldn't delete. Please try again."
+    },
+    "edit": {
+      "titlePackage": "Edit package",
+      "titleApp": "Edit app",
+      "saveButton": "Save",
+      "errorMaxFileSize": "Couldn't edit software. The maximum file size is {{maxSize}} MB.",
+      "successMessage": "Successfully edited",
+      "successSelfServiceSuffix": "The end user can install from Fleet Desktop."
+    },
+    "editIcon": {
+      "title": "Edit software",
+      "displayNameLabel": "Display name",
+      "displayNameHelpText": "Optional. If left blank, Fleet will use",
+      "iconLabel": "Icon",
+      "iconMessage": "The icon must be a PNG file and square, with dimensions ranging from {{minDim}}x{{minDim}} px to {{maxDim}}x{{maxDim}} px.",
+      "chooseFileButton": "Choose file",
+      "previewHeader": "Preview",
+      "previewFleetTab": "Fleet",
+      "previewSelfServiceTab": "Self-service",
+      "versionHeader": "Version",
+      "vulnerabilitiesHeader": "Vulnerabilities",
+      "vulnerabilitiesText": "20 vulnerabilities",
+      "errorMaxFileSize": "Couldn't edit. Icon must be 100KB or less.",
+      "errorPngOnly": "Couldn't edit. Must be a PNG file.",
+      "errorDimensions": "Couldn't edit. Icon must be square, between {{minDim}}x{{minDim}}px and {{maxDim}}x{{maxDim}}px.",
+      "errorFileReader": "FileReader result was not a string.",
+      "errorGeneric": "Couldn't edit. Please try again.",
+      "successIconRemoved": "Successfully removed icon from",
+      "successIconEdited": "Successfully edited",
+      "successNameRemoved": "Successfully removed custom name for",
+      "successNameChanged": "Successfully renamed",
+      "successNameChangedSuffix": "to",
+      "saveButton": "Save"
+    }
   }
 }

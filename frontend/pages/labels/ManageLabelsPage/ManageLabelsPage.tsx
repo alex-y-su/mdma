@@ -1,6 +1,7 @@
 import React, { useContext, useCallback, useState } from "react";
 import { InjectedRouter } from "react-router";
 import { useQuery } from "react-query";
+import { useTranslation } from "react-i18next";
 
 import PATHS from "router/paths";
 
@@ -28,6 +29,8 @@ interface IManageLabelsPageProps {
 }
 
 const ManageLabelsPage = ({ router }: IManageLabelsPageProps): JSX.Element => {
+  const { t } = useTranslation();
+
   const {
     currentUser,
     isGlobalAdmin,
@@ -56,19 +59,22 @@ const ManageLabelsPage = ({ router }: IManageLabelsPageProps): JSX.Element => {
       try {
         setIsUpdating(true);
         await labelsAPI.destroy(labelToDelete);
-        renderFlash("success", `Successfully deleted ${labelToDelete.name}.`);
+        renderFlash(
+          "success",
+          t("labels:deleteLabel.success", { name: labelToDelete.name })
+        );
         refetch();
       } catch {
         renderFlash(
           "error",
-          `Could not delete ${labelToDelete.name}. Please try again.`
+          t("labels:deleteLabel.error", { name: labelToDelete.name })
         );
       } finally {
         setLabelToDelete(null);
         setIsUpdating(false);
       }
     }
-  }, [labelToDelete, refetch, renderFlash]);
+  }, [labelToDelete, refetch, renderFlash, t]);
 
   const onClickAction = useCallback(
     (action: string, label: ILabel): void => {
@@ -113,7 +119,7 @@ const ManageLabelsPage = ({ router }: IManageLabelsPageProps): JSX.Element => {
         <div className={`${baseClass}__header`}>
           <div className={`${baseClass}__text`}>
             <div className={`${baseClass}__title`}>
-              <h1>Labels</h1>
+              <h1>{t("labels:manage.title")}</h1>
             </div>
           </div>
           {canAddLabel && (
@@ -122,12 +128,12 @@ const ManageLabelsPage = ({ router }: IManageLabelsPageProps): JSX.Element => {
                 className={`${baseClass}__create-button`}
                 onClick={onCreateLabelClick}
               >
-                Add label
+                {t("labels:manage.addLabel")}
               </Button>
             </div>
           )}
         </div>
-        <PageDescription content="Group hosts for targeting and filtering." />
+        <PageDescription content={t("labels:manage.description")} />
       </div>
       {renderTable()}
       {labelToDelete && (

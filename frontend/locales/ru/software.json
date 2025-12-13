@@ -75,5 +75,75 @@
     "title": "ПО не найдено",
     "description": "Нет ПО, соответствующего текущим фильтрам",
     "addFirst": "Добавьте ПО для начала работы"
+  },
+  "page": {
+    "headerDescription": "Управление ПО и поиск установленного ПО, ОС и уязвимостей",
+    "headerDescriptionAllTeams": " для всех устройств",
+    "headerDescriptionTeam": " в этой команде",
+    "manageAutomations": "Управление автоматизацией",
+    "manageAutomationsTooltip": "Выберите \"Все команды\" для управления автоматизацией.",
+    "addSoftwareTooltip": "Выберите команду для добавления ПО.",
+    "addSoftwareTooltipFreeTier": "Эта функция включена в Fleet Premium.",
+    "updateAutomationsSuccess": "Автоматизация уязвимостей успешно обновлена.",
+    "updateAutomationsError": "Не удалось обновить автоматизацию уязвимостей. Пожалуйста, попробуйте еще раз.",
+    "backToSoftware": "Вернуться к ПО"
+  },
+  "table": {
+    "showVersions": "Показать версии",
+    "searchPlaceholder": "Поиск по названию или уязвимости (CVE)",
+    "lastUpdatedTooltip": "Последнее обновление данных ПО, включая уязвимости и количество устройств.",
+    "helpText": "Видите неожиданное ПО или уязвимости?",
+    "helpLink": "Сообщить о проблеме на GitHub"
+  },
+  "modals": {
+    "delete": {
+      "title": "Удалить ПО",
+      "confirmText": "Вы уверены, что хотите удалить",
+      "warning1": "ПО не будет удалено с существующих устройств, но все ожидающие установки и удаления будут отменены.",
+      "warning2": "Установки или удаления, выполняющиеся на устройстве, все равно завершатся, но результаты не появятся в Fleet.",
+      "warning3": "Установленное ПО будет отображаться как",
+      "warning3Suffix": "в инвентаризациях ПО и будет использовать стандартный значок.",
+      "warning4": "Вы не можете отменить это действие.",
+      "gitopsWarning": "Вы находитесь в режиме GitOps. Если пакет определен в GitOps, он появится снова после запуска GitOps.",
+      "deleteButton": "Удалить",
+      "cancelButton": "Отмена",
+      "successMessage": "ПО успешно удалено!",
+      "errorPolicyUsed": "Не удалось удалить. Это ПО используется автоматизацией политики. Отключите автоматизацию политики для этого ПО и попробуйте снова.",
+      "errorSetupExperience": "Не удалось удалить. Это ПО устанавливается при загрузке новых Mac. Удалите ПО в Контроли > Настройка и попробуйте снова.",
+      "errorGeneric": "Не удалось удалить. Пожалуйста, попробуйте еще раз."
+    },
+    "edit": {
+      "titlePackage": "Редактировать пакет",
+      "titleApp": "Редактировать приложение",
+      "saveButton": "Сохранить",
+      "errorMaxFileSize": "Не удалось изменить ПО. Максимальный размер файла {{maxSize}} МБ.",
+      "successMessage": "Успешно отредактировано",
+      "successSelfServiceSuffix": "Конечный пользователь может установить из Fleet Desktop."
+    },
+    "editIcon": {
+      "title": "Редактировать ПО",
+      "displayNameLabel": "Отображаемое имя",
+      "displayNameHelpText": "Необязательно. Если оставить пустым, Fleet будет использовать",
+      "iconLabel": "Значок",
+      "iconMessage": "Значок должен быть файлом PNG и квадратным с размерами от {{minDim}}x{{minDim}} пикселей до {{maxDim}}x{{maxDim}} пикселей.",
+      "chooseFileButton": "Выбрать файл",
+      "previewHeader": "Предпросмотр",
+      "previewFleetTab": "Fleet",
+      "previewSelfServiceTab": "Самообслуживание",
+      "versionHeader": "Версия",
+      "vulnerabilitiesHeader": "Уязвимости",
+      "vulnerabilitiesText": "20 уязвимостей",
+      "errorMaxFileSize": "Не удалось изменить. Значок должен быть не более 100 КБ.",
+      "errorPngOnly": "Не удалось изменить. Должен быть файл PNG.",
+      "errorDimensions": "Не удалось изменить. Значок должен быть квадратным, между {{minDim}}x{{minDim}}px и {{maxDim}}x{{maxDim}}px.",
+      "errorFileReader": "Результат FileReader не является строкой.",
+      "errorGeneric": "Не удалось изменить. Пожалуйста, попробуйте еще раз.",
+      "successIconRemoved": "Значок успешно удален из",
+      "successIconEdited": "Успешно отредактировано",
+      "successNameRemoved": "Пользовательское имя успешно удалено для",
+      "successNameChanged": "Успешно переименовано",
+      "successNameChangedSuffix": "в",
+      "saveButton": "Сохранить"
+    }
   }
 }

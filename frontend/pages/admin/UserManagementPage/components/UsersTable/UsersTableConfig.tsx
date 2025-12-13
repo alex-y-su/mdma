@@ -1,4 +1,5 @@
 import React from "react";
+import { TFunction } from "i18next";
 
 import HeaderCell from "components/TableContainer/DataTable/HeaderCell/HeaderCell";
 import StatusIndicator from "components/StatusIndicator";
@@ -65,12 +66,13 @@ export interface IUserTableData {
 // more info here https://react-table.tanstack.com/docs/api/useTable#cell-properties
 const generateTableHeaders = (
   actionSelectHandler: (value: string, user: IUser | IInvite) => void,
-  isPremiumTier: boolean | undefined
+  isPremiumTier: boolean | undefined,
+  t?: TFunction
 ): IDataColumn[] => {
   const tableHeaders: IDataColumn[] = [
     {
-      title: "Name",
-      Header: "Name",
+      title: t ? t("settings:admin.users.table.name") : "Name",
+      Header: t ? t("settings:admin.users.table.name") : "Name",
       disableSortBy: true,
       accessor: "name",
       Cell: (cellProps: ICellProps) => {
@@ -88,8 +90,8 @@ const generateTableHeaders = (
       },
     },
     {
-      title: "Role",
-      Header: "Role",
+      title: t ? t("settings:admin.users.table.role") : "Role",
+      Header: t ? t("settings:admin.users.table.role") : "Role",
       accessor: "role",
       disableSortBy: true,
       Cell: (cellProps: ICellProps) => {
@@ -97,13 +99,17 @@ const generateTableHeaders = (
           return (
             <TooltipWrapper
               tipContent={
-                <>
-                  The GitOps role is only available on the command-line
-                  <br />
-                  when creating an API-only user. This user has no
-                  <br />
-                  access to the UI.
-                </>
+                t ? (
+                  t("settings:admin.users.roleTooltips.gitops")
+                ) : (
+                  <>
+                    The GitOps role is only available on the command-line
+                    <br />
+                    when creating an API-only user. This user has no
+                    <br />
+                    access to the UI.
+                  </>
+                )
               }
             >
               GitOps
@@ -114,13 +120,17 @@ const generateTableHeaders = (
           return (
             <TooltipWrapper
               tipContent={
-                <>
-                  Users with the Observer+ role have access to all of
-                  <br />
-                  the same functions as an Observer, with the added
-                  <br />
-                  ability to run any live query against all hosts.
-                </>
+                t ? (
+                  t("settings:admin.users.roleTooltips.observerPlus")
+                ) : (
+                  <>
+                    Users with the Observer+ role have access to all of
+                    <br />
+                    the same functions as an Observer, with the added
+                    <br />
+                    ability to run any live query against all hosts.
+                  </>
+                )
               }
             >
               {cellProps.cell.value}
@@ -138,7 +148,7 @@ const generateTableHeaders = (
       },
     },
     {
-      title: "Status",
+      title: t ? t("settings:admin.users.table.status") : "Status",
       Header: (cellProps) => (
         <HeaderCell
           value={cellProps.column.title}
@@ -151,8 +161,8 @@ const generateTableHeaders = (
       ),
     },
     {
-      title: "Email",
-      Header: "Email",
+      title: t ? t("settings:admin.users.table.email") : "Email",
+      Header: t ? t("settings:admin.users.table.email") : "Email",
       disableSortBy: true,
       accessor: "email",
       Cell: (cellProps: ICellProps) => (
@@ -160,7 +170,7 @@ const generateTableHeaders = (
       ),
     },
     {
-      title: "Actions",
+      title: t ? t("settings:admin.users.table.actions") : "Actions",
       Header: "",
       disableSortBy: true,
       accessor: "actions",
@@ -170,7 +180,7 @@ const generateTableHeaders = (
           onChange={(value: string) =>
             actionSelectHandler(value, cellProps.row.original)
           }
-          placeholder="Actions"
+          placeholder={t ? t("settings:admin.users.table.actions") : "Actions"}
           menuAlign="right"
           variant="small-button"
         />
@@ -181,8 +191,8 @@ const generateTableHeaders = (
   // Add Teams column for premium tier
   if (isPremiumTier) {
     tableHeaders.splice(2, 0, {
-      title: "Teams",
-      Header: "Teams",
+      title: t ? t("settings:users.columns.teams") : "Teams",
+      Header: t ? t("settings:users.columns.teams") : "Teams",
       accessor: "teams",
       disableSortBy: true,
       Cell: (cellProps: ICellProps) => (
@@ -194,38 +204,53 @@ const generateTableHeaders = (
   return tableHeaders;
 };
 
-const generateStatus = (type: string, data: IUser | IInvite): string => {
+const generateStatus = (
+  type: string,
+  data: IUser | IInvite,
+  t?: TFunction
+): string => {
   const { teams, global_role } = data;
   if (global_role === null && teams.length === 0) {
-    return "No access";
+    return t ? t("settings:admin.users.statusValues.noAccess") : "No access";
   }
 
-  return type === "invite" ? "Invite pending" : "Active";
+  return type === "invite"
+    ? t
+      ? t("settings:admin.users.statusValues.invitePending")
+      : "Invite pending"
+    : t
+    ? t("settings:admin.users.statusValues.active")
+    : "Active";
 };
 
 const generateActionDropdownOptions = (
   isCurrentUser: boolean,
   isInvitePending: boolean,
-  isSsoEnabled: boolean
+  isSsoEnabled: boolean,
+  t?: TFunction
 ): IDropdownOption[] => {
   let dropdownOptions = [
     {
-      label: "Edit",
+      label: t ? t("settings:admin.users.actions.edit") : "Edit",
       disabled: false,
       value: isCurrentUser ? "editMyAccount" : "edit",
     },
     {
-      label: "Require password reset",
+      label: t
+        ? t("settings:admin.users.actions.requirePasswordReset")
+        : "Require password reset",
       disabled: isInvitePending,
       value: "passwordReset",
     },
     {
-      label: "Reset sessions",
+      label: t
+        ? t("settings:admin.users.actions.resetSessions")
+        : "Reset sessions",
       disabled: isInvitePending,
       value: "resetSessions",
     },
     {
-      label: "Delete",
+      label: t ? t("settings:admin.users.actions.delete") : "Delete",
       disabled: isCurrentUser,
       value: "delete",
     },
@@ -234,14 +259,14 @@ const generateActionDropdownOptions = (
   if (isCurrentUser) {
     // remove "Reset sessions" from dropdownOptions
     dropdownOptions = dropdownOptions.filter(
-      (option) => option.label !== "Reset sessions"
+      (option) => option.value !== "resetSessions"
     );
   }
 
   if (isSsoEnabled) {
     // remove "Require password reset" from dropdownOptions
     dropdownOptions = dropdownOptions.filter(
-      (option) => option.label !== "Require password reset"
+      (option) => option.value !== "passwordReset"
     );
   }
   return dropdownOptions;
@@ -249,19 +274,21 @@ const generateActionDropdownOptions = (
 
 const enhanceUserData = (
   users: IUser[],
-  currentUserId: number
+  currentUserId: number,
+  t?: TFunction
 ): IUserTableData[] => {
   return users.map((user) => {
     return {
       name: user.name || DEFAULT_EMPTY_CELL_VALUE,
-      status: generateStatus("user", user),
+      status: generateStatus("user", user, t),
       email: user.email,
       teams: generateTeam(user.teams, user.global_role),
       role: generateRole(user.teams, user.global_role),
       actions: generateActionDropdownOptions(
         user.id === currentUserId,
         false,
-        user.sso_enabled
+        user.sso_enabled,
+        t
       ),
       id: user.id,
       type: "user",
@@ -270,15 +297,23 @@ const enhanceUserData = (
   });
 };
 
-const enhanceInviteData = (invites: IInvite[]): IUserTableData[] => {
+const enhanceInviteData = (
+  invites: IInvite[],
+  t?: TFunction
+): IUserTableData[] => {
   return invites.map((invite) => {
     return {
       name: invite.name || DEFAULT_EMPTY_CELL_VALUE,
-      status: generateStatus("invite", invite),
+      status: generateStatus("invite", invite, t),
       email: invite.email,
       teams: generateTeam(invite.teams, invite.global_role),
       role: generateRole(invite.teams, invite.global_role),
-      actions: generateActionDropdownOptions(false, true, invite.sso_enabled),
+      actions: generateActionDropdownOptions(
+        false,
+        true,
+        invite.sso_enabled,
+        t
+      ),
       id: invite.id,
       type: "invite",
       api_only: false, // api only users are created through fleetctl and not invites
@@ -289,11 +324,12 @@ const enhanceInviteData = (invites: IInvite[]): IUserTableData[] => {
 const combineDataSets = (
   users: IUser[],
   invites: IInvite[],
-  currentUserId: number
+  currentUserId: number,
+  t?: TFunction
 ): IUserTableData[] => {
   return [
-    ...enhanceUserData(users, currentUserId),
-    ...enhanceInviteData(invites),
+    ...enhanceUserData(users, currentUserId, t),
+    ...enhanceInviteData(invites, t),
   ];
 };
 

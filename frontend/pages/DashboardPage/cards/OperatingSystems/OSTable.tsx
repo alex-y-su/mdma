@@ -2,6 +2,7 @@ import EmptyTable from "components/EmptyTable";
 import TableContainer from "components/TableContainer";
 import { IOperatingSystemVersion } from "interfaces/operating_system";
 import React, { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import {
   PlatformValueOptions,
   PLATFORM_DISPLAY_NAMES,
@@ -14,17 +15,6 @@ const DEFAULT_SORT_HEADER = "hosts_count";
 const PAGE_SIZE = 8;
 
 const baseClass = "operating-systems";
-
-const EmptyOS = (platform: PlatformValueOptions): JSX.Element => (
-  <EmptyTable
-    className={`${baseClass}__os-empty-table`}
-    header={`No${
-      ` ${PLATFORM_DISPLAY_NAMES[platform]}` || ""
-    } operating systems detected`}
-    info="This report is updated every hour to protect the performance of your
-  devices."
-  />
-);
 
 interface IOSTableProps {
   currentTeamId?: number;
@@ -39,12 +29,24 @@ const OSTable = ({
   selectedPlatform,
   isLoading,
 }: IOSTableProps) => {
+  const { t } = useTranslation();
+
   const columnConfigs = useMemo(
     () => generateTableHeaders(currentTeamId, undefined),
     [currentTeamId]
   );
 
   const showPaginationControls = osVersions.length > PAGE_SIZE;
+
+  const EmptyOS = (): JSX.Element => (
+    <EmptyTable
+      className={`${baseClass}__os-empty-table`}
+      header={t("dashboard:operatingSystems.emptyHeader", {
+        platform: PLATFORM_DISPLAY_NAMES[selectedPlatform] || "",
+      })}
+      info={t("dashboard:operatingSystems.emptyInfo")}
+    />
+  );
 
   return (
     <TableContainer
@@ -54,7 +56,7 @@ const OSTable = ({
       defaultSortHeader={DEFAULT_SORT_HEADER}
       defaultSortDirection={DEFAULT_SORT_DIRECTION}
       resultsTitle="Operating systems"
-      emptyComponent={() => EmptyOS(selectedPlatform)}
+      emptyComponent={EmptyOS}
       showMarkAllPages={false}
       isAllPagesSelected={false}
       disableCount

@@ -18,6 +18,7 @@ export const NAMESPACES = [
   "dashboard", // Dashboard-specific strings
   "errors", // Error messages
   "hosts", // Host management
+  "labels", // Label management
   "software", // Software management
   "policies", // Policy management
   "queries", // Query management

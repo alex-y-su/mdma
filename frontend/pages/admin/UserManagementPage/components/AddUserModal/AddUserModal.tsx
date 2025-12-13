@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import { ITeam } from "interfaces/team";
 import { IUserFormErrors, UserRole } from "interfaces/user";
@@ -41,9 +42,11 @@ const AddUserModal = ({
   isUpdatingUsers,
   addUserErrors,
 }: IAddUserModalProps): JSX.Element => {
+  const { t } = useTranslation();
+
   return (
     <Modal
-      title="Add user"
+      title={t("settings:admin.users.modals.addUser.title")}
       onExit={onCancel}
       className={baseClass}
       width="large"

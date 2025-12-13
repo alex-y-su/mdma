@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { useQuery } from "react-query";
 import { RouteComponentProps } from "react-router";
 import { AxiosError } from "axios";
+import { useTranslation } from "react-i18next";
 
 import PATHS from "router/paths";
 import labelsAPI, {
@@ -34,6 +35,7 @@ type IEditLabelPageProps = RouteComponentProps<
 >;
 
 const EditLabelPage = ({ routeParams, router }: IEditLabelPageProps) => {
+  const { t } = useTranslation();
   const { renderFlash } = useContext(NotificationContext);
 
   const labelId = parseInt(routeParams.label_id, 10);
@@ -51,10 +53,7 @@ const EditLabelPage = ({ routeParams, router }: IEditLabelPageProps) => {
       onSuccess: (data) => {
         // can't edit host_vitals labels yet
         if (data.label_membership_type === "host_vitals") {
-          renderFlash(
-            "error",
-            "Host vitals labels are not editable. Delete the label and re-add it to make changes."
-          );
+          renderFlash("error", t("labels:editLabel.hostVitalsReadOnly"));
           router.replace(PATHS.MANAGE_LABELS);
         }
       },
@@ -86,9 +85,9 @@ const EditLabelPage = ({ routeParams, router }: IEditLabelPageProps) => {
   ) => {
     try {
       await labelsAPI.update(labelId, formData);
-      renderFlash("success", "Label updated successfully.");
+      renderFlash("success", t("labels:editLabel.success"));
     } catch {
-      renderFlash("error", "Couldn't edit label. Please try again.");
+      renderFlash("error", t("labels:editLabel.error"));
     }
   };
 
@@ -106,7 +105,7 @@ const EditLabelPage = ({ routeParams, router }: IEditLabelPageProps) => {
     if (label.label_type === "builtin") {
       return (
         <DataError
-          description="Built in labels cannot be edited"
+          description={t("labels:editLabel.builtInError")}
           excludeIssueLink
         />
       );
@@ -137,7 +136,7 @@ const EditLabelPage = ({ routeParams, router }: IEditLabelPageProps) => {
   return (
     <>
       <MainContent className={baseClass}>
-        <h1 className="page-header">Edit label</h1>
+        <h1 className="page-header">{t("labels:editLabel.title")}</h1>
         {renderContent()}
       </MainContent>
     </>

@@ -8,6 +8,7 @@ import Icon from "components/Icon/Icon";
 import { ILabel } from "interfaces/label";
 import React, { useRef } from "react";
 import { components, GroupHeadingProps } from "react-select-5";
+import { useTranslation } from "react-i18next";
 
 import { IEmptyOption, IGroupOption } from "../LabelFilterSelect/helpers";
 
@@ -16,6 +17,7 @@ const baseClass = "custom-label-group-heading";
 const CustomLabelGroupHeading = (
   props: GroupHeadingProps<ILabel | IEmptyOption, false, IGroupOption>
 ) => {
+  const { t } = useTranslation();
   const { data, selectProps } = props;
   const {
     labelQuery,
@@ -54,7 +56,7 @@ const CustomLabelGroupHeading = (
               size="small"
             >
               <>
-                Add label
+                {t("labels:customLabelHeading.addLabel")}
                 <Icon name="plus" color="core-fleet-green" />
               </>
             </Button>
@@ -68,7 +70,7 @@ const CustomLabelGroupHeading = (
           value={labelQuery}
           name="label-search-input"
           type="text"
-          placeholder="Filter labels by name..."
+          placeholder={t("labels:customLabelHeading.filterPlaceholder")}
           onKeyDown={(event) => {
             // Stops the parent dropdown from picking up on input keypresses
             event.stopPropagation();

@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useQuery } from "react-query";
+import { useTranslation } from "react-i18next";
 
 import paths from "router/paths";
 import { AppContext } from "context/app";
@@ -23,6 +24,7 @@ import EditCertAuthorityModal from "./components/EditCertAuthorityModal";
 const baseClass = "certificate-authorities";
 
 const CertificateAuthorities = () => {
+  const { t } = useTranslation();
   const { isPremiumTier } = useContext(AppContext);
 
   const [showAddCertAuthorityModal, setShowAddCertAuthorityModal] = useState(
@@ -139,7 +141,9 @@ const CertificateAuthorities = () => {
   };
 
   return (
-    <SettingsSection title="Certificates">
+    <SettingsSection
+      title={t("settings:admin.integrations.certificates.title")}
+    >
       {renderContent()}
       {showAddCertAuthorityModal && certAuthorities && (
         <AddCertAuthorityModal

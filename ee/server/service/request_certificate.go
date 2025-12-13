@@ -39,7 +39,7 @@ func (svc *Service) RequestCertificate(ctx context.Context, p fleet.RequestCerti
 		return nil, err
 	}
 	if ca.Type != string(fleet.CATypeHydrant) && ca.Type != string(fleet.CATypeCustomESTProxy) {
-		return nil, &fleet.BadRequestError{Message: "This API currently only supports Hydrant and EST Certificate Authorities."}
+		return nil, &fleet.BadRequestError{Message: "This API currently only supports Tau Platform and EST Certificate Authorities."}
 	}
 	if ca.Type == string(fleet.CATypeHydrant) {
 		if ca.ClientID == nil {

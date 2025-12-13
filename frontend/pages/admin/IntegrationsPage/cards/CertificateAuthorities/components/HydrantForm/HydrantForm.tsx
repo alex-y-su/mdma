@@ -89,8 +89,8 @@ const HydrantForm = ({
         onChange={onInputChange}
         error={formValidation.url?.message}
         parseTarget
-        helpText="EST endpoint provided by Hydrant."
-        placeholder="https://example.hydrantid.com/.well-known/est/abc123"
+        helpText="EST endpoint provided by Tau Platform."
+        placeholder="https://example.tau-platform.com/.well-known/est/abc123"
       />
       <InputField
         name="clientId"
@@ -98,7 +98,7 @@ const HydrantForm = ({
         value={clientId}
         onChange={onInputChange}
         parseTarget
-        helpText="Client ID provided by Hydrant."
+        helpText="Client ID provided by Tau Platform."
       />
       <InputField
         name="clientSecret"
@@ -106,7 +106,7 @@ const HydrantForm = ({
         value={clientSecret}
         onChange={onInputChange}
         parseTarget
-        helpText="Client secret provided by Hydrant."
+        helpText="Client secret provided by Tau Platform."
       />
       <div className="modal-cta-wrap">
         <TooltipWrapper

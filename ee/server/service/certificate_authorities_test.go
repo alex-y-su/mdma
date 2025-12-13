@@ -675,7 +675,7 @@ func TestCreatingCertificateAuthorities(t *testing.T) {
 		}
 
 		createdCA, err := svc.NewCertificateAuthority(ctx, createHydrantRequest)
-		require.ErrorContains(t, err, "Invalid Hydrant URL.")
+		require.ErrorContains(t, err, "Invalid Tau Platform URL.")
 		require.Len(t, createdCAs, 0)
 		require.Nil(t, createdCA)
 	})
@@ -693,7 +693,7 @@ func TestCreatingCertificateAuthorities(t *testing.T) {
 		}
 
 		createdCA, err := svc.NewCertificateAuthority(ctx, createHydrantRequest)
-		require.ErrorContains(t, err, "Invalid Hydrant URL.")
+		require.ErrorContains(t, err, "Invalid Tau Platform URL.")
 		require.Len(t, createdCAs, 0)
 		require.Nil(t, createdCA)
 	})
@@ -711,7 +711,7 @@ func TestCreatingCertificateAuthorities(t *testing.T) {
 		}
 
 		createdCA, err := svc.NewCertificateAuthority(ctx, createHydrantRequest)
-		require.ErrorContains(t, err, "Invalid Hydrant Client ID.")
+		require.ErrorContains(t, err, "Invalid Tau Platform Client ID.")
 		require.Len(t, createdCAs, 0)
 		require.Nil(t, createdCA)
 	})
@@ -729,7 +729,7 @@ func TestCreatingCertificateAuthorities(t *testing.T) {
 		}
 
 		createdCA, err := svc.NewCertificateAuthority(ctx, createHydrantRequest)
-		require.ErrorContains(t, err, "Invalid Hydrant Client Secret.")
+		require.ErrorContains(t, err, "Invalid Tau Platform Client Secret.")
 		require.Len(t, createdCAs, 0)
 		require.Nil(t, createdCA)
 	})
@@ -1502,7 +1502,7 @@ func TestUpdatingCertificateAuthorities(t *testing.T) {
 			}
 
 			err := svc.UpdateCertificateAuthority(ctx, hydrantID, payload)
-			require.EqualError(t, err, "validation failed: url Couldn't edit certificate authority. Invalid Hydrant URL. Please correct and try again.")
+			require.EqualError(t, err, "validation failed: url Couldn't edit certificate authority. Invalid Tau Platform URL. Please correct and try again.")
 		})
 
 		t.Run("Bad URL", func(t *testing.T) {
@@ -1518,7 +1518,7 @@ func TestUpdatingCertificateAuthorities(t *testing.T) {
 			}
 
 			err := svc.UpdateCertificateAuthority(ctx, hydrantID, payload)
-			require.EqualError(t, err, "Couldn't edit certificate authority. Invalid Hydrant URL. Please correct and try again.")
+			require.EqualError(t, err, "Couldn't edit certificate authority. Invalid Tau Platform URL. Please correct and try again.")
 		})
 
 		t.Run("Empty ClientID", func(t *testing.T) {
@@ -1531,7 +1531,7 @@ func TestUpdatingCertificateAuthorities(t *testing.T) {
 			}
 
 			err := svc.UpdateCertificateAuthority(ctx, hydrantID, payload)
-			require.EqualError(t, err, "Couldn't edit certificate authority. Invalid Hydrant Client ID. Please correct and try again.")
+			require.EqualError(t, err, "Couldn't edit certificate authority. Invalid Tau Platform Client ID. Please correct and try again.")
 		})
 
 		t.Run("Empty ClientSecret", func(t *testing.T) {
@@ -1544,7 +1544,7 @@ func TestUpdatingCertificateAuthorities(t *testing.T) {
 			}
 
 			err := svc.UpdateCertificateAuthority(ctx, hydrantID, payload)
-			require.EqualError(t, err, "Couldn't edit certificate authority. Invalid Hydrant Client Secret. Please correct and try again.")
+			require.EqualError(t, err, "Couldn't edit certificate authority. Invalid Tau Platform Client Secret. Please correct and try again.")
 		})
 	})
 

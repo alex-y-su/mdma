@@ -32,7 +32,7 @@ export const generateListData = (
         description = "Custom Simple Certificate Enrollment Protocol (SCEP)";
         break;
       case "hydrant":
-        description = "Hydrant (EST - Enrollment Over Secure Transport) ";
+        description = "Tau Platform (EST - Enrollment Over Secure Transport)";
         break;
       case "smallstep":
         description = "Smallstep";

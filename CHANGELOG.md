@@ -170,7 +170,7 @@
 ## Fleet 4.74.0 (Oct 6, 2025)
 
 ### Security Engineers
-- Added support for Hydrant as a Certificate Authority and added an experimental API that can be used to have Fleet request a certificate from a Hydrant.
+- Added support for Tau Platform as a Certificate Authority and added an experimental API that can be used to have Fleet request a certificate from Tau Platform.
 - Added a check to disallow FLEET_SECRET variables in Apple configuration profile `<PayloadDisplayName>` fields for security.
 - Added `/batch/{batch_execution_id:[a-zA-Z0-9-]+}/host-results` API endpoint to list hosts targeted in batch.
 - Added `POST /api/v1/fleet/configuration_profiles/batch` API endpoint to batch modify MDM configuration profiles.

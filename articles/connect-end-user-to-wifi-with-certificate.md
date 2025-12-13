@@ -1,8 +1,8 @@
-# Connect end users to Wi-Fi or VPN with a certificate (DigiCert, NDES, Hydrant, Smallstep, or custom SCEP)
+# Connect end users to Wi-Fi or VPN with a certificate (DigiCert, NDES, Tau Platform, Smallstep, or custom SCEP)
 
 _Available in Fleet Premium_
 
-Fleet can help your end users connect to Wi-Fi or VPN by deploying certificates from your certificate authority (CA). Fleet currently supports [DigiCert](#digicert), [Microsoft NDES](#microsoft-ndes),[Smallstep](#smallstep), [Hydrant](#hydrant), and a custom [SCEP](#custom-scep-simple-certificate-enrollment-protocol) or [EST](#custom-est-enrollment-over-secure-transport) server.
+Fleet can help your end users connect to Wi-Fi or VPN by deploying certificates from your certificate authority (CA). Fleet currently supports [DigiCert](#digicert), [Microsoft NDES](#microsoft-ndes),[Smallstep](#smallstep), [Tau Platform](#tau-platform), and a custom [SCEP](#custom-scep-simple-certificate-enrollment-protocol) or [EST](#custom-est-enrollment-over-secure-transport) server.
 
 Fleet will automatically renew certificates on Apple (macOS, iOS, iPadOS) hosts before expiration. Learn more in the [Renewal section](#renewal).
 
@@ -299,29 +299,29 @@ When the profile is delivered to your hosts, Fleet will replace the variables. I
 </plist>
 ```
 
-## Hydrant
+## Tau Platform
 
-The following steps show how to connect end users to Wi-Fi or VPN with [Hydrant](https://www.hidglobal.com/solutions/pki-service).
+The following steps show how to connect end users to Wi-Fi or VPN with [Tau Platform](https://tau-platform.com/).
 
-The flow for Hydrant differs from the other certificate authorities (CA's). While other CAs in Fleet use a configuration profile to request a certificate, Hydrant uses:
+The flow for Tau Platform differs from the other certificate authorities (CA's). While other CAs in Fleet use a configuration profile to request a certificate, Tau Platform uses:
 - A custom script that makes a request to Fleet's [`POST /request_certificate`](https://fleetdm.com/docs/rest-api/rest-api#request-certificate) API endpoint. 
 - A custom policy that triggers the script on hosts that don't have a certificate.
 
-### Step 1: Create a Hydrant user and obtain its API credentials
+### Step 1: Create a Tau Platform user and obtain its API credentials
 
-1. Log in to your [company's ACM platform](https://help.hydrantid.com/html/authentication.html).
-1. Invite a [new user](https://help.hydrantid.com/html/authentication.html) that will be used for certificate generation and ensure it has the [required permissions](https://help.hydrantid.com/html/roles.html) to request certificates.
+1. Log in to your [company's Tau Platform](https://tau-platform.com/).
+1. Invite a new user that will be used for certificate generation and ensure it has the required permissions to request certificates.
 1. Log out and log back in as the new user.
-1. Get the [API keys](https://help.hydrantid.com/html/manageapikeys.html) for the newly created user, make a note of the **Client ID** and **Client Secret**, you will need that to connect Fleet with Hydrant in the next step.
+1. Get the API keys for the newly created user, make a note of the **Client ID** and **Client Secret**, you will need that to connect Fleet with Tau Platform in the next step.
 
-### Step 2: Connect Fleet to Hydrant
+### Step 2: Connect Fleet to Tau Platform
 
 1. In Fleet, head to **Settings > Integrations > Certificates**.
-2. Select **Add CA** and then choose **Hydrant EST** in the dropdown.
+2. Select **Add CA** and then choose **Tau Platform EST** in the dropdown.
 3. Add a **Name** for your certificate authority. The best practice is to create a name based on your use case in all caps snake case (ex. "WIFI_AUTHENTICATION").
-4. Add your Hydrant EST **URL**.
-5. Add the Hydrant ID and Key as the **Client ID** and **Client secret** in Fleet respectfully.
-6. Click **Add CA**. Your Hydrant certificate authority (CA) should appear in the list in Fleet.
+4. Add your Tau Platform EST **URL**.
+5. Add the Tau Platform ID and Key as the **Client ID** and **Client secret** in Fleet respectfully.
+6. Click **Add CA**. Your Tau Platform certificate authority (CA) should appear in the list in Fleet.
 
 ### Step 3: Create a custom script
 
@@ -331,7 +331,7 @@ This custom script will create a certificate signing request (CSR) and make a re
 
 1. Create an API-only user with the global maintainer role. Learn how to create an API-only user in the [API-only user guide](https://fleetdm.com/guides/fleetctl#create-api-only-user).
 2. In Fleet, head to **Controls > Variables** and create a Fleet variable called REQUEST_CERTIFICATE_API_TOKEN. Add the API-only user's API token as the value. You'll use this variable in your script.
-3. Make a request to Fleet's [`GET /certificate_authorities` API endpoint](https://fleetdm.com/docs/rest-api/rest-api#list-certificate-authorities-cas) to get the `id` for your Hydrant CA. You'll use this `id` in your script.
+3. Make a request to Fleet's [`GET /certificate_authorities` API endpoint](https://fleetdm.com/docs/rest-api/rest-api#list-certificate-authorities-cas) to get the `id` for your Tau Platform CA. You'll use this `id` in your script.
 4. In Fleet, head to **Controls > Scripts**, and add a script like the one below, plugging in your own filesystem locations, Fleet server URL and IdP information. For this script to work, the host it's run on has to have openssl, sed, curl and jq installed.
 
 Example script:
@@ -348,14 +348,14 @@ URL="<IdP-introspection-URL>"
 # Generate the password-protected private key
 openssl genpkey -algorithm RSA -out /opt/company/CustomerUserNetworkAccess.key -pkeyopt rsa_keygen_bits:2048 -aes256 -pass pass:${PASSWORD}
 
-# Generate CSR signed with that private key. The CN can be changed and DNS attribute omitted if your Hydrant configuration allows it.
+# Generate CSR signed with that private key. The CN can be changed and DNS attribute omitted if your Tau Platform configuration allows it.
 openssl req -new -sha256 -key /opt/company/CustomerUserNetworkAccess.key -out CustomerUserNetworkAccess.csr -subj /CN=CustomerUserNetworkAccess:${USERNAME} -addext "subjectAltName=DNS:example.com, email:$USERNAME, otherName:msUPN;UTF8:$USERNAME" -passin pass:${PASSWORD}
 
 # Escape CSR for request
 CSR=$(sed 's/$/\\n/' CustomerUserNetworkAccess.csr | tr -d '\n')
 REQUEST='{ "csr": "'"${CSR}"'", "idp_oauth_url":"'"${URL}"'", "idp_token": "'"${TOKEN}"'", "idp_client_id": "'"${CLIENT_ID}"'" }'
 
-curl 'https://<Fleet-server-URL>/api/latest/fleet/certificate_authorities/<Hydrant-CA-ID>/request_certificate' \
+curl 'https://<Fleet-server-URL>/api/latest/fleet/certificate_authorities/<Tau-Platform-CA-ID>/request_certificate' \
   -X 'POST' \
   -H 'accept: application/json, text/plain, */*' \
   -H 'authorization: Bearer '"$FLEET_SECRET_REQUEST_CERTIFICATE_API_TOKEN" \
@@ -605,7 +605,7 @@ Any options listed under [Device/SCEP](https://learn.microsoft.com/en-us/windows
 
 The following steps show how to connect end users to Wi-Fi or VPN with a [custom EST server](https://en.wikipedia.org/wiki/Enrollment_over_Secure_Transport).
 
-The flow for EST is similar to Hydrant, and differs from the other certificate authorities. While other CAs in Fleet use a configuration profile to request a certificate, EST uses:
+The flow for EST is similar to Tau Platform, and differs from the other certificate authorities. While other CAs in Fleet use a configuration profile to request a certificate, EST uses:
 - A custom script that makes a request to Fleet's [`POST /request_certificate`](https://fleetdm.com/docs/rest-api/rest-api#request-certificate) API endpoint.
 - A custom policy that triggers the script on hosts that don't have a certificate.
 
@@ -816,7 +816,7 @@ Steps to get CAThumbrint from your SCEP server:
 3. It will return the SHA1 Thumbprint without colons and text. Copy this.
 4. Use the copied value for `./Device/Vendor/MSFT/ClientCertificateInstall/SCEP/$FLEET_VAR_SCEP_WINDOWS_CERTIFICATE_ID/Install/CAThumbprint` option.
 
-<meta name="articleTitle" value="Connect end users to Wi-Fi or VPN with a certificate (DigiCert, NDES, Hydrant, Smallstep, or custom SCEP)">
+<meta name="articleTitle" value="Connect end users to Wi-Fi or VPN with a certificate (DigiCert, NDES, Tau Platform, Smallstep, or custom SCEP)">
 <meta name="authorFullName" value="Victor Lyuboslavsky">
 <meta name="authorGitHubUsername" value="getvictor">
 <meta name="category" value="guides">

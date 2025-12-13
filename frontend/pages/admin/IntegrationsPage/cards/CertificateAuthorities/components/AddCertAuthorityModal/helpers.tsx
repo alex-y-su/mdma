@@ -28,7 +28,7 @@ const DEFAULT_CERT_AUTHORITY_OPTIONS: IDropdownOption[] = [
   },
   { label: "DigiCert", value: "digicert" },
   {
-    label: "Hydrant EST (Enrollment Over Secure Transport)",
+    label: "Tau Platform EST (Enrollment Over Secure Transport)",
     value: "hydrant",
   },
   {

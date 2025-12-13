@@ -322,7 +322,7 @@ func TestRequestCertificate(t *testing.T) {
 			IDPToken:    ptr.String("test-idp-token"),
 			IDPClientID: ptr.String("test-idp-client-id"),
 		})
-		require.ErrorContains(t, err, "This API currently only supports Hydrant and EST Certificate Authorities.")
+		require.ErrorContains(t, err, "This API currently only supports Tau Platform and EST Certificate Authorities.")
 	})
 
 	t.Run("Request certificate - nonexistent CA", func(t *testing.T) {

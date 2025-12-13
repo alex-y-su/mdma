@@ -53,7 +53,7 @@ org_settings:
       url: https://some-digicert-url.com
     hydrant:
     - client_id: some-hydrant-client-id
-      client_secret: # TODO: Add your Hydrant client secret here
+      client_secret: # TODO: Add your Tau Platform client secret here
       name: some-hydrant-name
       url: https://some-hydrant-url.com
     ndes_scep_proxy:

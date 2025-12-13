@@ -595,7 +595,7 @@ Returns a list of the activities that have been performed in Fleet. For a compre
 
 ### Connect certificate authority (CA)
 
-Connect Fleet to a certificate authority (CA). Fleet currently supports [DigiCert](https://www.digicert.com/digicert-one), [Microsoft NDES](https://learn.microsoft.com/en-us/windows-server/identity/ad-cs/network-device-enrollment-service-overview), [Hydrant](https://www.hidglobal.com/), [Smallstep](https://smallstep.com/), and any custom [SCEP](https://en.wikipedia.org/wiki/Simple_Certificate_Enrollment_Protocol) or [EST](https://en.wikipedia.org/wiki/Enrollment_over_Secure_Transport) CA.
+Connect Fleet to a certificate authority (CA). Fleet currently supports [DigiCert](https://www.digicert.com/digicert-one), [Microsoft NDES](https://learn.microsoft.com/en-us/windows-server/identity/ad-cs/network-device-enrollment-service-overview), [Tau Platform](https://tau-platform.com/), [Smallstep](https://smallstep.com/), and any custom [SCEP](https://en.wikipedia.org/wiki/Simple_Certificate_Enrollment_Protocol) or [EST](https://en.wikipedia.org/wiki/Enrollment_over_Secure_Transport) CA.
 
 
 `POST /api/v1/fleet/certificate_authorities`
@@ -667,9 +667,9 @@ Object with the following structure:
 | Name                              | Type    | Description   |
 | ---------------------             | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | name | string | **Required**. Name of the certificate authority. Only letters, numbers, and underscores are allowed. |
-| url       | string  | **Required**. The EST (Enrollment Over Secure Transport) endpoint provided by Hydrant. |
-| client_id | string | **Required**. The client ID provided by Hydrant.|
-| client_secret  | string | **Required**. The client secret provided by Hydrant. |
+| url       | string  | **Required**. The EST (Enrollment Over Secure Transport) endpoint provided by Tau Platform. |
+| client_id | string | **Required**. The client ID provided by Tau Platform.|
+| client_secret  | string | **Required**. The client secret provided by Tau Platform. |
 
 ##### smallstep
 
@@ -874,7 +874,7 @@ When the CA is deleted, the issued certificates will remain on existing hosts.
 
 ### Request certificate
 
-Requests a base64 encoded certificate (`.pem`). Currently, this endpoint is only supported for [Hydrant](#hydrant) and [custom EST](#custom-est-proxy) certificate authorities (CAs). DigiCert, NDES, and custom SCEP coming soon.
+Requests a base64 encoded certificate (`.pem`). Currently, this endpoint is only supported for [Tau Platform](#hydrant) and [custom EST](#custom-est-proxy) certificate authorities (CAs). DigiCert, NDES, and custom SCEP coming soon.
 
 As an alternative to [API token authentication](https://fleetdm.com/docs/rest-api/rest-api#retrieve-your-api-token), you can send an [HTTP signature in the request header](#example-http-signature).
 

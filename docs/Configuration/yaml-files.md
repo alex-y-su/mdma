@@ -921,9 +921,9 @@ Can only be configured for all teams (`org_settings`).
 #### hydrant
 
 - `name` is the name of the certificate authority that will be used in variables in configuration profiles. Only letters, numbers, and underscores are allowed.
-- `url` is the EST (Enrollment Over Secure Transport) endpoint provided by Hydrant.
-- `client_id` is the client ID provided by Hydrant.
-- `client_secret` is the client secret provided by Hydrant.
+- `url` is the EST (Enrollment Over Secure Transport) endpoint provided by Tau Platform.
+- `client_id` is the client ID provided by Tau Platform.
+- `client_secret` is the client secret provided by Tau Platform.
 
 #### custom_est_proxy
 

@@ -64,7 +64,7 @@ export const generateFormValidations = (
               ) === undefined
             );
           },
-          message: "Name is already used by another Hydrant CA.",
+          message: "Name is already used by another Tau Platform CA.",
         },
       ],
     },

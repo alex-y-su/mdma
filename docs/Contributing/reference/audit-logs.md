@@ -1816,7 +1816,7 @@ This activity contains the following fields:
 
 ## added_hydrant
 
-Generated when Hydrant certificate authority configuration is added in Fleet.
+Generated when Tau Platform certificate authority configuration is added in Fleet.
 
 This activity contains the following fields:
 - "name": Name of the certificate authority.
@@ -1831,7 +1831,7 @@ This activity contains the following fields:
 
 ## deleted_hydrant
 
-Generated when Hydrant certificate authority configuration is deleted in Fleet.
+Generated when Tau Platform certificate authority configuration is deleted in Fleet.
 
 This activity contains the following fields:
 - "name": Name of the certificate authority.
@@ -1846,7 +1846,7 @@ This activity contains the following fields:
 
 ## edited_hydrant
 
-Generated when Hydrant certificate authority configuration is edited in Fleet.
+Generated when Tau Platform certificate authority configuration is edited in Fleet.
 
 This activity contains the following fields:
 - "name": Name of the certificate authority.

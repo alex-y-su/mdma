@@ -39,7 +39,7 @@ Companies that self-host Fleet can now use IAM (Identity and Access Management) 
 This release includes breaking changes in the software YAML. For migration instructions and more information, please see [this public document](https://docs.google.com/document/d/1tcRkImYaufjSUoVYKEFukLgFUaCD64pjH7EGIMCy1cA/edit?usp=sharing).
 
 ### Security engineers
-- Added support for Hydrant as a Certificate Authority and added an experimental API that can be used to have Fleet request a certificate from a Hydrant.
+- Added support for Tau Platform as a Certificate Authority and added an experimental API that can be used to have Fleet request a certificate from Tau Platform.
 - Added a check to disallow FLEET_SECRET variables in Apple configuration profile `<PayloadDisplayName>` fields for security.
 - Added `/batch/{batch_execution_id:[a-zA-Z0-9-]+}/host-results` API endpoint to list hosts targeted in batch.
 - Added `POST /api/v1/fleet/configuration_profiles/batch` API endpoint to batch modify MDM configuration profiles.

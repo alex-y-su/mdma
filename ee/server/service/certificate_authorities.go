@@ -87,7 +87,7 @@ func (svc *Service) NewCertificateAuthority(ctx context.Context, p fleet.Certifi
 		caToCreate.URL = &p.Hydrant.URL
 		caToCreate.ClientID = &p.Hydrant.ClientID
 		caToCreate.ClientSecret = &p.Hydrant.ClientSecret
-		caDisplayType = "Hydrant"
+		caDisplayType = "Tau Platform"
 		activity = fleet.ActivityAddedHydrant{}
 	}
 
@@ -321,14 +321,14 @@ func (svc *Service) validateHydrant(ctx context.Context, hydrantCA *fleet.Hydran
 	if err := validateCAName(hydrantCA.Name, errPrefix); err != nil {
 		return err
 	}
-	if err := validateURL(hydrantCA.URL, "Hydrant", errPrefix); err != nil {
+	if err := validateURL(hydrantCA.URL, "Tau Platform", errPrefix); err != nil {
 		return err
 	}
 	if hydrantCA.ClientID == "" {
-		return fleet.NewInvalidArgumentError("client_id", fmt.Sprintf("%sInvalid Hydrant Client ID. Please correct and try again.", errPrefix))
+		return fleet.NewInvalidArgumentError("client_id", fmt.Sprintf("%sInvalid Tau Platform Client ID. Please correct and try again.", errPrefix))
 	}
 	if hydrantCA.ClientSecret == "" || hydrantCA.ClientSecret == fleet.MaskedPassword {
-		return fleet.NewInvalidArgumentError("client_secret", fmt.Sprintf("%sInvalid Hydrant Client Secret. Please correct and try again.", errPrefix))
+		return fleet.NewInvalidArgumentError("client_secret", fmt.Sprintf("%sInvalid Tau Platform Client Secret. Please correct and try again.", errPrefix))
 	}
 	if err := svc.estService.ValidateESTURL(ctx, fleet.ESTProxyCA{
 		ID:       hydrantCA.ID,
@@ -337,7 +337,7 @@ func (svc *Service) validateHydrant(ctx context.Context, hydrantCA *fleet.Hydran
 		Username: hydrantCA.ClientID,
 		Password: hydrantCA.ClientSecret,
 	}); err != nil {
-		return fleet.NewInvalidArgumentError("url", fmt.Sprintf("%sInvalid Hydrant URL. Please correct and try again.", errPrefix))
+		return fleet.NewInvalidArgumentError("url", fmt.Sprintf("%sInvalid Tau Platform URL. Please correct and try again.", errPrefix))
 	}
 	return nil
 }
@@ -1338,7 +1338,7 @@ func (svc *Service) validateHydrantUpdate(ctx context.Context, hydrant *fleet.Hy
 		}
 	}
 	if hydrant.URL != nil {
-		if err := validateURL(*hydrant.URL, "Hydrant", errPrefix); err != nil {
+		if err := validateURL(*hydrant.URL, "Tau Platform", errPrefix); err != nil {
 			return err
 		}
 
@@ -1346,17 +1346,17 @@ func (svc *Service) validateHydrantUpdate(ctx context.Context, hydrant *fleet.Hy
 			URL: *hydrant.URL,
 		}
 		if err := svc.estService.ValidateESTURL(ctx, hydrantCAToVerify); err != nil {
-			return &fleet.BadRequestError{Message: fmt.Sprintf("%sInvalid Hydrant URL. Please correct and try again.", errPrefix)}
+			return &fleet.BadRequestError{Message: fmt.Sprintf("%sInvalid Tau Platform URL. Please correct and try again.", errPrefix)}
 		}
 	}
 	if hydrant.ClientID != nil && *hydrant.ClientID == "" {
 		return &fleet.BadRequestError{
-			Message: fmt.Sprintf("%sInvalid Hydrant Client ID. Please correct and try again.", errPrefix),
+			Message: fmt.Sprintf("%sInvalid Tau Platform Client ID. Please correct and try again.", errPrefix),
 		}
 	}
 	if hydrant.ClientSecret != nil && *hydrant.ClientSecret == "" {
 		return &fleet.BadRequestError{
-			Message: fmt.Sprintf("%sInvalid Hydrant Client Secret. Please correct and try again.", errPrefix),
+			Message: fmt.Sprintf("%sInvalid Tau Platform Client Secret. Please correct and try again.", errPrefix),
 		}
 	}
 

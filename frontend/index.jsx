@@ -4,6 +4,9 @@ import { createRoot } from "react-dom/client";
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 
+// Initialize i18n before rendering the app
+import "./i18n/config";
+
 import "./public-path";
 import routes from "./router";
 import "./index.scss";

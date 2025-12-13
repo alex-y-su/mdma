@@ -1,0 +1,72 @@
+{
+  "title": "Запросы",
+  "manage": {
+    "title": "Управление запросами",
+    "addQuery": "Добавить запрос",
+    "editQuery": "Редактировать запрос",
+    "deleteQuery": "Удалить запрос",
+    "runQuery": "Выполнить запрос",
+    "liveQuery": "Live-запрос"
+  },
+  "columns": {
+    "name": "Название",
+    "platform": "Платформа",
+    "author": "Автор",
+    "lastModified": "Последнее изменение",
+    "frequency": "Частота",
+    "performance": "Влияние на производительность",
+    "automations": "Автоматизации"
+  },
+  "details": {
+    "title": "Информация о запросе",
+    "sql": "SQL",
+    "description": "Описание",
+    "platform": "Платформа",
+    "performance": "Влияние на производительность",
+    "schedule": "Расписание",
+    "logging": "Логирование",
+    "automations": "Автоматизации"
+  },
+  "create": {
+    "title": "Создать запрос",
+    "name": "Название",
+    "description": "Описание",
+    "sql": "SQL-запрос",
+    "platform": "Платформа",
+    "performanceImpact": "Влияние на производительность",
+    "submitButton": "Сохранить запрос"
+  },
+  "run": {
+    "title": "Выполнить запрос",
+    "selectHosts": "Выбрать устройства",
+    "selectLabels": "Выбрать метки",
+    "selectTeams": "Выбрать команды",
+    "runButton": "Запустить",
+    "stopButton": "Остановить",
+    "results": "Результаты",
+    "noResults": "Нет результатов",
+    "exportResults": "Экспортировать результаты"
+  },
+  "performance": {
+    "minimal": "Минимальное",
+    "low": "Низкое",
+    "medium": "Среднее",
+    "high": "Высокое",
+    "excessive": "Чрезмерное"
+  },
+  "schedule": {
+    "title": "Расписание",
+    "frequency": "Частота",
+    "enabled": "Включено",
+    "disabled": "Выключено",
+    "daily": "Ежедневно",
+    "weekly": "Еженедельно",
+    "monthly": "Ежемесячно",
+    "custom": "Произвольно"
+  },
+  "empty": {
+    "title": "Запросы не найдены",
+    "description": "Нет запросов, соответствующих текущим фильтрам",
+    "addFirst": "Создайте первый запрос для начала работы"
+  }
+}

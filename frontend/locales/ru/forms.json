@@ -1,0 +1,61 @@
+{
+  "validation": {
+    "required": "Это поле обязательно",
+    "emailRequired": "Поле email должно быть заполнено",
+    "emailInvalid": "Введите корректный email адрес",
+    "passwordRequired": "Поле пароля должно быть заполнено",
+    "passwordMinLength": "Пароль должен содержать минимум 12 символов",
+    "passwordMaxLength": "Пароль превышает допустимую длину",
+    "passwordRequirements": "Пароль должен соответствовать требованиям ниже",
+    "passwordMismatch": "Пароли не совпадают",
+    "passwordConfirmMismatch": "Подтверждение пароля не совпадает с паролем",
+    "newPasswordRequired": "Поле нового пароля должно быть заполнено",
+    "newPasswordConfirmRequired": "Поле подтверждения нового пароля должно быть заполнено",
+    "passwordPresent": "Необходимо указать пароль",
+    "passwordConfirmPresent": "Необходимо подтвердить пароль",
+    "fullNameRequired": "Необходимо указать полное имя",
+    "nameRequired": "Название обязательно",
+    "descriptionRequired": "Описание обязательно",
+    "urlInvalid": "Введите корректный URL",
+    "numberInvalid": "Введите корректное число",
+    "minLength": "Минимум {{min}} символов",
+    "maxLength": "Максимум {{max}} символов",
+    "minValue": "Минимальное значение {{min}}",
+    "maxValue": "Максимальное значение {{max}}",
+    "pattern": "Неверный формат",
+    "unique": "Это значение уже используется"
+  },
+  "labels": {
+    "email": "Email",
+    "password": "Пароль",
+    "confirmPassword": "Подтвердите пароль",
+    "fullName": "Полное имя",
+    "displayName": "Отображаемое имя",
+    "firstName": "Имя",
+    "lastName": "Фамилия",
+    "organizationName": "Название организации",
+    "teamName": "Название команды",
+    "role": "Роль",
+    "platform": "Платформа",
+    "query": "Запрос",
+    "name": "Название",
+    "description": "Описание",
+    "url": "URL",
+    "apiToken": "API-токен",
+    "secretKey": "Секретный ключ"
+  },
+  "placeholders": {
+    "email": "Введите email адрес",
+    "password": "Введите пароль",
+    "search": "Поиск...",
+    "name": "Введите название",
+    "description": "Введите описание",
+    "url": "https://example.com",
+    "selectOption": "Выберите вариант"
+  },
+  "hints": {
+    "passwordRequirements": "Должен содержать 12 символов, минимум 1 цифру (0-9) и минимум 1 специальный символ (&*#)",
+    "optional": "Необязательно",
+    "caseSensitive": "Учитывается регистр"
+  }
+}

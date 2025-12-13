@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { InjectedRouter } from "react-router";
+import { useTranslation } from "react-i18next";
 
 import PATHS from "router/paths";
 import { AppContext } from "context/app";
@@ -19,6 +20,7 @@ interface IResetPasswordPageProps {
 }
 
 const ResetPasswordPage = ({ location, router }: IResetPasswordPageProps) => {
+  const { t } = useTranslation();
   const { token } = location.query;
   const { currentUser, setConfig } = useContext(AppContext);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -82,11 +84,7 @@ const ResetPasswordPage = ({ location, router }: IResetPasswordPageProps) => {
   return (
     <AuthenticationFormWrapper className={baseClass}>
       <div className={`${baseClass}__description`}>
-        <p>
-          Create a new password. Your new password must include 12-48
-          characters, at least 1 number (e.g. 0 - 9), and at least 1 symbol
-          (e.g. &*#)
-        </p>
+        <p>{t("auth:resetPassword.description")}</p>
       </div>
       <ResetPasswordForm handleSubmit={onSubmit} serverErrors={errors} />
     </AuthenticationFormWrapper>

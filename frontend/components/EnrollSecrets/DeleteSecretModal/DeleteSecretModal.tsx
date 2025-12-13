@@ -1,4 +1,6 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
+
 import Modal from "components/Modal";
 import Button from "components/buttons/Button";
 import CustomLink from "components/CustomLink";
@@ -16,20 +18,22 @@ const DeleteSecretModal = ({
   toggleDeleteSecretModal,
   isUpdatingSecret,
 }: IDeleteSecretModal): JSX.Element => {
+  const { t } = useTranslation();
+
   return (
     <Modal
       onExit={toggleDeleteSecretModal}
       onEnter={onDeleteSecret}
-      title="Delete secret"
+      title={t("common:enrollSecrets.deleteTitle")}
       className={baseClass}
     >
       <div className={baseClass}>
         <div className={`${baseClass}__description`}>
-          <p>Hosts can no longer enroll using this secret.</p>
+          <p>{t("common:enrollSecrets.deleteWarning")}</p>
           <p>
             <CustomLink
               url="https://fleetdm.com/learn-more-about/rotating-enroll-secrets"
-              text="Learn about rotating enroll secrets"
+              text={t("common:enrollSecrets.learnRotating")}
               newTab
             />
           </p>
@@ -42,10 +46,10 @@ const DeleteSecretModal = ({
             className="delete-loading"
             isLoading={isUpdatingSecret}
           >
-            Delete
+            {t("common:buttons.delete")}
           </Button>
           <Button onClick={toggleDeleteSecretModal} variant="inverse-alert">
-            Cancel
+            {t("common:buttons.cancel")}
           </Button>
         </div>
       </div>

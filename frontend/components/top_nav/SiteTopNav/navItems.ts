@@ -3,7 +3,8 @@ import URL_PREFIX from "router/url_prefix";
 import { IUser } from "interfaces/user";
 
 export interface INavItem {
-  name: string;
+  /** Translation key for the nav item name (e.g., "navigation.hosts") */
+  nameKey: string;
   icon?: string;
   iconName?: string;
   location: {
@@ -42,7 +43,7 @@ export default (
   const logo = [
     {
       icon: "logo",
-      name: "Home",
+      nameKey: "navigation.home",
       iconName: "logo",
       location: {
         regex: new RegExp(`^${URL_PREFIX}/dashboard`),
@@ -53,7 +54,7 @@ export default (
 
   const navItems: INavItem[] = [
     {
-      name: "Hosts",
+      nameKey: "navigation.hosts",
       location: {
         regex: new RegExp(`^${URL_PREFIX}/hosts/`),
         pathname: PATHS.MANAGE_HOSTS,
@@ -61,7 +62,7 @@ export default (
       withParams: { type: "query", names: ["team_id"] },
     },
     {
-      name: "Controls",
+      nameKey: "navigation.controls",
       location: {
         regex: new RegExp(`^${URL_PREFIX}/controls/`),
         pathname: PATHS.CONTROLS,
@@ -71,7 +72,7 @@ export default (
       withParams: { type: "query", names: ["team_id"] },
     },
     {
-      name: "Software",
+      nameKey: "navigation.software",
       location: {
         regex: new RegExp(`^${URL_PREFIX}/software/`),
         pathname: PATHS.SOFTWARE_TITLES,
@@ -80,7 +81,7 @@ export default (
       withParams: { type: "query", names: ["team_id"] },
     },
     {
-      name: "Queries",
+      nameKey: "navigation.queries",
       location: {
         regex: new RegExp(`^${URL_PREFIX}/queries/`),
         pathname: PATHS.MANAGE_QUERIES,
@@ -88,7 +89,7 @@ export default (
       withParams: { type: "query", names: ["team_id"] },
     },
     {
-      name: "Policies",
+      nameKey: "navigation.policies",
       location: {
         regex: new RegExp(`^${URL_PREFIX}/(policies)/`),
         pathname: PATHS.MANAGE_POLICIES,

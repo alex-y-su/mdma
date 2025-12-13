@@ -1,0 +1,167 @@
+{
+  "title": "Settings",
+  "navigation": {
+    "organization": "Organization settings",
+    "integrations": "Integrations",
+    "users": "Users",
+    "teams": "Teams",
+    "myAccount": "My account"
+  },
+  "organization": {
+    "title": "Organization settings",
+    "info": {
+      "title": "Organization info",
+      "name": "Organization name",
+      "logoUrl": "Logo URL",
+      "contactUrl": "Contact URL"
+    },
+    "fleetDesktop": {
+      "title": "Fleet Desktop",
+      "transparency": "Transparency URL"
+    },
+    "webAddress": {
+      "title": "Web address",
+      "serverUrl": "Server URL"
+    },
+    "smtpSettings": {
+      "title": "SMTP settings",
+      "senderAddress": "Sender address",
+      "server": "SMTP server",
+      "port": "Port",
+      "username": "Username",
+      "password": "Password",
+      "enableTls": "Enable TLS",
+      "authenticationMethod": "Authentication method"
+    },
+    "agentOptions": {
+      "title": "Agent options",
+      "description": "Configure osquery options for all hosts"
+    },
+    "advanced": {
+      "title": "Advanced options",
+      "hostExpiry": "Host expiry",
+      "hostExpiryWindow": "Host expiry window (days)",
+      "disableLiveQueries": "Disable live queries"
+    }
+  },
+  "integrations": {
+    "title": "Integrations",
+    "mdm": {
+      "title": "Mobile device management (MDM)",
+      "apple": "Apple (macOS, iOS, iPadOS)",
+      "windows": "Windows",
+      "android": "Android"
+    },
+    "sso": {
+      "title": "Single sign-on (SSO)",
+      "fleetUsers": "Fleet users",
+      "endUsers": "End users"
+    },
+    "scim": {
+      "title": "SCIM",
+      "description": "Manage Fleet users with your identity provider"
+    },
+    "automaticEnrollment": {
+      "title": "Automatic enrollment",
+      "apple": "Apple Business Manager",
+      "windows": "Windows automatic enrollment"
+    },
+    "vpp": {
+      "title": "Volume Purchasing Program (VPP)",
+      "description": "Manage App Store apps"
+    },
+    "ticketing": {
+      "title": "Ticketing",
+      "jira": "Jira",
+      "zendesk": "Zendesk"
+    },
+    "calendar": {
+      "title": "Calendar",
+      "google": "Google Calendar"
+    },
+    "logging": {
+      "title": "Logging",
+      "description": "Configure log destinations"
+    },
+    "hostStatusWebhook": {
+      "title": "Host status webhook",
+      "description": "Send notifications when hosts change status"
+    }
+  },
+  "users": {
+    "title": "Users",
+    "addUser": "Add user",
+    "editUser": "Edit user",
+    "deleteUser": "Delete user",
+    "inviteUser": "Invite user",
+    "columns": {
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
+      "teams": "Teams",
+      "status": "Status"
+    },
+    "roles": {
+      "admin": "Admin",
+      "maintainer": "Maintainer",
+      "observer": "Observer",
+      "observerPlus": "Observer+",
+      "gitops": "GitOps"
+    },
+    "status": {
+      "active": "Active",
+      "invited": "Invited"
+    }
+  },
+  "teams": {
+    "title": "Teams",
+    "addTeam": "Add team",
+    "editTeam": "Edit team",
+    "deleteTeam": "Delete team",
+    "noTeams": "No teams",
+    "teamName": "Team name",
+    "teamDescription": "Team description",
+    "members": "Members",
+    "hosts": "Hosts",
+    "settings": "Settings",
+    "agentOptions": "Agent options"
+  },
+  "account": {
+    "title": "My account",
+    "profile": "Profile",
+    "email": "Email",
+    "name": "Name",
+    "role": "Role",
+    "teams": "Teams",
+    "changePassword": "Change password",
+    "apiToken": "API token",
+    "getApiToken": "Get API token",
+    "accountUpdated": "Account updated",
+    "changeEmail": {
+      "confirmPassword": "To update your email you must confirm your password.",
+      "passwordLabel": "Password",
+      "pendingChange": "Pending change to {{email}}"
+    },
+    "changePasswordForm": {
+      "originalPassword": "Original password",
+      "newPassword": "New password",
+      "confirmPassword": "New password confirmation",
+      "passwordRequirements": "Must include 12 characters, at least 1 number (e.g. 0 - 9), and at least 1 symbol (e.g. &*#)"
+    },
+    "userSettings": {
+      "emailLabel": "Email (required)",
+      "nameLabel": "Full name (required)",
+      "positionLabel": "Position",
+      "smtpRequired": "Editing your email address requires that SMTP or SES is configured in order to send a validation email. Users with Admin role can configure SMTP in **Settings > Organization settings**."
+    },
+    "validation": {
+      "passwordRequired": "Password must be present",
+      "newPasswordRequired": "New password must be present",
+      "confirmPasswordRequired": "New password confirmation must be present",
+      "passwordMismatch": "New password confirmation does not match new password",
+      "emailRequired": "Email field must be completed",
+      "emailInvalid": "{{email}} is not a valid email",
+      "nameRequired": "Full name field must be completed"
+    }
+  }
+}

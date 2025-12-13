@@ -1,5 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 
 import Button from "components/buttons/Button";
 import Form from "components/forms/Form";
@@ -8,37 +9,35 @@ import InputField from "components/forms/fields/InputField";
 
 const baseClass = "change-email-form";
 
-class ChangeEmailForm extends Component {
-  static propTypes = {
-    fields: PropTypes.shape({
-      password: formFieldInterface.isRequired,
-    }).isRequired,
-    handleSubmit: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired,
-  };
+const ChangeEmailForm = ({ fields, handleSubmit, onCancel }) => {
+  const { t } = useTranslation();
 
-  render() {
-    const { fields, handleSubmit, onCancel } = this.props;
+  return (
+    <form className={baseClass} onSubmit={handleSubmit}>
+      {t("settings:account.changeEmail.confirmPassword")}
+      <InputField
+        {...fields.password}
+        autofocus
+        label={t("settings:account.changeEmail.passwordLabel")}
+        type="password"
+      />
+      <div className="modal-cta-wrap">
+        <Button type="submit">{t("common:buttons.submit")}</Button>
+        <Button onClick={onCancel} variant="inverse">
+          {t("common:buttons.cancel")}
+        </Button>
+      </div>
+    </form>
+  );
+};
 
-    return (
-      <form className={baseClass} onSubmit={handleSubmit}>
-        To update your email you must confirm your password.
-        <InputField
-          {...fields.password}
-          autofocus
-          label="Password"
-          type="password"
-        />
-        <div className="modal-cta-wrap">
-          <Button type="submit">Submit</Button>
-          <Button onClick={onCancel} variant="inverse">
-            Cancel
-          </Button>
-        </div>
-      </form>
-    );
-  }
-}
+ChangeEmailForm.propTypes = {
+  fields: PropTypes.shape({
+    password: formFieldInterface.isRequired,
+  }).isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
+};
 
 export default Form(ChangeEmailForm, {
   fields: ["password"],

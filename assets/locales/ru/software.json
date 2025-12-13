@@ -1,0 +1,79 @@
+{
+  "title": "Программное обеспечение",
+  "tabs": {
+    "titles": "Программы",
+    "versions": "Версии",
+    "os": "Операционные системы",
+    "vulnerabilities": "Уязвимости"
+  },
+  "manage": {
+    "title": "Управление ПО",
+    "addSoftware": "Добавить ПО",
+    "editSoftware": "Редактировать ПО",
+    "deleteSoftware": "Удалить ПО"
+  },
+  "add": {
+    "title": "Добавить ПО",
+    "fleetMaintained": "Поддерживаемое Fleet",
+    "appStore": "App Store",
+    "customPackage": "Собственный пакет"
+  },
+  "columns": {
+    "name": "Название",
+    "version": "Версия",
+    "type": "Тип",
+    "vulnerabilities": "Уязвимости",
+    "hosts": "Устройства",
+    "source": "Источник",
+    "status": "Статус",
+    "selfService": "Самообслуживание",
+    "installScript": "Скрипт установки"
+  },
+  "vulnerabilities": {
+    "title": "Уязвимости",
+    "critical": "Критические",
+    "high": "Высокие",
+    "medium": "Средние",
+    "low": "Низкие",
+    "none": "Нет",
+    "cve": "CVE",
+    "cvss": "Оценка CVSS",
+    "publishedDate": "Дата публикации",
+    "affectedHosts": "Затронутые устройства",
+    "affectedSoftware": "Затронутое ПО",
+    "cisaKnownExploit": "Известный эксплойт CISA",
+    "exploitedInWild": "Эксплуатируется в реальных условиях"
+  },
+  "details": {
+    "title": "Информация о ПО",
+    "versionDetails": "Информация о версии",
+    "osDetails": "Информация об ОС",
+    "vulnerabilityDetails": "Информация об уязвимости"
+  },
+  "status": {
+    "installed": "Установлено",
+    "pending": "Ожидание",
+    "failed": "Ошибка",
+    "available": "Доступно"
+  },
+  "selfService": {
+    "title": "Самообслуживание",
+    "enabled": "Включено",
+    "disabled": "Выключено",
+    "availableForUsers": "Доступно для установки пользователями"
+  },
+  "install": {
+    "title": "Установить ПО",
+    "preInstallQuery": "Запрос перед установкой",
+    "installScript": "Скрипт установки",
+    "postInstallScript": "Скрипт после установки",
+    "preInstallQueryOutput": "Результат запроса перед установкой",
+    "installScriptOutput": "Результат скрипта установки",
+    "postInstallScriptOutput": "Результат скрипта после установки"
+  },
+  "empty": {
+    "title": "ПО не найдено",
+    "description": "Нет ПО, соответствующего текущим фильтрам",
+    "addFirst": "Добавьте ПО для начала работы"
+  }
+}

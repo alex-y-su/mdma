@@ -6,6 +6,7 @@ import Select, {
   OptionProps,
   StylesConfig,
 } from "react-select-5";
+import { useTranslation } from "react-i18next";
 import { NotificationContext } from "context/notification";
 
 import { IUser } from "interfaces/user";
@@ -13,6 +14,7 @@ import { ITeam, ITeamSummary } from "interfaces/team";
 import { IDropdownOption } from "interfaces/dropdownOption";
 import PATHS from "router/paths";
 import { getSortedTeamOptions } from "utilities/helpers";
+import { SUPPORTED_LANGUAGES, LANGUAGE_NAMES, SupportedLanguage } from "i18n";
 
 import { PADDING } from "styles/var/padding";
 import { COLORS } from "styles/var/colors";
@@ -87,11 +89,17 @@ const UserMenu = ({
   currentUser,
   currentTeam,
 }: IUserMenuProps): JSX.Element => {
+  const { t, i18n } = useTranslation();
   // Work around for react-select-5 not having :focus-visible pseudo class that can style dropdown on keyboard tab only
   // Work around preventing react-select-5 from auto focusing first option unless using keyboard
   const [isKeyboardFocus, setIsKeyboardFocus] = useState(false);
 
   const { renderFlash } = useContext(NotificationContext);
+
+  const handleLanguageChange = (lang: SupportedLanguage) => {
+    i18n.changeLanguage(lang);
+    localStorage.setItem("fleet_language", lang);
+  };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -113,21 +121,31 @@ const UserMenu = ({
     };
   }, []);
 
+  // Create language options - show all supported languages
+  const languageOptions = SUPPORTED_LANGUAGES.filter(
+    (lang) => lang === "en" || lang === "ru" // Only show English and Russian for now
+  ).map((lang) => ({
+    label: `${i18n.language === lang ? "✓ " : ""}${LANGUAGE_NAMES[lang]}`,
+    value: `language-${lang}`,
+    onClick: () => handleLanguageChange(lang),
+  }));
+
   const dropdownItems = [
     {
-      label: "My account",
+      label: t("userMenu.myAccount"),
       value: "my-account",
       onClick: () => onUserMenuItemClick(PATHS.ACCOUNT),
     },
     {
-      label: "Documentation",
+      label: t("userMenu.documentation"),
       value: "documentation",
       onClick: () => {
         window.open("https://fleetdm.com/docs", "_blank");
       },
     },
+    ...languageOptions,
     {
-      label: "Sign out",
+      label: t("userMenu.signOut"),
       value: "sign-out",
       onClick: onLogout,
     },
@@ -135,7 +153,7 @@ const UserMenu = ({
 
   if (isGlobalAdmin) {
     const manageUserNavItem = {
-      label: "Users",
+      label: t("userMenu.users"),
       value: "manage-users",
       onClick: () => onUserMenuItemClick(PATHS.ADMIN_USERS),
     };
@@ -143,7 +161,7 @@ const UserMenu = ({
   }
 
   const manageLabelsMenuItem = {
-    label: "Labels",
+    label: t("userMenu.labels"),
     value: "labels",
     onClick: () => onUserMenuItemClick(PATHS.MANAGE_LABELS),
   };
@@ -173,7 +191,7 @@ const UserMenu = ({
     }
 
     const adminMenuItem = {
-      label: "Settings",
+      label: t("userMenu.settings"),
       value: "settings",
       onClick: clickHandler,
     };

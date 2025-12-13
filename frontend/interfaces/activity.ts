@@ -391,8 +391,10 @@ export const ACTIVITY_DISPLAY_NAME_MAP: Record<ActivityType, string> = {
   deleted_custom_variable: "Deleted custom variable",
   [ActivityType.HostDeleted]: "Host deleted",
   [ActivityType.AddedHydrant]: "Added certificate authority (CA): Tau Platform",
-  [ActivityType.DeletedHydrant]: "Deleted certificate authority (CA): Tau Platform",
-  [ActivityType.EditedHydrant]: "Edited certificate authority (CA): Tau Platform",
+  [ActivityType.DeletedHydrant]:
+    "Deleted certificate authority (CA): Tau Platform",
+  [ActivityType.EditedHydrant]:
+    "Edited certificate authority (CA): Tau Platform",
   [ActivityType.AddedSmallstep]: "Added certificate authority (CA): Smallstep",
   [ActivityType.DeletedSmallstep]:
     "Deleted certificate authority (CA): Smallstep",

@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { Row } from "react-table";
+import { useTranslation } from "react-i18next";
 
 import { IMdmStatusCardData, IMdmSummaryMdmSolution } from "interfaces/mdm";
 
@@ -47,29 +48,34 @@ const STATUS_DEFAULT_SORT_HEADER = "status";
 const PAGE_SIZE = 8;
 const baseClass = "home-mdm";
 
-const EmptyMdmStatus = (): JSX.Element => (
-  <EmptyTable
-    header="Unable to detect MDM enrollment"
-    info={
-      <>
-        To see MDM versions, deploy&nbsp;
-        <CustomLink
-          url="https://fleetdm.com/learn-more-about/fleetd"
-          newTab
-          text="Fleet's agent (fleetd)"
-        />
-      </>
-    }
-  />
-);
+const EmptyMdmStatus = (): JSX.Element => {
+  const { t } = useTranslation();
+  return (
+    <EmptyTable
+      header={t("dashboard:mdm.emptyStatusHeader")}
+      info={
+        <>
+          {t("dashboard:mdm.emptyStatusInfo")}&nbsp;
+          <CustomLink
+            url="https://fleetdm.com/learn-more-about/fleetd"
+            newTab
+            text={t("dashboard:mdm.emptyStatusLinkText")}
+          />
+        </>
+      }
+    />
+  );
+};
 
-const EmptyMdmSolutions = (): JSX.Element => (
-  <EmptyTable
-    header="No MDM solutions detected"
-    info="This report is updated every hour to protect the performance of your
-      devices."
-  />
-);
+const EmptyMdmSolutions = (): JSX.Element => {
+  const { t } = useTranslation();
+  return (
+    <EmptyTable
+      header={t("dashboard:mdm.emptySolutionsHeader")}
+      info={t("dashboard:mdm.emptySolutionsInfo")}
+    />
+  );
+};
 
 type IMdmSolutionMap = Record<string, IMdmSolutionTableData>;
 
@@ -97,6 +103,7 @@ const Mdm = ({
   selectedTeamId,
   onClickMdmSolution,
 }: IMdmCardProps): JSX.Element => {
+  const { t } = useTranslation();
   const [navTabIndex, setNavTabIndex] = useState(0);
 
   const onTabChange = (index: number) => {
@@ -144,10 +151,10 @@ const Mdm = ({
           <Tabs selectedIndex={navTabIndex} onSelect={onTabChange}>
             <TabList>
               <Tab>
-                <TabText>Solutions</TabText>
+                <TabText>{t("dashboard:mdm.tabSolutions")}</TabText>
               </Tab>
               <Tab>
-                <TabText>Status</TabText>
+                <TabText>{t("dashboard:mdm.tabStatus")}</TabText>
               </Tab>
             </TabList>
             <TabPanel>

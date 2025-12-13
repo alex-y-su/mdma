@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Trans, useTranslation } from "react-i18next";
 
 import { ITeam } from "interfaces/team";
 import { IEnrollSecret } from "interfaces/enroll_secret";
@@ -38,26 +39,28 @@ const SecretEditorModal = ({
   selectedSecret,
   isUpdatingSecret,
 }: ISecretEditorModalProps): JSX.Element => {
+  const { t } = useTranslation();
   const [enrollSecretString, setEnrollSecretString] = useState(
     selectedSecret ? selectedSecret.secret : randomSecretGenerator()
   );
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const renderTeam = () => {
-    if (typeof selectedTeam === "string") {
-      selectedTeam = parseInt(selectedTeam, 10);
+    let teamId = selectedTeam;
+    if (typeof teamId === "string") {
+      teamId = parseInt(teamId, 10);
     }
 
-    if (selectedTeam === 0) {
-      return { name: "No team" };
+    if (teamId === 0) {
+      return { name: t("common:enrollSecrets.noTeam") };
     }
-    return teams.find((team) => team.id === selectedTeam);
+    return teams.find((team) => team.id === teamId);
   };
 
   const onSecretChange = (value: string) => {
     if (value.length < 32) {
       setErrors({
-        secret: "Secret",
+        secret: t("common:enrollSecrets.secretLabel"),
       });
     } else {
       setErrors({});
@@ -68,7 +71,7 @@ const SecretEditorModal = ({
   const onSaveSecretClick = () => {
     if (enrollSecretString.length < 32) {
       setErrors({
-        secret: "Secret",
+        secret: t("common:enrollSecrets.secretLabel"),
       });
     } else {
       setErrors({});
@@ -76,28 +79,38 @@ const SecretEditorModal = ({
     }
   };
 
+  const teamName = renderTeam()?.name || "";
+
   return (
     <Modal
       onExit={toggleSecretEditorModal}
       onEnter={onSaveSecretClick}
-      title={selectedSecret ? "Edit secret" : "Add secret"}
+      title={
+        selectedSecret
+          ? t("common:enrollSecrets.editTitle")
+          : t("common:enrollSecrets.addTitle")
+      }
       className={baseClass}
     >
       <div className={baseClass}>
         <div className={`${baseClass}__description`}>
-          Create or edit the generated secret to enroll hosts to{" "}
-          <b>{renderTeam()?.name}</b>:
+          <Trans
+            i18nKey="common:enrollSecrets.useSecrets"
+            values={{ teamName }}
+            components={{ bold: <b /> }}
+            defaults="Use these secret(s) to enroll hosts to <bold>{{teamName}}</bold>."
+          />
         </div>
         <div className={`${baseClass}__secret-wrapper`}>
           <InputField
             inputWrapperClass={`${baseClass}__secret-input`}
             name="osqueryd-secret"
-            label="Secret"
+            label={t("common:enrollSecrets.secretLabel")}
             type="text"
             value={enrollSecretString}
             onChange={onSecretChange}
             error={errors.secret}
-            helpText="Must contain at least 32 characters."
+            helpText={t("common:enrollSecrets.secretHelp")}
           />
         </div>
         <div className="modal-cta-wrap">
@@ -106,7 +119,7 @@ const SecretEditorModal = ({
             className="save-loading"
             isLoading={isUpdatingSecret}
           >
-            Save
+            {t("common:buttons.save")}
           </Button>
         </div>
       </div>

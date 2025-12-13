@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import validateEquality from "components/forms/validators/validate_equality";
 
@@ -24,48 +25,53 @@ interface IConfirmInviteFormErrors {
   password_confirmation?: string | null;
 }
 
-const validate = (formData: IConfirmInviteFormData) => {
-  const errors: IConfirmInviteFormErrors = {};
-  const {
-    name,
-    password,
-    password_confirmation: passwordConfirmation,
-  } = formData;
-
-  if (!name) {
-    errors.name = "Full name must be present";
-  }
-
-  if (
-    password &&
-    passwordConfirmation &&
-    !validateEquality(password, passwordConfirmation)
-  ) {
-    errors.password_confirmation =
-      "Password confirmation does not match password";
-  }
-
-  if (!password) {
-    errors.password = "Password must be present";
-  }
-
-  if (!passwordConfirmation) {
-    errors.password_confirmation = "Password confirmation must be present";
-  }
-
-  return errors;
-};
 const ConfirmInviteForm = ({
   defaultFormData,
   handleSubmit,
   ancestorError,
 }: IConfirmInviteFormProps) => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState<IConfirmInviteFormData>({
     name: defaultFormData?.name || "",
     password: defaultFormData?.password || "",
     password_confirmation: defaultFormData?.password || "",
   });
   const [formErrors, setFormErrors] = useState<IConfirmInviteFormErrors>({});
+
+  const validate = (data: IConfirmInviteFormData) => {
+    const errors: IConfirmInviteFormErrors = {};
+    const {
+      name,
+      password,
+      password_confirmation: passwordConfirmation,
+    } = data;
+
+    if (!name) {
+      errors.name = t("forms:validation.fullNameRequired");
+    }
+
+    if (
+      password &&
+      passwordConfirmation &&
+      !validateEquality(password, passwordConfirmation)
+    ) {
+      errors.password_confirmation = t(
+        "forms:validation.passwordConfirmMismatch"
+      );
+    }
+
+    if (!password) {
+      errors.password = t("forms:validation.passwordPresent");
+    }
+
+    if (!passwordConfirmation) {
+      errors.password_confirmation = t(
+        "forms:validation.passwordConfirmPresent"
+      );
+    }
+
+    return errors;
+  };
 
   const { name, password, password_confirmation } = formData;
 
@@ -104,7 +110,7 @@ const ConfirmInviteForm = ({
     <form onSubmit={onSubmit} className={baseClass} autoComplete="off">
       {ancestorError && <div className="form__base-error">{ancestorError}</div>}
       <InputField
-        label="Full name"
+        label={t("auth:invite.fullNameLabel")}
         autofocus
         onChange={onInputChange}
         name="name"
@@ -114,10 +120,10 @@ const ConfirmInviteForm = ({
         maxLength={80}
       />
       <InputField
-        label="Password"
+        label={t("auth:invite.passwordLabel")}
         type="password"
-        placeholder="Password"
-        helpText="Must include 12 characters, at least 1 number (e.g. 0 - 9), and at least 1 symbol (e.g. &*#)"
+        placeholder={t("auth:invite.passwordPlaceholder")}
+        helpText={t("auth:invite.passwordHint")}
         onChange={onInputChange}
         name="password"
         value={password}
@@ -125,9 +131,9 @@ const ConfirmInviteForm = ({
         parseTarget
       />
       <InputField
-        label="Confirm password"
+        label={t("auth:invite.confirmPasswordLabel")}
         type="password"
-        placeholder="Confirm password"
+        placeholder={t("auth:invite.confirmPasswordPlaceholder")}
         onChange={onInputChange}
         name="password_confirmation"
         value={password_confirmation}
@@ -140,7 +146,7 @@ const ConfirmInviteForm = ({
           disabled={Object.keys(formErrors).length > 0}
           className="confirm-invite-button"
         >
-          Submit
+          {t("auth:invite.submitButton")}
         </Button>
       </div>
     </form>

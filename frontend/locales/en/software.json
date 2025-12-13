@@ -1,0 +1,79 @@
+{
+  "title": "Software",
+  "tabs": {
+    "titles": "Titles",
+    "versions": "Versions",
+    "os": "Operating systems",
+    "vulnerabilities": "Vulnerabilities"
+  },
+  "manage": {
+    "title": "Manage software",
+    "addSoftware": "Add software",
+    "editSoftware": "Edit software",
+    "deleteSoftware": "Delete software"
+  },
+  "add": {
+    "title": "Add software",
+    "fleetMaintained": "Fleet-maintained",
+    "appStore": "App Store",
+    "customPackage": "Custom package"
+  },
+  "columns": {
+    "name": "Name",
+    "version": "Version",
+    "type": "Type",
+    "vulnerabilities": "Vulnerabilities",
+    "hosts": "Hosts",
+    "source": "Source",
+    "status": "Status",
+    "selfService": "Self-service",
+    "installScript": "Install script"
+  },
+  "vulnerabilities": {
+    "title": "Vulnerabilities",
+    "critical": "Critical",
+    "high": "High",
+    "medium": "Medium",
+    "low": "Low",
+    "none": "None",
+    "cve": "CVE",
+    "cvss": "CVSS score",
+    "publishedDate": "Published date",
+    "affectedHosts": "Affected hosts",
+    "affectedSoftware": "Affected software",
+    "cisaKnownExploit": "CISA known exploit",
+    "exploitedInWild": "Exploited in wild"
+  },
+  "details": {
+    "title": "Software details",
+    "versionDetails": "Version details",
+    "osDetails": "OS details",
+    "vulnerabilityDetails": "Vulnerability details"
+  },
+  "status": {
+    "installed": "Installed",
+    "pending": "Pending",
+    "failed": "Failed",
+    "available": "Available"
+  },
+  "selfService": {
+    "title": "Self-service",
+    "enabled": "Enabled",
+    "disabled": "Disabled",
+    "availableForUsers": "Available for users to install"
+  },
+  "install": {
+    "title": "Install software",
+    "preInstallQuery": "Pre-install query",
+    "installScript": "Install script",
+    "postInstallScript": "Post-install script",
+    "preInstallQueryOutput": "Pre-install query output",
+    "installScriptOutput": "Install script output",
+    "postInstallScriptOutput": "Post-install script output"
+  },
+  "empty": {
+    "title": "No software found",
+    "description": "No software matches the current filters",
+    "addFirst": "Add software to get started"
+  }
+}

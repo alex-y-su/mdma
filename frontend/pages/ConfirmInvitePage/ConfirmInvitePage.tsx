@@ -1,6 +1,7 @@
 import React, { useCallback, useContext } from "react";
 import { InjectedRouter } from "react-router";
 import { Params } from "react-router/lib/Router";
+import { useTranslation } from "react-i18next";
 
 import { AppContext } from "context/app";
 import { NotificationContext } from "context/notification";
@@ -27,6 +28,7 @@ interface IConfirmInvitePageProps {
 const baseClass = "confirm-invite-page";
 
 const ConfirmInvitePage = ({ router, params }: IConfirmInvitePageProps) => {
+  const { t } = useTranslation();
   const { currentUser } = useContext(AppContext);
   const { renderFlash } = useContext(NotificationContext);
 
@@ -58,17 +60,14 @@ const ConfirmInvitePage = ({ router, params }: IConfirmInvitePageProps) => {
       try {
         await usersAPI.create(dataForAPI);
         router.push(paths.LOGIN);
-        renderFlash(
-          "success",
-          "Registration successful! For security purposes, please log in."
-        );
+        renderFlash("success", t("auth:invite.successMessage"));
       } catch (error) {
         const reason = getErrorReason(error);
         console.error(reason);
         renderFlash("error", reason);
       }
     },
-    [invite_token, renderFlash, router, validInvite?.email]
+    [invite_token, renderFlash, router, t, validInvite?.email]
   );
 
   if (currentUser) {
@@ -86,7 +85,7 @@ const ConfirmInvitePage = ({ router, params }: IConfirmInvitePageProps) => {
     if (validateInviteError) {
       return (
         <p className={`${baseClass}__description`}>
-          This invite token is invalid. Please confirm your invite link.
+          {t("auth:invite.invalidTokenMessage")}
         </p>
       );
     }
@@ -94,8 +93,7 @@ const ConfirmInvitePage = ({ router, params }: IConfirmInvitePageProps) => {
     return (
       <>
         <p className={`${baseClass}__description`}>
-          Before you get started, please take a moment to complete the following
-          information.
+          {t("auth:invite.description")}
         </p>
         <ConfirmInviteForm
           defaultFormData={{
@@ -110,7 +108,11 @@ const ConfirmInvitePage = ({ router, params }: IConfirmInvitePageProps) => {
 
   return (
     <AuthenticationFormWrapper
-      header={validateInviteError ? "Invalid invite token" : "Welcome to Fleet"}
+      header={
+        validateInviteError
+          ? t("auth:invite.invalidTokenTitle")
+          : t("auth:invite.title")
+      }
       className={baseClass}
     >
       {renderContent()}

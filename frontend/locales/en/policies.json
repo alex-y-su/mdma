@@ -1,0 +1,64 @@
+{
+  "title": "Policies",
+  "manage": {
+    "title": "Manage policies",
+    "addPolicy": "Add policy",
+    "editPolicy": "Edit policy",
+    "deletePolicy": "Delete policy",
+    "runPolicy": "Run policy"
+  },
+  "columns": {
+    "name": "Name",
+    "status": "Status",
+    "passing": "Passing",
+    "failing": "Failing",
+    "yes": "Yes",
+    "no": "No",
+    "hosts": "Hosts",
+    "lastRun": "Last run",
+    "critical": "Critical",
+    "automations": "Automations"
+  },
+  "status": {
+    "passing": "Passing",
+    "failing": "Failing",
+    "notChecked": "Not checked"
+  },
+  "details": {
+    "title": "Policy details",
+    "query": "Query",
+    "description": "Description",
+    "resolution": "Resolution",
+    "platform": "Platform",
+    "critical": "Critical",
+    "automations": "Automations"
+  },
+  "automations": {
+    "title": "Automations",
+    "webhook": "Webhook",
+    "installSoftware": "Install software",
+    "runScript": "Run script",
+    "calendar": "Calendar integration"
+  },
+  "create": {
+    "title": "Create policy",
+    "name": "Name",
+    "description": "Description",
+    "resolution": "Resolution",
+    "query": "Query",
+    "platform": "Platform",
+    "critical": "Critical",
+    "submitButton": "Save policy"
+  },
+  "empty": {
+    "title": "No policies found",
+    "description": "No policies match the current filters",
+    "addFirst": "Create your first policy to get started"
+  },
+  "results": {
+    "passing": "{{count}} host passing",
+    "passing_plural": "{{count}} hosts passing",
+    "failing": "{{count}} host failing",
+    "failing_plural": "{{count}} hosts failing"
+  }
+}

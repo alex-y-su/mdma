@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router";
 import classnames from "classnames";
+import { useTranslation } from "react-i18next";
 
 import { getPathWithQueryParams, QueryParams } from "utilities/url";
 import { LEARN_MORE_ABOUT_BASE_LINK } from "utilities/constants";
@@ -77,14 +78,15 @@ const isGlobalPage = (path: string) => {
 };
 
 const GitOpsModeIndicator = () => {
+  const { t } = useTranslation();
   const baseClass = "gitops-mode-indicator";
   const tipContent = (
     <>
-      Items managed in YAML are read-only.
+      {t("gitops.readOnlyMessage")}
       <br />
       <CustomLink
         newTab
-        text="Learn more"
+        text={t("gitops.learnMore")}
         variant="tooltip-link"
         url={`${LEARN_MORE_ABOUT_BASE_LINK}/ui-gitops-mode`}
       />
@@ -100,7 +102,7 @@ const GitOpsModeIndicator = () => {
       tipOffset={2}
     >
       <Icon name="gitops-mode" />
-      <div className={`${baseClass}__text`}>GitOps mode</div>
+      <div className={`${baseClass}__text`}>{t("gitops.mode")}</div>
     </TooltipWrapper>
   );
 };
@@ -112,6 +114,7 @@ const SiteTopNav = ({
   onLogoutUser,
   onUserMenuItemClick,
 }: ISiteTopNavProps): JSX.Element => {
+  const { t } = useTranslation();
   const {
     currentTeam,
     isAnyTeamAdmin,
@@ -136,7 +139,8 @@ const SiteTopNav = ({
   }
 
   const renderNavItem = (navItem: INavItem) => {
-    const { name, iconName, withParams } = navItem;
+    const { nameKey, iconName, withParams } = navItem;
+    const name = t(nameKey);
     const orgLogoURL = config.org_info.org_logo_url_light_background;
     const active = navItem.location.regex.test(currentPath);
 
@@ -148,7 +152,7 @@ const SiteTopNav = ({
 
     if (iconName && iconName === "logo") {
       return (
-        <li className={navItemClasses} key={`nav-item-${name}`}>
+        <li className={navItemClasses} key={`nav-item-${nameKey}`}>
           <LinkWithContext
             className={`${navItemBaseClass}__logo-wrapper`}
             currentQueryParams={currentQueryParams}
@@ -179,12 +183,9 @@ const SiteTopNav = ({
       // TODO: Find best pattern(one that doesn't dispatch a
       // replace to the same url, which triggers a re-render)
       return (
-        <li className={navItemClasses} key={`nav-item-${name}`}>
+        <li className={navItemClasses} key={`nav-item-${nameKey}`}>
           <Link to={path} className={`${navItemBaseClass}__link`}>
-            <span
-              className={`${navItemBaseClass}__name`}
-              data-text={navItem.name}
-            >
+            <span className={`${navItemBaseClass}__name`} data-text={name}>
               {name}
             </span>
           </Link>
@@ -193,7 +194,7 @@ const SiteTopNav = ({
     }
 
     return (
-      <li className={navItemClasses} key={`nav-item-${name}`}>
+      <li className={navItemClasses} key={`nav-item-${nameKey}`}>
         {withParams ? (
           <LinkWithContext
             className={`${navItemBaseClass}__link`}
@@ -201,10 +202,7 @@ const SiteTopNav = ({
             currentQueryParams={{ team_id: currentQueryParams.team_id }}
             to={navItem.location.pathname}
           >
-            <span
-              className={`${navItemBaseClass}__name`}
-              data-text={navItem.name}
-            >
+            <span className={`${navItemBaseClass}__name`} data-text={name}>
               {name}
             </span>
           </LinkWithContext>
@@ -213,10 +211,7 @@ const SiteTopNav = ({
             className={`${navItemBaseClass}__link`}
             to={navItem.location.pathname}
           >
-            <span
-              className={`${navItemBaseClass}__name`}
-              data-text={navItem.name}
-            >
+            <span className={`${navItemBaseClass}__name`} data-text={name}>
               {name}
             </span>
           </Link>

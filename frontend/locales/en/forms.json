@@ -1,0 +1,61 @@
+{
+  "validation": {
+    "required": "This field is required",
+    "emailRequired": "Email field must be completed",
+    "emailInvalid": "Email must be a valid email address",
+    "passwordRequired": "Password field must be completed",
+    "passwordMinLength": "Password must be at least 12 characters",
+    "passwordMaxLength": "Password is over the character limit",
+    "passwordRequirements": "Password must meet the criteria below",
+    "passwordMismatch": "Passwords do not match",
+    "passwordConfirmMismatch": "Password confirmation does not match password",
+    "newPasswordRequired": "New password field must be completed",
+    "newPasswordConfirmRequired": "New password confirmation field must be completed",
+    "passwordPresent": "Password must be present",
+    "passwordConfirmPresent": "Password confirmation must be present",
+    "fullNameRequired": "Full name must be present",
+    "nameRequired": "Name is required",
+    "descriptionRequired": "Description is required",
+    "urlInvalid": "Please enter a valid URL",
+    "numberInvalid": "Please enter a valid number",
+    "minLength": "Must be at least {{min}} characters",
+    "maxLength": "Must be no more than {{max}} characters",
+    "minValue": "Must be at least {{min}}",
+    "maxValue": "Must be no more than {{max}}",
+    "pattern": "Invalid format",
+    "unique": "This value is already in use"
+  },
+  "labels": {
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "fullName": "Full name",
+    "displayName": "Display name",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "organizationName": "Organization name",
+    "teamName": "Team name",
+    "role": "Role",
+    "platform": "Platform",
+    "query": "Query",
+    "name": "Name",
+    "description": "Description",
+    "url": "URL",
+    "apiToken": "API token",
+    "secretKey": "Secret key"
+  },
+  "placeholders": {
+    "email": "Enter email address",
+    "password": "Enter password",
+    "search": "Search...",
+    "name": "Enter name",
+    "description": "Enter description",
+    "url": "https://example.com",
+    "selectOption": "Select an option"
+  },
+  "hints": {
+    "passwordRequirements": "Must include 12 characters, at least 1 number (e.g. 0 - 9), and at least 1 symbol (e.g. &*#)",
+    "optional": "Optional",
+    "caseSensitive": "Case sensitive"
+  }
+}

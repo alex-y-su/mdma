@@ -1,0 +1,72 @@
+{
+  "title": "Queries",
+  "manage": {
+    "title": "Manage queries",
+    "addQuery": "Add query",
+    "editQuery": "Edit query",
+    "deleteQuery": "Delete query",
+    "runQuery": "Run query",
+    "liveQuery": "Live query"
+  },
+  "columns": {
+    "name": "Name",
+    "platform": "Platform",
+    "author": "Author",
+    "lastModified": "Last modified",
+    "frequency": "Frequency",
+    "performance": "Performance impact",
+    "automations": "Automations"
+  },
+  "details": {
+    "title": "Query details",
+    "sql": "SQL",
+    "description": "Description",
+    "platform": "Platform",
+    "performance": "Performance impact",
+    "schedule": "Schedule",
+    "logging": "Logging",
+    "automations": "Automations"
+  },
+  "create": {
+    "title": "Create query",
+    "name": "Name",
+    "description": "Description",
+    "sql": "SQL query",
+    "platform": "Platform",
+    "performanceImpact": "Performance impact",
+    "submitButton": "Save query"
+  },
+  "run": {
+    "title": "Run query",
+    "selectHosts": "Select hosts",
+    "selectLabels": "Select labels",
+    "selectTeams": "Select teams",
+    "runButton": "Run",
+    "stopButton": "Stop",
+    "results": "Results",
+    "noResults": "No results",
+    "exportResults": "Export results"
+  },
+  "performance": {
+    "minimal": "Minimal",
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High",
+    "excessive": "Excessive"
+  },
+  "schedule": {
+    "title": "Schedule",
+    "frequency": "Frequency",
+    "enabled": "Enabled",
+    "disabled": "Disabled",
+    "daily": "Daily",
+    "weekly": "Weekly",
+    "monthly": "Monthly",
+    "custom": "Custom"
+  },
+  "empty": {
+    "title": "No queries found",
+    "description": "No queries match the current filters",
+    "addFirst": "Create your first query to get started"
+  }
+}

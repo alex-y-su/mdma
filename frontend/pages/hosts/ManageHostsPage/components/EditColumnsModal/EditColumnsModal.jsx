@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 
 import Modal from "components/Modal";
 import Checkbox from "../../../../../components/forms/fields/Checkbox";
@@ -52,15 +53,20 @@ const EditColumnsModal = ({
   onSaveColumns,
   onCancelColumns,
 }) => {
+  const { t } = useTranslation();
   const [columnItems, updateColumnItems] = useCheckboxListStateManagement(
     columns,
     hiddenColumns
   );
 
   return (
-    <Modal title="Edit columns" onExit={onCancelColumns} className={baseClass}>
+    <Modal
+      title={t("hosts:editColumnsModal.title")}
+      onExit={onCancelColumns}
+      className={baseClass}
+    >
       <div className="form">
-        <p>Choose which columns you see:</p>
+        <p>{t("hosts:editColumnsModal.description")}</p>
         <div className={`${baseClass}__column-headers`}>
           {columnItems.map((column) => {
             if (column.disableHidden) return null;
@@ -79,10 +85,10 @@ const EditColumnsModal = ({
         </div>
         <div className="modal-cta-wrap">
           <Button onClick={() => onSaveColumns(getHiddenColumns(columnItems))}>
-            Save
+            {t("hosts:editColumnsModal.save")}
           </Button>
           <Button onClick={onCancelColumns} variant="inverse">
-            Cancel
+            {t("hosts:editColumnsModal.cancel")}
           </Button>
         </div>
       </div>

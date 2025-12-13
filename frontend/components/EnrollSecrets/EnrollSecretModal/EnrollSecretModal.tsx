@@ -1,4 +1,5 @@
 import React from "react";
+import { Trans, useTranslation } from "react-i18next";
 
 import { ITeam } from "interfaces/team";
 import { IEnrollSecret } from "interfaces/enroll_secret";
@@ -36,20 +37,46 @@ const EnrollSecretModal = ({
   setSelectedSecret,
   globalSecrets,
 }: IEnrollSecretModal): JSX.Element => {
+  const { t } = useTranslation();
+
   const teamInfo =
     selectedTeamId <= 0
-      ? { name: "No team", secrets: globalSecrets }
+      ? { name: t("common:enrollSecrets.noTeam"), secrets: globalSecrets }
       : teams.find((team) => team.id === selectedTeamId);
+
+  const teamName = primoMode ? "" : teamInfo?.name || "";
 
   const addNewSecretClick = () => {
     setSelectedSecret(undefined);
     toggleSecretEditorModal();
   };
+
+  const renderDescription = (hasSecrets: boolean) => {
+    const key = hasSecrets
+      ? "common:enrollSecrets.useSecrets"
+      : "common:enrollSecrets.addSecrets";
+    if (primoMode) {
+      return t(key, { teamName: "" }).replace(" to .", ".");
+    }
+    return (
+      <Trans
+        i18nKey={key}
+        values={{ teamName }}
+        components={{ bold: <b /> }}
+        defaults={
+          hasSecrets
+            ? "Use these secret(s) to enroll hosts to <bold>{{teamName}}</bold>."
+            : "Add secret(s) to enroll hosts to <bold>{{teamName}}</bold>."
+        }
+      />
+    );
+  };
+
   return (
     <Modal
       onExit={onReturnToApp}
       onEnter={onReturnToApp}
-      title="Manage enroll secrets"
+      title={t("common:enrollSecrets.manageTitle")}
       className={baseClass}
     >
       <div className={`${baseClass} form`}>
@@ -57,16 +84,7 @@ const EnrollSecretModal = ({
           <>
             <div className={`${baseClass}__header`}>
               <div className={`${baseClass}__description`}>
-                Use these secret(s) to enroll hosts
-                {primoMode ? (
-                  ""
-                ) : (
-                  <>
-                    {" "}
-                    to <b>{teamInfo?.name}</b>
-                  </>
-                )}
-                .
+                {renderDescription(true)}
               </div>
               <div className={`${baseClass}__add-secret`}>
                 <GitOpsModeTooltipWrapper
@@ -80,7 +98,8 @@ const EnrollSecretModal = ({
                       variant="brand-inverse-icon"
                       iconStroke
                     >
-                      Add secret <Icon name="plus" color="core-fleet-green" />
+                      {t("common:enrollSecrets.addTitle")}{" "}
+                      <Icon name="plus" color="core-fleet-green" />
                     </Button>
                   )}
                 />
@@ -96,21 +115,8 @@ const EnrollSecretModal = ({
         ) : (
           <Card color="grey" paddingSize="small">
             <EmptyTable
-              header="You have no enroll secrets."
-              info={
-                <>
-                  Add secret(s) to enroll hosts
-                  {primoMode ? (
-                    ""
-                  ) : (
-                    <>
-                      {" "}
-                      to <b>{teamInfo?.name}</b>
-                    </>
-                  )}
-                  .
-                </>
-              }
+              header={t("common:enrollSecrets.noSecrets")}
+              info={renderDescription(false)}
               primaryButton={
                 <GitOpsModeTooltipWrapper
                   position="right"
@@ -123,7 +129,8 @@ const EnrollSecretModal = ({
                       variant="brand-inverse-icon"
                       iconStroke
                     >
-                      Add secret <Icon name="plus" color="core-fleet-green" />
+                      {t("common:enrollSecrets.addTitle")}{" "}
+                      <Icon name="plus" color="core-fleet-green" />
                     </Button>
                   )}
                 />
@@ -132,7 +139,7 @@ const EnrollSecretModal = ({
           </Card>
         )}
         <div className="modal-cta-wrap">
-          <Button onClick={onReturnToApp}>Done</Button>
+          <Button onClick={onReturnToApp}>{t("common:buttons.done")}</Button>
         </div>
       </div>
     </Modal>

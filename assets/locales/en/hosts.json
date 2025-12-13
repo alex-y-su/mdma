@@ -1,0 +1,119 @@
+{
+  "title": "Hosts",
+  "manage": {
+    "title": "Manage hosts",
+    "addHosts": "Add hosts",
+    "transferHosts": "Transfer hosts",
+    "deleteHosts": "Delete hosts"
+  },
+  "details": {
+    "title": "Host details",
+    "about": "About",
+    "software": "Software",
+    "queries": "Queries",
+    "policies": "Policies",
+    "scripts": "Scripts",
+    "activity": "Activity"
+  },
+  "status": {
+    "online": "Online",
+    "offline": "Offline",
+    "missing": "Missing",
+    "new": "New"
+  },
+  "columns": {
+    "host": "Host",
+    "hostname": "Hostname",
+    "computerName": "Computer name",
+    "team": "Team",
+    "status": "Status",
+    "issues": "Issues",
+    "diskSpaceAvailable": "Disk space available",
+    "operatingSystem": "Operating system",
+    "osquery": "Osquery",
+    "usedBy": "Used by",
+    "privateIpAddress": "Private IP address",
+    "mdmStatus": "MDM status",
+    "mdmServerUrl": "MDM server URL",
+    "publicIpAddress": "Public IP address",
+    "lastFetched": "Last fetched",
+    "lastSeen": "Last seen",
+    "uuid": "UUID",
+    "lastRestarted": "Last restarted",
+    "cpu": "CPU",
+    "ram": "RAM",
+    "macAddress": "MAC address",
+    "serialNumber": "Serial number",
+    "hardwareModel": "Hardware model",
+    "platform": "Platform",
+    "osVersion": "OS version",
+    "ipAddress": "IP address",
+    "memory": "Memory",
+    "diskSpace": "Disk space",
+    "cpuUsage": "CPU usage"
+  },
+  "tooltips": {
+    "statusHeader": "Online hosts will respond to a live query. Offline hosts won't respond to a live query because they may be shut down, asleep, or not connected to the internet.",
+    "mdmStatus": "Settings can be updated remotely on hosts with MDM turned on. To filter by MDM status, head to the Dashboard page.",
+    "mdmServerUrl": "The MDM server that updates settings on the host. To filter by MDM server URL, head to the Dashboard page.",
+    "publicIpAddress": "The IP address the host uses to connect to Fleet.",
+    "lastFetched": "The last time the host reported vitals.",
+    "lastSeen": "The last time the host was online.",
+    "pendingHost": "This host was ordered using Apple Business Manager (ABM). You will see host vitals when it is enrolled in Fleet",
+    "lastSeenOnline": "Online",
+    "lastSeenPrefix": "Last seen:"
+  },
+  "usersCount": "{{count}} users",
+  "moreUsers": "+{{count}} more",
+  "filters": {
+    "status": "Status",
+    "platform": "Platform",
+    "team": "Team",
+    "label": "Label",
+    "mdmStatus": "MDM status",
+    "mdmSolution": "MDM solution",
+    "diskEncryption": "Disk encryption",
+    "osVersion": "OS version",
+    "lastSeen": "Last seen",
+    "lowDiskSpace": "Low disk space"
+  },
+  "labels": {
+    "title": "Labels",
+    "addLabel": "Add label",
+    "editLabel": "Edit label",
+    "deleteLabel": "Delete label",
+    "labelName": "Label name",
+    "description": "Description",
+    "platform": "Platform",
+    "dynamic": "Dynamic",
+    "manual": "Manual"
+  },
+  "actions": {
+    "refetch": "Refetch host",
+    "runScript": "Run script",
+    "runQuery": "Run query",
+    "transfer": "Transfer",
+    "delete": "Delete",
+    "turnOffMdm": "Turn off MDM",
+    "lockHost": "Lock host",
+    "unlockHost": "Unlock host",
+    "wipeHost": "Wipe host"
+  },
+  "mdm": {
+    "enrolled": "Enrolled",
+    "pendingEnrollment": "Pending enrollment",
+    "unenrolled": "Unenrolled",
+    "manualEnrollment": "Manual enrollment"
+  },
+  "empty": {
+    "title": "No hosts found",
+    "description": "No hosts match the current filters",
+    "addFirst": "Add your first host to get started"
+  },
+  "editColumnsModal": {
+    "title": "Edit columns",
+    "description": "Choose which columns you see:",
+    "save": "Save",
+    "cancel": "Cancel"
+  }
+}

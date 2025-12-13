@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext, useCallback } from "react";
 import { useQuery } from "react-query";
 import { InjectedRouter } from "react-router";
 import { AxiosError } from "axios";
+import { useTranslation } from "react-i18next";
 
 import paths from "router/paths";
 import { AppContext } from "context/app";
@@ -28,25 +29,18 @@ interface ILoginPageProps {
   };
 }
 
-interface IStatusMessages {
-  account_disabled: string;
-  account_invalid: string;
-  org_disabled: string;
-  error: string;
-}
-
-const statusMessages: IStatusMessages = {
-  account_disabled:
-    "Single sign-on is not enabled on your account. Please contact your Fleet administrator.",
-  account_invalid: "You do not have a Fleet account.",
-  org_disabled: "Single sign-on is not enabled for your organization.",
-  error:
-    "There was an error with single sign-on. Please contact your Fleet administrator.",
-};
-
 const baseClass = "login-page";
 
+// Maps URL status params to translation keys
+const STATUS_MESSAGE_KEYS: Record<string, string> = {
+  account_disabled: "auth:login.sso.disabled",
+  account_invalid: "auth:login.sso.invalidAccount",
+  org_disabled: "auth:login.sso.orgDisabled",
+  error: "auth:login.sso.error",
+};
+
 const LoginPage = ({ router, location }: ILoginPageProps) => {
+  const { t } = useTranslation();
   const {
     availableTeams,
     config,
@@ -105,12 +99,12 @@ const LoginPage = ({ router, location }: ILoginPageProps) => {
 
   // TODO: Fix this. If renderFlash is added as a dependency it causes infinite re-renders.
   useEffect(() => {
-    let status = new URLSearchParams(location.search).get("status");
-    status = status && statusMessages[status as keyof IStatusMessages];
-    if (status) {
-      renderFlash("error", status);
+    const statusParam = new URLSearchParams(location.search).get("status");
+    const messageKey = statusParam && STATUS_MESSAGE_KEYS[statusParam];
+    if (messageKey) {
+      renderFlash("error", t(messageKey));
     }
-  }, [location?.search]);
+  }, [location?.search, t]);
 
   const onSubmit = useCallback(
     async (formData: ILoginUserData) => {
@@ -194,7 +188,7 @@ const LoginPage = ({ router, location }: ILoginPageProps) => {
   }
 
   return (
-    <AuthenticationFormWrapper header="Welcome to Fleet">
+    <AuthenticationFormWrapper header={t("auth:login.title")}>
       <LoginForm
         handleSubmit={onSubmit}
         baseError={errors.base}

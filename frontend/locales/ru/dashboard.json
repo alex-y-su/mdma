@@ -1,0 +1,113 @@
+{
+  "title": "Панель управления",
+  "welcome": "Добро пожаловать",
+  "platformLabel": "Платформа:",
+  "platformDropdown": {
+    "all": "Все",
+    "macos": "macOS",
+    "windows": "Windows",
+    "linux": "Linux",
+    "chromeos": "ChromeOS",
+    "ios": "iOS",
+    "ipados": "iPadOS",
+    "android": "Android"
+  },
+  "summary": {
+    "title": "Сводка",
+    "totalHosts": "Всего устройств",
+    "onlineHosts": "В сети",
+    "offlineHosts": "Не в сети",
+    "newHosts": "Новые устройства",
+    "missingHosts": "Отсутствующие"
+  },
+  "platforms": {
+    "title": "Платформы",
+    "windows": "Windows",
+    "macos": "macOS",
+    "linux": "Linux",
+    "chromeos": "ChromeOS",
+    "ios": "iOS",
+    "ipados": "iPadOS",
+    "android": "Android"
+  },
+  "activity": {
+    "title": "Активность",
+    "recentActivity": "Последняя активность",
+    "noActivity": "Нет недавней активности",
+    "manageAutomations": "Управление автоматизацией",
+    "automationsUpdateSuccess": "Автоматизация ленты активности успешно обновлена.",
+    "automationsUpdateError": "Не удалось обновить автоматизацию ленты активности. Попробуйте ещё раз."
+  },
+  "software": {
+    "title": "Программное обеспечение",
+    "viewAll": "Просмотреть всё ПО",
+    "tabAll": "Все",
+    "tabVulnerable": "Уязвимые",
+    "vulnerabilities": "Уязвимости",
+    "criticalVulnerabilities": "Критические уязвимости",
+    "tooltipText": "Fleet периодически опрашивает все устройства для получения информации о ПО. Нажмите для просмотра устройств с актуальными списками."
+  },
+  "mdm": {
+    "title": "Управление мобильными устройствами (MDM)",
+    "description": "MDM используется для изменения настроек и установки ПО на ваших устройствах.",
+    "tabSolutions": "Решения",
+    "tabStatus": "Статус",
+    "enrolled": "Зарегистрировано",
+    "pendingEnrollment": "Ожидает регистрации",
+    "unenrolled": "Не зарегистрировано",
+    "emptyStatusHeader": "Не удалось определить статус MDM",
+    "emptyStatusInfo": "Для просмотра версий MDM установите",
+    "emptyStatusLinkText": "агент Fleet (fleetd)",
+    "emptySolutionsHeader": "MDM-решения не обнаружены",
+    "emptySolutionsInfo": "Этот отчёт обновляется каждый час для защиты производительности ваших устройств."
+  },
+  "policies": {
+    "title": "Политики",
+    "passing": "Соответствуют",
+    "failing": "Не соответствуют"
+  },
+  "filters": {
+    "allPlatforms": "Все платформы",
+    "allTeams": "Все команды",
+    "timeRange": "Период времени"
+  },
+  "cards": {
+    "welcomeToFleet": "Добро пожаловать в Fleet",
+    "learnFleet": "Узнайте, как использовать Fleet",
+    "activity": "Активность",
+    "software": "Программное обеспечение",
+    "mdm": "Управление мобильными устройствами (MDM)",
+    "operatingSystems": "Операционные системы",
+    "munki": "Munki",
+    "hosts": "Устройства",
+    "policies": "Политики"
+  },
+  "welcomeHost": {
+    "addHostsButton": "Добавить устройства",
+    "emptyDescription": "Добавьте своё устройство для оценки его безопасности.",
+    "emptySubtext": "В Fleet ноутбуки, рабочие станции и серверы называются «устройствами».",
+    "offlineError": "Ваше устройство не взаимодействует с Fleet.",
+    "offlineHelp": "Присоединяйтесь к каналу #fleet в Slack для получения помощи.",
+    "noPoliciesError": "К вашему устройству не применяются политики.",
+    "connectedSuccess": "Ваше устройство успешно подключено к Fleet.",
+    "policiesBlurb": "Fleet уже выполнил следующие политики для оценки безопасности вашего устройства:",
+    "viewAllPolicies": "Перейти к деталям устройства для просмотра всех политик",
+    "refetchBlurb": "Исправили несоответствие политике? Обновите данные устройства для проверки.",
+    "refetchButton": "Обновить",
+    "lastUpdated": "Последнее обновление",
+    "modalDone": "Готово",
+    "modalResolve": "Решение:",
+    "refetchOfflineError": "Устройство не в сети. Попробуйте обновить данные позже.",
+    "refetchTimeoutError": "Не удаётся получить свежие данные для этого устройства. Попробуйте позже.",
+    "refetchError": "Ошибка обновления устройства \"{{name}}\"",
+    "slackAlt": "Получить помощь в Slack"
+  },
+  "learnFleet": {
+    "description": "Хотите изучить возможности Fleet? Узнайте, как задавать вопросы о вашем устройстве с помощью запросов.",
+    "linkText": "Узнать, как использовать Fleet"
+  },
+  "munkiCard": {
+    "description": "Munki — инструмент для управления ПО на устройствах macOS.",
+    "linkText": "Узнать о Munki"
+  }
+}

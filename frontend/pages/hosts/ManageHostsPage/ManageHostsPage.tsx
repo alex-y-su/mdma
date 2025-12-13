@@ -5,6 +5,7 @@ import React, {
   useCallback,
   useMemo,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { Row } from "react-table";
 import { InjectedRouter, Params } from "react-router/lib/Router";
@@ -172,6 +173,7 @@ const ManageHostsPage = ({
   const { renderFlash } = useContext(NotificationContext);
 
   const { setResetSelectedRows } = useContext(TableContext);
+  const { t } = useTranslation();
 
   const shouldStripScriptBatchExecParamOnTeamChange = (
     newTeamId?: number,
@@ -1420,7 +1422,11 @@ const ManageHostsPage = ({
 
     return (
       <EditColumnsModal
-        columns={generateAvailableTableHeaders({ isFreeTier, isOnlyObserver })}
+        columns={generateAvailableTableHeaders({
+          t,
+          isFreeTier,
+          isOnlyObserver,
+        })}
         hiddenColumns={hiddenColumns}
         onSaveColumns={onSaveColumns}
         onCancelColumns={toggleEditColumnsModal}
@@ -1553,6 +1559,7 @@ const ManageHostsPage = ({
 
     if (config && currentUser) {
       const tableColumns = generateVisibleTableColumns({
+        t,
         hiddenColumns: currentHiddenColumns,
         isFreeTier,
         isOnlyObserver,
@@ -1791,6 +1798,7 @@ const ManageHostsPage = ({
     ];
 
     const tableColumns = generateVisibleTableColumns({
+      t,
       hiddenColumns,
       isFreeTier,
       isOnlyObserver:

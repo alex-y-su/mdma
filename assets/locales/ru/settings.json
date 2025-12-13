@@ -1,0 +1,167 @@
+{
+  "title": "Настройки",
+  "navigation": {
+    "organization": "Настройки организации",
+    "integrations": "Интеграции",
+    "users": "Пользователи",
+    "teams": "Команды",
+    "myAccount": "Мой аккаунт"
+  },
+  "organization": {
+    "title": "Настройки организации",
+    "info": {
+      "title": "Информация об организации",
+      "name": "Название организации",
+      "logoUrl": "URL логотипа",
+      "contactUrl": "URL контактов"
+    },
+    "fleetDesktop": {
+      "title": "Fleet Desktop",
+      "transparency": "URL прозрачности"
+    },
+    "webAddress": {
+      "title": "Веб-адрес",
+      "serverUrl": "URL сервера"
+    },
+    "smtpSettings": {
+      "title": "Настройки SMTP",
+      "senderAddress": "Адрес отправителя",
+      "server": "SMTP-сервер",
+      "port": "Порт",
+      "username": "Имя пользователя",
+      "password": "Пароль",
+      "enableTls": "Включить TLS",
+      "authenticationMethod": "Метод аутентификации"
+    },
+    "agentOptions": {
+      "title": "Параметры агента",
+      "description": "Настройка параметров osquery для всех устройств"
+    },
+    "advanced": {
+      "title": "Расширенные настройки",
+      "hostExpiry": "Срок действия устройства",
+      "hostExpiryWindow": "Окно истечения срока (дни)",
+      "disableLiveQueries": "Отключить live-запросы"
+    }
+  },
+  "integrations": {
+    "title": "Интеграции",
+    "mdm": {
+      "title": "Управление мобильными устройствами (MDM)",
+      "apple": "Apple (macOS, iOS, iPadOS)",
+      "windows": "Windows",
+      "android": "Android"
+    },
+    "sso": {
+      "title": "Единый вход (SSO)",
+      "fleetUsers": "Пользователи Fleet",
+      "endUsers": "Конечные пользователи"
+    },
+    "scim": {
+      "title": "SCIM",
+      "description": "Управление пользователями Fleet через провайдера идентификации"
+    },
+    "automaticEnrollment": {
+      "title": "Автоматическая регистрация",
+      "apple": "Apple Business Manager",
+      "windows": "Автоматическая регистрация Windows"
+    },
+    "vpp": {
+      "title": "Volume Purchasing Program (VPP)",
+      "description": "Управление приложениями App Store"
+    },
+    "ticketing": {
+      "title": "Системы заявок",
+      "jira": "Jira",
+      "zendesk": "Zendesk"
+    },
+    "calendar": {
+      "title": "Календарь",
+      "google": "Google Calendar"
+    },
+    "logging": {
+      "title": "Логирование",
+      "description": "Настройка назначений логов"
+    },
+    "hostStatusWebhook": {
+      "title": "Вебхук статуса устройства",
+      "description": "Отправка уведомлений при изменении статуса устройств"
+    }
+  },
+  "users": {
+    "title": "Пользователи",
+    "addUser": "Добавить пользователя",
+    "editUser": "Редактировать пользователя",
+    "deleteUser": "Удалить пользователя",
+    "inviteUser": "Пригласить пользователя",
+    "columns": {
+      "name": "Имя",
+      "email": "Email",
+      "role": "Роль",
+      "teams": "Команды",
+      "status": "Статус"
+    },
+    "roles": {
+      "admin": "Администратор",
+      "maintainer": "Ответственный",
+      "observer": "Наблюдатель",
+      "observerPlus": "Наблюдатель+",
+      "gitops": "GitOps"
+    },
+    "status": {
+      "active": "Активен",
+      "invited": "Приглашен"
+    }
+  },
+  "teams": {
+    "title": "Команды",
+    "addTeam": "Добавить команду",
+    "editTeam": "Редактировать команду",
+    "deleteTeam": "Удалить команду",
+    "noTeams": "Нет команд",
+    "teamName": "Название команды",
+    "teamDescription": "Описание команды",
+    "members": "Участники",
+    "hosts": "Устройства",
+    "settings": "Настройки",
+    "agentOptions": "Параметры агента"
+  },
+  "account": {
+    "title": "Мой аккаунт",
+    "profile": "Профиль",
+    "email": "Email",
+    "name": "Имя",
+    "role": "Роль",
+    "teams": "Команды",
+    "changePassword": "Изменить пароль",
+    "apiToken": "API-токен",
+    "getApiToken": "Получить API-токен",
+    "accountUpdated": "Аккаунт обновлен",
+    "changeEmail": {
+      "confirmPassword": "Для изменения email необходимо подтвердить пароль.",
+      "passwordLabel": "Пароль",
+      "pendingChange": "Ожидается изменение на {{email}}"
+    },
+    "changePasswordForm": {
+      "originalPassword": "Текущий пароль",
+      "newPassword": "Новый пароль",
+      "confirmPassword": "Подтверждение нового пароля",
+      "passwordRequirements": "Должен содержать 12 символов, минимум 1 цифру (0-9) и 1 специальный символ (&*#)"
+    },
+    "userSettings": {
+      "emailLabel": "Email (обязательно)",
+      "nameLabel": "Полное имя (обязательно)",
+      "positionLabel": "Должность",
+      "smtpRequired": "Для изменения email необходимо настроить SMTP или SES для отправки письма с подтверждением. Пользователи с ролью администратора могут настроить SMTP в **Настройки > Настройки организации**."
+    },
+    "validation": {
+      "passwordRequired": "Пароль обязателен",
+      "newPasswordRequired": "Новый пароль обязателен",
+      "confirmPasswordRequired": "Подтверждение пароля обязательно",
+      "passwordMismatch": "Подтверждение пароля не совпадает с новым паролем",
+      "emailRequired": "Поле email обязательно для заполнения",
+      "emailInvalid": "{{email}} не является действительным email",
+      "nameRequired": "Поле полного имени обязательно для заполнения"
+    }
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "title": "Dashboard",
+  "welcome": "Welcome",
+  "platformLabel": "Platform:",
+  "platformDropdown": {
+    "all": "All",
+    "macos": "macOS",
+    "windows": "Windows",
+    "linux": "Linux",
+    "chromeos": "ChromeOS",
+    "ios": "iOS",
+    "ipados": "iPadOS",
+    "android": "Android"
+  },
+  "summary": {
+    "title": "Summary",
+    "totalHosts": "Total hosts",
+    "onlineHosts": "Online",
+    "offlineHosts": "Offline",
+    "newHosts": "New hosts",
+    "missingHosts": "Missing"
+  },
+  "platforms": {
+    "title": "Platforms",
+    "windows": "Windows",
+    "macos": "macOS",
+    "linux": "Linux",
+    "chromeos": "ChromeOS",
+    "ios": "iOS",
+    "ipados": "iPadOS",
+    "android": "Android"
+  },
+  "activity": {
+    "title": "Activity",
+    "recentActivity": "Recent activity",
+    "noActivity": "No recent activity",
+    "manageAutomations": "Manage automations",
+    "automationsUpdateSuccess": "Successfully updated activity feed automations.",
+    "automationsUpdateError": "Couldn't update activity feed automations. Please try again."
+  },
+  "software": {
+    "title": "Software",
+    "viewAll": "View all software",
+    "tabAll": "All",
+    "tabVulnerable": "Vulnerable",
+    "vulnerabilities": "Vulnerabilities",
+    "criticalVulnerabilities": "Critical vulnerabilities",
+    "tooltipText": "Fleet periodically queries all hosts to retrieve software. Click to view hosts for the most up-to-date lists."
+  },
+  "mdm": {
+    "title": "Mobile device management (MDM)",
+    "description": "MDM is used to change settings and install software on your hosts.",
+    "tabSolutions": "Solutions",
+    "tabStatus": "Status",
+    "enrolled": "Enrolled",
+    "pendingEnrollment": "Pending enrollment",
+    "unenrolled": "Unenrolled",
+    "emptyStatusHeader": "Unable to detect MDM enrollment",
+    "emptyStatusInfo": "To see MDM versions, deploy",
+    "emptyStatusLinkText": "Fleet's agent (fleetd)",
+    "emptySolutionsHeader": "No MDM solutions detected",
+    "emptySolutionsInfo": "This report is updated every hour to protect the performance of your devices."
+  },
+  "policies": {
+    "title": "Policies",
+    "passing": "Passing",
+    "failing": "Failing"
+  },
+  "filters": {
+    "allPlatforms": "All platforms",
+    "allTeams": "All teams",
+    "timeRange": "Time range"
+  },
+  "cards": {
+    "welcomeToFleet": "Welcome to Fleet",
+    "learnFleet": "Learn how to use Fleet",
+    "activity": "Activity",
+    "software": "Software",
+    "mdm": "Mobile device management (MDM)",
+    "operatingSystems": "Operating systems",
+    "munki": "Munki",
+    "hosts": "Hosts",
+    "policies": "Policies"
+  },
+  "welcomeHost": {
+    "addHostsButton": "Add hosts",
+    "emptyDescription": "Add your personal device to assess the security of your device.",
+    "emptySubtext": "In Fleet, laptops, workstations, and servers are referred to as \"hosts.\"",
+    "offlineError": "Your device is not communicating with Fleet.",
+    "offlineHelp": "Join the #fleet Slack channel for help troubleshooting.",
+    "noPoliciesError": "No policies apply to your device.",
+    "connectedSuccess": "Your host is successfully connected to Fleet.",
+    "policiesBlurb": "Fleet already ran the following policies to assess the security of your device:",
+    "viewAllPolicies": "Go to Host details to see all policies",
+    "refetchBlurb": "Resolved a failing policy? Refetch your host vitals to verify.",
+    "refetchButton": "Refetch",
+    "lastUpdated": "Last updated",
+    "modalDone": "Done",
+    "modalResolve": "Resolve:",
+    "refetchOfflineError": "This host is offline. Please try refetching host vitals later.",
+    "refetchTimeoutError": "We're having trouble fetching fresh vitals for this host. Please try again later.",
+    "refetchError": "Host \"{{name}}\" refetch error",
+    "slackAlt": "Get help on Slack"
+  },
+  "learnFleet": {
+    "description": "Want to explore Fleet's features? Learn how to ask questions about your device using queries.",
+    "linkText": "Learn how to use Fleet"
+  },
+  "munkiCard": {
+    "description": "Munki is a tool for managing software on macOS devices.",
+    "linkText": "Learn about Munki"
+  }
+}

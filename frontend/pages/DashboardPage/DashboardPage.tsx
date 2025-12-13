@@ -8,6 +8,7 @@ import React, {
 } from "react";
 import { InjectedRouter } from "react-router";
 import { useQuery } from "react-query";
+import { useTranslation } from "react-i18next";
 
 import { AppContext } from "context/app";
 import { NotificationContext } from "context/notification";
@@ -64,6 +65,7 @@ import DataError from "components/DataError";
 
 import {
   LOW_DISK_SPACE_GB,
+  getPlatformDropdownOptions,
   PLATFORM_DROPDOWN_OPTIONS,
   PLATFORM_NAME_TO_LABEL_NAME,
 } from "./helpers";
@@ -97,6 +99,7 @@ interface IDashboardProps {
 }
 
 const DashboardPage = ({ router, location }: IDashboardProps): JSX.Element => {
+  const { t } = useTranslation();
   const { pathname } = location;
   const {
     isGlobalAdmin,
@@ -288,7 +291,7 @@ const DashboardPage = ({ router, location }: IDashboardProps): JSX.Element => {
   );
 
   const featuresConfig = isAnyTeamSelected
-    ? teams?.find((t) => t.id === currentTeamId)?.features
+    ? teams?.find((team) => team.id === currentTeamId)?.features
     : config?.features;
   const isSoftwareEnabled = !!featuresConfig?.enable_software_inventory;
   const isViewingVulnerableSoftware = !!softwareNavTabIndex; // we can take the tab index as a boolean to represent the vulnerable flag
@@ -534,14 +537,11 @@ const DashboardPage = ({ router, location }: IDashboardProps): JSX.Element => {
         }
         renderFlash(
           "success",
-          "Successfully updated activity feed automations."
+          t("dashboard:activity.automationsUpdateSuccess")
         );
         setShowActivityFeedAutomationsModal(false);
       } catch {
-        renderFlash(
-          "error",
-          "Couldn't update activity feed automations. Please try again."
-        );
+        renderFlash("error", t("dashboard:activity.automationsUpdateError"));
       } finally {
         setUpdatingActivityFeedAutomations(false);
         refetchConfig();
@@ -596,7 +596,7 @@ const DashboardPage = ({ router, location }: IDashboardProps): JSX.Element => {
   );
 
   const WelcomeHostCard = useInfoCard({
-    title: "Welcome to Fleet",
+    title: t("dashboard:cards.welcomeToFleet"),
     showTitle: true,
     children: (
       <WelcomeHost
@@ -609,18 +609,18 @@ const DashboardPage = ({ router, location }: IDashboardProps): JSX.Element => {
   });
 
   const LearnFleetCard = useInfoCard({
-    title: "Learn how to use Fleet",
+    title: t("dashboard:cards.learnFleet"),
     showTitle: true,
     children: <LearnFleet />,
   });
 
   const ActivityFeedCard = useInfoCard({
-    title: "Activity",
+    title: t("dashboard:cards.activity"),
     showTitle: showActivityFeedTitle,
     action: canEditActivityFeedAutomations
       ? {
           type: "button",
-          text: "Manage automations",
+          text: t("dashboard:activity.manageAutomations"),
           onClick: () => setShowActivityFeedAutomationsModal(true),
         }
       : undefined,
@@ -636,10 +636,10 @@ const DashboardPage = ({ router, location }: IDashboardProps): JSX.Element => {
   });
 
   const SoftwareCard = useInfoCard({
-    title: "Software",
+    title: t("dashboard:cards.software"),
     action: {
       type: "link",
-      text: "View all software",
+      text: t("dashboard:software.viewAll"),
       to: "software",
     },
     actionUrl: softwareActionUrl,
@@ -670,16 +670,20 @@ const DashboardPage = ({ router, location }: IDashboardProps): JSX.Element => {
     [munkiCountsUpdatedAt]
   );
 
+  const platformDropdownOptions = useMemo(() => getPlatformDropdownOptions(t), [
+    t,
+  ]);
+
   const MunkiCard = useInfoCard({
-    title: "Munki",
+    title: t("dashboard:cards.munki"),
     titleDetail: munkiTitleDetail,
     showTitle: !isMacAdminsFetching,
     description: (
       <p>
-        Munki is a tool for managing software on macOS devices.{" "}
+        {t("dashboard:munkiCard.description")}{" "}
         <CustomLink
           url="https://www.munki.org/munki/"
-          text="Learn about Munki"
+          text={t("dashboard:munkiCard.linkText")}
           newTab
         />
       </p>
@@ -696,12 +700,10 @@ const DashboardPage = ({ router, location }: IDashboardProps): JSX.Element => {
   });
 
   const MDMCard = useInfoCard({
-    title: "Mobile device management (MDM)",
+    title: t("dashboard:cards.mdm"),
     titleDetail: mdmTitleDetail,
     showTitle: !isMdmFetching,
-    description: (
-      <p>MDM is used to change settings and install software on your hosts.</p>
-    ),
+    description: <p>{t("dashboard:mdm.description")}</p>,
     children: (
       <Mdm
         isFetching={isMdmFetching}
@@ -719,7 +721,7 @@ const DashboardPage = ({ router, location }: IDashboardProps): JSX.Element => {
   });
 
   const OperatingSystemsCard = useInfoCard({
-    title: "Operating systems",
+    title: t("dashboard:cards.operatingSystems"),
     showTitle: showOperatingSystemsUI,
     children: (
       <OperatingSystems
@@ -887,14 +889,14 @@ const DashboardPage = ({ router, location }: IDashboardProps): JSX.Element => {
           </div>
         </div>
         <div className={`${baseClass}__platforms`}>
-          <span>Platform:&nbsp;</span>
+          <span>{t("dashboard:platformLabel")}&nbsp;</span>
           <DropdownWrapper
             name="platform-filter"
             value={selectedPlatform || ""}
             className={`${baseClass}__platform-filter`}
-            options={[...PLATFORM_DROPDOWN_OPTIONS]}
+            options={[...platformDropdownOptions]}
             onChange={(option: SingleValue<CustomOptionType>) => {
-              const selectedPlatformOption = PLATFORM_DROPDOWN_OPTIONS.find(
+              const selectedPlatformOption = platformDropdownOptions.find(
                 (platform) => platform.value === option?.value
               );
               router.push(

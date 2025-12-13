@@ -3,6 +3,7 @@ import PATHS from "router/paths";
 import { Link } from "react-router";
 import { useQuery } from "react-query";
 import { formatDistanceToNow } from "date-fns";
+import { useTranslation } from "react-i18next";
 
 import { NotificationContext } from "context/notification";
 import { IHost, IHostResponse } from "interfaces/host";
@@ -30,6 +31,7 @@ const WelcomeHost = ({
   totalsHostsCount,
   toggleAddHostsModal,
 }: IWelcomeHostCardProps): JSX.Element => {
+  const { t } = useTranslation();
   const { renderFlash } = useContext(NotificationContext);
   const [refetchStartTime, setRefetchStartTime] = useState<number | null>(null);
   const [currentPolicyShown, setCurrentPolicyShown] = useState<IHostPolicy>();
@@ -79,14 +81,14 @@ const WelcomeHost = ({
               } else {
                 renderFlash(
                   "error",
-                  `This host is offline. Please try refetching host vitals later.`
+                  t("dashboard:welcomeHost.refetchOfflineError")
                 );
                 setShowRefetchLoadingSpinner(false);
               }
             } else {
               renderFlash(
                 "error",
-                `We're having trouble fetching fresh vitals for this host. Please try again later.`
+                t("dashboard:welcomeHost.refetchTimeoutError")
               );
               setShowRefetchLoadingSpinner(false);
             }
@@ -110,7 +112,10 @@ const WelcomeHost = ({
         });
       } catch (error) {
         console.error(error);
-        renderFlash("error", `Host "${host.display_name}" refetch error`);
+        renderFlash(
+          "error",
+          t("dashboard:welcomeHost.refetchError", { name: host.display_name })
+        );
         setShowRefetchLoadingSpinner(false);
       }
     }
@@ -139,16 +144,13 @@ const WelcomeHost = ({
     return (
       <div className={baseClass}>
         <div className={`${baseClass}__empty-hosts`}>
-          <p>Add your personal device to assess the security of your device.</p>
-          <p>
-            In Fleet, laptops, workstations, and servers are referred to as
-            &quot;hosts.&quot;
-          </p>
+          <p>{t("dashboard:welcomeHost.emptyDescription")}</p>
+          <p>{t("dashboard:welcomeHost.emptySubtext")}</p>
           <Button
             onClick={toggleAddHostsModal}
             className={`${baseClass}__add-host`}
           >
-            <span>Add hosts</span>
+            <span>{t("dashboard:welcomeHost.addHostsButton")}</span>
           </Button>
         </div>
       </div>
@@ -161,16 +163,16 @@ const WelcomeHost = ({
         <div className={`${baseClass}__error`}>
           <p className="error-message">
             <Icon name="disable" color="status-error" />
-            Your device is not communicating with Fleet.
+            {t("dashboard:welcomeHost.offlineError")}
           </p>
-          <p>Join the #fleet Slack channel for help troubleshooting.</p>
+          <p>{t("dashboard:welcomeHost.offlineHelp")}</p>
           <a
             target="_blank"
             rel="noreferrer"
             href="https://osquery.slack.com/archives/C01DXJL16D8"
           >
             <img
-              alt="Get help on Slack"
+              alt={t("dashboard:welcomeHost.slackAlt")}
               className="button-slack"
               src={SlackButton}
             />
@@ -186,16 +188,16 @@ const WelcomeHost = ({
         <div className={`${baseClass}__error`}>
           <p className="error-message">
             <Icon name="disable" color="status-error" />
-            No policies apply to your device.
+            {t("dashboard:welcomeHost.noPoliciesError")}
           </p>
-          <p>Join the #fleet Slack channel for help troubleshooting.</p>
+          <p>{t("dashboard:welcomeHost.offlineHelp")}</p>
           <a
             target="_blank"
             rel="noreferrer"
             href="https://osquery.slack.com/archives/C01DXJL16D8"
           >
             <img
-              alt="Get help on Slack"
+              alt={t("dashboard:welcomeHost.slackAlt")}
               className="button-slack"
               src={SlackButton}
             />
@@ -215,14 +217,11 @@ const WelcomeHost = ({
               {host.display_name}
               <Icon name="arrow-internal-link" />
             </Link>
-            <p>Your host is successfully connected to Fleet.</p>
+            <p>{t("dashboard:welcomeHost.connectedSuccess")}</p>
           </div>
         </div>
         <div className={`${baseClass}__blurb`}>
-          <p>
-            Fleet already ran the following policies to assess the security of
-            your device:{" "}
-          </p>
+          <p>{t("dashboard:welcomeHost.policiesBlurb")}</p>
         </div>
         <div className={`${baseClass}__policies`}>
           {host.policies?.slice(0, 3).map((p) => {
@@ -253,13 +252,13 @@ const WelcomeHost = ({
           })}
           {host.policies?.length > 3 && (
             <Link to={PATHS.HOST_POLICIES(host.id)} className="external-link">
-              Go to Host details to see all policies
+              {t("dashboard:welcomeHost.viewAllPolicies")}
               <Icon name="arrow-internal-link" />
             </Link>
           )}
         </div>
         <div className={`${baseClass}__blurb`}>
-          <p>Resolved a failing policy? Refetch your host vitals to verify.</p>
+          <p>{t("dashboard:welcomeHost.refetchBlurb")}</p>
         </div>
         <div className={`${baseClass}__refetch`}>
           <Button
@@ -269,10 +268,11 @@ const WelcomeHost = ({
             onClick={onRefetchHost}
             disabled={showRefetchLoadingSpinner}
           >
-            <Icon name="refresh" color="core-fleet-white" /> Refetch
+            <Icon name="refresh" color="core-fleet-white" />{" "}
+            {t("dashboard:welcomeHost.refetchButton")}
           </Button>
           <span>
-            Last updated{" "}
+            {t("dashboard:welcomeHost.lastUpdated")}{" "}
             {formatDistanceToNow(new Date(host.detail_updated_at), {
               addSuffix: true,
             })}
@@ -289,11 +289,14 @@ const WelcomeHost = ({
               <p>{currentPolicyShown?.description}</p>
               {currentPolicyShown?.resolution && (
                 <p>
-                  <b>Resolve:</b> {currentPolicyShown.resolution}
+                  <b>{t("dashboard:welcomeHost.modalResolve")}</b>{" "}
+                  {currentPolicyShown.resolution}
                 </p>
               )}
               <div className="modal-cta-wrap">
-                <Button onClick={() => setShowPolicyModal(false)}>Done</Button>
+                <Button onClick={() => setShowPolicyModal(false)}>
+                  {t("dashboard:welcomeHost.modalDone")}
+                </Button>
               </div>
             </>
           </Modal>

@@ -4,6 +4,7 @@
 import React from "react";
 import { CellProps, Column } from "react-table";
 import ReactTooltip from "react-tooltip";
+import { TFunction } from "i18next";
 
 import { IDeviceUser, IHost } from "interfaces/host";
 import {
@@ -80,14 +81,20 @@ const condenseDeviceUsers = (users: IDeviceUser[]): string[] => {
     : condensed;
 };
 
-const lastSeenTime = (status: string, seenTime: string): string => {
+const lastSeenTime = (
+  status: string,
+  seenTime: string,
+  t: TFunction
+): string => {
   if (status !== "online") {
-    return `Last seen: ${humanHostLastSeen(seenTime)}`;
+    return `${t("hosts:tooltips.lastSeenPrefix")} ${humanHostLastSeen(
+      seenTime
+    )}`;
   }
-  return "Online";
+  return t("hosts:tooltips.lastSeenOnline");
 };
 
-const allHostTableHeaders: IHostTableColumnConfig[] = [
+const getAllHostTableHeaders = (t: TFunction): IHostTableColumnConfig[] => [
   // We are using React Table useRowSelect functionality for the selection header.
   // More information on its API can be found here
   // https://react-table.tanstack.com/docs/api/useRowSelect
@@ -113,8 +120,12 @@ const allHostTableHeaders: IHostTableColumnConfig[] = [
     disableHidden: true,
   },
   {
+    title: t("hosts:columns.host"),
     Header: (cellProps: IHostTableHeaderProps) => (
-      <HeaderCell value="Host" isSortedDesc={cellProps.column.isSortedDesc} />
+      <HeaderCell
+        value={t("hosts:columns.host")}
+        isSortedDesc={cellProps.column.isSortedDesc}
+      />
     ),
     accessor: "display_name",
     id: "display_name",
@@ -146,10 +157,7 @@ const allHostTableHeaders: IHostTableColumnConfig[] = [
               data-html
             >
               <span className={`tooltip__tooltip-text`}>
-                This host was ordered using <br />
-                Apple Business Manager <br />
-                (ABM). You will see host <br />
-                vitals when it is enrolled in Fleet <br />
+                {t("hosts:tooltips.pendingHost")}
               </span>
             </ReactTooltip>
           </>
@@ -161,7 +169,8 @@ const allHostTableHeaders: IHostTableColumnConfig[] = [
           path={PATHS.HOST_DETAILS(cellProps.row.original.id)}
           title={lastSeenTime(
             cellProps.row.original.status,
-            cellProps.row.original.seen_time
+            cellProps.row.original.seen_time,
+            t
           )}
         />
       );
@@ -169,10 +178,10 @@ const allHostTableHeaders: IHostTableColumnConfig[] = [
     disableHidden: true,
   },
   {
-    title: "Hostname",
+    title: t("hosts:columns.hostname"),
     Header: (cellProps: IHostTableHeaderProps) => (
       <HeaderCell
-        value="Hostname"
+        value={t("hosts:columns.hostname")}
         isSortedDesc={cellProps.column.isSortedDesc}
       />
     ),
@@ -183,10 +192,10 @@ const allHostTableHeaders: IHostTableColumnConfig[] = [
     ),
   },
   {
-    title: "Computer name",
+    title: t("hosts:columns.computerName"),
     Header: (cellProps: IHostTableHeaderProps) => (
       <HeaderCell
-        value="Computer name"
+        value={t("hosts:columns.computerName")}
         isSortedDesc={cellProps.column.isSortedDesc}
       />
     ),
@@ -197,9 +206,12 @@ const allHostTableHeaders: IHostTableColumnConfig[] = [
     ),
   },
   {
-    title: "Team",
+    title: t("hosts:columns.team"),
     Header: (cellProps: IHostTableHeaderProps) => (
-      <HeaderCell value="Team" isSortedDesc={cellProps.column.isSortedDesc} />
+      <HeaderCell
+        value={t("hosts:columns.team")}
+        isSortedDesc={cellProps.column.isSortedDesc}
+      />
     ),
     accessor: "team_name",
     id: "team_name",
@@ -208,25 +220,23 @@ const allHostTableHeaders: IHostTableColumnConfig[] = [
     ),
   },
   {
-    title: "Status",
+    title: t("hosts:columns.status"),
     Header: (cellProps: IHostTableHeaderProps) => {
       const titleWithToolTip = (
         <TooltipWrapper
-          tipContent={
-            <>
-              Online hosts will respond to a live query. Offline hosts
-              won&apos;t respond to a live query because they may be shut down,
-              asleep, or not connected to the internet.
-            </>
-          }
+          tipContent={<>{t("hosts:tooltips.statusHeader")}</>}
           className="status-header"
         >
-          Status
+          {t("hosts:columns.status")}
         </TooltipWrapper>
       );
       return (
         <HeaderCell
-          value={cellProps.rows.length === 1 ? "Status" : titleWithToolTip}
+          value={
+            cellProps.rows.length === 1
+              ? t("hosts:columns.status")
+              : titleWithToolTip
+          }
           disableSortBy
         />
       );
@@ -258,9 +268,12 @@ const allHostTableHeaders: IHostTableColumnConfig[] = [
     },
   },
   {
-    title: "Issues",
+    title: t("hosts:columns.issues"),
     Header: (cellProps: IHostTableHeaderProps) => (
-      <HeaderCell value="Issues" isSortedDesc={cellProps.column.isSortedDesc} />
+      <HeaderCell
+        value={t("hosts:columns.issues")}
+        isSortedDesc={cellProps.column.isSortedDesc}
+      />
     ),
     accessor: "issues",
     id: "issues",
@@ -278,10 +291,10 @@ const allHostTableHeaders: IHostTableColumnConfig[] = [
     },
   },
   {
-    title: "Disk space available",
+    title: t("hosts:columns.diskSpaceAvailable"),
     Header: (cellProps: IHostTableHeaderProps) => (
       <HeaderCell
-        value="Disk space available"
+        value={t("hosts:columns.diskSpaceAvailable")}
         isSortedDesc={cellProps.column.isSortedDesc}
       />
     ),
@@ -310,10 +323,10 @@ const allHostTableHeaders: IHostTableColumnConfig[] = [
     },
   },
   {
-    title: "Operating system",
+    title: t("hosts:columns.operatingSystem"),
     Header: (cellProps: IHostTableHeaderProps) => (
       <HeaderCell
-        value="Operating system"
+        value={t("hosts:columns.operatingSystem")}
         isSortedDesc={cellProps.column.isSortedDesc}
       />
     ),
@@ -337,10 +350,10 @@ const allHostTableHeaders: IHostTableColumnConfig[] = [
     },
   },
   {
-    title: "Osquery",
+    title: t("hosts:columns.osquery"),
     Header: (cellProps: IHostTableHeaderProps) => (
       <HeaderCell
-        value="Osquery"
+        value={t("hosts:columns.osquery")}
         isSortedDesc={cellProps.column.isSortedDesc}
       />
     ),
@@ -354,8 +367,8 @@ const allHostTableHeaders: IHostTableColumnConfig[] = [
     },
   },
   {
-    title: "Used by",
-    Header: "Used by",
+    title: t("hosts:columns.usedBy"),
+    Header: t("hosts:columns.usedBy"),
     disableSortBy: true,
     accessor: "device_mapping",
     id: "device_mapping",
@@ -372,7 +385,10 @@ const allHostTableHeaders: IHostTableColumnConfig[] = [
             position="top"
             tipOffset={10}
           >
-            <TextCell italic value={`${numUsers} users`} />
+            <TextCell
+              italic
+              value={t("hosts:usersCount", { count: numUsers })}
+            />
           </TooltipWrapper>
         );
       }
@@ -383,10 +399,10 @@ const allHostTableHeaders: IHostTableColumnConfig[] = [
     },
   },
   {
-    title: "Private IP address",
+    title: t("hosts:columns.privateIpAddress"),
     Header: (cellProps: IHostTableHeaderProps) => (
       <HeaderCell
-        value="Private IP address"
+        value={t("hosts:columns.privateIpAddress")}
         isSortedDesc={cellProps.column.isSortedDesc}
       />
     ),
@@ -400,19 +416,11 @@ const allHostTableHeaders: IHostTableColumnConfig[] = [
     },
   },
   {
-    title: "MDM status",
+    title: t("hosts:columns.mdmStatus"),
     Header: () => {
       const titleWithToolTip = (
-        <TooltipWrapper
-          tipContent={
-            <>
-              Settings can be updated remotely on hosts with MDM turned
-              <br />
-              on. To filter by MDM status, head to the Dashboard page.
-            </>
-          }
-        >
-          MDM status
+        <TooltipWrapper tipContent={<>{t("hosts:tooltips.mdmStatus")}</>}>
+          {t("hosts:columns.mdmStatus")}
         </TooltipWrapper>
       );
       return <HeaderCell value={titleWithToolTip} disableSortBy />;
@@ -423,19 +431,11 @@ const allHostTableHeaders: IHostTableColumnConfig[] = [
     Cell: HostMdmStatusCell,
   },
   {
-    title: "MDM server URL",
+    title: t("hosts:columns.mdmServerUrl"),
     Header: () => {
       const titleWithToolTip = (
-        <TooltipWrapper
-          tipContent={
-            <>
-              The MDM server that updates settings on the host. To
-              <br />
-              filter by MDM server URL, head to the Dashboard page.
-            </>
-          }
-        >
-          MDM server URL
+        <TooltipWrapper tipContent={<>{t("hosts:tooltips.mdmServerUrl")}</>}>
+          {t("hosts:columns.mdmServerUrl")}
         </TooltipWrapper>
       );
       return <HeaderCell value={titleWithToolTip} disableSortBy />;
@@ -454,12 +454,12 @@ const allHostTableHeaders: IHostTableColumnConfig[] = [
     },
   },
   {
-    title: "Public IP address",
+    title: t("hosts:columns.publicIpAddress"),
     Header: (cellProps: IHostTableHeaderProps) => (
       <HeaderCell
         value={
-          <TooltipWrapper tipContent="The IP address the host uses to connect to Fleet.">
-            Public IP address
+          <TooltipWrapper tipContent={t("hosts:tooltips.publicIpAddress")}>
+            {t("hosts:columns.publicIpAddress")}
           </TooltipWrapper>
         }
         isSortedDesc={cellProps.column.isSortedDesc}
@@ -477,18 +477,11 @@ const allHostTableHeaders: IHostTableColumnConfig[] = [
     },
   },
   {
-    title: "Last fetched",
+    title: t("hosts:columns.lastFetched"),
     Header: (cellProps: IHostTableHeaderProps) => {
       const titleWithToolTip = (
-        <TooltipWrapper
-          tipContent={
-            <>
-              The last time the host
-              <br /> reported vitals.
-            </>
-          }
-        >
-          Last fetched
+        <TooltipWrapper tipContent={<>{t("hosts:tooltips.lastFetched")}</>}>
+          {t("hosts:columns.lastFetched")}
         </TooltipWrapper>
       );
       return (
@@ -509,18 +502,11 @@ const allHostTableHeaders: IHostTableColumnConfig[] = [
     ),
   },
   {
-    title: "Last seen",
+    title: t("hosts:columns.lastSeen"),
     Header: (cellProps: IHostTableHeaderProps) => {
       const titleWithToolTip = (
-        <TooltipWrapper
-          tipContent={
-            <>
-              The last time the <br />
-              host was online.
-            </>
-          }
-        >
-          Last seen
+        <TooltipWrapper tipContent={<>{t("hosts:tooltips.lastSeen")}</>}>
+          {t("hosts:columns.lastSeen")}
         </TooltipWrapper>
       );
       return (
@@ -545,9 +531,12 @@ const allHostTableHeaders: IHostTableColumnConfig[] = [
     },
   },
   {
-    title: "UUID",
+    title: t("hosts:columns.uuid"),
     Header: (cellProps: IHostTableHeaderProps) => (
-      <HeaderCell value="UUID" isSortedDesc={cellProps.column.isSortedDesc} />
+      <HeaderCell
+        value={t("hosts:columns.uuid")}
+        isSortedDesc={cellProps.column.isSortedDesc}
+      />
     ),
     accessor: "uuid",
     id: "uuid",
@@ -555,10 +544,10 @@ const allHostTableHeaders: IHostTableColumnConfig[] = [
       value ? <TooltipTruncatedTextCell value={value} /> : <TextCell />,
   },
   {
-    title: "Last restarted",
+    title: t("hosts:columns.lastRestarted"),
     Header: (cellProps: IHostTableHeaderProps) => (
       <HeaderCell
-        value="Last restarted"
+        value={t("hosts:columns.lastRestarted")}
         isSortedDesc={cellProps.column.isSortedDesc}
       />
     ),
@@ -581,8 +570,8 @@ const allHostTableHeaders: IHostTableColumnConfig[] = [
     },
   },
   {
-    title: "CPU",
-    Header: "CPU",
+    title: t("hosts:columns.cpu"),
+    Header: t("hosts:columns.cpu"),
     disableSortBy: true,
     accessor: "cpu_type",
     id: "cpu_type",
@@ -597,9 +586,12 @@ const allHostTableHeaders: IHostTableColumnConfig[] = [
     },
   },
   {
-    title: "RAM",
+    title: t("hosts:columns.ram"),
     Header: (cellProps: IHostTableHeaderProps) => (
-      <HeaderCell value="RAM" isSortedDesc={cellProps.column.isSortedDesc} />
+      <HeaderCell
+        value={t("hosts:columns.ram")}
+        isSortedDesc={cellProps.column.isSortedDesc}
+      />
     ),
     accessor: "memory",
     id: "memory",
@@ -616,10 +608,10 @@ const allHostTableHeaders: IHostTableColumnConfig[] = [
     },
   },
   {
-    title: "MAC address",
+    title: t("hosts:columns.macAddress"),
     Header: (cellProps: IHostTableHeaderProps) => (
       <HeaderCell
-        value="MAC address"
+        value={t("hosts:columns.macAddress")}
         isSortedDesc={cellProps.column.isSortedDesc}
       />
     ),
@@ -634,10 +626,10 @@ const allHostTableHeaders: IHostTableColumnConfig[] = [
     },
   },
   {
-    title: "Serial number",
+    title: t("hosts:columns.serialNumber"),
     Header: (cellProps: IHostTableHeaderProps) => (
       <HeaderCell
-        value="Serial number"
+        value={t("hosts:columns.serialNumber")}
         isSortedDesc={cellProps.column.isSortedDesc}
       />
     ),
@@ -657,10 +649,10 @@ const allHostTableHeaders: IHostTableColumnConfig[] = [
     },
   },
   {
-    title: "Hardware model",
+    title: t("hosts:columns.hardwareModel"),
     Header: (cellProps: IHostTableHeaderProps) => (
       <HeaderCell
-        value="Hardware model"
+        value={t("hosts:columns.hardwareModel")}
         isSortedDesc={cellProps.column.isSortedDesc}
       />
     ),
@@ -695,13 +687,15 @@ const defaultHiddenColumns = [
  * permissions and license tier of fleet they are on.
  */
 const generateAvailableTableHeaders = ({
+  t,
   isFreeTier = true,
   isOnlyObserver = true,
 }: {
+  t: TFunction;
   isFreeTier: boolean | undefined;
   isOnlyObserver: boolean | undefined;
 }): IHostTableColumnConfig[] => {
-  return allHostTableHeaders.reduce(
+  return getAllHostTableHeaders(t).reduce(
     (columns: Column<IHost>[], currentColumn: Column<IHost>) => {
       // skip over column headers that are not shown in free observer tier
       if (isFreeTier) {
@@ -735,20 +729,24 @@ const generateAvailableTableHeaders = ({
  * Will generate a host table column configuration that a user currently sees.
  */
 const generateVisibleTableColumns = ({
+  t,
   hiddenColumns,
   isFreeTier = true,
   isOnlyObserver = true,
 }: {
+  t: TFunction;
   hiddenColumns: string[];
   isFreeTier: boolean | undefined;
   isOnlyObserver: boolean | undefined;
 }): IHostTableColumnConfig[] => {
   // remove columns set as hidden by the user.
-  return generateAvailableTableHeaders({ isFreeTier, isOnlyObserver }).filter(
-    (column) => {
-      return !hiddenColumns.includes(column.id as string);
-    }
-  );
+  return generateAvailableTableHeaders({
+    t,
+    isFreeTier,
+    isOnlyObserver,
+  }).filter((column) => {
+    return !hiddenColumns.includes(column.id as string);
+  });
 };
 
 export {

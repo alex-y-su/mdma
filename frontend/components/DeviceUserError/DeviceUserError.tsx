@@ -1,4 +1,6 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
+
 import Icon from "components/Icon/Icon";
 import classNames from "classnames";
 
@@ -17,38 +19,33 @@ const DeviceUserError = ({
   isMobileView = false,
   isMobileDevice = false,
   isAuthenticationError = false,
-  platform,
 }: IDeviceUserErrorProps): JSX.Element => {
+  const { t } = useTranslation();
   const wrapperClassnames = classNames(baseClass, {
     [`${baseClass}__mobile-view`]: isMobileView,
   });
 
-  const isIOSIPadOS = platform === "ios" || platform === "ipados";
-
   // Default: "Something went wrong"
   let headerContent: React.ReactNode = (
     <>
-      <Icon name="error" /> Something went wrong
+      <Icon name="error" /> {t("common:errors.somethingWentWrong")}
     </>
   );
-  let bodyContent: React.ReactNode = <>Please contact your IT admin.</>;
+  let bodyContent: React.ReactNode = <>{t("common:errors.contactItAdmin")}</>;
 
   if (isAuthenticationError) {
     headerContent = (
       <>
         <Icon name="error" />
         {isMobileDevice
-          ? "Invalid or missing certificate"
-          : "This URL is invalid or expired."}
+          ? t("common:errors.invalidCertificate")
+          : t("common:errors.invalidUrl")}
       </>
     );
     bodyContent = isMobileDevice ? (
-      "Couldn't authenticate this device. Please contact your IT admin."
+      t("common:errors.invalidCertificateMessage")
     ) : (
-      <>
-        To access your device information, please click <br />
-        “My Device” from the Fleet Desktop menu icon.
-      </>
+      <>{t("common:errors.invalidUrlMessage")}</>
     );
   }
 

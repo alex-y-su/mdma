@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { InjectedRouter } from "react-router";
+import { useTranslation } from "react-i18next";
 import PATHS from "router/paths";
 import usersAPI from "services/entities/users";
 import formatErrorResponse from "utilities/format_error_response";
@@ -15,6 +16,7 @@ interface IForgotPasswordPage {
 }
 
 const ForgotPasswordPage = ({ router }: IForgotPasswordPage) => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isLoading, setIsLoading] = useState(false);
@@ -47,16 +49,13 @@ const ForgotPasswordPage = ({ router }: IForgotPasswordPage) => {
       return (
         <div className={`${baseClass}__text-wrapper`}>
           <p className={`${baseClass}__text`}>
-            An email was sent to{" "}
-            <span className={`${baseClass}__email`}>{email}</span>. Click the
-            link in the email to proceed with the password reset process. If you
-            did not receive an email please contact your Fleet administrator.
+            {t("auth:forgotPassword.success.message", { email })}
             <br />
             <br />
-            You can find more information on resetting passwords at the{" "}
+            {t("auth:forgotPassword.success.faqInfo")}{" "}
             <CustomLink
               url="https://fleetdm.com/docs/using-fleet/fleetctl-cli?utm_medium=fleetui&utm_campaign=get-api-token#using-fleetctl-with-an-api-only-user"
-              text="Password reset FAQ"
+              text={t("auth:forgotPassword.success.faqLink")}
               newTab
             />
           </p>
@@ -76,7 +75,7 @@ const ForgotPasswordPage = ({ router }: IForgotPasswordPage) => {
 
   return (
     <AuthenticationFormWrapper
-      header="Reset password"
+      header={t("auth:forgotPassword.title")}
       headerCta={
         <AuthenticationNav previousLocation={PATHS.LOGIN} router={router} />
       }

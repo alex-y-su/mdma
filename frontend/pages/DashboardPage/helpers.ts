@@ -1,16 +1,66 @@
+import { TFunction } from "i18next";
+
 import paths from "router/paths";
 
-/** Select platform */
-export const PLATFORM_DROPDOWN_OPTIONS = [
-  { label: "All", value: "all", path: paths.DASHBOARD },
-  { label: "macOS", value: "darwin", path: paths.DASHBOARD_MAC },
-  { label: "Windows", value: "windows", path: paths.DASHBOARD_WINDOWS },
-  { label: "Linux", value: "linux", path: paths.DASHBOARD_LINUX },
-  { label: "ChromeOS", value: "chrome", path: paths.DASHBOARD_CHROME },
-  { label: "iOS", value: "ios", path: paths.DASHBOARD_IOS },
-  { label: "iPadOS", value: "ipados", path: paths.DASHBOARD_IPADOS },
-  { label: "Android", value: "android", path: paths.DASHBOARD_ANDROID },
+/** Select platform - base config with translation keys */
+const PLATFORM_DROPDOWN_CONFIG = [
+  {
+    labelKey: "dashboard:platformDropdown.all",
+    value: "all",
+    path: paths.DASHBOARD,
+  },
+  {
+    labelKey: "dashboard:platformDropdown.macos",
+    value: "darwin",
+    path: paths.DASHBOARD_MAC,
+  },
+  {
+    labelKey: "dashboard:platformDropdown.windows",
+    value: "windows",
+    path: paths.DASHBOARD_WINDOWS,
+  },
+  {
+    labelKey: "dashboard:platformDropdown.linux",
+    value: "linux",
+    path: paths.DASHBOARD_LINUX,
+  },
+  {
+    labelKey: "dashboard:platformDropdown.chromeos",
+    value: "chrome",
+    path: paths.DASHBOARD_CHROME,
+  },
+  {
+    labelKey: "dashboard:platformDropdown.ios",
+    value: "ios",
+    path: paths.DASHBOARD_IOS,
+  },
+  {
+    labelKey: "dashboard:platformDropdown.ipados",
+    value: "ipados",
+    path: paths.DASHBOARD_IPADOS,
+  },
+  {
+    labelKey: "dashboard:platformDropdown.android",
+    value: "android",
+    path: paths.DASHBOARD_ANDROID,
+  },
 ] as const;
+
+/** Generate platform dropdown options with translated labels */
+export const getPlatformDropdownOptions = (t: TFunction) =>
+  PLATFORM_DROPDOWN_CONFIG.map((option) => ({
+    label: t(option.labelKey),
+    value: option.value,
+    path: option.path,
+  }));
+
+/** Config for path matching (without labels) */
+export const PLATFORM_DROPDOWN_OPTIONS = PLATFORM_DROPDOWN_CONFIG.map(
+  (option) => ({
+    value: option.value,
+    path: option.path,
+  })
+);
 
 /** Selected platform value mapped to built in label name */
 export const PLATFORM_NAME_TO_LABEL_NAME = {

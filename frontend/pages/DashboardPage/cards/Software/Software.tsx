@@ -3,6 +3,7 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { Row } from "react-table";
 import PATHS from "router/paths";
 import { InjectedRouter } from "react-router";
+import { useTranslation } from "react-i18next";
 
 import { getPathWithQueryParams } from "utilities/url";
 import { ISoftwareResponse } from "interfaces/software";
@@ -56,6 +57,7 @@ const Software = ({
   router,
   softwarePageIndex,
 }: ISoftwareCardProps): JSX.Element => {
+  const { t } = useTranslation();
   const tableHeaders = useMemo(() => generateTableHeaders(teamId), [teamId]);
 
   const handleRowSelect = (row: IRowProps) => {
@@ -82,10 +84,10 @@ const Software = ({
           <Tabs selectedIndex={navTabIndex} onSelect={onTabChange}>
             <TabList>
               <Tab>
-                <TabText>All</TabText>
+                <TabText>{t("dashboard:software.tabAll")}</TabText>
               </Tab>
               <Tab>
-                <TabText>Vulnerable</TabText>
+                <TabText>{t("dashboard:software.tabVulnerable")}</TabText>
               </Tab>
             </TabList>
             <TabPanel>

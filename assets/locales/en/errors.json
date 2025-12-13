@@ -1,0 +1,62 @@
+{
+  "generic": {
+    "somethingWentWrong": "Something went wrong",
+    "tryAgain": "Please try again",
+    "tryAgainLater": "Please try again later",
+    "contactSupport": "If the problem persists, please contact support",
+    "unexpectedError": "An unexpected error occurred"
+  },
+  "api": {
+    "connectionFailed": "Unable to connect to the server",
+    "timeout": "The request timed out",
+    "serverError": "Server error",
+    "notFound": "The requested resource was not found",
+    "unauthorized": "You are not authorized to perform this action",
+    "forbidden": "Access denied",
+    "rateLimited": "Too many requests. Please wait a moment and try again",
+    "invalidResponse": "Invalid response from server"
+  },
+  "auth": {
+    "invalidCredentials": "Invalid email or password",
+    "accountLocked": "Your account has been locked. Please contact support.",
+    "accountDisabled": "Your account has been disabled",
+    "sessionExpired": "Your session has expired. Please log in again.",
+    "tokenInvalid": "Invalid or expired token",
+    "emailAlreadyExists": "A user with this email address already exists"
+  },
+  "validation": {
+    "invalidInput": "Invalid input",
+    "requiredField": "This field is required",
+    "invalidFormat": "Invalid format"
+  },
+  "http": {
+    "400": "Bad request",
+    "401": "Unauthorized",
+    "403": "Forbidden",
+    "404": "Not found",
+    "408": "Request timeout",
+    "409": "Conflict",
+    "422": "Validation error",
+    "429": "Too many requests",
+    "500": "Internal server error",
+    "502": "Bad gateway",
+    "503": "Service unavailable",
+    "504": "Gateway timeout"
+  },
+  "pages": {
+    "notFound": {
+      "title": "Page not found",
+      "message": "The page you're looking for doesn't exist or has been moved.",
+      "goHome": "Go to dashboard"
+    },
+    "forbidden": {
+      "title": "Access denied",
+      "message": "You don't have permission to access this page.",
+      "goHome": "Go to dashboard"
+    },
+    "serverError": {
+      "title": "Server error",
+      "message": "Something went wrong on our end. Please try again later."
+    }
+  }
+}

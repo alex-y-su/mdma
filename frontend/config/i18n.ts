@@ -6,6 +6,7 @@ import enAuth from "../locales/en/auth.json";
 import esAuth from "../locales/es/auth.json";
 import frAuth from "../locales/fr/auth.json";
 import deAuth from "../locales/de/auth.json";
+import ruAuth from "../locales/ru/auth.json";
 
 const resources = {
   en: {
@@ -19,6 +20,9 @@ const resources = {
   },
   de: {
     auth: deAuth,
+  },
+  ru: {
+    auth: ruAuth,
   },
 };
 

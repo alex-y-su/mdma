@@ -1,4 +1,5 @@
 import React from "react";
+import i18n from "i18next";
 import { MdmProfileStatus } from "interfaces/mdm";
 import { IndicatorStatus } from "components/StatusIndicatorWithIcon/StatusIndicatorWithIcon";
 
@@ -12,7 +13,7 @@ interface IAggregateDisplayOption {
 const AGGREGATE_STATUS_DISPLAY_OPTIONS: IAggregateDisplayOption[] = [
   {
     value: "verified",
-    text: "Verified",
+    text: i18n.t("controls.osSettings.profileStatus.verified", { ns: "settings" }),
     iconName: "success",
     tooltipText: <>These hosts applied all OS settings. Fleet verified.</>,
   },
@@ -29,7 +30,7 @@ const AGGREGATE_STATUS_DISPLAY_OPTIONS: IAggregateDisplayOption[] = [
   },
   {
     value: "pending",
-    text: "Pending",
+    text: i18n.t("controls.osSettings.profileStatus.pending", { ns: "settings" }),
     iconName: "pendingPartial",
     tooltipText: (
       <>
@@ -40,7 +41,7 @@ const AGGREGATE_STATUS_DISPLAY_OPTIONS: IAggregateDisplayOption[] = [
   },
   {
     value: "failed",
-    text: "Failed",
+    text: i18n.t("controls.osSettings.profileStatus.failed", { ns: "settings" }),
     iconName: "error",
     tooltipText: (
       <>

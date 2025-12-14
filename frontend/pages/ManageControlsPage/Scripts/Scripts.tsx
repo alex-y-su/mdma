@@ -1,5 +1,6 @@
 import React from "react";
 import { InjectedRouter, Params } from "react-router/lib/Router";
+import { useTranslation } from "react-i18next";
 
 import useTeamIdParam from "hooks/useTeamIdParam";
 
@@ -30,6 +31,7 @@ interface IScriptsProps {
 }
 
 const Scripts = ({ router, location, params }: IScriptsProps) => {
+  const { t } = useTranslation("settings");
   const { section } = params;
 
   const { teamIdForApi } = useTeamIdParam({
@@ -52,8 +54,7 @@ const Scripts = ({ router, location, params }: IScriptsProps) => {
   return (
     <div className={baseClass}>
       <p className={`${baseClass}__description`}>
-        Change configuration and remediate issues on macOS, Windows, and Linux
-        hosts.{" "}
+        {t("controls.scripts.description")}{" "}
         <CustomLink
           text="Learn more"
           url={`${FLEET_WEBSITE_URL}/docs/using-fleet/scripts`}

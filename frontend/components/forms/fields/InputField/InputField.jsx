@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 import { noop, pick } from "lodash";
+import { withTranslation } from "react-i18next";
 
 import { stringToClipboard } from "utilities/copy_text";
 
@@ -145,6 +146,7 @@ class InputField extends Component {
 
   renderCopyButton = () => {
     const { onClickCopy } = this;
+    const { t } = this.props;
 
     const copyButtonValue = <Icon name="copy" />;
     const wrapperClasses = classnames(`${baseClass}__copy-wrapper`);
@@ -156,7 +158,7 @@ class InputField extends Component {
     return (
       <div className={wrapperClasses}>
         {this.state.copied && (
-          <span className={copiedConfirmationClasses}>Copied!</span>
+          <span className={copiedConfirmationClasses}>{t("messages.copiedToClipboard")}</span>
         )}
         <Button variant="icon" onClick={onClickCopy} size="small" iconStroke>
           {copyButtonValue}
@@ -287,4 +289,4 @@ class InputField extends Component {
   }
 }
 
-export default InputField;
+export default withTranslation("common")(InputField);

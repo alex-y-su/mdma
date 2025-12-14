@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useTranslation } from "react-i18next";
 import { AppContext } from "context/app";
 
 import { IPolicyStats } from "interfaces/policy";
@@ -56,35 +57,38 @@ const PoliciesTable = ({
   page,
   count,
 }: IPoliciesTableProps): JSX.Element => {
+  const { t } = useTranslation("policies");
   const { config } = useContext(AppContext);
 
-  const emptyState: IEmptyTableProps = {
-    graphicName: "empty-policies",
-    header: "You don't have any policies",
-    info:
-      "Add policies to detect device health issues and trigger automations.",
-  };
+  let emptyHeader = t("empty.title");
+  let emptyInfo = t("empty.info");
 
   if (isPremiumTier && !config?.partnerships?.enable_primo) {
     if (
       currentTeam?.id === null ||
       currentTeam?.id === APP_CONTEXT_ALL_TEAMS_ID
     ) {
-      emptyState.header += " that apply to all teams";
+      emptyHeader = t("empty.titleAllTeams");
     } else {
-      emptyState.header += " that apply to this team";
+      emptyHeader = t("empty.titleTeam");
     }
   }
 
   if (!canAddOrDeletePolicies) {
-    emptyState.info = "";
+    emptyInfo = "";
   }
+
+  const emptyState: IEmptyTableProps = {
+    graphicName: "empty-policies",
+    header: emptyHeader,
+    info: emptyInfo,
+  };
 
   if (searchQuery) {
     delete emptyState.graphicName;
     delete emptyState.primaryButton;
-    emptyState.header = "No matching policies";
-    emptyState.info = "No policies match the current filters.";
+    emptyState.header = t("empty.noMatching");
+    emptyState.info = t("empty.description");
   }
 
   const searchable = !(policiesList?.length === 0 && searchQuery === "");
@@ -119,7 +123,7 @@ const PoliciesTable = ({
         isAllPagesSelected={false}
         primarySelectAction={{
           name: "delete policy",
-          buttonText: "Delete",
+          buttonText: t("delete.delete"),
           iconSvg: "trash",
           variant: "inverse",
           onClick: onDeletePoliciesClick,
@@ -135,7 +139,7 @@ const PoliciesTable = ({
         }
         renderCount={renderPoliciesCount}
         onQueryChange={onQueryChange}
-        inputPlaceHolder="Search by name"
+        inputPlaceHolder={t("columns.name")}
         searchable={searchable}
       />
     </div>

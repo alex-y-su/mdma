@@ -33,12 +33,13 @@ type ITableHeaderProps = IHeaderProps<ISoftwareVersion>;
 
 const generateTableHeaders = (
   router: InjectedRouter,
-  teamId?: number
+  teamId?: number,
+  t?: any
 ): ISoftwareVersionsTableConfig[] => {
   const softwareTableHeaders: ISoftwareVersionsTableConfig[] = [
     {
       Header: (cellProps: ITableHeaderProps) => (
-        <HeaderCell value="Name" isSortedDesc={cellProps.column.isSortedDesc} />
+        <HeaderCell value={t ? t("columns.name") : "Name"} isSortedDesc={cellProps.column.isSortedDesc} />
       ),
       disableSortBy: false,
       accessor: "name",
@@ -66,7 +67,7 @@ const generateTableHeaders = (
       sortType: "caseInsensitive",
     },
     {
-      Header: "Version",
+      Header: t ? t("columns.version") : "Version",
       disableSortBy: true,
       accessor: "version",
       Cell: (cellProps: ITableStringCellProps) => (
@@ -74,7 +75,7 @@ const generateTableHeaders = (
       ),
     },
     {
-      Header: "Type",
+      Header: t ? t("columns.type") : "Type",
       disableSortBy: true,
       accessor: "source",
       Cell: (cellProps: ITableStringCellProps) => (
@@ -82,14 +83,14 @@ const generateTableHeaders = (
       ),
     },
     {
-      Header: "Vulnerabilities",
+      Header: t ? t("columns.vulnerabilities") : "Vulnerabilities",
       disableSortBy: true,
       accessor: "vulnerabilities",
       Cell: (cellProps: IVulnerabilitiesCellProps) => {
         if (
           ["ipados_apps", "ios_apps"].includes(cellProps.row.original.source)
         ) {
-          return <TextCell value="Not supported" grey />;
+          return <TextCell value={t ? t("columns.notSupported") : "Not supported"} grey />;
         }
         return <VulnerabilitiesCell vulnerabilities={cellProps.cell.value} />;
       },
@@ -97,7 +98,7 @@ const generateTableHeaders = (
     {
       Header: (cellProps: ITableHeaderProps) => (
         <HeaderCell
-          value="Hosts"
+          value={t ? t("columns.hosts") : "Hosts"}
           disableSortBy={false}
           isSortedDesc={cellProps.column.isSortedDesc}
         />

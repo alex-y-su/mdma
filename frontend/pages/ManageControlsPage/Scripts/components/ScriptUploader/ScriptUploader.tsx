@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import FileUploader, { ISupportedGraphicNames } from "components/FileUploader";
 import { getFileDetails } from "utilities/file/fileUtils";
@@ -18,6 +19,7 @@ const ScriptPackageUploader = ({
   selectedFile,
   onButtonClick,
 }: IScriptPackageUploaderProps) => {
+  const { t } = useTranslation("settings");
   const onFileSelect = (files: FileList | null) => {
     if (files && files.length > 0) {
       onFileSelected?.(files[0]);
@@ -25,7 +27,7 @@ const ScriptPackageUploader = ({
   };
 
   const buttonType = forModal ? "brand-inverse-icon" : undefined;
-  const buttonMessage = forModal ? "Choose file" : "Add script";
+  const buttonMessage = forModal ? "Choose file" : t("controls.scripts.addScript");
   const extension = selectedFile?.name.match(/(sh|ps1)$/i)?.[1];
   let graphicName: ISupportedGraphicNames[];
   switch (extension) {
@@ -44,7 +46,7 @@ const ScriptPackageUploader = ({
       className={baseClass}
       graphicName={graphicName}
       message="Shell (.sh) for macOS and Linux or PowerShell (.ps1) for Windows"
-      title="Upload script"
+      title={t("controls.scripts.uploadScript")}
       accept=".sh,.ps1"
       onFileUpload={onFileSelect}
       fileDetails={selectedFile ? getFileDetails(selectedFile) : undefined}

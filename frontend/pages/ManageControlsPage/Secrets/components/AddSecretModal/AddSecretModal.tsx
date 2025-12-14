@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 import Modal from "components/Modal";
 import Button from "components/buttons/Button";
 import { ISecretPayload } from "interfaces/secrets";
@@ -21,6 +22,7 @@ export interface IAddSecretModalScheduleFormData {
 }
 
 const AddSecretModal = ({ onCancel, onSave }: AddSecretModalProps) => {
+  const { t } = useTranslation("settings");
   const [secretName, setSecretName] = useState("");
   const [secretValue, setSecretValue] = useState("");
   const [isSaving, setIsSaving] = useState(false);
@@ -82,12 +84,12 @@ const AddSecretModal = ({ onCancel, onSave }: AddSecretModalProps) => {
   };
 
   return (
-    <Modal title="Add custom variable" onExit={onCancel} className={baseClass}>
+    <Modal title={t("controls.secrets.modals.add.title")} onExit={onCancel} className={baseClass}>
       <form className={`${baseClass}__add-secret-form`}>
         <InputField
           onChange={onInputChange}
           value={secretName}
-          label="Name"
+          label={t("controls.secrets.modals.add.nameLabel")}
           name="name"
           parseTarget
           helpText={
@@ -101,7 +103,7 @@ const AddSecretModal = ({ onCancel, onSave }: AddSecretModalProps) => {
         <InputField
           onChange={onInputChange}
           value={secretValue}
-          label="Value"
+          label={t("controls.secrets.modals.add.valueLabel")}
           name="value"
           parseTarget
           error={formValidation.value?.message}

@@ -1,5 +1,70 @@
 {
+  "common": {
+    "backToHome": "Back to home",
+    "backToDashboard": "Back to dashboard",
+    "tryAgain": "Try again",
+    "contactSupport": "Contact support",
+    "contactAdmin": "Contact your administrator"
+  },
+  "403": {
+    "title": "Access denied",
+    "code": "403",
+    "message": "You do not have permissions to access that page.",
+    "description": "If you believe this is an error, please contact your administrator.",
+    "possibleReasons": {
+      "title": "This might happen because:",
+      "noPermission": "You don't have the required permissions",
+      "sessionExpired": "Your session has expired",
+      "roleChanged": "Your role was recently changed"
+    }
+  },
+  "404": {
+    "title": "Oops, sorry we can't find that page!",
+    "code": "404",
+    "message": "The page you're looking for doesn't exist.",
+    "description": "The page you are looking for has either moved, or doesn't exist.",
+    "possibleReasons": {
+      "title": "This might happen because:",
+      "typo": "There's a typo in the URL",
+      "moved": "The page has been moved",
+      "deleted": "The page has been deleted"
+    },
+    "searchSuggestion": "Try searching for what you need",
+    "actions": {
+      "getHelpSlack": "Get help on Slack",
+      "fileIssue": "File an issue"
+    }
+  },
+  "500": {
+    "title": "Oh, something went wrong.",
+    "code": "500",
+    "message": "Something went wrong on our end.",
+    "description": "Please file an issue if you believe this is a bug.",
+    "possibleActions": {
+      "title": "What you can do:",
+      "refresh": "Refresh the page",
+      "wait": "Wait a few minutes and try again",
+      "contact": "Contact support if the problem persists"
+    },
+    "actions": {
+      "getHelpSlack": "Get help on Slack",
+      "fileIssue": "File an issue"
+    }
+  },
+  "network": {
+    "title": "Connection error",
+    "message": "Unable to connect to the server.",
+    "description": "Please check your internet connection and try again."
+  },
+  "timeout": {
+    "title": "Request timeout",
+    "message": "The request took too long to complete.",
+    "description": "Please try again or contact support if the problem persists."
+  },
   "generic": {
+    "title": "Something went wrong",
+    "message": "An unexpected error occurred.",
+    "description": "Please try again or contact support if the problem persists.",
     "somethingWentWrong": "Something went wrong",
     "tryAgain": "Please try again",
     "tryAgainLater": "Please try again later",

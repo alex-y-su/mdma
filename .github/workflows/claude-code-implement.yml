@@ -1,0 +1,48 @@
+name: Claude Code Implement Issue
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  implement:
+    # Only run when the 'claude' label is added
+    if: github.event.label.name == 'claude'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # IMPORTANT: Change this to the branch you want to base PRs from
+          ref: claude/i18n-auth-translation-e7kvG
+          fetch-depth: 0
+
+      - name: Run Claude Code Implementation
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            REPO: ${{ github.repository }}
+            ISSUE NUMBER: ${{ github.event.issue.number }}
+            ISSUE TITLE: ${{ github.event.issue.title }}
+
+            Please implement this issue. Read the full issue description using `gh issue view`.
+
+            Instructions:
+            1. Read the issue details thoroughly
+            2. Create a new branch from the current branch for this work
+            3. Implement the changes as described in the issue
+            4. Commit your changes with clear commit messages
+            5. Push the branch and create a PR targeting the base branch (claude/i18n-auth-translation-e7kvG)
+
+            Use the repository's CLAUDE.md for guidance on style and conventions.
+
+            After creating the PR, comment on the original issue with a link to the PR.
+
+          claude_args: '--allowed-tools "Bash(git *),Bash(gh issue *),Bash(gh pr *),Bash(npm *),Read,Write,Edit,Glob,Grep"'

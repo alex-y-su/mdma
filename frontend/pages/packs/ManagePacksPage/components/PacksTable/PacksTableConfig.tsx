@@ -65,7 +65,7 @@ interface IPackTableData {
 
 // NOTE: cellProps come from react-table
 // more info here https://react-table.tanstack.com/docs/api/useTable#cell-properties
-const generateTableHeaders = (): IDataColumn[] => {
+const generateTableHeaders = (t: any): IDataColumn[] => {
   const tableHeaders: IDataColumn[] = [
     {
       id: "selection",
@@ -89,7 +89,7 @@ const generateTableHeaders = (): IDataColumn[] => {
       disableHidden: true,
     },
     {
-      title: "Name",
+      title: t("packs.columns.name"),
       Header: (cellProps) => (
         <HeaderCell
           value={cellProps.column.title}
@@ -105,7 +105,7 @@ const generateTableHeaders = (): IDataColumn[] => {
       ),
     },
     {
-      title: "Queries",
+      title: t("packs.columns.queriesCount"),
       Header: (cellProps) => (
         <HeaderCell
           value={cellProps.column.title}
@@ -118,7 +118,7 @@ const generateTableHeaders = (): IDataColumn[] => {
       ),
     },
     {
-      title: "Hosts",
+      title: t("packs.columns.hostsCount"),
       Header: (cellProps) => (
         <HeaderCell
           value={cellProps.column.title}
@@ -131,7 +131,7 @@ const generateTableHeaders = (): IDataColumn[] => {
       ),
     },
     {
-      title: "Last modified",
+      title: t("packs.columns.lastModified"),
       Header: (cellProps) => (
         <HeaderCell
           value={cellProps.column.title}
@@ -144,8 +144,8 @@ const generateTableHeaders = (): IDataColumn[] => {
       ),
     },
     {
-      title: "Status",
-      Header: "Status",
+      title: t("packs.columns.status"),
+      Header: t("packs.columns.status"),
       disableSortBy: true,
       accessor: "status",
       Cell: (cellProps) => <StatusIndicator value={cellProps.cell.value} />,

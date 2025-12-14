@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 import { IMdmSolution } from "interfaces/mdm";
 
@@ -30,9 +31,10 @@ const MdmSolutionModal = ({
   selectedTeamId,
   onCancel,
 }: IMdmSolutionModalProps) => {
+  const { t } = useTranslation("dashboard");
   const solutionsTableHeaders = useMemo(
-    () => generateSolutionsTableHeaders(selectedTeamId),
-    [selectedTeamId]
+    () => generateSolutionsTableHeaders(selectedTeamId, t),
+    [selectedTeamId, t]
   );
   const solutionsDataSet = generateSolutionsDataSet(
     mdmSolutions,
@@ -66,7 +68,7 @@ const MdmSolutionModal = ({
         </div>
         <div className="modal-cta-wrap">
           <Button type="button" onClick={onCancel}>
-            Done
+            {t("mdmSolutionModal.done")}
           </Button>
         </div>
       </>

@@ -2,6 +2,7 @@
 // disable this rule as it was throwing an error in Header and Cell component
 // definitions for the selection row for some reason when we dont really need it.
 import React from "react";
+import { useTranslation } from "react-i18next";
 import PATHS from "router/paths";
 
 import { secondsToDhms } from "utilities/helpers";
@@ -119,6 +120,7 @@ interface IGenerateColumnConfigs {
   currentUser: IUser;
   currentTeamId?: number;
   omitSelectionColumn?: boolean;
+  t: (key: string) => string;
 }
 
 // NOTE: cellProps come from react-table
@@ -127,6 +129,7 @@ const generateColumnConfigs = ({
   currentUser,
   currentTeamId,
   omitSelectionColumn = false,
+  t,
 }: IGenerateColumnConfigs): IDataColumn[] => {
   const isCurrentTeamObserverOrGlobalObserver = currentTeamId
     ? isTeamObserver(currentUser, currentTeamId)
@@ -135,7 +138,7 @@ const generateColumnConfigs = ({
 
   const tableHeaders: IDataColumn[] = [
     {
-      title: "Name",
+      title: t("columns.name"),
       Header: (cellProps) => (
         <HeaderCell
           value={cellProps.column.title}
@@ -184,8 +187,8 @@ const generateColumnConfigs = ({
       sortType: "caseInsensitive",
     },
     {
-      title: "Platform",
-      Header: "Targeted platforms",
+      title: t("columns.platform"),
+      Header: t("columns.platform"),
       disableSortBy: true,
       accessor: "platform",
       Cell: (cellProps: IPlatformCellProps): JSX.Element => {
@@ -205,8 +208,8 @@ const generateColumnConfigs = ({
       },
     },
     {
-      title: "Interval",
-      Header: "Interval",
+      title: t("columns.frequency"),
+      Header: t("columns.frequency"),
       disableSortBy: true,
       accessor: "interval",
       Cell: (cellProps: INumberCellProps): JSX.Element => {
@@ -224,12 +227,12 @@ const generateColumnConfigs = ({
       },
     },
     {
-      title: "Performance impact",
+      title: t("columns.performance"),
       Header: () => {
         return (
           <div>
             <TooltipWrapper tipContent="The average performance impact across all hosts.">
-              Performance impact
+              {t("columns.performance")}
             </TooltipWrapper>
           </div>
         );
@@ -246,8 +249,8 @@ const generateColumnConfigs = ({
       ),
     },
     {
-      title: "Automations",
-      Header: "Automations",
+      title: t("columns.automations"),
+      Header: t("columns.automations"),
       disableSortBy: true,
       accessor: "automations_enabled",
       Cell: (cellProps: IBoolCellProps): JSX.Element => {
@@ -260,7 +263,7 @@ const generateColumnConfigs = ({
       },
     },
     {
-      title: "Last modified",
+      title: t("columns.lastModified"),
       Header: (cellProps) => (
         <HeaderCell
           value={cellProps.column.title}

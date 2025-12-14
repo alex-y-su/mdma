@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useQuery } from "react-query";
+import { useTranslation } from "react-i18next";
 
 import { AppContext } from "context/app";
 import { NotificationContext } from "context/notification";
@@ -35,6 +36,7 @@ const DiskEncryption = ({
   onMutation,
   router,
 }: IDiskEncryptionProps) => {
+  const { t } = useTranslation("settings");
   const { isPremiumTier, config, setConfig } = useContext(AppContext);
   const { renderFlash } = useContext(NotificationContext);
 
@@ -172,7 +174,7 @@ const DiskEncryption = ({
 
   return (
     <div className={baseClass}>
-      <SectionHeader title="Disk encryption" alignLeftHeaderVertically />
+      <SectionHeader title={t("controls.osSettings.diskEncryption.title")} alignLeftHeaderVertically />
       <PageDescription
         variant="right-panel"
         content={

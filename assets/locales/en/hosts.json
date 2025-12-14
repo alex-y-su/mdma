@@ -13,7 +13,10 @@
     "queries": "Queries",
     "policies": "Policies",
     "scripts": "Scripts",
-    "activity": "Activity"
+    "activity": "Activity",
+    "inventory": "Inventory",
+    "library": "Library",
+    "backToAllHosts": "Back to all hosts"
   },
   "status": {
     "online": "Online",
@@ -246,5 +249,99 @@
     "title": "Munki issues",
     "noIssuesDetected": "No Munki issues detected",
     "noIssuesInfo": "The last time Munki ran on this host, no issues were reported."
+  },
+  "detailsPage": {
+    "title": "Host details",
+    "banners": {
+      "refetching": "Refetching host data...",
+      "mdmOff": "MDM is turned off for this host",
+      "pendingLock": "Lock pending",
+      "pendingWipe": "Wipe pending"
+    }
+  },
+  "header": {
+    "hostname": "Hostname",
+    "platform": "Platform",
+    "osVersion": "OS version",
+    "status": "Status",
+    "team": "Team",
+    "myDevice": "My device",
+    "lastFetched": "Last fetched"
+  },
+  "summary": {
+    "osSettings": "OS settings",
+    "bootstrapPackage": "Bootstrap package",
+    "diskEncryption": "Disk encryption",
+    "mdm": "MDM"
+  },
+  "activityItems": {
+    "canceledInstall": "Canceled software install",
+    "canceledScript": "Canceled script run",
+    "canceledUninstall": "Canceled software uninstall",
+    "installedSoftware": "Installed software",
+    "lockedHost": "Locked host",
+    "ranScript": "Ran script",
+    "readDiskKey": "Read disk encryption key",
+    "unlockedHost": "Unlocked host",
+    "wipedHost": "Wiped host"
+  },
+  "modals": {
+    "lock": {
+      "title": "Lock host",
+      "message": "Are you sure you want to lock this host?",
+      "warning": "The user will be locked out of their device.",
+      "description": "Lock a host when it needs to be returned to your organization.",
+      "descriptionIos": "This will enable Lost Mode. It can only be unlocked through Fleet.",
+      "generatePin": "Fleet will generate a six-digit unlock PIN.",
+      "confirmMessage": "Please check to confirm:",
+      "confirmCheckbox": "I wish to lock",
+      "buttonLock": "Lock",
+      "buttonCancel": "Cancel",
+      "successMessage": "Locking host or will lock when it comes online.",
+      "endUserExperience": "End user experience",
+      "organizationNameNote": "Instead of \"Fleet\", the message will show the Organization Name that you configured in Organization settings."
+    },
+    "unlock": {
+      "title": "Unlock host",
+      "message": "Enter the unlock PIN to unlock this host."
+    },
+    "wipe": {
+      "title": "Wipe host",
+      "message": "Are you sure you want to wipe this host?",
+      "warning": "All data will be permanently deleted."
+    },
+    "diskEncryptionKey": {
+      "title": "Disk encryption key",
+      "copyKey": "Copy key"
+    },
+    "runScript": {
+      "title": "Run script",
+      "selectScript": "Select a script to run"
+    }
+  },
+  "selfService": {
+    "title": "Self-service",
+    "install": "Install",
+    "uninstall": "Uninstall",
+    "update": "Update",
+    "categories": "Categories",
+    "allApps": "All apps"
+  },
+  "certificates": {
+    "title": "Certificates",
+    "noCertificates": "No certificates found"
+  },
+  "deviceUser": {
+    "title": "My device",
+    "settingUp": "Setting up your device",
+    "enrollMdm": "Enroll in MDM",
+    "bitlockerPin": "BitLocker PIN",
+    "createLinuxKey": "Create Linux encryption key"
+  },
+  "osSettingsModal": {
+    "title": "OS settings",
+    "status": "Status",
+    "profile": "Profile",
+    "actionRequired": "Action required"
   }
 }

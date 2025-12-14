@@ -58,12 +58,13 @@ const generateTableHeaders = (
   isPremiumTier?: boolean,
   router?: InjectedRouter,
   configOptions?: IVulnerabilitiesTableConfigOptions,
-  teamId?: number
+  teamId?: number,
+  t?: any
 ): IDataColumn[] => {
   const tableHeaders: IDataColumn[] = [
     {
-      title: "Vulnerability",
-      Header: "Vulnerability",
+      title: t ? t("vulnerabilities.vulnerability") : "Vulnerability",
+      Header: t ? t("vulnerabilities.vulnerability") : "Vulnerability",
       disableSortBy: true,
       accessor: "cve",
       Cell: (cellProps: ITextCellProps) => {
@@ -100,20 +101,15 @@ const generateTableHeaders = (
       },
     },
     {
-      title: "Severity",
+      title: t ? t("vulnerabilities.severity") : "Severity",
       accessor: "cvss_score",
       disableSortBy: false,
       Header: (headerProps: IHeaderProps): JSX.Element => {
         const titleWithTooltip = (
           <TooltipWrapper
-            tipContent={
-              <>
-                The worst case impact across different environments (CVSS
-                version 3.x base score).
-              </>
-            }
+            tipContent={t ? t("vulnerabilities.severityTooltip") : "The worst case impact across different environments (CVSS version 3.x base score)."}
           >
-            Severity
+            {t ? t("vulnerabilities.severity") : "Severity"}
           </TooltipWrapper>
         );
         return (
@@ -130,23 +126,17 @@ const generateTableHeaders = (
       ),
     },
     {
-      title: "Probability of exploit",
+      title: t ? t("vulnerabilities.probabilityOfExploit") : "Probability of exploit",
       accessor: "epss_probability",
       disableSortBy: false,
       Header: (headerProps: IHeaderProps): JSX.Element => {
         const titleWithTooltip = (
           <TooltipWrapper
             className="epss_probability"
-            tipContent={
-              <>
-                The probability that this vulnerability will be exploited in the
-                next 30 days (EPSS probability). <br />
-                This data is reported by FIRST.org.
-              </>
-            }
+            tipContent={t ? t("vulnerabilities.probabilityTooltip") : "The probability that this vulnerability will be exploited in the next 30 days (EPSS probability). This data is reported by FIRST.org."}
             fixedPositionStrategy
           >
-            Probability of exploit
+            {t ? t("vulnerabilities.probabilityOfExploit") : "Probability of exploit"}
           </TooltipWrapper>
         );
         return (
@@ -166,20 +156,15 @@ const generateTableHeaders = (
       ),
     },
     {
-      title: "Published",
+      title: t ? t("vulnerabilities.published") : "Published",
       accessor: "cve_published",
       disableSortBy: false,
       Header: (headerProps: IHeaderProps): JSX.Element => {
         const titleWithTooltip = (
           <TooltipWrapper
-            tipContent={
-              <>
-                The date this vulnerability was published in the National
-                Vulnerability Database (NVD).
-              </>
-            }
+            tipContent={t ? t("vulnerabilities.publishedTooltip") : "The date this vulnerability was published in the National Vulnerability Database (NVD)."}
           >
-            Published
+            {t ? t("vulnerabilities.published") : "Published"}
           </TooltipWrapper>
         );
         return (
@@ -202,17 +187,15 @@ const generateTableHeaders = (
       },
     },
     {
-      title: "Detected",
+      title: t ? t("vulnerabilities.detected") : "Detected",
       accessor: "created_at",
       disableSortBy: false,
       Header: (headerProps: IHeaderProps): JSX.Element => {
         const titleWithTooltip = (
           <TooltipWrapper
-            tipContent={
-              <>The date this vulnerability first appeared on a host.</>
-            }
+            tipContent={t ? t("vulnerabilities.detectedTooltip") : "The date this vulnerability first appeared on a host."}
           >
-            Detected
+            {t ? t("vulnerabilities.detected") : "Detected"}
           </TooltipWrapper>
         );
         return (
@@ -236,10 +219,10 @@ const generateTableHeaders = (
       },
     },
     {
-      title: "Hosts",
+      title: t ? t("columns.hosts") : "Hosts",
       Header: (cellProps: IHeaderProps): JSX.Element => (
         <HeaderCell
-          value="Hosts"
+          value={t ? t("columns.hosts") : "Hosts"}
           disableSortBy={false}
           isSortedDesc={cellProps.column.isSortedDesc}
         />

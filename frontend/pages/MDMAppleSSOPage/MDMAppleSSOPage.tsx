@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useQuery } from "react-query";
 import { AxiosError } from "axios";
 import { WithRouterProps } from "react-router";
+import { useTranslation } from "react-i18next";
 
 import mdmAPI, { IMDMSSOParams } from "services/entities/mdm";
 
@@ -17,6 +18,7 @@ const baseClass = "mdm-apple-sso-page";
 const DEPSSOLoginPage = ({
   location: { pathname, query },
 }: WithRouterProps<object, IMDMSSOParams>) => {
+  const { t } = useTranslation("auth");
   const [clickedLogin, setClickedLogin] = useState(false);
   localStorage.setItem("deviceinfo", query.deviceinfo || "");
   if (!query.initiator) {
@@ -40,24 +42,23 @@ const DEPSSOLoginPage = ({
 
   if (query.initiator === "setup_experience") {
     return (
-      <AuthenticationFormWrapper header="Authentication required">
+      <AuthenticationFormWrapper header={t("mdmSSO.authRequired")}>
         <div className={`${baseClass} form`}>
           <p>
-            Your organization requires you to authenticate before setting up
-            your device. Please sign in to continue.
+            {t("mdmSSO.orgRequiresAuth")}
           </p>
           <Button
             className={`${baseClass}__sso-btn`}
             type="button"
-            title="Single sign-on"
+            title={t("mdmSSO.ssoTitle")}
             onClick={() => setClickedLogin(true)}
             isLoading={clickedLogin}
           >
-            <div>Sign in</div>
+            <div>{t("mdmSSO.signIn")}</div>
           </Button>
           <p className={`${baseClass}__transparency-link`}>
             <CustomLink
-              text="Why am I seeing this?"
+              text={t("mdmSSO.whyLink")}
               url="https://fleetdm.com/better"
               newTab
             />

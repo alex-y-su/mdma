@@ -100,7 +100,7 @@ const SoftwareTable = ({
   isLoading,
   onAddFiltersClick,
 }: ISoftwareTableProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("software");
 
   const currentPath = showVersions
     ? PATHS.SOFTWARE_VERSIONS
@@ -189,8 +189,8 @@ const SoftwareTable = ({
 
   const softwareTableHeaders = useMemo(() => {
     if (!data) return [];
-    return generateTableConfig(router, teamId);
-  }, [generateTableConfig, data, router, teamId]);
+    return generateTableConfig(router, teamId, t);
+  }, [generateTableConfig, data, router, teamId, t]);
 
   // Determines if a user should be able to filter or search in the table
   const hasData = tableData && tableData.length > 0;
@@ -264,14 +264,14 @@ const SoftwareTable = ({
         {tableData && data?.counts_updated_at && (
           <LastUpdatedText
             lastUpdatedAt={data.counts_updated_at}
-            customTooltipText={t("software:table.lastUpdatedTooltip")}
+            customTooltipText={t("table.lastUpdatedTooltip")}
           />
         )}
         <Slider
           value={showVersions}
           onChange={handleShowVersionsToggle}
-          inactiveText={t("software:table.showVersions")}
-          activeText={t("software:table.showVersions")}
+          inactiveText={t("table.showVersions")}
+          activeText={t("table.showVersions")}
         />
       </>
     );
@@ -324,10 +324,10 @@ const SoftwareTable = ({
 
   const renderTableHelpText = () => (
     <div>
-      {t("software:table.helpText")}{" "}
+      {t("table.helpText")}{" "}
       <CustomLink
         url={GITHUB_NEW_ISSUE_LINK}
-        text={t("software:table.helpLink")}
+        text={t("table.helpLink")}
         newTab
       />
     </div>
@@ -359,7 +359,7 @@ const SoftwareTable = ({
         isAllPagesSelected={false}
         disableNextPage={!data?.meta.has_next_results}
         searchable={showFilterHeaders}
-        inputPlaceHolder={t("software:table.searchPlaceholder")}
+        inputPlaceHolder={t("table.searchPlaceholder")}
         onQueryChange={onQueryChange}
         // additionalQueries serves as a trigger for the useDeepEffect hook
         // to fire onQueryChange for events happening outside of

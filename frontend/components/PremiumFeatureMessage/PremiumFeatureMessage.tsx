@@ -1,5 +1,6 @@
 import React from "react";
 import classnames from "classnames";
+import { useTranslation } from "react-i18next";
 
 import CustomLink from "components/CustomLink";
 import Icon from "components/Icon";
@@ -16,6 +17,7 @@ const PremiumFeatureMessage = ({
   className,
   alignment,
 }: IPremiumFeatureMessage) => {
+  const { t } = useTranslation("common");
   const classes = classnames(
     baseClass,
     {
@@ -28,11 +30,11 @@ const PremiumFeatureMessage = ({
     <div className={classes}>
       <div className="premium-feature-message">
         <Icon name="premium-feature" />
-        <p>This feature is included in Fleet Premium.</p>
+        <p>{t("premium.featureUnavailable")}</p>
         <div className="external-link-and-icon">
           <CustomLink
             url="https://fleetdm.com/upgrade"
-            text="Learn more"
+            text={t("premium.learnMore")}
             newTab
           />
         </div>

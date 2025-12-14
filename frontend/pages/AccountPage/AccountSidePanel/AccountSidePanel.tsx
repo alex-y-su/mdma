@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { IUser } from "interfaces/user";
 import { IVersionData } from "interfaces/version";
@@ -32,6 +33,7 @@ const AccountSidePanel = ({
   onChangePassword,
   onGetApiToken,
 }: IAccountSidePanelProps): JSX.Element => {
+  const { t } = useTranslation("auth");
   const { isPremiumTier, config } = useContext(AppContext);
   const [versionData, setVersionData] = useState<IVersionData>();
 
@@ -72,12 +74,12 @@ const AccountSidePanel = ({
           target="_blank"
           rel="noopener noreferrer"
         >
-          Change photo at Gravatar
+          {t("account.changePhotoGravatar")}
         </a>
       </div>
       {isPremiumTier && (
         <DataSet
-          title="Teams"
+          title={t("account.teams")}
           value={
             <span
               className={`${
@@ -89,15 +91,15 @@ const AccountSidePanel = ({
           }
         />
       )}
-      <DataSet title="Role" value={roleText} />
+      <DataSet title={t("account.role")} value={roleText} />
       {isPremiumTier && config && (
         <DataSet
-          title="License expiration date"
+          title={t("account.licenseExpiration")}
           value={readableDate(config.license.expiration)}
         />
       )}
       <DataSet
-        title="Password"
+        title={t("account.password")}
         value={
           <div className={`${baseClass}__password-info`}>
             <Button
@@ -105,16 +107,16 @@ const AccountSidePanel = ({
               disabled={ssoEnabled}
               className={`${baseClass}__button`}
             >
-              Change password
+              {t("account.changePasswordButton")}
             </Button>
             <div className={`${baseClass}__last-updated`}>
-              Last changed: {lastUpdatedAt}
+              {t("account.lastChanged")}: {lastUpdatedAt}
             </div>
           </div>
         }
       />
       <Button onClick={onGetApiToken} className={`${baseClass}__button`}>
-        Get API token
+        {t("account.getApiToken")}
       </Button>
       <span
         className={`${baseClass}__version`}
@@ -125,7 +127,7 @@ const AccountSidePanel = ({
           target="_blank"
           rel="noopener noreferrer"
         >
-          Privacy policy
+          {t("account.privacyPolicy")}
         </a>
       </span>
     </div>

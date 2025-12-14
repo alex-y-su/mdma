@@ -6,7 +6,10 @@
     "editQuery": "Edit query",
     "deleteQuery": "Delete query",
     "runQuery": "Run query",
-    "liveQuery": "Live query"
+    "liveQuery": "Live query",
+    "searchPlaceholder": "Search queries by name",
+    "automationsEnabled": "Automations enabled",
+    "automationsDisabled": "Automations disabled"
   },
   "columns": {
     "name": "Name",
@@ -15,7 +18,9 @@
     "lastModified": "Last modified",
     "frequency": "Frequency",
     "performance": "Performance impact",
-    "automations": "Automations"
+    "automations": "Automations",
+    "hostsTargeted": "Hosts targeted",
+    "hostsResponded": "Hosts responded"
   },
   "details": {
     "title": "Query details",
@@ -25,7 +30,10 @@
     "performance": "Performance impact",
     "schedule": "Schedule",
     "logging": "Logging",
-    "automations": "Automations"
+    "automations": "Automations",
+    "report": "Report",
+    "lastRun": "Last run",
+    "totalResults": "Total results"
   },
   "create": {
     "title": "Create query",
@@ -34,10 +42,23 @@
     "sql": "SQL query",
     "platform": "Platform",
     "performanceImpact": "Performance impact",
-    "submitButton": "Save query"
+    "submitButton": "Save query",
+    "namePlaceholder": "Enter query name",
+    "descriptionPlaceholder": "Enter description (optional)",
+    "sqlPlaceholder": "SELECT * FROM ...",
+    "nameRequired": "Query name is required",
+    "sqlRequired": "SQL query is required"
+  },
+  "edit": {
+    "title": "Edit query",
+    "saveChanges": "Save changes",
+    "discardChanges": "Discard changes",
+    "confirmDiscard": "Are you sure you want to discard your changes?",
+    "unsavedChanges": "You have unsaved changes"
   },
   "run": {
     "title": "Run query",
+    "liveQuery": "Live query",
     "selectHosts": "Select hosts",
     "selectLabels": "Select labels",
     "selectTeams": "Select teams",
@@ -45,28 +66,165 @@
     "stopButton": "Stop",
     "results": "Results",
     "noResults": "No results",
-    "exportResults": "Export results"
+    "exportResults": "Export results",
+    "running": "Running...",
+    "stopped": "Query stopped",
+    "completed": "Query completed",
+    "hostsResponding": "{{count}} host responding",
+    "hostsResponding_plural": "{{count}} hosts responding"
   },
   "performance": {
     "minimal": "Minimal",
     "low": "Low",
     "medium": "Medium",
     "high": "High",
-    "excessive": "Excessive"
+    "excessive": "Excessive",
+    "unknown": "Unknown"
   },
   "schedule": {
     "title": "Schedule",
     "frequency": "Frequency",
     "enabled": "Enabled",
     "disabled": "Disabled",
+    "never": "Never",
     "daily": "Daily",
     "weekly": "Weekly",
     "monthly": "Monthly",
-    "custom": "Custom"
+    "custom": "Custom",
+    "interval": "Every {{value}} {{unit}}"
+  },
+  "automations": {
+    "title": "Query automations",
+    "manage": "Manage automations",
+    "webhook": "Webhook",
+    "logging": "Logging",
+    "enabled": "Enabled",
+    "disabled": "Disabled"
+  },
+  "modals": {
+    "delete": {
+      "title": "Delete query",
+      "message": "Are you sure you want to delete \"{{name}}\"?",
+      "warning": "This action cannot be undone.",
+      "deleteButton": "Delete",
+      "cancelButton": "Cancel"
+    },
+    "saveNew": {
+      "title": "Save new query",
+      "nameLabel": "Query name",
+      "descriptionLabel": "Description",
+      "saveButton": "Save",
+      "cancelButton": "Cancel"
+    },
+    "saveAsNew": {
+      "title": "Save as new query",
+      "message": "Save a copy of this query with a new name."
+    },
+    "confirmSave": {
+      "title": "Save changes",
+      "message": "Do you want to save your changes to this query?"
+    },
+    "previewData": {
+      "title": "Preview data",
+      "noData": "No data available"
+    }
   },
   "empty": {
     "title": "No queries found",
     "description": "No queries match the current filters",
-    "addFirst": "Create your first query to get started"
+    "addFirst": "Create your first query to get started",
+    "noResults": "No results",
+    "noResultsDescription": "This query returned no results"
+  },
+  "report": {
+    "title": "Query report",
+    "lastUpdated": "Last updated",
+    "hostsReported": "Hosts reported",
+    "exportCsv": "Export CSV"
+  },
+  "packs": {
+    "title": "Packs",
+    "manage": {
+      "title": "Manage packs",
+      "description": "Manage query packs to schedule recurring queries for your hosts.",
+      "createButton": "Create new pack",
+      "pack": "pack",
+      "packs": "packs",
+      "query": "query",
+      "queries": "queries",
+      "deleteSuccess": "Successfully deleted {{packOrPacks}}.",
+      "deleteError": "Unable to delete {{packOrPacks}}. Please try again.",
+      "enableDisableSuccess": "Successfully {{enableOrDisable}} selected {{packOrPacks}}.",
+      "enableDisableError": "Unable to {{enableOrDisable}} selected {{packOrPacks}}. Please try again."
+    },
+    "columns": {
+      "name": "Name",
+      "queriesCount": "Queries",
+      "hostsCount": "Hosts",
+      "lastModified": "Last modified",
+      "status": "Status"
+    },
+    "table": {
+      "searchPlaceholder": "Search by name"
+    },
+    "actions": {
+      "enable": "Enable",
+      "disable": "Disable",
+      "delete": "Delete"
+    },
+    "empty": {
+      "noPacks": "You don't have any packs",
+      "description": "Query packs allow you to schedule recurring queries for your hosts.",
+      "noMatch": "No packs match the current search criteria",
+      "tryAgain": "Expecting to see packs? Try again in a few seconds as the system catches up."
+    },
+    "edit": {
+      "backButton": "Back to packs",
+      "updateSuccess": "Successfully updated this pack.",
+      "updateError": "Could not update pack. Please try again.",
+      "duplicateNameError": "Unable to update pack. Pack names must be unique.",
+      "removeQuerySuccess": "Successfully removed {{queryOrQueries}} from this pack.",
+      "removeQueryError": "Unable to remove {{queryOrQueries}} from this pack. Please try again."
+    },
+    "create": {
+      "success": "Pack successfully created. Add queries to your pack.",
+      "error": "Unable to create pack.",
+      "duplicateNameError": "Unable to create pack. Pack names must be unique."
+    },
+    "status": {
+      "enabled": "Enabled",
+      "disabled": "Disabled"
+    },
+    "modals": {
+      "delete": {
+        "title": "Delete pack",
+        "message": "Are you sure you want to delete the selected packs?",
+        "deleteButton": "Delete",
+        "cancelButton": "Cancel"
+      },
+      "queryEditor": {
+        "addQueryTitle": "Add query",
+        "selectQueryPlaceholder": "Select query",
+        "selectPlaceholder": "Select",
+        "frequency": "Frequency (seconds)",
+        "logging": "Logging",
+        "platform": "Platform",
+        "minVersion": "Minimum osquery version",
+        "shard": "Shard (percentage)",
+        "saveButton": "Save",
+        "addButton": "Add query",
+        "cancelButton": "Cancel",
+        "errors": {
+          "frequencyPositive": "Frequency must be an integer greater than zero",
+          "frequencyMax": "Frequency must be an integer that does not exceed 604,800 (i.e. 7 days)"
+        }
+      },
+      "removeQuery": {
+        "title": "Remove queries",
+        "message": "Are you sure you want to remove the selected {{queryOrQueries}} from your pack?",
+        "removeButton": "Remove",
+        "cancelButton": "Cancel"
+      }
+    }
   }
 }

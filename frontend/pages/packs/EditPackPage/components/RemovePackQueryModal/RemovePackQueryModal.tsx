@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import Modal from "components/Modal";
 import Button from "components/buttons/Button";
@@ -21,18 +22,18 @@ const RemovePackQueryModal = ({
   selectedQueryIds,
   isUpdatingPack,
 }: IRemovePackQueryModalProps): JSX.Element => {
+  const { t } = useTranslation("queries");
   const queryOrQueries =
-    selectedQuery || selectedQueryIds?.length === 1 ? "query" : "queries";
+    selectedQuery || selectedQueryIds?.length === 1 ? t("packs.manage.query") : t("packs.manage.queries");
   return (
     <Modal
-      title="Remove queries"
+      title={t("packs.modals.removeQuery.title")}
       onExit={onCancel}
       onEnter={onSubmit}
       className={baseClass}
     >
       <div className={baseClass}>
-        Are you sure you want to remove the selected {queryOrQueries} from your
-        pack?
+        {t("packs.modals.removeQuery.message", { queryOrQueries })}
         <div className="modal-cta-wrap">
           <Button
             type="button"
@@ -41,10 +42,10 @@ const RemovePackQueryModal = ({
             className="remove-loading"
             isLoading={isUpdatingPack}
           >
-            Remove
+            {t("packs.modals.removeQuery.removeButton")}
           </Button>
           <Button onClick={onCancel} variant="inverse-alert">
-            Cancel
+            {t("packs.modals.removeQuery.cancelButton")}
           </Button>
         </div>
       </div>

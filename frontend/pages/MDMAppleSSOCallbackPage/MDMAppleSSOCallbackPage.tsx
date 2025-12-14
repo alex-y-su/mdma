@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { WithRouterProps } from "react-router";
+import { useTranslation } from "react-i18next";
 
 import endpoints from "utilities/endpoints";
 
@@ -31,6 +32,7 @@ const EnrollmentGate = ({
   initiator,
   error,
 }: IEnrollmentGateProps) => {
+  const { t } = useTranslation("auth");
   const [showEULA, setShowEULA] = useState(Boolean(eulaToken));
 
   const deviceinfo = localStorage.getItem("deviceinfo") || "";
@@ -41,9 +43,9 @@ const EnrollmentGate = ({
 
   if (initiator === "setup_experience") {
     return (
-      <AuthenticationFormWrapper header="Authentication complete">
+      <AuthenticationFormWrapper header={t("mdmSSOCallback.authComplete")}>
         <div className={`${baseClass} form`}>
-          <p>You’re done! You may now close this window.</p>
+          <p>{t("mdmSSOCallback.doneMessage")}</p>
         </div>
       </AuthenticationFormWrapper>
     );
@@ -52,7 +54,7 @@ const EnrollmentGate = ({
   if (showEULA && eulaToken) {
     return (
       <div className={`${baseClass}__eula-wrapper`}>
-        <h3>Terms and conditions</h3>
+        <h3>{t("mdmSSOCallback.termsAndConditions")}</h3>
         <iframe
           src={`/api${endpoints.MDM_EULA(eulaToken)}`}
           width="100%"
@@ -63,7 +65,7 @@ const EnrollmentGate = ({
           variant="oversized"
           className={`${baseClass}__agree-btn`}
         >
-          Agree and continue
+          {t("mdmSSOCallback.agreeAndContinue")}
         </Button>
       </div>
     );

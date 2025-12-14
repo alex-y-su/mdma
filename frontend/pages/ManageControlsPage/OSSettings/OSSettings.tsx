@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { InjectedRouter, Params } from "react-router/lib/Router";
 import { useQuery } from "react-query";
+import { useTranslation } from "react-i18next";
 
 import { AppContext } from "context/app";
 import SideNav from "pages/admin/components/SideNav";
@@ -27,6 +28,7 @@ const OSSettings = ({
   location: { search: queryString },
   params,
 }: IOSSettingsProps) => {
+  const { t } = useTranslation("settings");
   const { section } = params;
   const { currentTeam } = useContext(AppContext);
 
@@ -61,7 +63,7 @@ const OSSettings = ({
   return (
     <div className={baseClass}>
       <p className={`${baseClass}__description`}>
-        Remotely enforce OS settings on hosts assigned to this team.
+        {t("controls.osSettings.description")}
       </p>
       <ProfileStatusAggregate
         isLoading={isLoadingAggregateProfileStatus}

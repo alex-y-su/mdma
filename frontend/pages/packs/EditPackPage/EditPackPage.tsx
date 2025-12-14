@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useContext } from "react";
 import { useQuery } from "react-query";
 import { InjectedRouter, Params } from "react-router/lib/Router";
+import { useTranslation } from "react-i18next";
 
 import { AppContext } from "context/app";
 import { NotificationContext } from "context/notification";
@@ -52,6 +53,7 @@ const EditPacksPage = ({
 }: IEditPacksPageProps): JSX.Element => {
   const { isPremiumTier } = useContext(AppContext);
   const { renderFlash } = useContext(NotificationContext);
+  const { t } = useTranslation("queries");
 
   const packId: number = parseInt(paramsPackId, 10);
 
@@ -158,7 +160,7 @@ const EditPacksPage = ({
       .update(packId, updatedPack)
       .then(() => {
         router.push(PATHS.MANAGE_PACKS);
-        renderFlash("success", `Successfully updated this pack.`);
+        renderFlash("success", t("packs.edit.updateSuccess"));
       })
       .catch((e) => {
         if (
@@ -168,10 +170,10 @@ const EditPacksPage = ({
         ) {
           renderFlash(
             "error",
-            "Unable to update pack. Pack names must be unique."
+            t("packs.edit.duplicateNameError")
           );
         } else {
-          renderFlash("error", `Could not update pack. Please try again.`);
+          renderFlash("error", t("packs.edit.updateError"));
         }
       })
       .finally(() => {
@@ -189,10 +191,10 @@ const EditPacksPage = ({
       : scheduledQueriesAPI.create(formData);
     request
       .then(() => {
-        renderFlash("success", `Successfully updated this pack.`);
+        renderFlash("success", t("packs.edit.updateSuccess"));
       })
       .catch(() => {
-        renderFlash("error", "Could not update this pack. Please try again.");
+        renderFlash("error", t("packs.edit.updateError"));
       })
       .finally(() => {
         togglePackQueryEditorModal();
@@ -205,7 +207,7 @@ const EditPacksPage = ({
   const onRemovePackQuerySubmit = () => {
     setIsUpdatingPack(true);
     const queryOrQueries =
-      selectedPackQueryIds.length === 1 ? "query" : "queries";
+      selectedPackQueryIds.length === 1 ? t("packs.manage.query") : t("packs.manage.queries");
 
     const promises = selectedPackQueryIds.map((id: number) => {
       return scheduledQueriesAPI.destroy(id);
@@ -215,13 +217,13 @@ const EditPacksPage = ({
       .then(() => {
         renderFlash(
           "success",
-          `Successfully removed ${queryOrQueries} from this pack.`
+          t("packs.edit.removeQuerySuccess", { queryOrQueries })
         );
       })
       .catch(() => {
         renderFlash(
           "error",
-          `Unable to remove ${queryOrQueries} from this pack. Please try again.`
+          t("packs.edit.removeQueryError", { queryOrQueries })
         );
       })
       .finally(() => {
@@ -235,7 +237,7 @@ const EditPacksPage = ({
     <MainContent className={baseClass}>
       <>
         <div className={`${baseClass}__header-links`}>
-          <BackButton text="Back to packs" path={PATHS.MANAGE_PACKS} />
+          <BackButton text={t("packs.edit.backButton")} path={PATHS.MANAGE_PACKS} />
         </div>
         {storedPack && storedPackQueries && (
           <EditPackForm

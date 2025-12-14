@@ -8,6 +8,7 @@ import React, {
   Ref,
 } from "react";
 import { ReactElement } from "react-markdown/lib/react-markdown";
+import { useTranslation } from "react-i18next";
 import { AppContext } from "context/app";
 import PaginatedList, { IPaginatedListHandle } from "components/PaginatedList";
 import { useQuery } from "react-query";
@@ -77,6 +78,7 @@ function PoliciesPaginatedList(
   }: IPoliciesPaginatedListProps,
   ref: Ref<IPaginatedListHandle<IFormPolicy>>
 ) {
+  const { t } = useTranslation("policies");
   const { config } = useContext(AppContext);
 
   // Create a ref to use with the PaginatedList, so we can access its dirty items.
@@ -242,7 +244,7 @@ function PoliciesPaginatedList(
           pageSize={DEFAULT_PAGE_SIZE}
           onUpdate={onUpdate}
           disabled={disableList || gitOpsModeEnabled}
-          heading={<span className={`${baseClass}__header`}>Policies</span>}
+          heading={<span className={`${baseClass}__header`}>{t("title")}</span>}
           helpText={helpText}
         />
       </div>
@@ -265,13 +267,13 @@ function PoliciesPaginatedList(
                 isLoading={isUpdating}
                 disabled={!!saveDisabled || disableChildren}
               >
-                Save
+                {t("paginatedList.save")}
               </Button>
             </TooltipWrapper>
           )}
         />
         <Button onClick={onCancel} variant="inverse">
-          Cancel
+          {t("paginatedList.cancel")}
         </Button>
       </div>
     </div>

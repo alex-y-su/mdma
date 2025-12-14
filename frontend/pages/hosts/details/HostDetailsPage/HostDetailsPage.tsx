@@ -4,6 +4,7 @@ import { useQuery } from "react-query";
 import { useErrorHandler } from "react-error-boundary";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { pick } from "lodash";
+import { useTranslation } from "react-i18next";
 
 import PATHS from "router/paths";
 
@@ -178,6 +179,7 @@ const HostDetailsPage = ({
   params: { host_id },
 }: IHostDetailsProps): JSX.Element => {
   const hostIdFromURL = parseInt(host_id, 10);
+  const { t } = useTranslation("hosts");
 
   const {
     config,
@@ -929,22 +931,22 @@ const HostDetailsPage = ({
 
   const hostDetailsSubNav: IHostDetailsSubNavItem[] = [
     {
-      name: "Details",
+      name: t("details.title"),
       title: "details",
       pathname: PATHS.HOST_DETAILS(hostIdFromURL),
     },
     {
-      name: "Software",
+      name: t("details.software"),
       title: "software",
       pathname: PATHS.HOST_SOFTWARE(hostIdFromURL),
     },
     {
-      name: "Queries",
+      name: t("details.queries"),
       title: "queries",
       pathname: PATHS.HOST_QUERIES(hostIdFromURL),
     },
     {
-      name: "Policies",
+      name: t("details.policies"),
       title: "policies",
       pathname: PATHS.HOST_POLICIES(hostIdFromURL),
       count: failingPoliciesCount,
@@ -953,12 +955,12 @@ const HostDetailsPage = ({
 
   const hostSoftwareSubNav: IHostDetailsSubNavItem[] = [
     {
-      name: "Inventory",
+      name: t("details.inventory"),
       title: "inventory",
       pathname: PATHS.HOST_INVENTORY(hostIdFromURL),
     },
     {
-      name: "Library",
+      name: t("details.library"),
       title: "library",
       pathname: PATHS.HOST_LIBRARY(hostIdFromURL),
     },
@@ -1176,7 +1178,7 @@ const HostDetailsPage = ({
           )}
           <div className={`${baseClass}__header-links`}>
             <BackButton
-              text="Back to all hosts"
+              text={t("details.backToAllHosts")}
               path={filteredHostsPath || PATHS.MANAGE_HOSTS}
             />
           </div>

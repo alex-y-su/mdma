@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { AxiosError, AxiosResponse } from "axios";
 
@@ -44,6 +45,7 @@ const BootstrapPackage = ({
   currentTeamId,
   router,
 }: ISetupExperienceCardProps) => {
+  const { t } = useTranslation("settings");
   const { renderFlash } = useContext(NotificationContext);
   const [
     selectedManualAgentInstall,
@@ -231,7 +233,7 @@ const BootstrapPackage = ({
   return (
     <section className={baseClass}>
       <SectionHeader
-        title="Bootstrap package"
+        title={t("controls.setupExperience.bootstrapPackage.title")}
         details={
           <CustomLink
             newTab

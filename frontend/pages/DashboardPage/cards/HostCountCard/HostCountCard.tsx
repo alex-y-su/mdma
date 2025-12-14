@@ -1,6 +1,7 @@
 import React from "react";
 import { kebabCase } from "lodash";
 import { internationalNumberFormat } from "utilities/helpers";
+import { useTranslation } from "react-i18next";
 
 import Icon from "components/Icon";
 import { IconNames } from "components/icons";
@@ -32,6 +33,7 @@ const HostCountCard = ({
   iconPosition = "top",
 }: IHostCountCard) => {
   // Renders opaque information as host information is loading
+  const { t } = useTranslation("dashboard");
 
   const classes = classnames(`${baseClass}__card`, `${kebabCase(title)}-card`, {
     [`${baseClass}__not-supported`]: notSupported,
@@ -49,7 +51,7 @@ const HostCountCard = ({
 
   const renderCount = () => {
     return notSupported ? (
-      <div className={`${baseClass}__not-supported-text`}>Not supported</div>
+      <div className={`${baseClass}__not-supported-text`}>{t("hostCountCard.notSupported")}</div>
     ) : (
       <div
         className={`${baseClass}__count ${baseClass}__count--${kebabCase(

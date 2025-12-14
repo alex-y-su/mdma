@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Link } from "react-router";
+import { useTranslation } from "react-i18next";
 
 import PATHS from "router/paths";
 import { NotificationContext } from "context/notification";
@@ -18,17 +19,16 @@ import IphoneLockPreview from "../../../../../../../assets/images/iphone-lock-pr
 const baseClass = "lock-modal";
 
 const IosOrIpadLockPreview = () => {
+  const { t } = useTranslation("hosts");
   return (
     <Card
       color="grey"
       paddingSize="xlarge"
       className={`${baseClass}__ios-ipad-lock-preview`}
     >
-      <h3>End user experience</h3>
+      <h3>{t("modals.lock.endUserExperience")}</h3>
       <p>
-        Instead of &quot;Fleet&quot;, the message will show the{" "}
-        <b>Organization Name</b> that you configured in{" "}
-        <Link to={PATHS.ADMIN_ORGANIZATION_INFO}>Organization settings</Link>.
+        {t("modals.lock.organizationNameNote")}
       </p>
       <img src={IphoneLockPreview} alt="iPhone with a lock screen message" />
     </Card>
@@ -50,6 +50,7 @@ const LockModal = ({
   onSuccess,
   onClose,
 }: ILockModalProps) => {
+  const { t } = useTranslation("hosts");
   const { renderFlash } = useContext(NotificationContext);
   const [lockChecked, setLockChecked] = React.useState(false);
   const [isLocking, setIsLocking] = React.useState(false);
@@ -59,7 +60,7 @@ const LockModal = ({
     try {
       await hostAPI.lockHost(id);
       onSuccess();
-      renderFlash("success", "Locking host or will lock when it comes online.");
+      renderFlash("success", t("modals.lock.successMessage"));
     } catch (e) {
       renderFlash("error", getErrorReason(e));
     }
@@ -72,29 +73,23 @@ const LockModal = ({
       // if (true) {
       return (
         <p>
-          This will enable{" "}
-          <CustomLink
-            url="https://fleetdm.com/learn-more-about/managed-lost-mode"
-            newTab
-            text="Lost Mode"
-          />
-          . It can only be unlocked through Fleet.
+          {t("modals.lock.descriptionIos")}
         </p>
       );
     }
 
     return (
       <>
-        <p>Lock a host when it needs to be returned to your organization.</p>
+        <p>{t("modals.lock.description")}</p>
         {platform === "darwin" && (
-          <p>Fleet will generate a six-digit unlock PIN.</p>
+          <p>{t("modals.lock.generatePin")}</p>
         )}
       </>
     );
   };
 
   return (
-    <Modal className={baseClass} title="Lock host" onExit={onClose}>
+    <Modal className={baseClass} title={t("modals.lock.title")} onExit={onClose}>
       <>
         <div className={`${baseClass}__modal-content`}>
           <div className={`${baseClass}__description`}>
@@ -102,14 +97,14 @@ const LockModal = ({
           </div>
           <div className={`${baseClass}__confirm-message`}>
             <span>
-              <b>Please check to confirm:</b>
+              <b>{t("modals.lock.confirmMessage")}</b>
             </span>
             <Checkbox
               wrapperClassName={`${baseClass}__lock-checkbox`}
               value={lockChecked}
               onChange={(value: boolean) => setLockChecked(value)}
             >
-              I wish to lock <b>{hostName}</b>
+              {t("modals.lock.confirmCheckbox")} <b>{hostName}</b>
             </Checkbox>
           </div>
         </div>
@@ -122,10 +117,10 @@ const LockModal = ({
             disabled={!lockChecked}
             isLoading={isLocking}
           >
-            Lock
+            {t("modals.lock.buttonLock")}
           </Button>
           <Button onClick={onClose} variant="inverse">
-            Cancel
+            {t("modals.lock.buttonCancel")}
           </Button>
         </div>
       </>

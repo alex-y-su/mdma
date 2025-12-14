@@ -1,4 +1,5 @@
 import React, { useCallback, useContext, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { useQuery } from "react-query";
 import PATHS from "router/paths";
@@ -45,6 +46,7 @@ const CustomSettings = ({
   currentPage = 0,
   onMutation,
 }: ICustomSettingsProps) => {
+  const { t } = useTranslation("settings");
   const { renderFlash } = useContext(NotificationContext);
   const { config, isPremiumTier } = useContext(AppContext);
 
@@ -206,7 +208,7 @@ const CustomSettings = ({
 
   return (
     <div className={baseClass}>
-      <SectionHeader title="Custom settings" alignLeftHeaderVertically />
+      <SectionHeader title={t("controls.osSettings.customSettings.title")} alignLeftHeaderVertically />
       <PageDescription
         variant="right-panel"
         content={

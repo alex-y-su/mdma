@@ -27,7 +27,8 @@
     "source": "Source",
     "status": "Status",
     "selfService": "Self-service",
-    "installScript": "Install script"
+    "installScript": "Install script",
+    "notSupported": "Not supported"
   },
   "vulnerabilities": {
     "title": "Vulnerabilities",
@@ -42,7 +43,16 @@
     "affectedHosts": "Affected hosts",
     "affectedSoftware": "Affected software",
     "cisaKnownExploit": "CISA known exploit",
-    "exploitedInWild": "Exploited in wild"
+    "exploitedInWild": "Exploited in wild",
+    "vulnerability": "Vulnerability",
+    "severity": "Severity",
+    "severityTooltip": "The worst case impact across different environments (CVSS version 3.x base score).",
+    "probabilityOfExploit": "Probability of exploit",
+    "probabilityTooltip": "The probability that this vulnerability will be exploited in the next 30 days (EPSS probability). This data is reported by FIRST.org.",
+    "published": "Published",
+    "publishedTooltip": "The date this vulnerability was published in the National Vulnerability Database (NVD).",
+    "detected": "Detected",
+    "detectedTooltip": "The date this vulnerability first appeared on a host."
   },
   "details": {
     "title": "Software details",
@@ -74,7 +84,8 @@
   "empty": {
     "title": "No software found",
     "description": "No software matches the current filters",
-    "addFirst": "Add software to get started"
+    "addFirst": "Add software to get started",
+    "tableName": "{{tableName}}"
   },
   "page": {
     "headerDescription": "Manage software and search for installed software, OS, and vulnerabilities",
@@ -93,7 +104,83 @@
     "searchPlaceholder": "Search by name or vulnerability (CVE)",
     "lastUpdatedTooltip": "The last time software data was updated, including vulnerabilities and host counts.",
     "helpText": "Seeing unexpected software or vulnerabilities?",
-    "helpLink": "File an issue on GitHub"
+    "helpLink": "File an issue on GitHub",
+    "items": "items",
+    "allPlatforms": "All platforms"
+  },
+  "os": {
+    "title": "Operating systems",
+    "description": "View operating systems installed on your hosts",
+    "platforms": {
+      "all": "All platforms",
+      "darwin": "macOS",
+      "windows": "Windows",
+      "linux": "Linux",
+      "chrome": "ChromeOS",
+      "ios": "iOS",
+      "ipados": "iPadOS"
+    }
+  },
+  "titles": {
+    "title": "Software titles",
+    "description": "View and manage software across your fleet"
+  },
+  "addPages": {
+    "appStore": {
+      "title": "App Store",
+      "searchPlaceholder": "Search App Store",
+      "noResults": "No apps found"
+    },
+    "customPackage": {
+      "title": "Custom package",
+      "uploadLabel": "Upload package",
+      "supportedFormats": "Supported formats: .pkg, .msi, .deb, .rpm, .exe",
+      "chooseFile": "Choose file",
+      "payloadFreePackage": "Payload-free package"
+    },
+    "fleetMaintained": {
+      "title": "Fleet-maintained apps",
+      "description": "Pre-configured apps maintained by Fleet"
+    }
+  },
+  "detailsPage": {
+    "summary": {
+      "title": "Summary",
+      "versions": "Versions",
+      "hosts": "Hosts"
+    },
+    "installer": {
+      "title": "Installer",
+      "details": "Details",
+      "status": "Status",
+      "policies": "Policies"
+    }
+  },
+  "forms": {
+    "package": {
+      "name": "Name",
+      "version": "Version",
+      "selfService": "Self-service",
+      "preInstallQuery": "Pre-install query",
+      "installScript": "Install script",
+      "postInstallScript": "Post-install script",
+      "uninstallScript": "Uninstall script",
+      "save": "Save",
+      "addSoftware": "Add software",
+      "cancel": "Cancel"
+    },
+    "advancedOptions": {
+      "title": "Advanced options",
+      "preInstallQuery": "Pre-install query",
+      "installScript": "Install script",
+      "postInstallScript": "Post-install script"
+    }
+  },
+  "automations": {
+    "title": "Software automations",
+    "vulnerabilities": "Vulnerability automations",
+    "webhook": "Webhook",
+    "integration": "Integration"
   },
   "modals": {
     "delete": {

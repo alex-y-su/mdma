@@ -1,4 +1,5 @@
 import { InjectedRouter } from "react-router";
+import i18n from "i18next";
 
 import PATHS from "router/paths";
 import { ISideNavItem } from "pages/admin/components/SideNav/SideNav";
@@ -20,13 +21,13 @@ type IOSSettingsCardProps = IDiskEncryptionProps | ICustomSettingsProps;
 
 const OS_SETTINGS_NAV_ITEMS: ISideNavItem<IOSSettingsCardProps>[] = [
   {
-    title: "Disk encryption",
+    title: i18n.t("controls.osSettings.navItems.diskEncryption", { ns: "settings" }),
     urlSection: "disk-encryption",
     path: PATHS.CONTROLS_DISK_ENCRYPTION,
     Card: DiskEncryption,
   },
   {
-    title: "Custom settings",
+    title: i18n.t("controls.osSettings.navItems.customSettings", { ns: "settings" }),
     urlSection: "custom-settings",
     path: PATHS.CONTROLS_CUSTOM_SETTINGS,
     Card: CustomSettings,

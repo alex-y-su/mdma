@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import classnames from "classnames";
+import { useTranslation } from "react-i18next";
 
 import { isAndroid, isIPadOrIPhone } from "interfaces/platform";
 
@@ -30,14 +31,16 @@ const RefetchButton = ({
   tooltip,
   onRefetchHost,
 }: IRefetchButtonProps) => {
+  const { t } = useTranslation("hosts");
+
   const classNames = classnames({
     "refetch-spinner": isFetching,
     "refetch-btn": !isFetching,
   });
 
   const buttonText = isFetching
-    ? "Fetching fresh vitals...this may take a moment"
-    : "Refetch";
+    ? t("detailsPage.banners.refetching")
+    : t("actions.refetch");
 
   return (
     <>
@@ -83,6 +86,7 @@ const HostHeader = ({
   deviceUser,
   hostMdmDeviceStatus,
 }: IHostSummaryProps) => {
+  const { t } = useTranslation("hosts");
   const { platform } = summaryData;
 
   const hostDisplayName = useRef<HTMLHeadingElement>(null);
@@ -180,7 +184,7 @@ const HostHeader = ({
             disableTooltip={!isTruncated}
             tipContent={
               deviceUser
-                ? "My device"
+                ? t("header.myDevice")
                 : summaryData.display_name || DEFAULT_EMPTY_CELL_VALUE
             }
             underline={false}
@@ -189,7 +193,7 @@ const HostHeader = ({
           >
             <h1 className="display-name" ref={hostDisplayName}>
               {deviceUser
-                ? "My device"
+                ? t("header.myDevice")
                 : summaryData.display_name || DEFAULT_EMPTY_CELL_VALUE}
             </h1>
           </TooltipWrapper>
@@ -197,7 +201,7 @@ const HostHeader = ({
           {renderDeviceStatusTag()}
 
           <div className={`${baseClass}__last-fetched`}>
-            {"Last fetched"} {lastFetched}
+            {t("header.lastFetched")} {lastFetched}
             &nbsp;
           </div>
         </div>

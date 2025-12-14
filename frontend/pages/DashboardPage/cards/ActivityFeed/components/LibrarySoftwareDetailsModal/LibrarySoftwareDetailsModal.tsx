@@ -1,4 +1,5 @@
 import React from "react";
+import { TFunction, useTranslation } from "react-i18next";
 
 import { IActivityDetails } from "interfaces/activity";
 import { ILabelSoftwareTitle } from "interfaces/label";
@@ -13,31 +14,34 @@ const baseClass = "library-software-details-modal";
 interface ITargetValueProps {
   labelIncludeAny?: ILabelSoftwareTitle[];
   labelExcludeAny?: ILabelSoftwareTitle[];
+  t?: TFunction;
 }
 
 // Shared with global activity VPP details modal
 export const TargetTitle = ({
   labelIncludeAny,
   labelExcludeAny,
+  t,
 }: ITargetValueProps) => {
   let suffix = "";
 
   if (labelIncludeAny) {
-    suffix = " (include any)";
+    suffix = ` (${t?.("activityDetails.librarySoftwareModal.includeAny") || "include any"})`;
   } else if (labelExcludeAny) {
-    suffix = " (exclude any)";
+    suffix = ` (${t?.("activityDetails.librarySoftwareModal.excludeAny") || "exclude any"})`;
   }
 
-  return <>Target{suffix}</>;
+  return <>{t?.("activityDetails.librarySoftwareModal.target") || "Target"}{suffix}</>;
 };
 
 // Shared with global activity VPP details modal
 export const TargetValue = ({
   labelIncludeAny,
   labelExcludeAny,
+  t,
 }: ITargetValueProps) => {
   if (!labelIncludeAny && !labelExcludeAny) {
-    return <>All hosts</>;
+    return <>{t?.("activityDetails.librarySoftwareModal.allHosts") || "All hosts"}</>;
   }
 
   let labels: ILabelSoftwareTitle[] = [];
@@ -62,7 +66,7 @@ export const TargetValue = ({
         </>
       ))}
     >
-      {labels.length} labels
+      {labels.length} {t?.("activityDetails.librarySoftwareModal.labels") || "labels"}
     </TooltipWrapper>
   );
 };
@@ -76,11 +80,12 @@ const LibrarySoftwareDetailsModal = ({
   details,
   onCancel,
 }: ILibrarySoftwareDetailsModalProps) => {
+  const { t } = useTranslation("dashboard");
   const { labels_include_any, labels_exclude_any } = details;
 
   return (
     <Modal
-      title="Software details"
+      title={t("activityDetails.librarySoftwareModal.title")}
       width="large"
       onExit={onCancel}
       onEnter={onCancel}
@@ -89,31 +94,33 @@ const LibrarySoftwareDetailsModal = ({
       <>
         <div className={`${baseClass}__modal-content`}>
           <DataSet
-            title="Name"
+            title={t("activityDetails.librarySoftwareModal.name")}
             value={details.software_display_name || details.software_title}
           />
-          <DataSet title="Package name" value={details.software_package} />
+          <DataSet title={t("activityDetails.librarySoftwareModal.packageName")} value={details.software_package} />
           <DataSet
-            title="Self-Service"
-            value={details.self_service ? "Yes" : "No"}
+            title={t("activityDetails.librarySoftwareModal.selfService")}
+            value={details.self_service ? t("activityDetails.librarySoftwareModal.yes") : t("activityDetails.librarySoftwareModal.no")}
           />
           <DataSet
             title={
               <TargetTitle
                 labelIncludeAny={labels_include_any}
                 labelExcludeAny={labels_exclude_any}
+                t={t}
               />
             }
             value={
               <TargetValue
                 labelIncludeAny={labels_include_any}
                 labelExcludeAny={labels_exclude_any}
+                t={t}
               />
             }
           />
         </div>
         <div className="modal-cta-wrap">
-          <Button onClick={onCancel}>Done</Button>
+          <Button onClick={onCancel}>{t("activityDetails.librarySoftwareModal.done")}</Button>
         </div>
       </>
     </Modal>

@@ -1,4 +1,5 @@
 import React from "react";
+import { TFunction } from "i18next";
 
 import { IMdmSolution } from "interfaces/mdm";
 
@@ -41,23 +42,22 @@ interface IDataColumn {
 }
 
 export const generateSolutionsTableHeaders = (
-  teamId?: number
+  teamId?: number,
+  t?: TFunction
 ): IDataColumn[] => [
   {
-    title: "Server URL",
+    title: t?.("mdmSolutionModal.columns.serverUrl") || "Server URL",
     Header: (): JSX.Element => {
       const titleWithToolTip = (
         <TooltipWrapper
           tipContent={
             <>
-              The MDM server URL is used to connect hosts with the MDM service.
-              For cross-platform MDM solutions, each operating system has a
-              different URL.
+              {t?.("mdmSolutionModal.columns.serverUrlTooltip") || "The MDM server URL is used to connect hosts with the MDM service. For cross-platform MDM solutions, each operating system has a different URL."}
             </>
           }
           className="server-url-header"
         >
-          Server URL
+          {t?.("mdmSolutionModal.columns.serverUrl") || "Server URL"}
         </TooltipWrapper>
       );
       return <HeaderCell value={titleWithToolTip} disableSortBy />;
@@ -67,8 +67,8 @@ export const generateSolutionsTableHeaders = (
     Cell: (cellProps: ICellProps) => <TextCell value={cellProps.cell.value} />,
   },
   {
-    title: "Hosts",
-    Header: "Hosts",
+    title: t?.("mdmSolutionModal.columns.hosts") || "Hosts",
+    Header: t?.("mdmSolutionModal.columns.hosts") || "Hosts",
     disableSortBy: true,
     accessor: "hosts_count",
     Cell: (cellProps: ICellProps) => (

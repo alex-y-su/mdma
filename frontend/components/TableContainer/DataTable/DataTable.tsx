@@ -22,6 +22,7 @@ import {
 } from "react-table";
 import { kebabCase, noop } from "lodash";
 import { useDebouncedCallback } from "use-debounce";
+import { useTranslation } from "react-i18next";
 
 import useDeepEffect from "hooks/useDeepEffect";
 import sort from "utilities/sort";
@@ -132,6 +133,7 @@ const DataTable = ({
   // used to track the initial mount of the component.
   const isInitialRender = useRef(true);
 
+  const { t } = useTranslation("common");
   const { isOnlyObserver } = useContext(AppContext);
 
   const columns = useMemo(() => {
@@ -445,18 +447,18 @@ const DataTable = ({
           {selectedCount}
           {isAllPagesSelected && "+"}
         </span>{" "}
-        selected
+        {t("tables.selected")}
       </p>
     );
   };
 
   const renderAreAllSelected = (): JSX.Element | null => {
     if (isAllPagesSelected) {
-      return <p>All matching {resultsTitle} are selected</p>;
+      return <p>{t("tables.allMatchingSelected", { resultsTitle })}</p>;
     }
 
     if (isAllRowsSelected) {
-      return <p>All {resultsTitle} on this page are selected</p>;
+      return <p>{t("tables.allOnPageSelected", { resultsTitle })}</p>;
     }
     return null;
   };
@@ -547,7 +549,7 @@ const DataTable = ({
                 className="light-text"
                 size="small"
               >
-                <>Select all matching {resultsTitle}</>
+                <>{t("tables.selectAllMatching", { resultsTitle })}</>
               </Button>
             )}
             <Button
@@ -555,7 +557,7 @@ const DataTable = ({
               variant="inverse"
               size="small"
             >
-              Clear selection
+              {t("tables.clearSelection")}
             </Button>
           </div>
         </th>

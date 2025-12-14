@@ -3,6 +3,7 @@
 import React, { useCallback, useMemo } from "react";
 import { InjectedRouter } from "react-router";
 import { Row } from "react-table";
+import { useTranslation } from "react-i18next";
 
 import PATHS from "router/paths";
 
@@ -46,44 +47,6 @@ interface ISoftwareOSTableProps {
   platform?: SelectedPlatform;
 }
 
-const PLATFORM_FILTER_OPTIONS = [
-  {
-    disabled: false,
-    label: "All platforms",
-    value: "all",
-  },
-  {
-    disabled: false,
-    label: "macOS",
-    value: "darwin",
-  },
-  {
-    disabled: false,
-    label: "Windows",
-    value: "windows",
-  },
-  {
-    disabled: false,
-    label: "Linux",
-    value: "linux",
-  },
-  {
-    disabled: false,
-    label: "ChromeOS",
-    value: "chrome",
-  },
-  {
-    disabled: false,
-    label: "iOS",
-    value: "ios",
-  },
-  {
-    disabled: false,
-    label: "iPadOS",
-    value: "ipados",
-  },
-];
-
 const SoftwareOSTable = ({
   router,
   isSoftwareEnabled,
@@ -96,6 +59,45 @@ const SoftwareOSTable = ({
   isLoading,
   platform,
 }: ISoftwareOSTableProps) => {
+  const { t } = useTranslation("software");
+
+  const PLATFORM_FILTER_OPTIONS = [
+    {
+      disabled: false,
+      label: t("os.platforms.all"),
+      value: "all",
+    },
+    {
+      disabled: false,
+      label: t("os.platforms.darwin"),
+      value: "darwin",
+    },
+    {
+      disabled: false,
+      label: t("os.platforms.windows"),
+      value: "windows",
+    },
+    {
+      disabled: false,
+      label: t("os.platforms.linux"),
+      value: "linux",
+    },
+    {
+      disabled: false,
+      label: t("os.platforms.chrome"),
+      value: "chrome",
+    },
+    {
+      disabled: false,
+      label: t("os.platforms.ios"),
+      value: "ios",
+    },
+    {
+      disabled: false,
+      label: t("os.platforms.ipados"),
+      value: "ipados",
+    },
+  ];
   const determineQueryParamChange = useCallback(
     (newTableQuery: ITableQueryData) => {
       const changedEntry = Object.entries(newTableQuery).find(([key, val]) => {
@@ -199,10 +201,10 @@ const SoftwareOSTable = ({
   const renderTableHelpText = () => {
     return (
       <div>
-        Seeing unexpected software or vulnerabilities?{" "}
+        {t("table.helpText")}{" "}
         <CustomLink
           url={GITHUB_NEW_ISSUE_LINK}
-          text="File an issue on GitHub"
+          text={t("table.helpLink")}
           newTab
         />
       </div>
@@ -248,7 +250,7 @@ const SoftwareOSTable = ({
         resultsTitle="items"
         emptyComponent={() => (
           <EmptySoftwareTable
-            tableName="operating systems"
+            tableName={t("os.title")}
             isSoftwareDisabled={!isSoftwareEnabled}
             noSearchQuery // non-searchable table renders not detecting by default
           />

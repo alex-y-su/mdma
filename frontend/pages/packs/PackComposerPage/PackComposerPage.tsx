@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { InjectedRouter } from "react-router";
+import { useTranslation } from "react-i18next";
 
 import PATHS from "router/paths";
 import { AppContext } from "context/app";
@@ -28,6 +29,7 @@ const baseClass = "pack-composer";
 const PackComposerPage = ({ router }: IPackComposerPageProps): JSX.Element => {
   const { isPremiumTier } = useContext(AppContext);
   const { renderFlash } = useContext(NotificationContext);
+  const { t } = useTranslation("queries");
 
   const [selectedTargetsCount, setSelectedTargetsCount] = useState(0);
   const [isUpdatingPack, setIsUpdatingPack] = useState(false);
@@ -53,7 +55,7 @@ const PackComposerPage = ({ router }: IPackComposerPageProps): JSX.Element => {
       router.push(PATHS.PACK(packID));
       renderFlash(
         "success",
-        "Pack successfully created. Add queries to your pack."
+        t("packs.create.success")
       );
     } catch (e) {
       if (
@@ -63,10 +65,10 @@ const PackComposerPage = ({ router }: IPackComposerPageProps): JSX.Element => {
       ) {
         renderFlash(
           "error",
-          "Unable to create pack. Pack names must be unique."
+          t("packs.create.duplicateNameError")
         );
       } else {
-        renderFlash("error", "Unable to create pack.");
+        renderFlash("error", t("packs.create.error"));
       }
     } finally {
       setIsUpdatingPack(false);

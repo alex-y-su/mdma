@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { IPack } from "interfaces/pack";
 import { IEmptyTableProps } from "interfaces/empty_table";
@@ -30,6 +31,7 @@ const PacksTable = ({
   packs,
   isLoading,
 }: IPacksTableProps): JSX.Element => {
+  const { t } = useTranslation("queries");
   const [filteredPacks, setFilteredPacks] = useState<IPack[] | undefined>(
     packs
   );
@@ -59,42 +61,40 @@ const PacksTable = ({
   const emptyState = () => {
     const emptyPacks: IEmptyTableProps = {
       graphicName: "empty-packs",
-      header: "You don't have any packs",
-      info:
-        "Query packs allow you to schedule recurring queries for your hosts.",
+      header: t("packs.empty.noPacks"),
+      info: t("packs.empty.description"),
       primaryButton: (
         <Button
           className={`${baseClass}__create-button`}
           onClick={onCreatePackClick}
         >
-          Create new pack
+          {t("packs.manage.createButton")}
         </Button>
       ),
     };
     if (searchString) {
       delete emptyPacks.graphicName;
-      emptyPacks.header = "No packs match the current search criteria";
-      emptyPacks.info =
-        "Expecting to see packs? Try again in a few seconds as the system catches up.";
+      emptyPacks.header = t("packs.empty.noMatch");
+      emptyPacks.info = t("packs.empty.tryAgain");
       delete emptyPacks.primaryButton;
     }
     return emptyPacks;
   };
 
-  const tableHeaders = generateTableHeaders();
+  const tableHeaders = generateTableHeaders(t);
 
   const secondarySelectActions: IActionButtonProps[] = [
     {
       name: "enable",
       onClick: onEnablePackClick,
-      buttonText: "Enable",
+      buttonText: t("packs.actions.enable"),
       variant: "inverse",
       iconSvg: "check",
     },
     {
       name: "disable",
       onClick: onDisablePackClick,
-      buttonText: "Disable",
+      buttonText: t("packs.actions.disable"),
       variant: "inverse",
       iconSvg: "disable",
     },
@@ -102,7 +102,7 @@ const PacksTable = ({
   return (
     <div className={`${baseClass}`}>
       <TableContainer
-        resultsTitle="packs"
+        resultsTitle={t("packs.title").toLowerCase()}
         columnConfigs={tableHeaders}
         data={generateDataSet(filteredPacks)}
         isLoading={isLoading}
@@ -111,12 +111,12 @@ const PacksTable = ({
         showMarkAllPages={false}
         isAllPagesSelected={false}
         onQueryChange={onQueryChange}
-        inputPlaceHolder="Search by name"
+        inputPlaceHolder={t("packs.table.searchPlaceholder")}
         searchable={packs && packs.length > 0}
         disablePagination
         primarySelectAction={{
           name: "delete pack",
-          buttonText: "Delete",
+          buttonText: t("packs.actions.delete"),
           iconSvg: "trash",
           variant: "inverse",
           onClick: onDeletePackClick,

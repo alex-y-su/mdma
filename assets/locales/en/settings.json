@@ -279,7 +279,54 @@
           "warning": "This action cannot be undone.",
           "deleteButton": "Delete",
           "cancelButton": "Cancel"
+        },
+        "resetPassword": {
+          "title": "Require password reset",
+          "message": "This user will be asked to reset their password after their next successful log in to Fleet.",
+          "revokeTokens": "This will revoke all active Fleet API tokens for this user.",
+          "confirmButton": "Confirm",
+          "cancelButton": "Cancel"
+        },
+        "resetSessions": {
+          "title": "Reset sessions",
+          "message": "This user will be logged out of Fleet.",
+          "revokeTokens": "This will revoke all active Fleet API tokens for this user.",
+          "confirmButton": "Confirm",
+          "cancelButton": "Cancel"
         }
+      },
+      "forms": {
+        "account": "Account",
+        "createUser": "Create user",
+        "inviteUser": "Invite user",
+        "inviteUserTooltip": "The \"Invite user\" feature requires that SMTP or SES is configured in order to send invitation emails.\n\nSMTP can be configured in Settings > Organization settings.",
+        "fullName": "Full name",
+        "email": "Email",
+        "editEmailTooltip": "Editing an email address requires that SMTP or SES is configured in order to send a validation email.\n\nUsers with Admin role can configure SMTP in Settings > Organization settings.",
+        "authentication": "Authentication",
+        "singleSignOn": "Single sign-on",
+        "ssoNotEnabled": "SSO is not enabled in organization settings.\nUser must sign in with a password.",
+        "password": "Password",
+        "passwordPlaceholder": "••••••••",
+        "passwordHelp": "12-48 characters, with at least 1 number (e.g. 0 - 9) and 1 symbol (e.g. &*#).",
+        "temporaryPasswordTooltip": "This password is temporary. This user will be asked to set a new password after logging in to the Fleet UI.\n\nThis user will not be asked to set a new password after logging in to fleetctl or the Fleet API.",
+        "twoFactorAuth": "Enable two-factor authentication (email)",
+        "twoFactorAuthHelp": "User will be asked to authenticate with a magic link that will be sent to their email.",
+        "twoFactorAuthTooltip": "This feature requires that SMTP or SES is configured in order to send authentication emails.\n\nSMTP can be configured in Settings > Organization settings.",
+        "team": "Team",
+        "globalUser": "Global user",
+        "assignTeams": "Assign team(s)",
+        "noTeamsMessage": "You have no teams.",
+        "noTeamsInfo": "Expecting to see teams? Try again in a few seconds as the system catches up or ",
+        "createTeamLink": "create a team",
+        "globalUserInfo": "Global users can manage or observe all users, entities, and settings in Fleet.",
+        "teamUserInfo": "Users can manage or observe team-specific users, entities, and settings in Fleet.",
+        "learnMorePermissions": "Learn more about user permissions",
+        "selectTeam": "Please select at least one team for this user.",
+        "role": "Role",
+        "add": "Add",
+        "save": "Save",
+        "cancel": "Cancel"
       }
     },
     "teams": {
@@ -317,6 +364,341 @@
           "cannotUndo": "This action cannot be undone.",
           "deleteButton": "Delete",
           "cancelButton": "Cancel"
+        }
+      }
+    }
+  },
+  "userManagement": {
+    "resetPassword": {
+      "title": "Require password reset",
+      "message": "The user will be required to reset their password on next login."
+    },
+    "resetSessions": {
+      "title": "Reset sessions",
+      "message": "All active sessions for this user will be terminated."
+    },
+    "forms": {
+      "selectRole": "Select role",
+      "selectTeams": "Select teams",
+      "roleDescription": "Choose a role for this user"
+    }
+  },
+  "orgSettings": {
+    "info": {
+      "orgName": "Organization name",
+      "logoUrl": "Organization logo URL",
+      "contactUrl": "Contact URL"
+    },
+    "webAddress": {
+      "serverUrl": "Fleet server URL"
+    },
+    "smtp": {
+      "title": "SMTP options",
+      "senderAddress": "Sender address",
+      "server": "SMTP server",
+      "port": "Port",
+      "enableTls": "Enable TLS",
+      "authMethod": "Authentication method"
+    },
+    "agents": {
+      "title": "Agent options",
+      "description": "Configure osquery options for all hosts"
+    },
+    "statistics": {
+      "title": "Usage statistics",
+      "description": "Help improve Fleet by sharing anonymous usage data"
+    },
+    "fleetDesktop": {
+      "title": "Fleet Desktop",
+      "transparencyUrl": "Transparency URL"
+    },
+    "advanced": {
+      "title": "Advanced options",
+      "hostExpiry": "Host expiry",
+      "hostExpiryWindow": "Host expiry window (days)",
+      "disableLiveQueries": "Disable live queries"
+    }
+  },
+  "mdmSettings": {
+    "apple": {
+      "title": "Apple MDM",
+      "turnOn": "Turn on Apple MDM",
+      "turnOff": "Turn off Apple MDM",
+      "renewCert": "Renew certificate",
+      "apnsExpiry": "APNs certificate expires"
+    },
+    "android": {
+      "title": "Android MDM",
+      "turnOn": "Turn on Android MDM",
+      "turnOff": "Turn off Android MDM"
+    },
+    "windows": {
+      "title": "Windows MDM",
+      "turnOn": "Turn on Windows MDM",
+      "turnOff": "Turn off Windows MDM"
+    },
+    "vpp": {
+      "title": "Volume Purchasing Program (VPP)",
+      "addToken": "Add VPP token",
+      "renewToken": "Renew token",
+      "deleteToken": "Delete token",
+      "editTeams": "Edit teams"
+    },
+    "abm": {
+      "title": "Apple Business Manager",
+      "addConnection": "Add ABM connection",
+      "renewToken": "Renew token",
+      "deleteConnection": "Delete connection",
+      "editTeams": "Edit teams"
+    },
+    "eula": {
+      "title": "End user license agreement",
+      "upload": "Upload EULA",
+      "delete": "Delete EULA"
+    }
+  },
+  "certificateAuthorities": {
+    "title": "Certificate authorities",
+    "add": "Add certificate authority",
+    "edit": "Edit certificate authority",
+    "delete": "Delete certificate authority",
+    "types": {
+      "scep": "SCEP",
+      "est": "EST",
+      "ndes": "NDES",
+      "digicert": "DigiCert",
+      "smallstep": "Smallstep",
+      "hydrant": "Hydrant"
+    }
+  },
+  "controls": {
+    "title": "Controls",
+    "osSettings": {
+      "title": "OS settings",
+      "description": "Manage configuration profiles and disk encryption",
+      "navItems": {
+        "customSettings": "Custom settings",
+        "diskEncryption": "Disk encryption"
+      },
+      "profileStatus": {
+        "title": "Profile status",
+        "verified": "Verified",
+        "pending": "Pending",
+        "failed": "Failed"
+      },
+      "customSettings": {
+        "title": "Custom settings",
+        "addProfile": "Add profile",
+        "uploadProfile": "Upload profile",
+        "deleteProfile": "Delete profile",
+        "resendProfile": "Resend profile",
+        "profileLabels": "Profile labels",
+        "profileStatus": "Profile status",
+        "noProfiles": "No configuration profiles",
+        "addProfileDescription": "Add a configuration profile to customize settings",
+        "confirmDelete": "Are you sure you want to delete this profile?",
+        "deleteWarning": "Hosts with this profile will no longer receive these settings."
+      },
+      "diskEncryption": {
+        "title": "Disk encryption",
+        "description": "Require disk encryption on hosts",
+        "enabled": "Enabled",
+        "disabled": "Disabled",
+        "enforced": "Enforced",
+        "status": {
+          "verified": "Verified",
+          "verifying": "Verifying",
+          "actionRequired": "Action required",
+          "enforcing": "Enforcing",
+          "failed": "Failed"
+        }
+      }
+    },
+    "osUpdates": {
+      "title": "OS updates",
+      "description": "Manage operating system updates",
+      "currentVersion": "Current version",
+      "targetVersion": "Target version",
+      "deadline": "Deadline",
+      "minimumVersion": "Minimum version",
+      "platforms": {
+        "macos": "macOS",
+        "windows": "Windows",
+        "ios": "iOS",
+        "ipados": "iPadOS"
+      },
+      "form": {
+        "targetVersionLabel": "Target version",
+        "deadlineLabel": "Deadline",
+        "deadlineHelp": "Hosts must update by this date"
+      },
+      "empty": {
+        "title": "No OS versions configured",
+        "description": "Set target OS versions for your hosts"
+      },
+      "preview": {
+        "title": "End user experience preview",
+        "description": "What end users will see"
+      }
+    },
+    "scripts": {
+      "title": "Scripts",
+      "description": "Manage and run scripts on hosts",
+      "library": "Script library",
+      "addScript": "Add script",
+      "uploadScript": "Upload script",
+      "editScript": "Edit script",
+      "deleteScript": "Delete script",
+      "runScript": "Run script",
+      "cancelScript": "Cancel script",
+      "rerunScript": "Rerun script",
+      "scriptName": "Script name",
+      "scriptContent": "Script content",
+      "noScripts": "No scripts",
+      "addScriptDescription": "Upload scripts to run on your hosts",
+      "batchDetails": {
+        "title": "Script batch details",
+        "progress": "Progress",
+        "hosts": "Hosts",
+        "status": "Status",
+        "startedAt": "Started at",
+        "completedAt": "Completed at"
+      },
+      "modals": {
+        "upload": {
+          "title": "Upload script",
+          "dragDrop": "Drag and drop or click to upload",
+          "supportedTypes": "Supported: .sh, .ps1, .py"
+        },
+        "edit": {
+          "title": "Edit script",
+          "nameLabel": "Name",
+          "contentLabel": "Content"
+        },
+        "delete": {
+          "title": "Delete script",
+          "message": "Are you sure you want to delete \"{{name}}\"?",
+          "warning": "This will cancel any pending runs of this script."
+        },
+        "cancel": {
+          "title": "Cancel script batch",
+          "message": "Are you sure you want to cancel this script batch?"
+        },
+        "rerun": {
+          "title": "Rerun script",
+          "message": "Run this script again on failed hosts?"
+        }
+      },
+      "status": {
+        "pending": "Pending",
+        "running": "Running",
+        "completed": "Completed",
+        "failed": "Failed",
+        "cancelled": "Cancelled"
+      }
+    },
+    "secrets": {
+      "title": "Custom variables",
+      "description": "Manage custom variables that will be available in scripts and profiles.",
+      "addSecret": "Add custom variable",
+      "deleteSecret": "Delete custom variable",
+      "secretName": "Name",
+      "secretValue": "Value",
+      "noSecrets": "No custom variables created yet",
+      "addSecretDescription": "Add a custom variable to make it available in scripts and profiles.",
+      "updated": "Updated",
+      "modals": {
+        "add": {
+          "title": "Add custom variable",
+          "nameLabel": "Name",
+          "namePlaceholder": "SECRET_NAME",
+          "valueLabel": "Value",
+          "valuePlaceholder": "Secret value"
+        },
+        "delete": {
+          "title": "Delete custom variable?",
+          "message": "This will delete the <bold>{{name}}</bold> custom variable.",
+          "warning": "If this custom variable is used in any configuration profiles or scripts, they will fail. To resolve, edit the configuration profile or script."
+        }
+      }
+    },
+    "setupExperience": {
+      "title": "Setup experience",
+      "description": "Configure the new device setup experience",
+      "navItems": {
+        "bootstrapPackage": "Bootstrap package",
+        "setupAssistant": "Setup assistant",
+        "installSoftware": "Install software",
+        "endUserAuth": "End user authentication",
+        "runScript": "Run script"
+      },
+      "bootstrapPackage": {
+        "title": "Bootstrap package",
+        "description": "Package installed during device setup",
+        "upload": "Upload package",
+        "delete": "Delete package",
+        "noPackage": "No bootstrap package",
+        "uploadDescription": "Upload a package to install during setup",
+        "advancedOptions": "Advanced options",
+        "modals": {
+          "delete": {
+            "title": "Delete bootstrap package",
+            "message": "Are you sure you want to delete this package?",
+            "warning": "New devices will not receive this package."
+          }
+        }
+      },
+      "setupAssistant": {
+        "title": "Setup assistant",
+        "description": "Configure the macOS setup assistant",
+        "uploadProfile": "Upload profile",
+        "deleteProfile": "Delete profile",
+        "noProfile": "No setup assistant profile",
+        "uploadDescription": "Upload a profile to customize setup assistant",
+        "advancedOptions": "Advanced options",
+        "modals": {
+          "delete": {
+            "title": "Delete setup assistant profile",
+            "message": "Are you sure you want to delete this profile?"
+          }
+        }
+      },
+      "installSoftware": {
+        "title": "Install software",
+        "description": "Software installed during setup",
+        "addSoftware": "Add software",
+        "selectSoftware": "Select software",
+        "noSoftware": "No software configured",
+        "addDescription": "Add software to install during device setup",
+        "modals": {
+          "select": {
+            "title": "Select software",
+            "searchPlaceholder": "Search software"
+          }
+        }
+      },
+      "endUserAuth": {
+        "title": "End user authentication",
+        "description": "Require authentication during setup",
+        "enabled": "Enabled",
+        "disabled": "Disabled",
+        "form": {
+          "idpLabel": "Identity provider",
+          "idpPlaceholder": "Select identity provider"
+        }
+      },
+      "runScript": {
+        "title": "Run script",
+        "description": "Script run during device setup",
+        "uploadScript": "Upload script",
+        "deleteScript": "Delete script",
+        "noScript": "No setup script",
+        "uploadDescription": "Upload a script to run during setup",
+        "modals": {
+          "delete": {
+            "title": "Delete setup script",
+            "message": "Are you sure you want to delete this script?"
+          }
         }
       }
     }

@@ -159,5 +159,94 @@
   },
   "addHosts": {
     "title": "Add hosts"
+  },
+  "layout": {
+    "mainContent": "Main content",
+    "sideNav": "Side navigation",
+    "skipToMain": "Skip to main content"
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page",
+    "of": "of",
+    "showing": "Showing",
+    "to": "to",
+    "results": "results"
+  },
+  "tables": {
+    "noData": "No data available",
+    "loading": "Loading...",
+    "selectAll": "Select all",
+    "selected": "selected",
+    "allMatchingSelected": "All matching {{resultsTitle}} are selected",
+    "allOnPageSelected": "All {{resultsTitle}} on this page are selected",
+    "selectAllMatching": "Select all matching {{resultsTitle}}",
+    "clearSelection": "Clear selection",
+    "sortAscending": "Sort ascending",
+    "sortDescending": "Sort descending",
+    "rowsPerPage": "Rows per page"
+  },
+  "forms": {
+    "required": "Required",
+    "optional": "Optional",
+    "chooseFile": "Choose file",
+    "dragAndDrop": "Drag and drop or click to upload",
+    "maxFileSize": "Maximum file size: {{size}}",
+    "supportedFormats": "Supported formats: {{formats}}"
+  },
+  "search": {
+    "placeholder": "Search...",
+    "noResults": "No results found",
+    "clearSearch": "Clear search"
+  },
+  "status": {
+    "loading": "Loading...",
+    "saving": "Saving...",
+    "saved": "Saved",
+    "error": "Error",
+    "success": "Success",
+    "pending": "Pending",
+    "inProgress": "In progress",
+    "completed": "Completed",
+    "failed": "Failed",
+    "cancelled": "Cancelled"
+  },
+  "messages": {
+    "copiedToClipboard": "Copied to clipboard",
+    "downloadStarted": "Download started",
+    "uploadComplete": "Upload complete",
+    "uploadFailed": "Upload failed",
+    "changesSaved": "Changes saved",
+    "changesDiscarded": "Changes discarded"
+  },
+  "modals": {
+    "close": "Close",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "areYouSure": "Are you sure?",
+    "cannotUndo": "This action cannot be undone."
+  },
+  "premium": {
+    "featureUnavailable": "This feature is available in Fleet Premium",
+    "upgradeTo": "Upgrade to Fleet Premium",
+    "learnMore": "Learn more about Fleet Premium"
+  },
+  "empty": {
+    "noItems": "No items",
+    "getStarted": "Get started by adding your first item"
+  },
+  "accessibility": {
+    "expandMenu": "Expand menu",
+    "collapseMenu": "Collapse menu",
+    "openDropdown": "Open dropdown",
+    "closeDropdown": "Close dropdown",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password"
+  },
+  "lastUpdated": {
+    "updated": "Updated {{time}}",
+    "never": "never",
+    "fleetPeriodicallyQueries": "Fleet periodically queries all hosts to retrieve {{whatToRetrieve}}."
   }
 }

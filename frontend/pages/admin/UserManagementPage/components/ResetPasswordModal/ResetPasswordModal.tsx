@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { IUser } from "interfaces/user";
 import Modal from "components/Modal";
 import Button from "components/buttons/Button";
@@ -16,25 +17,26 @@ const ResetPasswordModal = ({
   onResetConfirm,
   onResetCancel,
 }: IResetPasswordModal): JSX.Element => {
+  const { t } = useTranslation("settings");
+
   return (
     <Modal
-      title="Require password reset"
+      title={t("admin.users.modals.resetPassword.title")}
       onExit={onResetCancel}
       onEnter={() => onResetConfirm(user)}
     >
       <div className={baseClass}>
         <p>
-          This user will be asked to reset their password after their next
-          successful log in to Fleet.
+          {t("admin.users.modals.resetPassword.message")}
           <br />
-          This will revoke all active Fleet API tokens for this user.
+          {t("admin.users.modals.resetPassword.revokeTokens")}
         </p>
         <div className="modal-cta-wrap">
           <Button type="button" onClick={() => onResetConfirm(user)}>
-            Confirm
+            {t("admin.users.modals.resetPassword.confirmButton")}
           </Button>
           <Button onClick={onResetCancel} variant="inverse">
-            Cancel
+            {t("admin.users.modals.resetPassword.cancelButton")}
           </Button>
         </div>
       </div>

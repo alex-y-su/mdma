@@ -2,6 +2,7 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { InjectedRouter } from "react-router/lib/Router";
+import { useTranslation } from "react-i18next";
 import PATHS from "router/paths";
 import { isEqual } from "lodash";
 
@@ -94,13 +95,6 @@ interface IManagePoliciesPageProps {
 export const DEFAULT_SORT_DIRECTION = "asc";
 export const DEFAULT_PAGE_SIZE = 20;
 export const DEFAULT_SORT_COLUMN = "name";
-const [
-  DEFAULT_AUTOMATION_UPDATE_SUCCESS_MSG,
-  DEFAULT_AUTOMATION_UPDATE_ERR_MSG,
-] = [
-  "Successfully updated policy automations.",
-  "Could not update policy automations.",
-];
 
 const baseClass = "manage-policies-page";
 
@@ -108,6 +102,7 @@ const ManagePolicyPage = ({
   router,
   location,
 }: IManagePoliciesPageProps): JSX.Element => {
+  const { t } = useTranslation("policies");
   const queryParams = location.query;
   const {
     isGlobalAdmin,
@@ -528,9 +523,9 @@ const ManagePolicyPage = ({
         // For any team including "No team" (team ID 0), use the teams API
         await teamsAPI.update(requestBody, teamIdForApi);
       }
-      renderFlash("success", DEFAULT_AUTOMATION_UPDATE_SUCCESS_MSG);
+      renderFlash("success", t("manage.automationUpdateSuccess"));
     } catch {
-      renderFlash("error", DEFAULT_AUTOMATION_UPDATE_ERR_MSG);
+      renderFlash("error", t("manage.automationUpdateError"));
     } finally {
       toggleOtherWorkflowsModal();
       setIsUpdatingPolicies(false);
@@ -566,7 +561,7 @@ const ManagePolicyPage = ({
       });
 
       if (!changedPolicies.length) {
-        renderFlash("success", "No changes detected.");
+        renderFlash("success", t("manage.noChangesDetected"));
         return;
       }
 
@@ -659,7 +654,7 @@ const ManagePolicyPage = ({
       });
 
       if (!changedPolicies.length) {
-        renderFlash("success", "No changes detected.");
+        renderFlash("success", t("manage.noChangesDetected"));
         return;
       }
 
@@ -765,9 +760,9 @@ const ManagePolicyPage = ({
       await refetchTeamPolicies();
       await refetchTeamConfig();
 
-      renderFlash("success", DEFAULT_AUTOMATION_UPDATE_SUCCESS_MSG);
+      renderFlash("success", t("manage.automationUpdateSuccess"));
     } catch {
-      renderFlash("error", DEFAULT_AUTOMATION_UPDATE_ERR_MSG);
+      renderFlash("error", t("manage.automationUpdateError"));
     } finally {
       toggleCalendarEventsModal();
       setIsUpdatingPolicies(false);
@@ -834,10 +829,10 @@ const ManagePolicyPage = ({
       }
       renderFlash(
         "success",
-        "Successfully updated conditional access automations."
+        t("manage.conditionalAccessUpdateSuccess")
       );
     } catch {
-      renderFlash("error", "Could not update conditional access automations.");
+      renderFlash("error", t("manage.conditionalAccessUpdateError"));
     } finally {
       toggleConditionalAccessModal();
       setIsUpdatingPolicies(false);
@@ -914,18 +909,20 @@ const ManagePolicyPage = ({
       await Promise.all(responses);
       renderFlash(
         "success",
-        `Successfully deleted ${
-          selectedPolicyIds?.length === 1 ? "policy" : "policies"
-        }.`
+        t("manage.deleteSuccess", {
+          count: selectedPolicyIds?.length || 0,
+          entity: t(`manage.policy`, { count: selectedPolicyIds?.length || 0 })
+        })
       );
       setResetSelectedRows(true);
       refetchPolicies(teamIdForApi);
     } catch {
       renderFlash(
         "error",
-        `Unable to delete ${
-          selectedPolicyIds?.length === 1 ? "policy" : "policies"
-        }. Please try again.`
+        t("manage.deleteError", {
+          count: selectedPolicyIds?.length || 0,
+          entity: t(`manage.policy`, { count: selectedPolicyIds?.length || 0 })
+        })
       );
     } finally {
       toggleDeletePoliciesModal();
@@ -1021,13 +1018,7 @@ const ManagePolicyPage = ({
         <TableCount name="policies" count={count} />
         <LastUpdatedText
           lastUpdatedAt={updatedAt}
-          customTooltipText={
-            <>
-              Counts are updated hourly. Click host
-              <br />
-              counts for the most up-to-date count.
-            </>
-          }
+          customTooltipText={t("manage.countsUpdatedTooltip")}
         />
       </>
     );
@@ -1130,82 +1121,52 @@ const ManagePolicyPage = ({
     let disabledRunScriptTooltipContent: TooltipContent;
     let disabledConditionalAccessTooltipContent: TooltipContent;
     if (!isPremiumTier) {
-      disabledInstallTooltipContent = "Available in Fleet Premium";
-      disabledCalendarTooltipContent = "Available in Fleet Premium";
-      disabledRunScriptTooltipContent = "Available in Fleet Premium";
-      disabledConditionalAccessTooltipContent = "Available in Fleet Premium";
+      disabledInstallTooltipContent = t("automations.availablePremium");
+      disabledCalendarTooltipContent = t("automations.availablePremium");
+      disabledRunScriptTooltipContent = t("automations.availablePremium");
+      disabledConditionalAccessTooltipContent = t("automations.availablePremium");
     } else if (isAllTeamsSelected) {
-      disabledInstallTooltipContent = (
-        <>
-          Select a team to manage
-          <br />
-          install software automation.
-        </>
-      );
-      disabledCalendarTooltipContent = (
-        <>
-          Select a team to manage
-          <br />
-          calendar events.
-        </>
-      );
-      disabledRunScriptTooltipContent = (
-        <>
-          Select a team to manage
-          <br />
-          run script automation.
-        </>
-      );
-      disabledConditionalAccessTooltipContent = (
-        <>
-          Select a team to manage
-          <br />
-          conditional access.
-        </>
-      );
+      disabledInstallTooltipContent = t("automations.selectTeamInstall");
+      disabledCalendarTooltipContent = t("automations.selectTeamCalendar");
+      disabledRunScriptTooltipContent = t("automations.selectTeamScript");
+      disabledConditionalAccessTooltipContent = t("automations.selectTeamConditionalAccess");
     } else if (
       (isGlobalMaintainer || isTeamMaintainer) &&
       !isCalEventsEnabled
     ) {
-      disabledCalendarTooltipContent = (
-        <>
-          Contact a user with an
-          <br />
-          admin role for access.
-        </>
-      );
+      disabledCalendarTooltipContent = t("automations.contactAdmin");
     }
 
     const options: CustomOptionType[] = [
       {
-        label: "Calendar",
+        label: t("automations.calendar"),
         value: "calendar_events",
         isDisabled: !!disabledCalendarTooltipContent,
-        helpText: "Automatically reserve time to resolve failing policies.",
+        helpText: t("automations.calendarHelpText"),
         tooltipContent: disabledCalendarTooltipContent,
       },
       {
-        label: "Software",
+        label: t("automations.installSoftware"),
         value: "install_software",
         isDisabled: !!disabledInstallTooltipContent,
-        helpText: "Install software to resolve failing policies.",
+        helpText: t("automations.softwareHelpText"),
         tooltipContent: disabledInstallTooltipContent,
       },
       {
-        label: "Scripts",
+        label: t("automations.runScript"),
         value: "run_script",
         isDisabled: !!disabledRunScriptTooltipContent,
-        helpText: "Run script to resolve failing policies.",
+        helpText: t("automations.scriptsHelpText"),
         tooltipContent: disabledRunScriptTooltipContent,
       },
     ];
 
     if (globalConfigFromContext?.license.managed_cloud) {
       options.push({
-        label: "Conditional access",
+        label: t("automations.conditionalAccess"),
         value: "conditional_access",
         isDisabled: !!disabledConditionalAccessTooltipContent,
-        helpText: "Block single sign-on for hosts failing policies.",
+        helpText: t("automations.conditionalAccessHelpText"),
         tooltipContent: disabledConditionalAccessTooltipContent,
       });
     }
@@ -1213,10 +1174,10 @@ const ManagePolicyPage = ({
     // Maintainers do not have access to other workflows
     if (!isGlobalMaintainer && !isTeamMaintainer) {
       options.push({
-        label: "Other",
+        label: t("automations.other"),
         value: "other_workflows",
         isDisabled: false,
-        helpText: "Create tickets or fire webhooks for failing policies.",
+        helpText: t("automations.otherHelpText"),
       });
     }
 
@@ -1232,7 +1193,7 @@ const ManagePolicyPage = ({
           className={`${baseClass}__manage-automations-dropdown`}
           name="policy-automations"
           onChange={onSelectAutomationOption}
-          placeholder="Manage automations"
+          placeholder={t("manage.manageAutomations")}
           options={hasPoliciesToAutomate ? getAutomationsDropdownOptions() : []}
           variant="button"
           nowrapMenu
@@ -1243,17 +1204,9 @@ const ManagePolicyPage = ({
       const tipContent =
         isPremiumTier &&
         currentTeamId !== APP_CONTEXT_ALL_TEAMS_ID &&
-        !globalConfigFromContext?.partnerships?.enable_primo ? (
-          <div className={`${baseClass}__header__tooltip`}>
-            To manage automations add a policy to this team.
-            <br />
-            For inherited policies select &ldquo;All teams&rdquo;.
-          </div>
-        ) : (
-          <div className={`${baseClass}__header__tooltip`}>
-            To manage automations add a policy.
-          </div>
-        );
+        !globalConfigFromContext?.partnerships?.enable_primo
+          ? t("manage.automationsTooltipInherited")
+          : t("manage.automationsTooltip");
 
       automationsDropdown = (
         <TooltipWrapper
@@ -1289,22 +1242,17 @@ const ManagePolicyPage = ({
       }
     }
 
-    return <h1>Policies</h1>;
+    return <h1>{t("title")}</h1>;
   };
 
   let teamsDropdownHelpText: string;
   if (teamIdForApi === API_NO_TEAM_ID) {
-    teamsDropdownHelpText = `Detect device health issues${
-      globalConfigFromContext?.partnerships?.enable_primo
-        ? ""
-        : " for hosts that are not on a team"
-    }.`;
+    teamsDropdownHelpText = t("manage.noTeamDescription");
   } else if (teamIdForApi === API_ALL_TEAMS_ID) {
-    teamsDropdownHelpText = "Detect device health issues for all hosts.";
+    teamsDropdownHelpText = t("manage.allTeamsDescription");
   } else {
     // a team is selected
-    teamsDropdownHelpText =
-      "Detect device health issues for all hosts assigned to this team.";
+    teamsDropdownHelpText = t("manage.teamDescription");
   }
   return (
     <MainContent className={baseClass}>
@@ -1324,7 +1272,7 @@ const ManagePolicyPage = ({
                       className={`${baseClass}__select-policy-button`}
                       onClick={onAddPolicyClick}
                     >
-                      Add policy
+                      {t("manage.addPolicy")}
                     </Button>
                   </div>
                 )}

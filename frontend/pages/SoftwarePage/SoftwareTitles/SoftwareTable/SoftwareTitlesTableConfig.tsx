@@ -1,6 +1,7 @@
 import React from "react";
 import { CellProps, Column } from "react-table";
 import { InjectedRouter } from "react-router";
+import { useTranslation } from "react-i18next";
 
 import {
   ISoftwareTitle,
@@ -98,12 +99,13 @@ const getSoftwareNameCellData = (
 
 const generateTableHeaders = (
   router: InjectedRouter,
-  teamId?: number
+  teamId?: number,
+  t?: any
 ): ISoftwareTitlesTableConfig[] => {
   const softwareTableHeaders: ISoftwareTitlesTableConfig[] = [
     {
       Header: (cellProps: ITableHeaderProps) => (
-        <HeaderCell value="Name" isSortedDesc={cellProps.column.isSortedDesc} />
+        <HeaderCell value={t ? t("columns.name") : "Name"} isSortedDesc={cellProps.column.isSortedDesc} />
       ),
       disableSortBy: false,
       accessor: "name",
@@ -136,7 +138,7 @@ const generateTableHeaders = (
       sortType: "caseInsensitive",
     },
     {
-      Header: "Version",
+      Header: t ? t("columns.version") : "Version",
       disableSortBy: true,
       accessor: "versions",
       Cell: (cellProps: IVersionsCellProps) => (
@@ -144,7 +146,7 @@ const generateTableHeaders = (
       ),
     },
     {
-      Header: "Type",
+      Header: t ? t("columns.type") : "Type",
       disableSortBy: true,
       accessor: "source",
       Cell: (cellProps: ITableStringCellProps) => (
@@ -158,7 +160,7 @@ const generateTableHeaders = (
     // With the versions data, we can sum up the vulnerabilities to get the
     // total number of vulnerabilities for the software title
     {
-      Header: "Vulnerabilities",
+      Header: t ? t("columns.vulnerabilities") : "Vulnerabilities",
       disableSortBy: true,
       Cell: (cellProps: IVulnerabilitiesCellProps) => {
         const vulnDetectionNotSupported =
@@ -166,7 +168,7 @@ const generateTableHeaders = (
           cellProps.row.original.source === "tgz_packages";
 
         if (vulnDetectionNotSupported) {
-          return <TextCell value="Not supported" grey />;
+          return <TextCell value={t ? t("columns.notSupported") : "Not supported"} grey />;
         }
         const vulnerabilities = getVulnerabilities(
           cellProps.row.original.versions ?? []
@@ -177,7 +179,7 @@ const generateTableHeaders = (
     {
       Header: (cellProps: ITableHeaderProps) => (
         <HeaderCell
-          value="Hosts"
+          value={t ? t("columns.hosts") : "Hosts"}
           disableSortBy={false}
           isSortedDesc={cellProps.column.isSortedDesc}
         />

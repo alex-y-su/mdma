@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import Modal from "components/Modal";
 import Button from "components/buttons/Button";
@@ -16,15 +17,17 @@ const DeleteQueryModal = ({
   onCancel,
   onSubmit,
 }: IDeleteQueryModalProps): JSX.Element => {
+  const { t } = useTranslation("queries");
+
   return (
     <Modal
-      title="Delete query"
+      title={t("modals.delete.title")}
       onExit={onCancel}
       onEnter={onSubmit}
       className={baseClass}
     >
       <div className={baseClass}>
-        Are you sure you want to delete the selected queries?
+        {t("modals.delete.warning")}
         <div className="modal-cta-wrap">
           <Button
             type="button"
@@ -33,10 +36,10 @@ const DeleteQueryModal = ({
             className="delete-loading"
             isLoading={isUpdatingQueries}
           >
-            Delete
+            {t("modals.delete.deleteButton")}
           </Button>
           <Button onClick={onCancel} variant="inverse-alert">
-            Cancel
+            {t("modals.delete.cancelButton")}
           </Button>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { useQuery } from "react-query";
 
@@ -26,6 +27,7 @@ const baseClass = "secrets-batch-paginated-list";
 export const SECRETS_PAGE_SIZE = 20;
 
 const Secrets = () => {
+  const { t } = useTranslation("settings");
   const paginatedListRef = useRef<IPaginatedListHandle<ISecret>>(null);
 
   const [copyMessage, setCopyMessage] = useState("");
@@ -156,11 +158,11 @@ const Secrets = () => {
     return (
       <>
         <EmptyTable
-          header="No custom variables created yet"
-          info="Add a custom variable to make it available in scripts and profiles."
+          header={t("controls.secrets.noSecrets")}
+          info={t("controls.secrets.addSecretDescription")}
           primaryButton={
             canEdit ? (
-              <Button onClick={onClickAddSecret}>Add custom variable</Button>
+              <Button onClick={onClickAddSecret}>{t("controls.secrets.addSecret")}</Button>
             ) : undefined
           }
         />
@@ -176,7 +178,7 @@ const Secrets = () => {
   return (
     <div className={baseClass}>
       <p className={`${baseClass}__description`}>
-        Manage custom variables that will be available in scripts and profiles.{" "}
+        {t("controls.secrets.description")}{" "}
         <CustomLink
           text="Learn more"
           url={`${FLEET_WEBSITE_URL}/guides/secrets-in-scripts-and-configuration-profiles`}
@@ -194,7 +196,7 @@ const Secrets = () => {
         onClickRow={(secret) => secret}
         heading={
           <div className={`${baseClass}__header`}>
-            <span>Custom variables</span>
+            <span>{t("controls.secrets.title")}</span>
             {canEdit && (
               <GitOpsModeTooltipWrapper
                 renderChildren={(disableChildren) => (
@@ -205,7 +207,7 @@ const Secrets = () => {
                       disabled={disableChildren}
                     >
                       <Icon name="plus" />
-                      <span>Add custom variable</span>
+                      <span>{t("controls.secrets.addSecret")}</span>
                     </Button>
                   </span>
                 )}

@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { useTranslation } from "react-i18next";
 import { ITeam } from "interfaces/team";
 import { UserRole } from "interfaces/user";
 import { SingleValue } from "react-select-5";
@@ -36,6 +37,7 @@ const SelectRoleForm = ({
   isApiOnly,
   onMenuOpen,
 }: ISelectRoleFormProps): JSX.Element => {
+  const { t } = useTranslation("settings");
   const { isPremiumTier } = useContext(AppContext);
 
   const [selectedRole, setSelectedRole] = useState<CustomOptionType>({
@@ -57,7 +59,7 @@ const SelectRoleForm = ({
   return (
     <DropdownWrapper
       name="Team role"
-      label="Role"
+      label={t("admin.users.forms.role")}
       options={roleOptions({ isPremiumTier, isApiOnly })}
       value={selectedRole}
       onChange={updateSelectedRole}

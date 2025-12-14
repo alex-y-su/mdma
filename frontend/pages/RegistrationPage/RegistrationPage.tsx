@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { InjectedRouter } from "react-router";
 import { max } from "lodash";
+import { useTranslation } from "react-i18next";
 
 import paths from "router/paths";
 import { AppContext } from "context/app";
@@ -16,13 +17,6 @@ import RegistrationForm from "components/forms/RegistrationForm";
 // @ts-ignore
 import Breadcrumbs from "./Breadcrumbs";
 
-const ERROR_NOTIFICATION: INotification = {
-  alertType: "error",
-  isVisible: true,
-  message:
-    "We were unable to configure Fleet. If your Fleet server is behind a proxy, please ensure the server can be reached.",
-};
-
 interface IRegistrationPageProps {
   router: InjectedRouter;
 }
@@ -30,6 +24,7 @@ interface IRegistrationPageProps {
 const baseClass = "registration-page";
 
 const RegistrationPage = ({ router }: IRegistrationPageProps) => {
+  const { t } = useTranslation("auth");
   const {
     currentUser,
     setCurrentUser,
@@ -40,6 +35,12 @@ const RegistrationPage = ({ router }: IRegistrationPageProps) => {
   const [pageProgress, setPageProgress] = useState(1);
   const [showSetupError, setShowSetupError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const ERROR_NOTIFICATION: INotification = {
+    alertType: "error",
+    isVisible: true,
+    message: t("registration.setupError"),
+  };
 
   useEffect(() => {
     const { DASHBOARD } = paths;
@@ -86,10 +87,10 @@ const RegistrationPage = ({ router }: IRegistrationPageProps) => {
   };
 
   const REGISTRATION_HEADERS: Record<number, string> = {
-    1: "Set up user",
-    2: "Organization details",
-    3: "Set Fleet URL",
-    4: "Confirm configuration",
+    1: t("registration.headers.step1"),
+    2: t("registration.headers.step2"),
+    3: t("registration.headers.step3"),
+    4: t("registration.headers.step4"),
   };
   const header = REGISTRATION_HEADERS[page];
 

@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { InjectedRouter } from "react-router";
+import { useTranslation } from "react-i18next";
 
 import PATHS from "router/paths";
 import { ISideNavItem } from "pages/admin/components/SideNav/SideNav";
@@ -23,22 +24,23 @@ type IScriptsCardProps = IScriptLibraryProps | IScriptBatchProgressProps;
 const useScriptNavItems = (
   teamId: number | undefined
 ): ISideNavItem<IScriptsCardProps>[] => {
+  const { t } = useTranslation("settings");
   return useMemo(
     () => [
       {
-        title: "Library",
+        title: t("controls.scripts.library"),
         urlSection: "library",
         path: `${PATHS.CONTROLS_SCRIPTS_LIBRARY}?team_id=${teamId || 0}`,
         Card: ScriptLibrary,
       },
       {
-        title: "Batch progress",
+        title: t("controls.scripts.batchDetails.progress"),
         urlSection: "progress",
         path: `${PATHS.CONTROLS_SCRIPTS_BATCH_PROGRESS}?team_id=${teamId || 0}`,
         Card: ScriptBatchProgress,
       },
     ],
-    [teamId]
+    [teamId, t]
   );
 };
 

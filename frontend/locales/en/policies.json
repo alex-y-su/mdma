@@ -230,5 +230,27 @@
     "save": "Save",
     "cancel": "Cancel"
   },
-  "run": "Run"
+  "run": "Run",
+  "queryEditor": {
+    "title": "Query editor",
+    "schema": "Schema",
+    "examples": "Examples",
+    "runQuery": "Run query",
+    "savePolicy": "Save policy"
+  },
+  "runQuery": {
+    "title": "Run query",
+    "selectTargets": "Select targets",
+    "running": "Running...",
+    "completed": "Completed"
+  },
+  "form": {
+    "unsavedChanges": "You have unsaved changes",
+    "confirmLeave": "Are you sure you want to leave? Your changes will be lost.",
+    "validation": {
+      "nameRequired": "Policy name is required",
+      "queryRequired": "Query is required",
+      "platformRequired": "At least one platform is required"
+    }
+  }
 }

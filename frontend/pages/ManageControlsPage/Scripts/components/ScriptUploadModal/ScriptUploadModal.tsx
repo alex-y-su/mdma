@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { NotificationContext } from "context/notification";
 import scriptAPI from "services/entities/scripts";
 
@@ -20,6 +21,7 @@ const ScriptUploadModal = ({
   onExit,
   currentTeamId,
 }: IScriptUploadModal) => {
+  const { t } = useTranslation("settings");
   const { renderFlash } = useContext(NotificationContext);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [showLoading, setShowLoading] = useState(false);
@@ -47,7 +49,7 @@ const ScriptUploadModal = ({
 
   return (
     <Modal
-      title="Add script"
+      title={t("controls.scripts.addScript")}
       onExit={onExit}
       onEnter={onSubmit}
       className={baseClass}
@@ -69,7 +71,7 @@ const ScriptUploadModal = ({
             disabled={!selectedFile || showLoading}
             isLoading={showLoading}
           >
-            Add script
+            {t("controls.scripts.addScript")}
           </Button>
         </div>
       </>

@@ -3,6 +3,7 @@ import React, { useContext, useCallback, useMemo } from "react";
 import { InjectedRouter } from "react-router";
 import { Row } from "react-table";
 import { SingleValue } from "react-select-5";
+import { useTranslation } from "react-i18next";
 
 import PATHS from "router/paths";
 import { AppContext } from "context/app";
@@ -96,6 +97,7 @@ const QueriesTable = ({
   currentTeamId,
   isPremiumTier,
 }: IQueriesTableProps): JSX.Element | null => {
+  const { t } = useTranslation("queries");
   const { currentUser, config } = useContext(AppContext);
 
   // Functions to avoid race conditions
@@ -256,8 +258,9 @@ const QueriesTable = ({
         currentUser,
         currentTeamId,
         omitSelectionColumn: !curTeamScopeQueriesPresent,
+        t,
       }),
-    [currentUser, currentTeamId, curTeamScopeQueriesPresent]
+    [currentUser, currentTeamId, curTeamScopeQueriesPresent, t]
   );
 
   const searchable =
@@ -295,7 +298,7 @@ const QueriesTable = ({
             )) ||
             null
           }
-          inputPlaceHolder="Search by name"
+          inputPlaceHolder={t("manage.searchPlaceholder")}
           onQueryChange={onQueryChange}
           searchable={searchable}
           customControl={searchable ? renderPlatformDropdown : undefined}

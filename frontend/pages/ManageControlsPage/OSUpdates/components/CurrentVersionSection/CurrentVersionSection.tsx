@@ -2,6 +2,7 @@ import React from "react";
 import { useQuery } from "react-query";
 import { AxiosError } from "axios";
 import { InjectedRouter } from "react-router";
+import { useTranslation } from "react-i18next";
 
 import { IOperatingSystemVersion } from "interfaces/operating_system";
 import {
@@ -65,6 +66,7 @@ const CurrentVersionSection = ({
   currentTeamId,
   queryParams,
 }: ICurrentVersionSectionProps) => {
+  const { t } = useTranslation("settings");
   const { data, isError, isLoading: isLoadingOsVersions } = useQuery<
     IOSVersionsResponse,
     AxiosError
@@ -144,7 +146,7 @@ const CurrentVersionSection = ({
   return (
     <div className={baseClass}>
       <SectionHeader
-        title="Current versions"
+        title={t("controls.osUpdates.currentVersion")}
         subTitle={isLoadingOsVersions ? null : generateSubTitleText()}
         wrapperCustomClass={`${baseClass}__header`}
       />

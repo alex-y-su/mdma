@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import Modal from "components/Modal";
 import Button from "components/buttons/Button";
@@ -16,13 +17,13 @@ const ActivityAutomationDetailsModal = ({
   details,
   onCancel,
 }: IActivityAutomationDetailsModalProps) => {
+  const { t } = useTranslation("dashboard");
   const renderContent = () => {
     return (
       <>
         <div className={`${baseClass}__modal-content`}>
           <Textarea
-            label="Fleet will send a JSON payload to this URL whenever a new activity
-            is generated:"
+            label={t("activityDetails.automationModal.webhookLabel")}
             className={`${baseClass}__webhook-url`}
             variant="code"
           >
@@ -30,7 +31,7 @@ const ActivityAutomationDetailsModal = ({
           </Textarea>
         </div>
         <div className="modal-cta-wrap">
-          <Button onClick={onCancel}>Done</Button>
+          <Button onClick={onCancel}>{t("activityDetails.automationModal.done")}</Button>
         </div>
       </>
     );
@@ -38,7 +39,7 @@ const ActivityAutomationDetailsModal = ({
 
   return (
     <Modal
-      title="Details"
+      title={t("activityDetails.automationModal.title")}
       onExit={onCancel}
       onEnter={onCancel}
       className={baseClass}

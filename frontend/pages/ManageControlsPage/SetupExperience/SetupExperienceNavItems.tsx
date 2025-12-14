@@ -1,4 +1,5 @@
 import PATHS from "router/paths";
+import i18n from "i18next";
 
 import { InjectedRouter } from "react-router";
 
@@ -18,31 +19,41 @@ export interface ISetupExperienceCardProps {
 
 const SETUP_EXPERIENCE_NAV_ITEMS: ISideNavItem<ISetupExperienceCardProps>[] = [
   {
-    title: "1. End user authentication",
+    get title() {
+      return `1. ${i18n.t("controls.setupExperience.navItems.endUserAuth", { ns: "settings" })}`;
+    },
     urlSection: "end-user-auth",
     path: PATHS.CONTROLS_END_USER_AUTHENTICATION,
     Card: EndUserAuthentication,
   },
   {
-    title: "2. Bootstrap package",
+    get title() {
+      return `2. ${i18n.t("controls.setupExperience.navItems.bootstrapPackage", { ns: "settings" })}`;
+    },
     urlSection: "bootstrap-package",
     path: PATHS.CONTROLS_BOOTSTRAP_PACKAGE,
     Card: BootstrapPackage,
   },
   {
-    title: "3. Install software",
+    get title() {
+      return `3. ${i18n.t("controls.setupExperience.navItems.installSoftware", { ns: "settings" })}`;
+    },
     urlSection: "install-software",
     path: PATHS.CONTROLS_INSTALL_SOFTWARE("macos"),
     Card: InstallSoftware,
   },
   {
-    title: "4. Run script",
+    get title() {
+      return `4. ${i18n.t("controls.setupExperience.navItems.runScript", { ns: "settings" })}`;
+    },
     urlSection: "run-script",
     path: PATHS.CONTROLS_RUN_SCRIPT,
     Card: RunScript,
   },
   {
-    title: "5. Setup Assistant",
+    get title() {
+      return `5. ${i18n.t("controls.setupExperience.navItems.setupAssistant", { ns: "settings" })}`;
+    },
     urlSection: "setup-assistant",
     path: PATHS.CONTROLS_SETUP_ASSISTANT,
     Card: SetupAssistant,

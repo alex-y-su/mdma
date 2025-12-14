@@ -1,5 +1,6 @@
 import React, { MouseEventHandler } from "react";
 import classnames from "classnames";
+import { useTranslation } from "react-i18next";
 
 import Button from "components/buttons/Button";
 
@@ -15,6 +16,7 @@ const Breadcrumbs = ({
   currentPage = 1,
   pageProgress = 1,
 }: IBreadcrumbs): JSX.Element => {
+  const { t } = useTranslation("auth");
   const pageBaseClass = `${baseClass}__page`;
   const page1ClassName = classnames(pageBaseClass, `${pageBaseClass}--1`, {
     [`${pageBaseClass}--active`]: currentPage === 1,
@@ -40,7 +42,7 @@ const Breadcrumbs = ({
           onClick={() => onSetPage(1)}
           variant="unstyled"
         >
-          Set up user
+          {t("registration.breadcrumbs.step1")}
         </Button>
         <Button
           className={page2ClassName}
@@ -48,7 +50,7 @@ const Breadcrumbs = ({
           tabIndex={page2TabIndex}
           variant="unstyled"
         >
-          Organization details
+          {t("registration.breadcrumbs.step2")}
         </Button>
         <Button
           className={page3ClassName}
@@ -56,7 +58,7 @@ const Breadcrumbs = ({
           tabIndex={page3TabIndex}
           variant="unstyled"
         >
-          Set Fleet URL
+          {t("registration.breadcrumbs.step3")}
         </Button>
       </div>
     </div>

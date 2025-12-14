@@ -1,5 +1,6 @@
 import React from "react";
 import classnames from "classnames";
+import { useTranslation } from "react-i18next";
 
 import Button from "components/buttons/Button";
 import Icon from "components/Icon";
@@ -26,6 +27,7 @@ const Pagination = ({
   className,
   hidePagination = false,
 }: IPaginationProps) => {
+  const { t } = useTranslation("common");
   const classNames = classnames(baseClass, className);
 
   if (hidePagination) {
@@ -40,7 +42,7 @@ const Pagination = ({
         onClick={onPrevPage}
         className={`${baseClass}__pagination-button`}
       >
-        <Icon name="chevron-left" color="ui-fleet-black-75" /> Previous
+        <Icon name="chevron-left" color="ui-fleet-black-75" /> {t("pagination.previous")}
       </Button>
       <Button
         variant="inverse"
@@ -48,7 +50,7 @@ const Pagination = ({
         onClick={onNextPage}
         className={`${baseClass}__pagination-button`}
       >
-        Next <Icon name="chevron-right" color="ui-fleet-black-75" />
+        {t("pagination.next")} <Icon name="chevron-right" color="ui-fleet-black-75" />
       </Button>
     </div>
   );

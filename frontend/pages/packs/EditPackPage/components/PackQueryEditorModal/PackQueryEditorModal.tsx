@@ -1,6 +1,7 @@
 /* This component is used for creating and editing pack queries */
 
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { pull } from "lodash";
 import Modal from "components/Modal";
 import Button from "components/buttons/Button";
@@ -66,6 +67,7 @@ const PackQueryEditorModal = ({
   packId,
   isUpdatingPack,
 }: IPackQueryEditorModalProps): JSX.Element => {
+  const { t } = useTranslation("queries");
   const [selectedQuery, setSelectedQuery] = useState<
     IScheduledQuery | INoQueryOption
   >();
@@ -156,12 +158,12 @@ const PackQueryEditorModal = ({
 
     const frequency = parseInt(selectedFrequency, 10);
     if (!frequency || frequency < 0) {
-      setErrorFrequency("Frequency must be an integer greater than zero");
+      setErrorFrequency(t("packs.modals.queryEditor.errors.frequencyPositive"));
       return;
     }
     if (frequency > MAX_OSQUERY_SCHEDULED_QUERY_INTERVAL) {
       setErrorFrequency(
-        "Frequency must be an integer that does not exceed 604,800 (i.e. 7 days)"
+        t("packs.modals.queryEditor.errors.frequencyMax")
       );
       return;
     }
@@ -184,7 +186,7 @@ const PackQueryEditorModal = ({
 
   return (
     <Modal
-      title={editQuery?.name || "Add query"}
+      title={editQuery?.name || t("packs.modals.queryEditor.addQueryTitle")}
       onExit={onCancel}
       className={baseClass}
     >
@@ -194,7 +196,7 @@ const PackQueryEditorModal = ({
             searchable
             options={createQueryDropdownOptions()}
             onChange={onChangeSelectQuery}
-            placeholder="Select query"
+            placeholder={t("packs.modals.queryEditor.selectQueryPlaceholder")}
             value={selectedQuery?.id}
             wrapperClassName={`${baseClass}__select-query-dropdown-wrapper`}
             autoFocus
@@ -206,21 +208,21 @@ const PackQueryEditorModal = ({
           inputWrapperClass={`${baseClass}__form-field ${baseClass}__form-field--frequency`}
           value={selectedFrequency}
           placeholder="- - -"
-          label="Frequency (seconds)"
+          label={t("packs.modals.queryEditor.frequency")}
           type="number"
         />
         <Dropdown
           options={LOGGING_TYPE_OPTIONS}
           onChange={onChangeSelectLoggingType}
-          placeholder="Select"
+          placeholder={t("packs.modals.queryEditor.selectPlaceholder")}
           value={selectedLoggingType}
-          label="Logging"
+          label={t("packs.modals.queryEditor.logging")}
           wrapperClassName={`${baseClass}__form-field ${baseClass}__form-field--logging`}
         />
         <Dropdown
           options={SCHEDULE_PLATFORM_DROPDOWN_OPTIONS}
-          placeholder="Select"
-          label="Platform"
+          placeholder={t("packs.modals.queryEditor.selectPlaceholder")}
+          label={t("packs.modals.queryEditor.platform")}
           onChange={onChangeSelectPlatformOptions}
           value={selectedPlatformOptions}
           multi
@@ -229,9 +231,9 @@ const PackQueryEditorModal = ({
         <Dropdown
           options={MIN_OSQUERY_VERSION_OPTIONS}
           onChange={onChangeMinOsqueryVersionOptions}
-          placeholder="Select"
+          placeholder={t("packs.modals.queryEditor.selectPlaceholder")}
           value={selectedMinOsqueryVersionOptions}
-          label="Minimum osquery version"
+          label={t("packs.modals.queryEditor.minVersion")}
           wrapperClassName={`${baseClass}__form-field ${baseClass}__form-field--osquer-vers`}
         />
         <InputField
@@ -239,7 +241,7 @@ const PackQueryEditorModal = ({
           inputWrapperClass={`${baseClass}__form-field ${baseClass}__form-field--shard`}
           value={selectedShard}
           placeholder="- - -"
-          label="Shard (percentage)"
+          label={t("packs.modals.queryEditor.shard")}
           type="number"
         />
 
@@ -251,10 +253,10 @@ const PackQueryEditorModal = ({
             className={`${editQuery?.name ? "save" : "add-query"}-loading`}
             isLoading={isUpdatingPack}
           >
-            {editQuery?.name ? "Save" : "Add query"}
+            {editQuery?.name ? t("packs.modals.queryEditor.saveButton") : t("packs.modals.queryEditor.addButton")}
           </Button>
           <Button onClick={onCancel} variant="inverse">
-            Cancel
+            {t("packs.modals.queryEditor.cancelButton")}
           </Button>
         </div>
       </form>

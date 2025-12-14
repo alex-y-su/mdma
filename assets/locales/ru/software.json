@@ -27,7 +27,8 @@
     "source": "Источник",
     "status": "Статус",
     "selfService": "Самообслуживание",
-    "installScript": "Скрипт установки"
+    "installScript": "Скрипт установки",
+    "notSupported": "Не поддерживается"
   },
   "vulnerabilities": {
     "title": "Уязвимости",
@@ -42,7 +43,16 @@
     "affectedHosts": "Затронутые устройства",
     "affectedSoftware": "Затронутое ПО",
     "cisaKnownExploit": "Известный эксплойт CISA",
-    "exploitedInWild": "Эксплуатируется в реальных условиях"
+    "exploitedInWild": "Эксплуатируется в реальных условиях",
+    "vulnerability": "Уязвимость",
+    "severity": "Серьезность",
+    "severityTooltip": "Наихудшее возможное воздействие в различных средах (базовая оценка CVSS версии 3.x).",
+    "probabilityOfExploit": "Вероятность эксплуатации",
+    "probabilityTooltip": "Вероятность эксплуатации этой уязвимости в ближайшие 30 дней (вероятность EPSS). Эти данные предоставлены FIRST.org.",
+    "published": "Опубликовано",
+    "publishedTooltip": "Дата публикации этой уязвимости в Национальной базе данных уязвимостей (NVD).",
+    "detected": "Обнаружено",
+    "detectedTooltip": "Дата первого появления этой уязвимости на устройстве."
   },
   "details": {
     "title": "Информация о ПО",
@@ -74,7 +84,8 @@
   "empty": {
     "title": "ПО не найдено",
     "description": "Нет ПО, соответствующего текущим фильтрам",
-    "addFirst": "Добавьте ПО для начала работы"
+    "addFirst": "Добавьте ПО для начала работы",
+    "tableName": "{{tableName}}"
   },
   "page": {
     "headerDescription": "Управление ПО и поиск установленного ПО, ОС и уязвимостей",
@@ -93,7 +104,83 @@
     "searchPlaceholder": "Поиск по названию или уязвимости (CVE)",
     "lastUpdatedTooltip": "Последнее обновление данных ПО, включая уязвимости и количество устройств.",
     "helpText": "Видите неожиданное ПО или уязвимости?",
-    "helpLink": "Сообщить о проблеме на GitHub"
+    "helpLink": "Сообщить о проблеме на GitHub",
+    "items": "элементов",
+    "allPlatforms": "Все платформы"
+  },
+  "os": {
+    "title": "Операционные системы",
+    "description": "Просмотр операционных систем, установленных на устройствах",
+    "platforms": {
+      "all": "Все платформы",
+      "darwin": "macOS",
+      "windows": "Windows",
+      "linux": "Linux",
+      "chrome": "ChromeOS",
+      "ios": "iOS",
+      "ipados": "iPadOS"
+    }
+  },
+  "titles": {
+    "title": "Программное обеспечение",
+    "description": "Просмотр и управление ПО на всех устройствах"
+  },
+  "addPages": {
+    "appStore": {
+      "title": "App Store",
+      "searchPlaceholder": "Поиск в App Store",
+      "noResults": "Приложения не найдены"
+    },
+    "customPackage": {
+      "title": "Пользовательский пакет",
+      "uploadLabel": "Загрузить пакет",
+      "supportedFormats": "Поддерживаемые форматы: .pkg, .msi, .deb, .rpm, .exe",
+      "chooseFile": "Выбрать файл",
+      "payloadFreePackage": "Пакет без полезной нагрузки"
+    },
+    "fleetMaintained": {
+      "title": "Приложения от Fleet",
+      "description": "Предварительно настроенные приложения, поддерживаемые Fleet"
+    }
+  },
+  "detailsPage": {
+    "summary": {
+      "title": "Сводка",
+      "versions": "Версии",
+      "hosts": "Устройства"
+    },
+    "installer": {
+      "title": "Установщик",
+      "details": "Детали",
+      "status": "Статус",
+      "policies": "Политики"
+    }
+  },
+  "forms": {
+    "package": {
+      "name": "Название",
+      "version": "Версия",
+      "selfService": "Самообслуживание",
+      "preInstallQuery": "Запрос перед установкой",
+      "installScript": "Скрипт установки",
+      "postInstallScript": "Скрипт после установки",
+      "uninstallScript": "Скрипт удаления",
+      "save": "Сохранить",
+      "addSoftware": "Добавить ПО",
+      "cancel": "Отмена"
+    },
+    "advancedOptions": {
+      "title": "Дополнительные параметры",
+      "preInstallQuery": "Запрос перед установкой",
+      "installScript": "Скрипт установки",
+      "postInstallScript": "Скрипт после установки"
+    }
+  },
+  "automations": {
+    "title": "Автоматизация ПО",
+    "vulnerabilities": "Автоматизация уязвимостей",
+    "webhook": "Вебхук",
+    "integration": "Интеграция"
   },
   "modals": {
     "delete": {

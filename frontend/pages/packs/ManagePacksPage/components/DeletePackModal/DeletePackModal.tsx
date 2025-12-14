@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import Modal from "components/Modal";
 import Button from "components/buttons/Button";
@@ -16,15 +17,17 @@ const DeletePackModal = ({
   onSubmit,
   isUpdatingPack,
 }: IDeletePackModalProps): JSX.Element => {
+  const { t } = useTranslation("queries");
+
   return (
     <Modal
-      title="Delete pack"
+      title={t("packs.modals.delete.title")}
       onExit={onCancel}
       onEnter={onSubmit}
       className={baseClass}
     >
       <div className={baseClass}>
-        Are you sure you want to delete the selected packs?
+        {t("packs.modals.delete.message")}
         <div className="modal-cta-wrap">
           <Button
             type="button"
@@ -33,10 +36,10 @@ const DeletePackModal = ({
             className="delete-loading"
             isLoading={isUpdatingPack}
           >
-            Delete
+            {t("packs.modals.delete.deleteButton")}
           </Button>
           <Button onClick={onCancel} variant="inverse-alert">
-            Cancel
+            {t("packs.modals.delete.cancelButton")}
           </Button>
         </div>
       </div>

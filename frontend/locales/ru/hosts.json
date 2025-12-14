@@ -13,7 +13,10 @@
     "queries": "Запросы",
     "policies": "Политики",
     "scripts": "Скрипты",
-    "activity": "Активность"
+    "activity": "Активность",
+    "inventory": "Инвентарь",
+    "library": "Библиотека",
+    "backToAllHosts": "Назад ко всем устройствам"
   },
   "status": {
     "online": "В сети",
@@ -246,5 +249,99 @@
     "title": "Проблемы Munki",
     "noIssuesDetected": "Проблем Munki не обнаружено",
     "noIssuesInfo": "При последнем запуске Munki на этом устройстве проблем не было обнаружено."
+  },
+  "detailsPage": {
+    "title": "Детали хоста",
+    "banners": {
+      "refetching": "Обновление данных хоста...",
+      "mdmOff": "MDM отключён для этого хоста",
+      "pendingLock": "Ожидается блокировка",
+      "pendingWipe": "Ожидается очистка"
+    }
+  },
+  "header": {
+    "hostname": "Имя хоста",
+    "platform": "Платформа",
+    "osVersion": "Версия ОС",
+    "status": "Статус",
+    "team": "Команда",
+    "myDevice": "Моё устройство",
+    "lastFetched": "Последний запрос"
+  },
+  "summary": {
+    "osSettings": "Настройки ОС",
+    "bootstrapPackage": "Пакет начальной загрузки",
+    "diskEncryption": "Шифрование диска",
+    "mdm": "MDM"
+  },
+  "activityItems": {
+    "canceledInstall": "Установка ПО отменена",
+    "canceledScript": "Выполнение скрипта отменено",
+    "canceledUninstall": "Удаление ПО отменено",
+    "installedSoftware": "ПО установлено",
+    "lockedHost": "Хост заблокирован",
+    "ranScript": "Скрипт выполнен",
+    "readDiskKey": "Ключ шифрования диска прочитан",
+    "unlockedHost": "Хост разблокирован",
+    "wipedHost": "Хост очищен"
+  },
+  "modals": {
+    "lock": {
+      "title": "Заблокировать хост",
+      "message": "Вы уверены, что хотите заблокировать этот хост?",
+      "warning": "Пользователь будет заблокирован на своём устройстве.",
+      "description": "Заблокируйте хост, когда его нужно вернуть вашей организации.",
+      "descriptionIos": "Это включит режим пропажи. Разблокировать можно будет только через Fleet.",
+      "generatePin": "Fleet сгенерирует шестизначный PIN-код разблокировки.",
+      "confirmMessage": "Пожалуйста, подтвердите:",
+      "confirmCheckbox": "Я хочу заблокировать",
+      "buttonLock": "Заблокировать",
+      "buttonCancel": "Отмена",
+      "successMessage": "Устройство блокируется или будет заблокировано при подключении к сети.",
+      "endUserExperience": "Пользовательский интерфейс",
+      "organizationNameNote": "Вместо \"Fleet\" в сообщении будет показано название организации, настроенное в параметрах организации."
+    },
+    "unlock": {
+      "title": "Разблокировать хост",
+      "message": "Введите PIN-код для разблокировки хоста."
+    },
+    "wipe": {
+      "title": "Очистить хост",
+      "message": "Вы уверены, что хотите очистить этот хост?",
+      "warning": "Все данные будут безвозвратно удалены."
+    },
+    "diskEncryptionKey": {
+      "title": "Ключ шифрования диска",
+      "copyKey": "Копировать ключ"
+    },
+    "runScript": {
+      "title": "Запустить скрипт",
+      "selectScript": "Выберите скрипт для запуска"
+    }
+  },
+  "selfService": {
+    "title": "Самообслуживание",
+    "install": "Установить",
+    "uninstall": "Удалить",
+    "update": "Обновить",
+    "categories": "Категории",
+    "allApps": "Все приложения"
+  },
+  "certificates": {
+    "title": "Сертификаты",
+    "noCertificates": "Сертификаты не найдены"
+  },
+  "deviceUser": {
+    "title": "Моё устройство",
+    "settingUp": "Настройка вашего устройства",
+    "enrollMdm": "Зарегистрироваться в MDM",
+    "bitlockerPin": "PIN-код BitLocker",
+    "createLinuxKey": "Создать ключ шифрования Linux"
+  },
+  "osSettingsModal": {
+    "title": "Настройки ОС",
+    "status": "Статус",
+    "profile": "Профиль",
+    "actionRequired": "Требуется действие"
   }
 }

@@ -6,7 +6,10 @@
     "editQuery": "Редактировать запрос",
     "deleteQuery": "Удалить запрос",
     "runQuery": "Выполнить запрос",
-    "liveQuery": "Live-запрос"
+    "liveQuery": "Live-запрос",
+    "searchPlaceholder": "Поиск запросов по названию",
+    "automationsEnabled": "Автоматизация включена",
+    "automationsDisabled": "Автоматизация отключена"
   },
   "columns": {
     "name": "Название",
@@ -15,17 +18,22 @@
     "lastModified": "Последнее изменение",
     "frequency": "Частота",
     "performance": "Влияние на производительность",
-    "automations": "Автоматизации"
+    "automations": "Автоматизация",
+    "hostsTargeted": "Целевые хосты",
+    "hostsResponded": "Ответившие хосты"
   },
   "details": {
-    "title": "Информация о запросе",
+    "title": "Детали запроса",
     "sql": "SQL",
     "description": "Описание",
     "platform": "Платформа",
     "performance": "Влияние на производительность",
     "schedule": "Расписание",
     "logging": "Логирование",
-    "automations": "Автоматизации"
+    "automations": "Автоматизация",
+    "report": "Отчёт",
+    "lastRun": "Последний запуск",
+    "totalResults": "Всего результатов"
   },
   "create": {
     "title": "Создать запрос",
@@ -34,39 +42,189 @@
     "sql": "SQL-запрос",
     "platform": "Платформа",
     "performanceImpact": "Влияние на производительность",
-    "submitButton": "Сохранить запрос"
+    "submitButton": "Сохранить запрос",
+    "namePlaceholder": "Введите название запроса",
+    "descriptionPlaceholder": "Введите описание (необязательно)",
+    "sqlPlaceholder": "SELECT * FROM ...",
+    "nameRequired": "Название запроса обязательно",
+    "sqlRequired": "SQL-запрос обязателен"
+  },
+  "edit": {
+    "title": "Редактировать запрос",
+    "saveChanges": "Сохранить изменения",
+    "discardChanges": "Отменить изменения",
+    "confirmDiscard": "Вы уверены, что хотите отменить изменения?",
+    "unsavedChanges": "У вас есть несохранённые изменения"
   },
   "run": {
     "title": "Выполнить запрос",
-    "selectHosts": "Выбрать устройства",
+    "liveQuery": "Live-запрос",
+    "selectHosts": "Выбрать хосты",
     "selectLabels": "Выбрать метки",
     "selectTeams": "Выбрать команды",
-    "runButton": "Запустить",
+    "runButton": "Выполнить",
     "stopButton": "Остановить",
     "results": "Результаты",
     "noResults": "Нет результатов",
-    "exportResults": "Экспортировать результаты"
+    "exportResults": "Экспорт результатов",
+    "running": "Выполняется...",
+    "stopped": "Запрос остановлен",
+    "completed": "Запрос завершён",
+    "hostsResponding": "{{count}} хост отвечает",
+    "hostsResponding_plural": "{{count}} хостов отвечают"
   },
   "performance": {
     "minimal": "Минимальное",
     "low": "Низкое",
     "medium": "Среднее",
     "high": "Высокое",
-    "excessive": "Чрезмерное"
+    "excessive": "Чрезмерное",
+    "unknown": "Неизвестно"
   },
   "schedule": {
     "title": "Расписание",
     "frequency": "Частота",
     "enabled": "Включено",
-    "disabled": "Выключено",
+    "disabled": "Отключено",
+    "never": "Никогда",
     "daily": "Ежедневно",
     "weekly": "Еженедельно",
     "monthly": "Ежемесячно",
-    "custom": "Произвольно"
+    "custom": "Настраиваемое",
+    "interval": "Каждые {{value}} {{unit}}"
+  },
+  "automations": {
+    "title": "Автоматизация запросов",
+    "manage": "Управление автоматизацией",
+    "webhook": "Вебхук",
+    "logging": "Логирование",
+    "enabled": "Включено",
+    "disabled": "Отключено"
+  },
+  "modals": {
+    "delete": {
+      "title": "Удалить запрос",
+      "message": "Вы уверены, что хотите удалить \"{{name}}\"?",
+      "warning": "Это действие нельзя отменить.",
+      "deleteButton": "Удалить",
+      "cancelButton": "Отмена"
+    },
+    "saveNew": {
+      "title": "Сохранить новый запрос",
+      "nameLabel": "Название запроса",
+      "descriptionLabel": "Описание",
+      "saveButton": "Сохранить",
+      "cancelButton": "Отмена"
+    },
+    "saveAsNew": {
+      "title": "Сохранить как новый запрос",
+      "message": "Сохранить копию этого запроса с новым названием."
+    },
+    "confirmSave": {
+      "title": "Сохранить изменения",
+      "message": "Вы хотите сохранить изменения в этом запросе?"
+    },
+    "previewData": {
+      "title": "Предпросмотр данных",
+      "noData": "Данные недоступны"
+    }
   },
   "empty": {
     "title": "Запросы не найдены",
     "description": "Нет запросов, соответствующих текущим фильтрам",
-    "addFirst": "Создайте первый запрос для начала работы"
+    "addFirst": "Создайте свой первый запрос",
+    "noResults": "Нет результатов",
+    "noResultsDescription": "Этот запрос не вернул результатов"
+  },
+  "report": {
+    "title": "Отчёт по запросу",
+    "lastUpdated": "Последнее обновление",
+    "hostsReported": "Хостов отчиталось",
+    "exportCsv": "Экспорт CSV"
+  },
+  "packs": {
+    "title": "Пакеты",
+    "manage": {
+      "title": "Управление пакетами",
+      "description": "Управляйте пакетами запросов для планирования повторяющихся запросов для ваших устройств.",
+      "createButton": "Создать новый пакет",
+      "pack": "пакет",
+      "packs": "пакеты",
+      "query": "запрос",
+      "queries": "запросы",
+      "deleteSuccess": "Успешно удалён {{packOrPacks}}.",
+      "deleteError": "Не удалось удалить {{packOrPacks}}. Пожалуйста, попробуйте снова.",
+      "enableDisableSuccess": "Успешно {{enableOrDisable}} выбранный {{packOrPacks}}.",
+      "enableDisableError": "Не удалось {{enableOrDisable}} выбранный {{packOrPacks}}. Пожалуйста, попробуйте снова."
+    },
+    "columns": {
+      "name": "Название",
+      "queriesCount": "Запросы",
+      "hostsCount": "Устройства",
+      "lastModified": "Последнее изменение",
+      "status": "Статус"
+    },
+    "table": {
+      "searchPlaceholder": "Поиск по названию"
+    },
+    "actions": {
+      "enable": "Включить",
+      "disable": "Отключить",
+      "delete": "Удалить"
+    },
+    "empty": {
+      "noPacks": "У вас нет пакетов",
+      "description": "Пакеты запросов позволяют планировать повторяющиеся запросы для ваших устройств.",
+      "noMatch": "Нет пакетов, соответствующих текущим критериям поиска",
+      "tryAgain": "Ожидаете увидеть пакеты? Попробуйте снова через несколько секунд, пока система обновится."
+    },
+    "edit": {
+      "backButton": "Назад к пакетам",
+      "updateSuccess": "Пакет успешно обновлён.",
+      "updateError": "Не удалось обновить пакет. Пожалуйста, попробуйте снова.",
+      "duplicateNameError": "Не удалось обновить пакет. Названия пакетов должны быть уникальными.",
+      "removeQuerySuccess": "Успешно удалён {{queryOrQueries}} из этого пакета.",
+      "removeQueryError": "Не удалось удалить {{queryOrQueries}} из этого пакета. Пожалуйста, попробуйте снова."
+    },
+    "create": {
+      "success": "Пакет успешно создан. Добавьте запросы в ваш пакет.",
+      "error": "Не удалось создать пакет.",
+      "duplicateNameError": "Не удалось создать пакет. Названия пакетов должны быть уникальными."
+    },
+    "status": {
+      "enabled": "Включён",
+      "disabled": "Отключён"
+    },
+    "modals": {
+      "delete": {
+        "title": "Удалить пакет",
+        "message": "Вы уверены, что хотите удалить выбранные пакеты?",
+        "deleteButton": "Удалить",
+        "cancelButton": "Отмена"
+      },
+      "queryEditor": {
+        "addQueryTitle": "Добавить запрос",
+        "selectQueryPlaceholder": "Выберите запрос",
+        "selectPlaceholder": "Выберите",
+        "frequency": "Частота (секунды)",
+        "logging": "Логирование",
+        "platform": "Платформа",
+        "minVersion": "Минимальная версия osquery",
+        "shard": "Шард (процент)",
+        "saveButton": "Сохранить",
+        "addButton": "Добавить запрос",
+        "cancelButton": "Отмена",
+        "errors": {
+          "frequencyPositive": "Частота должна быть целым числом больше нуля",
+          "frequencyMax": "Частота должна быть целым числом, не превышающим 604,800 (т.е. 7 дней)"
+        }
+      },
+      "removeQuery": {
+        "title": "Удалить запросы",
+        "message": "Вы уверены, что хотите удалить выбранный {{queryOrQueries}} из вашего пакета?",
+        "removeButton": "Удалить",
+        "cancelButton": "Отмена"
+      }
+    }
   }
 }

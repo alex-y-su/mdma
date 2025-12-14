@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import scriptAPI from "services/entities/scripts";
 import { NotificationContext } from "context/notification";
@@ -26,6 +27,7 @@ const DeleteScriptModal = ({
   afterDelete,
   isHidden = false,
 }: IDeleteScriptModalProps) => {
+  const { t } = useTranslation("settings");
   const { renderFlash } = useContext(NotificationContext);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -51,7 +53,7 @@ const DeleteScriptModal = ({
   return (
     <Modal
       className={baseClass}
-      title="Delete script"
+      title={t("controls.scripts.modals.delete.title")}
       onExit={onCancel}
       onEnter={() => onClickDelete(scriptId)}
       isHidden={isHidden}
@@ -59,14 +61,11 @@ const DeleteScriptModal = ({
     >
       <>
         <p>
-          This action will cancel any pending script execution for{" "}
-          <span className={`${baseClass}__script-name`}>{scriptName}</span>
+          {t("controls.scripts.modals.delete.message", { name: scriptName })}
         </p>
         <p>
-          If the script is currently running on a host it will still complete,
-          but results won&apos;t appear in Fleet.
+          {t("controls.scripts.modals.delete.warning")}
         </p>
-        <p>You cannot undo this action.</p>
         <div className="modal-cta-wrap">
           <Button
             type="button"
@@ -75,7 +74,7 @@ const DeleteScriptModal = ({
             className="delete-loading"
             isLoading={isDeleting}
           >
-            Delete
+            {t("controls.scripts.deleteScript")}
           </Button>
           <Button onClick={onCancel} variant="inverse-alert">
             Cancel

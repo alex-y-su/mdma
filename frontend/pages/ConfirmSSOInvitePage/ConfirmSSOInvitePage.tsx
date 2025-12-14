@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { InjectedRouter } from "react-router";
 import { Params } from "react-router/lib/Router";
+import { useTranslation } from "react-i18next";
 
 import paths from "router/paths";
 import { AppContext } from "context/app";
@@ -25,6 +26,7 @@ const ConfirmSSOInvitePage = ({
   params,
   router,
 }: IConfirmSSOInvitePageProps) => {
+  const { t } = useTranslation("auth");
   const { email, name } = location.query;
   const { invite_token } = params;
   const inviteFormData = { email, invite_token, name };
@@ -56,10 +58,10 @@ const ConfirmSSOInvitePage = ({
   };
 
   return (
-    <AuthenticationFormWrapper className={baseClass} header="Welcome to Fleet">
+    <AuthenticationFormWrapper className={baseClass} header={t("ssoInvite.title")}>
       <>
         <p className={`${baseClass}__description`}>
-          Please provide your name to get started.
+          {t("ssoInvite.description")}
         </p>
         <ConfirmSSOInviteForm
           className={`${baseClass}__form`}

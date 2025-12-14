@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useTranslation } from "react-i18next";
 import { InjectedRouter, Params } from "react-router/lib/Router";
 
 import { AppContext } from "context/app";
@@ -23,6 +24,7 @@ const SetupExperience = ({
   router,
   teamIdForApi,
 }: ISetupExperienceProps) => {
+  const { t } = useTranslation("settings");
   const { section, platform: urlPlatformParam } = params;
   const { isPremiumTier } = useContext(AppContext);
 
@@ -54,7 +56,7 @@ const SetupExperience = ({
   return (
     <div className={baseClass}>
       <p className={`${baseClass}__description`}>
-        Customize the end user&apos;s setup experience.
+        {t("controls.setupExperience.description")}
       </p>
       <SideNav
         className={`${baseClass}__side-nav`}

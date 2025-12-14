@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { InjectedRouter } from "react-router";
+import { useTranslation } from "react-i18next";
 
 import { AppContext } from "context/app";
 import { NotificationContext } from "context/notification";
@@ -36,6 +37,7 @@ interface IAccountPageProps {
 }
 
 const AccountPage = ({ router }: IAccountPageProps): JSX.Element | null => {
+  const { t } = useTranslation("auth");
   const { config, currentUser } = useContext(AppContext);
   const { renderFlash } = useContext(NotificationContext);
 
@@ -90,13 +92,16 @@ const AccountPage = ({ router }: IAccountPageProps): JSX.Element | null => {
 
     try {
       await usersAPI.update(currentUser.id, updated);
-      let accountUpdatedFlashMessage = "Account updated";
+      let accountUpdatedFlashMessage = t("account.updated");
       if (updated.email) {
         // always present, this for typing
         const senderAddressMessage = config?.smtp_settings?.sender_address
           ? ` from ${config?.smtp_settings?.sender_address}`
           : "";
-        accountUpdatedFlashMessage += `: A confirmation email was sent${senderAddressMessage} to ${updated.email}`;
+        accountUpdatedFlashMessage += `: ${t("account.emailConfirmationSent", {
+          senderAddress: senderAddressMessage,
+          email: updated.email
+        })}`;
         setPendingEmail(updated.email);
       }
 
@@ -108,8 +113,8 @@ const AccountPage = ({ router }: IAccountPageProps): JSX.Element | null => {
       renderFlash(
         "error",
         errorObject.base.includes("already exists")
-          ? "A user with this email address already exists."
-          : "Could not edit user. Please try again."
+          ? t("account.errors.emailExists")
+          : t("account.errors.updateFailed")
       );
 
       setShowEmailModal(false);
@@ -120,7 +125,7 @@ const AccountPage = ({ router }: IAccountPageProps): JSX.Element | null => {
   const handleSubmitPasswordForm = async (formData: any) => {
     try {
       await usersAPI.changePassword(formData);
-      renderFlash("success", "Password changed successfully");
+      renderFlash("success", t("changePassword.success"));
       setShowPasswordModal(false);
     } catch (e) {
       renderFlash("error", getErrorMessage(e));
@@ -139,7 +144,7 @@ const AccountPage = ({ router }: IAccountPageProps): JSX.Element | null => {
     }
 
     return (
-      <Modal title="Confirm email update" onExit={onToggleEmailModal}>
+      <Modal title={t("changeEmail.title")} onExit={onToggleEmailModal}>
         <ChangeEmailForm
           formData={updatedUser}
           handleSubmit={emailSubmit}
@@ -156,7 +161,7 @@ const AccountPage = ({ router }: IAccountPageProps): JSX.Element | null => {
     }
 
     return (
-      <Modal title="Change password" onExit={onTogglePasswordModal}>
+      <Modal title={t("changePassword.title")} onExit={onTogglePasswordModal}>
         <ChangePasswordForm
           handleSubmit={handleSubmitPasswordForm}
           onCancel={onTogglePasswordModal}
@@ -173,33 +178,31 @@ const AccountPage = ({ router }: IAccountPageProps): JSX.Element | null => {
     // TODO - move to its own component
     return (
       <Modal
-        title="Get API token"
+        title={t("apiToken.title")}
         onExit={onToggleApiTokenModal}
         onEnter={onToggleApiTokenModal}
       >
         <>
           <InfoBanner>
             <p>
-              <strong>This token expires.</strong> If you want an API key for a
-              permanent integration, create an&nbsp;
+              <strong>{t("account.apiTokenExpires")}</strong> {t("account.apiTokenInfo")}&nbsp;
               <CustomLink
                 url="https://fleetdm.com/docs/using-fleet/fleetctl-cli?utm_medium=fleetui&utm_campaign=get-api-token#using-fleetctl-with-an-api-only-user"
-                text="API-only user"
+                text={t("account.apiOnlyUserLink")}
                 newTab
                 variant="banner-link"
               />
-              &nbsp;instead.
+              &nbsp;{t("account.apiTokenAlternative")}
             </p>
           </InfoBanner>
           <InputFieldHiddenContent
             value={authToken() || ""}
             helpText={
               <>
-                This token is intended for SSO users to authenticate in the
-                fleetctl CLI. It expires based on the{" "}
+                {t("account.apiTokenSSOInfo")}{" "}
                 <CustomLink
                   url="https://fleetdm.com/docs/deploying/configuration?utm_medium=fleetui&utm_campaign=get-api-token#session-duration"
-                  text="session duration configuration"
+                  text={t("account.sessionDurationLink")}
                   newTab
                 />
               </>
@@ -207,7 +210,7 @@ const AccountPage = ({ router }: IAccountPageProps): JSX.Element | null => {
           />
           <div className="modal-cta-wrap">
             <Button onClick={onToggleApiTokenModal} type="button">
-              Done
+              {t("account.done")}
             </Button>
           </div>
         </>
@@ -225,7 +228,7 @@ const AccountPage = ({ router }: IAccountPageProps): JSX.Element | null => {
         <MainContent className={baseClass}>
           <>
             <div className={`${baseClass}__manage`}>
-              <h1>My account</h1>
+              <h1>{t("account.title")}</h1>
               <UserSettingsForm
                 formData={currentUser}
                 handleSubmit={handleSubmit}

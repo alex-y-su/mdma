@@ -5,6 +5,7 @@ import React, {
   useContext,
   useRef,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import PATHS from "router/paths";
 
@@ -158,6 +159,8 @@ const UserForm = ({
   ancestorErrors,
   isUpdatingUsers,
 }: IUserFormProps): JSX.Element => {
+  const { t } = useTranslation("settings");
+
   // For scrollable modal
   const [isTopScrolling, setIsTopScrolling] = useState(false);
   const topDivRef = useRef<HTMLDivElement>(null);
@@ -361,7 +364,7 @@ const UserForm = ({
     // separate from `validate` function as it uses `renderFlash` hook, incompatible with pure
     // `validate` function
     if (!formData.global_role && !formData.teams.length) {
-      renderFlash("error", `Please select at least one team for this user.`);
+      renderFlash("error", t("admin.users.forms.selectTeam"));
       return;
     }
     const errs = validate(
@@ -384,19 +387,18 @@ const UserForm = ({
         {isPremiumTier && (
           <InfoBanner className={`${baseClass}__user-permissions-info`}>
             <p>
-              Global users can manage or observe all users, entities, and
-              settings in Fleet.
+              {t("admin.users.forms.globalUserInfo")}
             </p>
             <CustomLink
               url="https://fleetdm.com/docs/using-fleet/permissions#user-permissions"
-              text="Learn more about user permissions"
+              text={t("admin.users.forms.learnMorePermissions")}
               newTab
               variant="banner-link"
             />
           </InfoBanner>
         )}
         <DropdownWrapper
-          label="Role"
+          label={t("admin.users.forms.role")}
           name="Role"
           className={`${baseClass}__global-role-dropdown`}
           options={roleOptions({ isPremiumTier, isApiOnly })}
@@ -417,16 +419,15 @@ const UserForm = ({
     return (
       <div>
         <p>
-          <strong>You have no teams.</strong>
+          <strong>{t("admin.users.forms.noTeamsMessage")}</strong>
         </p>
         <p>
-          Expecting to see teams? Try again in a few seconds as the system
-          catches up or&nbsp;
+          {t("admin.users.forms.noTeamsInfo")}
           <Link
             className={`${baseClass}__create-team-link`}
             to={PATHS.ADMIN_TEAMS}
           >
-            create a team
+            {t("admin.users.forms.createTeamLink")}
           </Link>
           .
         </p>
@@ -442,12 +443,11 @@ const UserForm = ({
             <>
               <InfoBanner className={`${baseClass}__user-permissions-info`}>
                 <p>
-                  Users can manage or observe team-specific users, entities, and
-                  settings in Fleet.
+                  {t("admin.users.forms.teamUserInfo")}
                 </p>
                 <CustomLink
                   url="https://fleetdm.com/docs/using-fleet/permissions#team-member-permissions"
-                  text="Learn more about user permissions"
+                  text={t("admin.users.forms.learnMorePermissions")}
                   newTab
                   variant="banner-link"
                 />
@@ -486,10 +486,10 @@ const UserForm = ({
     <div className="form-field">
       {isModifiedByGlobalAdmin ? (
         <>
-          <div className="form-field__label">Account</div>
+          <div className="form-field__label">{t("admin.users.forms.account")}</div>
           <Radio
             className={`${baseClass}__radio-input`}
-            label="Create user"
+            label={t("admin.users.forms.createUser")}
             id="create-user"
             checked={formData.newUserType !== NewUserType.AdminInvited}
             value={NewUserType.AdminCreated}
@@ -498,7 +498,7 @@ const UserForm = ({
           />
           <Radio
             className={`${baseClass}__radio-input`}
-            label="Invite user"
+            label={t("admin.users.forms.inviteUser")}
             id="invite-user"
             disabled={!(smtpConfigured || sesConfigured)}
             checked={formData.newUserType === NewUserType.AdminInvited}
@@ -509,13 +509,7 @@ const UserForm = ({
               smtpConfigured || sesConfigured ? (
                 ""
               ) : (
-                <>
-                  The &quot;Invite user&quot; feature requires that SMTP or SES
-                  is configured in order to send invitation emails.
-                  <br />
-                  <br />
-                  SMTP can be configured in Settings &gt; Organization settings.
-                </>
+                t("admin.users.forms.inviteUserTooltip")
               )
             }
           />
@@ -534,13 +528,13 @@ const UserForm = ({
   const renderNameAndEmailSection = () => (
     <>
       <InputField
-        label="Full name"
+        label={t("admin.users.forms.fullName")}
         autofocus
         error={formErrors.name}
         name="name"
         onChange={onInputChange}
         onBlur={onInputBlur}
-        placeholder="Full name"
+        placeholder={t("admin.users.forms.fullName")}
         value={formData.name || ""}
         inputOptions={{
           maxLength: "80",
@@ -549,49 +543,34 @@ const UserForm = ({
         parseTarget
       />
       <InputField
-        label="Email"
+        label={t("admin.users.forms.email")}
         error={formErrors.email}
         name="email"
         type="email"
         onChange={onInputChange}
         onBlur={onInputBlur}
         parseTarget
-        placeholder="Email"
+        placeholder={t("admin.users.forms.email")}
         value={formData.email || ""}
         readOnly={!isNewUser && !(smtpConfigured || sesConfigured)}
-        tooltip={
-          <>
-            Editing an email address requires that SMTP or SES is configured in
-            order to send a validation email.
-            <br />
-            <br />
-            Users with Admin role can configure SMTP in{" "}
-            <strong>Settings &gt; Organization settings</strong>.
-          </>
-        }
+        tooltip={t("admin.users.forms.editEmailTooltip")}
       />
     </>
   );
 
   const renderAuthenticationSection = () => (
     <div className="form-field">
-      <div className="form-field__label">Authentication</div>
+      <div className="form-field__label">{t("admin.users.forms.authentication")}</div>
       <Radio
         className={`${baseClass}__radio-input`}
         label={
           canUseSso ? (
-            "Single sign-on"
+            t("admin.users.forms.singleSignOn")
           ) : (
             <TooltipWrapper
-              tipContent={
-                <>
-                  SSO is not enabled in organization settings.
-                  <br />
-                  User must sign in with a password.
-                </>
-              }
+              tipContent={t("admin.users.forms.ssoNotEnabled")}
             >
-              Single sign-on
+              {t("admin.users.forms.singleSignOn")}
             </TooltipWrapper>
           )
         }
@@ -604,7 +583,7 @@ const UserForm = ({
       />
       <Radio
         className={`${baseClass}__radio-input`}
-        label="Password"
+        label={t("admin.users.forms.password")}
         id="password-authentication"
         // allow the user to change auth back to password if they only changed the form to SSO in
         // the current session, that is, in the db, the user is still password authenticated
@@ -619,28 +598,19 @@ const UserForm = ({
   const renderPasswordSection = () => (
     <div className={`${baseClass}__${isNewUser ? "" : "edit-"}password`}>
       <InputField
-        label="Password"
+        label={t("admin.users.forms.password")}
         error={formErrors.password}
         name="password"
         onChange={onInputChange}
         onBlur={onInputBlur}
         parseTarget
-        placeholder={isNewUser ? "Password" : "••••••••"}
+        placeholder={isNewUser ? t("admin.users.forms.password") : t("admin.users.forms.passwordPlaceholder")}
         value={formData.password || ""}
         type="password"
-        helpText="12-48 characters, with at least 1 number (e.g. 0 - 9) and 1 symbol (e.g. &*#)."
+        helpText={t("admin.users.forms.passwordHelp")}
         blockAutoComplete
         tooltip={
-          isNewUser ? (
-            <>
-              This password is temporary. This user will be asked to set a new
-              password after logging in to the Fleet UI.
-              <br />
-              <br />
-              This user will not be asked to set a new password after logging in
-              to fleetctl or the Fleet API.
-            </>
-          ) : undefined
+          isNewUser ? t("admin.users.forms.temporaryPasswordTooltip") : undefined
         }
       />
     </div>
@@ -651,7 +621,7 @@ const UserForm = ({
     <div className="form-field">
       {/* Renders missing password heading when inviting a user */}
       {formData.newUserType === NewUserType.AdminInvited && (
-        <div className="form-field__label">Password</div>
+        <div className="form-field__label">{t("admin.users.forms.password")}</div>
       )}
       <Checkbox
         name="mfa_enabled"
@@ -659,25 +629,17 @@ const UserForm = ({
         onBlur={onInputBlur}
         value={formData.mfa_enabled}
         wrapperClassName={`${baseClass}__2fa`}
-        helpText="User will be asked to authenticate with a magic link that will be sent to their email."
+        helpText={t("admin.users.forms.twoFactorAuthHelp")}
         disabled={!smtpConfigured && !sesConfigured}
         parseTarget
       >
         {smtpConfigured || sesConfigured ? (
-          "Enable two-factor authentication (email)"
+          t("admin.users.forms.twoFactorAuth")
         ) : (
           <TooltipWrapper
-            tipContent={
-              <>
-                This feature requires that SMTP or SES is configured in order to
-                send authentication emails.
-                <br />
-                <br />
-                SMTP can be configured in Settings &gt; Organization settings.
-              </>
-            }
+            tipContent={t("admin.users.forms.twoFactorAuthTooltip")}
           >
-            Enable two-factor authentication (email)
+            {t("admin.users.forms.twoFactorAuth")}
           </TooltipWrapper>
         )}
       </Checkbox>
@@ -721,7 +683,7 @@ const UserForm = ({
       <>
         <Radio
           className={`${baseClass}__radio-input`}
-          label="Global user"
+          label={t("admin.users.forms.globalUser")}
           id="global-user"
           checked={isGlobalUser}
           value={UserTeamType.GlobalUser}
@@ -730,7 +692,7 @@ const UserForm = ({
         />
         <Radio
           className={`${baseClass}__radio-input`}
-          label="Assign team(s)"
+          label={t("admin.users.forms.assignTeams")}
           id="assign-teams"
           checked={!isGlobalUser}
           value={UserTeamType.AssignTeams}
@@ -745,7 +707,7 @@ const UserForm = ({
   const renderPremiumRoleOptions = () => (
     <>
       <div className="form-field team-field">
-        <div className="form-field__label">Team</div>
+        <div className="form-field__label">{t("admin.users.forms.team")}</div>
         {isModifiedByGlobalAdmin ? (
           renderGlobalAdminOptions()
         ) : (
@@ -782,7 +744,7 @@ const UserForm = ({
       primaryButtons={
         <>
           <Button onClick={onCancel} variant="inverse">
-            Cancel
+            {t("admin.users.forms.cancel")}
           </Button>
           <Button
             type="submit"
@@ -792,7 +754,7 @@ const UserForm = ({
             isLoading={isUpdatingUsers}
             disabled={Object.keys(formErrors).length > 0}
           >
-            {isNewUser ? "Add" : "Save"}
+            {isNewUser ? t("admin.users.forms.add") : t("admin.users.forms.save")}
           </Button>
         </>
       }

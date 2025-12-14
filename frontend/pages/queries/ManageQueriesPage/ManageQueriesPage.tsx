@@ -8,6 +8,7 @@ import React, {
 import { InjectedRouter } from "react-router";
 import { useQuery } from "react-query";
 import { pick } from "lodash";
+import { useTranslation } from "react-i18next";
 
 import { AppContext } from "context/app";
 import { QueryContext } from "context/query";
@@ -82,6 +83,7 @@ const ManageQueriesPage = ({
   router,
   location,
 }: IManageQueriesPageProps): JSX.Element => {
+  const { t } = useTranslation("queries");
   const {
     isGlobalAdmin,
     isGlobalMaintainer,
@@ -275,7 +277,7 @@ const ManageQueriesPage = ({
         return <h1>{userTeams[0].name}</h1>;
       }
     }
-    return <h1>Queries</h1>;
+    return <h1>{t("title")}</h1>;
   };
 
   const renderQueriesTable = () => {
@@ -418,7 +420,7 @@ const ManageQueriesPage = ({
                       className={`${baseClass}__manage-automations button`}
                       variant="inverse"
                     >
-                      Manage automations
+                      {t("automations.manage")}
                     </Button>
                   )}
                 {canCustomQuery && (
@@ -426,7 +428,7 @@ const ManageQueriesPage = ({
                     className={`${baseClass}__create-button`}
                     onClick={onCreateQueryClick}
                   >
-                    {isObserverPlus ? "Live query" : "Add query"}
+                    {isObserverPlus ? t("manage.liveQuery") : t("manage.addQuery")}
                   </Button>
                 )}
               </div>

@@ -159,5 +159,94 @@
   },
   "addHosts": {
     "title": "Добавить хосты"
+  },
+  "layout": {
+    "mainContent": "Основное содержимое",
+    "sideNav": "Боковая навигация",
+    "skipToMain": "Перейти к основному содержимому"
+  },
+  "pagination": {
+    "previous": "Назад",
+    "next": "Далее",
+    "page": "Страница",
+    "of": "из",
+    "showing": "Показано",
+    "to": "до",
+    "results": "результатов"
+  },
+  "tables": {
+    "noData": "Данные отсутствуют",
+    "loading": "Загрузка...",
+    "selectAll": "Выбрать все",
+    "selected": "выбрано",
+    "allMatchingSelected": "Выбраны все подходящие {{resultsTitle}}",
+    "allOnPageSelected": "Выбраны все {{resultsTitle}} на этой странице",
+    "selectAllMatching": "Выбрать все подходящие {{resultsTitle}}",
+    "clearSelection": "Снять выбор",
+    "sortAscending": "Сортировать по возрастанию",
+    "sortDescending": "Сортировать по убыванию",
+    "rowsPerPage": "Строк на странице"
+  },
+  "forms": {
+    "required": "Обязательно",
+    "optional": "Необязательно",
+    "chooseFile": "Выбрать файл",
+    "dragAndDrop": "Перетащите или нажмите для загрузки",
+    "maxFileSize": "Максимальный размер файла: {{size}}",
+    "supportedFormats": "Поддерживаемые форматы: {{formats}}"
+  },
+  "search": {
+    "placeholder": "Поиск...",
+    "noResults": "Результаты не найдены",
+    "clearSearch": "Очистить поиск"
+  },
+  "status": {
+    "loading": "Загрузка...",
+    "saving": "Сохранение...",
+    "saved": "Сохранено",
+    "error": "Ошибка",
+    "success": "Успешно",
+    "pending": "Ожидание",
+    "inProgress": "Выполняется",
+    "completed": "Завершено",
+    "failed": "Не удалось",
+    "cancelled": "Отменено"
+  },
+  "messages": {
+    "copiedToClipboard": "Скопировано в буфер обмена",
+    "downloadStarted": "Загрузка началась",
+    "uploadComplete": "Загрузка завершена",
+    "uploadFailed": "Загрузка не удалась",
+    "changesSaved": "Изменения сохранены",
+    "changesDiscarded": "Изменения отменены"
+  },
+  "modals": {
+    "close": "Закрыть",
+    "confirm": "Подтвердить",
+    "cancel": "Отмена",
+    "areYouSure": "Вы уверены?",
+    "cannotUndo": "Это действие нельзя отменить."
+  },
+  "premium": {
+    "featureUnavailable": "Эта функция доступна в Fleet Premium",
+    "upgradeTo": "Перейти на Fleet Premium",
+    "learnMore": "Узнать больше о Fleet Premium"
+  },
+  "empty": {
+    "noItems": "Элементы отсутствуют",
+    "getStarted": "Начните с добавления первого элемента"
+  },
+  "accessibility": {
+    "expandMenu": "Развернуть меню",
+    "collapseMenu": "Свернуть меню",
+    "openDropdown": "Открыть выпадающий список",
+    "closeDropdown": "Закрыть выпадающий список",
+    "showPassword": "Показать пароль",
+    "hidePassword": "Скрыть пароль"
+  },
+  "lastUpdated": {
+    "updated": "Обновлено {{time}}",
+    "never": "никогда",
+    "fleetPeriodicallyQueries": "Fleet периодически опрашивает все хосты для получения {{whatToRetrieve}}."
   }
 }

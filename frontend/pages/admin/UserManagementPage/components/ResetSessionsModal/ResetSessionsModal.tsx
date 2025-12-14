@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { IUser } from "interfaces/user";
 import Modal from "components/Modal";
 import Button from "components/buttons/Button";
@@ -16,24 +17,26 @@ const ResetSessionsModal = ({
   onResetConfirm,
   onResetCancel,
 }: IResetSessionsModal): JSX.Element => {
+  const { t } = useTranslation("settings");
+
   return (
     <Modal
-      title="Reset sessions"
+      title={t("admin.users.modals.resetSessions.title")}
       onExit={onResetCancel}
       onEnter={() => onResetConfirm(user)}
     >
       <div className={baseClass}>
         <p>
-          This user will be logged out of Fleet.
+          {t("admin.users.modals.resetSessions.message")}
           <br />
-          This will revoke all active Fleet API tokens for this user.
+          {t("admin.users.modals.resetSessions.revokeTokens")}
         </p>
         <div className="modal-cta-wrap">
           <Button type="button" onClick={() => onResetConfirm(user)}>
-            Confirm
+            {t("admin.users.modals.resetSessions.confirmButton")}
           </Button>
           <Button onClick={onResetCancel} variant="inverse">
-            Cancel
+            {t("admin.users.modals.resetSessions.cancelButton")}
           </Button>
         </div>
       </div>

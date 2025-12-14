@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { InjectedRouter } from "react-router";
 import { useQuery } from "react-query";
+import { useTranslation } from "react-i18next";
 
 import { AppContext } from "context/app";
 import PATHS from "router/paths";
@@ -48,6 +49,7 @@ interface IOSUpdates {
 }
 
 const OSUpdates = ({ router, teamIdForApi, queryParams }: IOSUpdates) => {
+  const { t } = useTranslation("settings");
   const {
     isPremiumTier,
     isGlobalAdmin,
@@ -136,7 +138,7 @@ const OSUpdates = ({ router, teamIdForApi, queryParams }: IOSUpdates) => {
   return (
     <div className={baseClass}>
       <p className={`${baseClass}__description`}>
-        Remotely enforce software updates.
+        {t("controls.osUpdates.description")}
       </p>
       <>
         <div className={`${baseClass}__current-version-container`}>
@@ -148,7 +150,7 @@ const OSUpdates = ({ router, teamIdForApi, queryParams }: IOSUpdates) => {
         </div>
         <div className={`${baseClass}__target-container`}>
           <SectionHeader
-            title="Target"
+            title={t("controls.osUpdates.targetVersion")}
             wrapperCustomClass={`${baseClass}__header`}
           />
           <TargetSection

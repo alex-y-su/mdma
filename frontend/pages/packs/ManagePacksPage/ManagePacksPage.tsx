@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useContext } from "react";
 import { useQuery } from "react-query";
 import { InjectedRouter } from "react-router/lib/Router";
+import { useTranslation } from "react-i18next";
 
 import { IPack, IStoredPacksResponse } from "interfaces/pack";
 import { IFleetApiError } from "interfaces/errors";
@@ -53,6 +54,7 @@ const renderTable = (
 const ManagePacksPage = ({ router }: IManagePacksPageProps): JSX.Element => {
   const { isOnlyObserver } = useContext(AppContext);
   const { renderFlash } = useContext(NotificationContext);
+  const { t } = useTranslation("queries");
 
   const onCreatePackClick = () => router.push(PATHS.NEW_PACK);
 
@@ -87,7 +89,7 @@ const ManagePacksPage = ({ router }: IManagePacksPageProps): JSX.Element => {
 
   const onDeletePackSubmit = useCallback(() => {
     setIsUpdatingPack(true);
-    const packOrPacks = selectedPackIds.length === 1 ? "pack" : "packs";
+    const packOrPacks = selectedPackIds.length === 1 ? t("packs.manage.pack") : t("packs.manage.packs");
 
     const promises = selectedPackIds.map((id: number) => {
       return packsAPI.destroy(id);
@@ -95,12 +97,12 @@ const ManagePacksPage = ({ router }: IManagePacksPageProps): JSX.Element => {
 
     return Promise.all(promises)
       .then(() => {
-        renderFlash("success", `Successfully deleted ${packOrPacks}.`);
+        renderFlash("success", t("packs.manage.deleteSuccess", { packOrPacks }));
       })
       .catch(() => {
         renderFlash(
           "error",
-          `Unable to delete ${packOrPacks}. Please try again.`
+          t("packs.manage.deleteError", { packOrPacks })
         );
       })
       .finally(() => {
@@ -108,12 +110,12 @@ const ManagePacksPage = ({ router }: IManagePacksPageProps): JSX.Element => {
         toggleDeletePackModal();
         setIsUpdatingPack(false);
       });
-  }, [refetchPacks, selectedPackIds, toggleDeletePackModal]);
+  }, [refetchPacks, selectedPackIds, toggleDeletePackModal, t]);
 
   const onEnableDisablePackSubmit = useCallback(
     (selectedTablePackIds: number[], disablePack: boolean) => {
-      const packOrPacks = selectedPackIds.length === 1 ? "pack" : "packs";
-      const enableOrDisable = disablePack ? "disabled" : "enabled";
+      const packOrPacks = selectedPackIds.length === 1 ? t("packs.manage.pack") : t("packs.manage.packs");
+      const enableOrDisable = disablePack ? t("packs.status.disabled").toLowerCase() : t("packs.status.enabled").toLowerCase();
 
       const promises = selectedTablePackIds.map((id: number) => {
         return packsAPI.update(id, { disabled: disablePack });
@@ -123,20 +125,20 @@ const ManagePacksPage = ({ router }: IManagePacksPageProps): JSX.Element => {
         .then(() => {
           renderFlash(
             "success",
-            `Successfully ${enableOrDisable} selected ${packOrPacks}.`
+            t("packs.manage.enableDisableSuccess", { enableOrDisable, packOrPacks })
           );
         })
         .catch(() => {
           renderFlash(
             "error",
-            `Unable to ${enableOrDisable} selected ${packOrPacks}. Please try again.`
+            t("packs.manage.enableDisableError", { enableOrDisable, packOrPacks })
           );
         })
         .finally(() => {
           refetchPacks();
         });
     },
-    [refetchPacks, selectedPackIds]
+    [refetchPacks, selectedPackIds, t]
   );
 
   const onEnablePackClick = (selectedTablePackIds: number[]) => {
@@ -156,12 +158,11 @@ const ManagePacksPage = ({ router }: IManagePacksPageProps): JSX.Element => {
           <div className={`${baseClass}__header`}>
             <div className={`${baseClass}__text`}>
               <h1 className={`${baseClass}__title`}>
-                <span>Packs</span>
+                <span>{t("packs.title")}</span>
               </h1>
               <div className={`${baseClass}__description`}>
                 <p>
-                  Manage query packs to schedule recurring queries for your
-                  hosts.
+                  {t("packs.manage.description")}
                 </p>
               </div>
             </div>
@@ -172,7 +173,7 @@ const ManagePacksPage = ({ router }: IManagePacksPageProps): JSX.Element => {
                 className={`${baseClass}__create-button`}
                 onClick={onCreatePackClick}
               >
-                Create new pack
+                {t("packs.manage.createButton")}
               </Button>
             </div>
           )}

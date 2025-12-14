@@ -1,5 +1,6 @@
 import React from "react";
 import { formatDistanceToNowStrict } from "date-fns";
+import { useTranslation } from "react-i18next";
 import { abbreviateTimeUnits } from "utilities/helpers";
 
 import TooltipWrapper from "components/TooltipWrapper";
@@ -27,27 +28,25 @@ const LastUpdatedText = ({
 }:
   | ILastUpdatedTextWithCustomTooltip
   | ILastUpdatedTextWithWhatToRetrieve): JSX.Element => {
+  const { t } = useTranslation("common");
+
+  let timeText: string;
   if (!lastUpdatedAt || lastUpdatedAt === "0001-01-01T00:00:00Z") {
-    lastUpdatedAt = "never";
+    timeText = t("lastUpdated.never");
   } else {
-    lastUpdatedAt = abbreviateTimeUnits(
+    timeText = abbreviateTimeUnits(
       formatDistanceToNowStrict(new Date(lastUpdatedAt), {
         addSuffix: true,
       })
     );
   }
 
-  const tooltipContent = customTooltipText || (
-    <>
-      Fleet periodically queries all hosts <br />
-      to retrieve {whatToRetrieve}.
-    </>
-  );
+  const tooltipContent = customTooltipText || t("lastUpdated.fleetPeriodicallyQueries", { whatToRetrieve });
 
   return (
     <span className={baseClass}>
       <TooltipWrapper tipContent={tooltipContent}>
-        {`Updated ${lastUpdatedAt}`}
+        {t("lastUpdated.updated", { time: timeText })}
       </TooltipWrapper>
     </span>
   );

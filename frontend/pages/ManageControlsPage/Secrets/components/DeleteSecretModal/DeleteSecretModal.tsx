@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 import Modal from "components/Modal";
 import Button from "components/buttons/Button";
 import TooltipTruncatedText from "components/TooltipTruncatedText";
@@ -21,6 +22,7 @@ const DeleteSecretModal = ({
   onExit,
   onDeleteSecret,
 }: DeleteSecretModalProps) => {
+  const { t } = useTranslation("settings");
   const [isDeleting, setIsDeleting] = useState(false);
 
   const { renderFlash } = useContext(NotificationContext);
@@ -52,24 +54,18 @@ const DeleteSecretModal = ({
 
   return (
     <Modal
-      title="Delete custom variable?"
+      title={t("controls.secrets.modals.delete.title")}
       onExit={onExit}
       className={baseClass}
     >
       <>
         <div className={`${baseClass}__message`}>
           <span>
-            This will delete the
-            <b>
-              <TooltipTruncatedText value={secret?.name} />
-            </b>
-            custom variable.
+            {t("controls.secrets.modals.delete.message", { name: secret?.name })}
           </span>
           <br />
           <br />
-          If this custom variable is used in any configuration profiles or
-          scripts, they will fail. To resolve, edit the configuration profile or
-          script.
+          {t("controls.secrets.modals.delete.warning")}
         </div>
         <div className="modal-cta-wrap">
           <Button

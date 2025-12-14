@@ -1,6 +1,7 @@
 import React, { useCallback, useContext, useRef, useState } from "react";
 import { AxiosError } from "axios";
 import { useQuery } from "react-query";
+import { useTranslation } from "react-i18next";
 
 import { DEFAULT_USE_QUERY_OPTIONS } from "utilities/constants";
 import PATHS from "router/paths";
@@ -36,6 +37,7 @@ const DEFAULT_PAGE = 0;
 export type IScriptLibraryProps = IScriptsCommonProps;
 
 const ScriptLibrary = ({ router, teamId, location }: IScriptLibraryProps) => {
+  const { t } = useTranslation("settings");
   const currentPage = location.query.page
     ? parseInt(location.query.page, 10)
     : DEFAULT_PAGE;
@@ -178,7 +180,7 @@ const ScriptLibrary = ({ router, teamId, location }: IScriptLibraryProps) => {
 
   return (
     <div className={baseClass}>
-      <SectionHeader title="Library" alignLeftHeaderVertically />
+      <SectionHeader title={t("controls.scripts.library")} alignLeftHeaderVertically />
       {config.server_settings.scripts_disabled && renderScriptsDisabledBanner()}
       {renderScriptsList()}
       {!isLoading && currentPage === 0 && !scripts?.length && (

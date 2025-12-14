@@ -1,4 +1,5 @@
 import React, { useCallback, useContext, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { InjectedRouter } from "react-router";
 import { useQuery } from "react-query";
 import { AxiosError } from "axios";
@@ -126,6 +127,7 @@ const HostSoftware = ({
   isMyDevicePage = false,
   hostMdmEnrollmentStatus = null,
 }: IHostSoftwareProps) => {
+  const { t } = useTranslation();
   const { isPremiumTier } = useContext(AppContext);
 
   const isUnsupported = isIPadOrIPhone(platform) && queryParams.vulnerable; // no Android software and no vulnerable software for iOS
@@ -331,7 +333,7 @@ const HostSoftware = ({
     return (
       <div className={baseClass}>
         <CardHeader
-          header="Software"
+          header={t("software:title")}
           subheader={getSoftwareSubheader({
             platform,
             isMyDevicePage: true,

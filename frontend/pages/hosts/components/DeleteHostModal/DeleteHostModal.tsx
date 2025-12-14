@@ -1,4 +1,5 @@
 import React from "react";
+import { Trans, useTranslation } from "react-i18next";
 
 import strUtils from "utilities/strings";
 
@@ -32,6 +33,8 @@ const DeleteHostModal = ({
   hostName,
   isUpdating,
 }: IDeleteHostModalProps): JSX.Element => {
+  const { t } = useTranslation();
+
   const pluralizeHost = () => {
     if (!selectedHostIds) {
       return "host";
@@ -55,24 +58,25 @@ const DeleteHostModal = ({
     hostsCount >= 500;
 
   return (
-    <Modal title="Delete host" onExit={onCancel} className={baseClass}>
+    <Modal
+      title={t("hosts:deleteHostModal.title")}
+      onExit={onCancel}
+      className={baseClass}
+    >
       <>
         <p>
-          This will remove the record of <b>{hostText()}</b> and associated data
-          such as unlock PINs and disk encryption keys.
+          <Trans
+            i18nKey="hosts:deleteHostModal.description"
+            values={{ hostText: hostText() }}
+            components={{ strong: <b /> }}
+          />
         </p>
-        {hasManyHosts && (
-          <p>
-            When deleting a large volume of hosts, it may take some time for
-            this change to be reflected in the UI.
-          </p>
-        )}
+        {hasManyHosts && <p>{t("hosts:deleteHostModal.manyHostsWarning")}</p>}
         <ul>
           <li>
-            macOS, Windows, or Linux hosts will re-appear unless Fleet&apos;s
-            agent is uninstalled.{" "}
+            {t("hosts:deleteHostModal.reappearWarning")}{" "}
             <CustomLink
-              text="Uninstall Fleet's agent"
+              text={t("hosts:deleteHostModal.uninstallAgent")}
               url={`${LEARN_MORE_ABOUT_BASE_LINK}/uninstall-fleetd`}
               newTab
             />
@@ -80,8 +84,7 @@ const DeleteHostModal = ({
           <li>
             {/* TODO(android): iOS, iPadOS, and Android hosts will re-appear unless MDM is turned
             off. */}
-            iOS and iPadOS hosts will re-appear unless MDM is turned off. It may
-            take up to an hour to re-appear.
+            {t("hosts:deleteHostModal.mobileWarning")}
           </li>
         </ul>
         <div className="modal-cta-wrap">
@@ -92,10 +95,10 @@ const DeleteHostModal = ({
             className="delete-loading"
             isLoading={isUpdating}
           >
-            Delete
+            {t("hosts:deleteHostModal.delete")}
           </Button>
           <Button onClick={onCancel} variant="inverse-alert">
-            Cancel
+            {t("hosts:deleteHostModal.cancel")}
           </Button>
         </div>
       </>

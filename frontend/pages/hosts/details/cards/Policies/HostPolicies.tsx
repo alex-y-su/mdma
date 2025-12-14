@@ -1,4 +1,5 @@
 import React, { useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { InjectedRouter } from "react-router";
 import { Row } from "react-table";
 
@@ -41,6 +42,7 @@ const Policies = ({
   router,
   currentTeamId,
 }: IPoliciesProps): JSX.Element => {
+  const { t } = useTranslation();
   const tableHeaders = generatePolicyTableHeaders(currentTeamId);
   if (deviceUser) {
     // Remove view all hosts link
@@ -60,12 +62,17 @@ const Policies = ({
     if (hostPlatform === "ios" || hostPlatform === "ipados") {
       return (
         <EmptyTable
-          header={<>Policies are not supported for this host</>}
+          header={<>{t("hosts:policies.notSupported")}</>}
           info={
             <>
-              Interested in detecting device health issues on{" "}
-              {hostPlatform === "ios" ? "iPhones" : "iPads"}?{" "}
-              <CustomLink url={SUPPORT_LINK} text="Let us know" newTab />
+              {hostPlatform === "ios"
+                ? t("hosts:policies.interestedIos")
+                : t("hosts:policies.interestedIpados")}{" "}
+              <CustomLink
+                url={SUPPORT_LINK}
+                text={t("hosts:policies.letUsKnow")}
+                newTab
+              />
             </>
           }
         />
@@ -75,11 +82,15 @@ const Policies = ({
     if (isAndroid(hostPlatform)) {
       return (
         <EmptyTable
-          header={<>Policies are not supported for this host</>}
+          header={<>{t("hosts:policies.notSupported")}</>}
           info={
             <>
-              Interested in detecting device health issues on Android hosts?{" "}
-              <CustomLink url={SUPPORT_LINK} text="Let us know" newTab />
+              {t("hosts:policies.interestedAndroid")}{" "}
+              <CustomLink
+                url={SUPPORT_LINK}
+                text={t("hosts:policies.letUsKnow")}
+                newTab
+              />
             </>
           }
         />
@@ -91,15 +102,16 @@ const Policies = ({
         <EmptyTable
           header={
             <>
-              No policies are checked{" "}
-              {deviceUser ? `on your device` : `for this host`}
+              {deviceUser
+                ? t("hosts:policies.noPoliciesDevice")
+                : t("hosts:policies.noPoliciesHost")}
             </>
           }
           info={
             <>
-              Expecting to see policies? Try selecting “Refetch” to ask{" "}
-              {deviceUser ? `your device ` : `this host `}
-              to report new vitals.
+              {deviceUser
+                ? t("hosts:policies.expectingPoliciesDevice")
+                : t("hosts:policies.expectingPoliciesHost")}
             </>
           }
         />
@@ -132,7 +144,7 @@ const Policies = ({
 
   return (
     <div className={baseClass}>
-      <CardHeader header="Policies" />
+      <CardHeader header={t("hosts:policies.title")} />
       {renderHostPolicies()}
     </div>
   );

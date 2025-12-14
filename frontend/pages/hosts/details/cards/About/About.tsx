@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import classnames from "classnames";
 
 import { IHostMdmData, IMunkiData } from "interfaces/host";
@@ -30,6 +31,7 @@ interface IAboutProps {
 const baseClass = "about-card";
 
 const About = ({ aboutData, munki, mdm, className }: IAboutProps) => {
+  const { t } = useTranslation();
   const isIosOrIpadosHost = isIPadOrIPhone(aboutData.platform);
   const isAndroidHost = isAndroid(aboutData.platform);
 
@@ -41,7 +43,7 @@ const About = ({ aboutData, munki, mdm, className }: IAboutProps) => {
     // evaludate to true, we will instead show the Enrollment ID dataset.
     let deviceIdDataSet = (
       <DataSet
-        title="Serial number"
+        title={t("hosts:about.serialNumber")}
         value={<TooltipTruncatedText value={aboutData.hardware_serial} />}
       />
     );
@@ -59,8 +61,8 @@ const About = ({ aboutData, munki, mdm, className }: IAboutProps) => {
       deviceIdDataSet = (
         <DataSet
           title={
-            <TooltipWrapper tipContent="Enrollment ID is a unique identifier for personal hosts. Personal (BYOD) devices don't report their serial numbers. The Enrollment ID changes with each enrollment.">
-              Enrollment ID
+            <TooltipWrapper tipContent={t("hosts:about.enrollmentIdTooltip")}>
+              {t("hosts:about.enrollmentId")}
             </TooltipWrapper>
           }
           value={<TooltipTruncatedText value={aboutData.uuid} />}
@@ -79,7 +81,10 @@ const About = ({ aboutData, munki, mdm, className }: IAboutProps) => {
       return (
         <>
           {DeviceIdDataSet}
-          <DataSet title="Hardware model" value={aboutData.hardware_model} />
+          <DataSet
+            title={t("hosts:about.hardwareModel")}
+            value={aboutData.hardware_model}
+          />
         </>
       );
     }
@@ -90,7 +95,10 @@ const About = ({ aboutData, munki, mdm, className }: IAboutProps) => {
       return (
         <>
           {DeviceIdDataSet}
-          <DataSet title="Hardware model" value={aboutData.hardware_model} />
+          <DataSet
+            title={t("hosts:about.hardwareModel")}
+            value={aboutData.hardware_model}
+          />
         </>
       );
     }
@@ -99,16 +107,19 @@ const About = ({ aboutData, munki, mdm, className }: IAboutProps) => {
     // (either Serial number or Enrollment ID).
     return (
       <>
-        <DataSet title="Hardware model" value={aboutData.hardware_model} />
+        <DataSet
+          title={t("hosts:about.hardwareModel")}
+          value={aboutData.hardware_model}
+        />
         {DeviceIdDataSet}
         <DataSet
-          title="Private IP address"
+          title={t("hosts:about.privateIpAddress")}
           value={<TooltipTruncatedText value={aboutData.primary_ip} />}
         />
         <DataSet
           title={
-            <TooltipWrapper tipContent="The IP address the host uses to connect to Fleet.">
-              Public IP address
+            <TooltipWrapper tipContent={t("hosts:about.publicIpTooltip")}>
+              {t("hosts:about.publicIpAddress")}
             </TooltipWrapper>
           }
           value={<TooltipTruncatedText value={aboutData.public_ip} />}
@@ -121,7 +132,7 @@ const About = ({ aboutData, munki, mdm, className }: IAboutProps) => {
     return munki ? (
       <>
         <DataSet
-          title="Munki version"
+          title={t("hosts:about.munkiVersion")}
           value={munki.version || DEFAULT_EMPTY_CELL_VALUE}
         />
       </>
@@ -135,7 +146,7 @@ const About = ({ aboutData, munki, mdm, className }: IAboutProps) => {
     return (
       <>
         <DataSet
-          title="MDM status"
+          title={t("hosts:about.mdmStatus")}
           value={
             <TooltipWrapper
               tipContent={MDM_STATUS_TOOLTIP[mdm.enrollment_status]}
@@ -146,7 +157,7 @@ const About = ({ aboutData, munki, mdm, className }: IAboutProps) => {
           }
         />
         <DataSet
-          title="MDM server URL"
+          title={t("hosts:about.mdmServerUrl")}
           value={
             <TooltipTruncatedText
               value={mdm.server_url || DEFAULT_EMPTY_CELL_VALUE}
@@ -167,7 +178,7 @@ const About = ({ aboutData, munki, mdm, className }: IAboutProps) => {
     const location = [geolocation?.city_name, geolocation?.country_iso]
       .filter(Boolean)
       .join(", ");
-    return <DataSet title="Location" value={location} />;
+    return <DataSet title={t("hosts:about.location")} value={location} />;
   };
 
   const renderBattery = () => {
@@ -180,7 +191,7 @@ const About = ({ aboutData, munki, mdm, className }: IAboutProps) => {
     }
     return (
       <DataSet
-        title="Battery condition"
+        title={t("hosts:about.batteryCondition")}
         value={
           <TooltipWrapper
             tipContent={BATTERY_TOOLTIP[aboutData.batteries?.[0]?.health]}
@@ -202,10 +213,10 @@ const About = ({ aboutData, munki, mdm, className }: IAboutProps) => {
       borderRadiusSize="xxlarge"
       paddingSize="xlarge"
     >
-      <CardHeader header="About" />
+      <CardHeader header={t("hosts:about.title")} />
       <div className={`${baseClass}__info-grid`}>
         <DataSet
-          title="Added to Fleet"
+          title={t("hosts:about.addedToFleet")}
           value={
             <HumanTimeDiffWithFleetLaunchCutoff
               timeString={aboutData.last_enrolled_at ?? "Unavailable"}
@@ -214,7 +225,7 @@ const About = ({ aboutData, munki, mdm, className }: IAboutProps) => {
         />
         {!isIosOrIpadosHost && !isAndroidHost && (
           <DataSet
-            title="Last restarted"
+            title={t("hosts:about.lastRestarted")}
             value={
               <HumanTimeDiffWithFleetLaunchCutoff
                 timeString={aboutData.last_restarted_at}

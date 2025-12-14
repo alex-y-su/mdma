@@ -2,7 +2,8 @@
 
 ## Current Status
 **Phase 1 (Dashboard) - COMPLETED**
-Phases 2-8 - PENDING
+**Phase 2 (Hosts Pages) - IN PROGRESS**
+Phases 3-8 - PENDING
 
 ## Overview
 Adding i18n (internationalization) support with Russian translations to the Fleet frontend application using `react-i18next`.
@@ -27,21 +28,23 @@ Files modified:
 
 ## Remaining Phases
 
-### Phase 2: Hosts Pages (~80 strings)
-**Files to modify:**
+### Phase 2: Hosts Pages (~80 strings) - IN PROGRESS
+**Completed files:**
+- `frontend/pages/hosts/components/DeleteHostModal/DeleteHostModal.tsx` ✓
+- `frontend/pages/hosts/components/TransferHostModal/TransferHostModal.tsx` ✓
+- `frontend/pages/hosts/details/cards/About/About.tsx` ✓
+- `frontend/pages/hosts/details/cards/Activity/Activity.tsx` ✓
+- `frontend/pages/hosts/details/cards/Policies/HostPolicies.tsx` ✓
+- `frontend/pages/hosts/details/cards/Queries/HostQueries.tsx` ✓
+
+**Remaining files to modify:**
 - `frontend/pages/hosts/ManageHostsPage/components/RunScriptBatchModal/RunScriptBatchModal.tsx`
 - `frontend/pages/hosts/ManageHostsPage/components/HostsFilterBlock/HostsFilterBlock.tsx`
 - `frontend/pages/hosts/details/HostDetailsPage/HostDetailsPage.tsx`
 - `frontend/pages/hosts/details/cards/Software/` (multiple files)
 - `frontend/pages/hosts/details/cards/Labels/Labels.tsx`
-- `frontend/pages/hosts/details/cards/Policies/HostPolicies.tsx`
-- `frontend/pages/hosts/details/cards/Queries/HostQueries.tsx`
-- `frontend/pages/hosts/details/cards/Activity/Activity.tsx`
-- `frontend/pages/hosts/details/cards/About/About.tsx`
 - `frontend/pages/hosts/details/cards/LocalUserAccounts/LocalUserAccounts.tsx`
 - `frontend/pages/hosts/details/cards/MunkiIssues/MunkiIssues.tsx`
-- `frontend/pages/hosts/components/DeleteHostModal/DeleteHostModal.tsx`
-- `frontend/pages/hosts/components/TransferHostModal/TransferHostModal.tsx`
 
 ### Phase 3: Queries Pages (~35 strings)
 **Files to modify:**

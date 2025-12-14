@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo } from "react";
+import { Trans, useTranslation } from "react-i18next";
 
 import { isAndroid } from "interfaces/platform";
 import { IQueryStats } from "interfaces/query_stats";
@@ -41,17 +42,19 @@ const HostQueries = ({
   queryReportsDisabled,
   router,
 }: IHostQueriesProps): JSX.Element => {
+  const { t } = useTranslation();
+
   const renderEmptyQueriesTab = () => {
     if (hostPlatform === "chrome") {
       return (
         <EmptyTable
-          header="Scheduled queries are not supported for this host"
+          header={t("hosts:queries.scheduledNotSupported")}
           info={
             <>
-              <span>Interested in collecting data from your Chromebooks? </span>
+              <span>{t("hosts:queries.interestedChromebooks")} </span>
               <CustomLink
                 url="https://www.fleetdm.com/contact"
-                text="Let us know"
+                text={t("hosts:queries.letUsKnow")}
                 newTab
               />
             </>
@@ -63,12 +66,17 @@ const HostQueries = ({
     if (hostPlatform === "ios" || hostPlatform === "ipados") {
       return (
         <EmptyTable
-          header="Queries are not supported for this host"
+          header={t("hosts:queries.notSupported")}
           info={
             <>
-              Interested in querying{" "}
-              {hostPlatform === "ios" ? "iPhones" : "iPads"}?{" "}
-              <CustomLink url={SUPPORT_LINK} text="Let us know" newTab />
+              {hostPlatform === "ios"
+                ? t("hosts:queries.interestedIos")
+                : t("hosts:queries.interestedIpados")}{" "}
+              <CustomLink
+                url={SUPPORT_LINK}
+                text={t("hosts:queries.letUsKnow")}
+                newTab
+              />
             </>
           }
         />
@@ -78,11 +86,15 @@ const HostQueries = ({
     if (isAndroid(hostPlatform)) {
       return (
         <EmptyTable
-          header="Queries are not supported for this host"
+          header={t("hosts:queries.notSupported")}
           info={
             <>
-              Interested in querying Android hosts?{" "}
-              <CustomLink url={SUPPORT_LINK} text="Let us know" newTab />
+              {t("hosts:queries.interestedAndroid")}{" "}
+              <CustomLink
+                url={SUPPORT_LINK}
+                text={t("hosts:queries.letUsKnow")}
+                newTab
+              />
             </>
           }
         />
@@ -91,12 +103,12 @@ const HostQueries = ({
 
     return (
       <EmptyTable
-        header="No queries are scheduled to run on this host"
+        header={t("hosts:queries.noScheduledQueries")}
         info={
-          <>
-            Expecting to see queries? Try selecting <b>Refetch</b> to ask this
-            host to report fresh vitals.
-          </>
+          <Trans
+            i18nKey="hosts:queries.expectingQueries"
+            components={{ strong: <b /> }}
+          />
         }
       />
     );
@@ -156,7 +168,7 @@ const HostQueries = ({
 
   return (
     <div className={baseClass}>
-      <CardHeader header="Queries" />
+      <CardHeader header={t("hosts:queries.title")} />
       {renderHostQueries()}
     </div>
   );

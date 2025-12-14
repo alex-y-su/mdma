@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import PATHS from "router/paths";
 import Modal from "components/Modal";
@@ -24,11 +25,6 @@ interface INoTeamOption {
 
 const baseClass = "transfer-host-modal";
 
-const NO_TEAM_OPTION = {
-  value: "no-team",
-  label: "No team",
-};
-
 const TransferHostModal = ({
   onCancel,
   onSubmit,
@@ -37,7 +33,13 @@ const TransferHostModal = ({
   isUpdating,
   multipleHosts,
 }: ITransferHostModal): JSX.Element => {
+  const { t } = useTranslation();
   const [selectedTeam, setSelectedTeam] = useState<ITeam | INoTeamOption>();
+
+  const NO_TEAM_OPTION = {
+    value: "no-team",
+    label: t("hosts:transferHostModal.noTeam"),
+  };
 
   const onChangeSelectTeam = useCallback(
     (teamId: number | string) => {
@@ -48,7 +50,7 @@ const TransferHostModal = ({
         setSelectedTeam(teamWithId as ITeam);
       }
     },
-    [teams, setSelectedTeam]
+    [teams, setSelectedTeam, NO_TEAM_OPTION.value]
   );
 
   const onSubmitTransferHost = useCallback(() => {
@@ -66,27 +68,35 @@ const TransferHostModal = ({
   };
 
   return (
-    <Modal onExit={onCancel} title="Transfer hosts" className={baseClass}>
+    <Modal
+      onExit={onCancel}
+      title={t("hosts:transferHostModal.title")}
+      className={baseClass}
+    >
       <>
         <form className={`${baseClass}__form`}>
           <Dropdown
             wrapperClassName={`${baseClass}__team-dropdown-wrapper`}
-            label={`Transfer ${multipleHosts ? "selected hosts" : "host"} to:`}
+            label={
+              multipleHosts
+                ? t("hosts:transferHostModal.labelMultiple")
+                : t("hosts:transferHostModal.labelSingle")
+            }
             value={selectedTeam && selectedTeam.id}
             options={createTeamDropdownOptions()}
             onChange={onChangeSelectTeam}
-            placeholder="Select a team"
+            placeholder={t("hosts:transferHostModal.selectTeam")}
             searchable={false}
             autoFocus
           />
           {isGlobalAdmin ? (
             <p>
-              Team not here?{" "}
+              {t("hosts:transferHostModal.teamNotHere")}{" "}
               <Link
                 to={PATHS.ADMIN_TEAMS}
                 className={`${baseClass}__team-link`}
               >
-                Create a team
+                {t("hosts:transferHostModal.createTeam")}
               </Link>
             </p>
           ) : null}
@@ -98,10 +108,10 @@ const TransferHostModal = ({
               className="transfer-loading"
               isLoading={isUpdating}
             >
-              Transfer
+              {t("hosts:transferHostModal.transfer")}
             </Button>
             <Button onClick={onCancel} variant="inverse">
-              Cancel
+              {t("hosts:transferHostModal.cancel")}
             </Button>
           </div>
         </form>

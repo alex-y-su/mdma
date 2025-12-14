@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import classnames from "classnames";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 
@@ -22,12 +23,13 @@ import UpcomingActivityFeed from "./UpcomingActivityFeed";
 const baseClass = "host-activity-card";
 
 const UpcomingTooltip = () => {
+  const { t } = useTranslation();
   return (
     <TooltipWrapper
-      tipContent="Failure of one activity won't cancel other activities."
+      tipContent={t("hosts:activity.tooltip")}
       className={`${baseClass}__upcoming-tooltip`}
     >
-      Activities run as listed
+      {t("hosts:activity.activitiesRunAsListed")}
     </TooltipWrapper>
   );
 };
@@ -61,6 +63,7 @@ const Activity = ({
   onShowDetails,
   onCancel,
 }: IActivityProps) => {
+  const { t } = useTranslation();
   const classNames = classnames(baseClass, className);
 
   return (
@@ -75,7 +78,7 @@ const Activity = ({
         </div>
       )}
       <div className={`${baseClass}__header`}>
-        <CardHeader header="Activity" />
+        <CardHeader header={t("hosts:activity.title")} />
         <UpcomingTooltip />
       </div>
       <TabNav secondary>
@@ -85,10 +88,12 @@ const Activity = ({
         >
           <TabList>
             <Tab>
-              <TabText>Past</TabText>
+              <TabText>{t("hosts:activity.past")}</TabText>
             </Tab>
             <Tab>
-              <TabText count={upcomingCount}>Upcoming</TabText>
+              <TabText count={upcomingCount}>
+                {t("hosts:activity.upcoming")}
+              </TabText>
             </Tab>
           </TabList>
           <TabPanel>

@@ -1,5 +1,6 @@
 import { useContext, useEffect } from "react";
 import { InjectedRouter } from "react-router";
+import { useTranslation } from "react-i18next";
 
 import { AppContext } from "context/app";
 import { NotificationContext } from "context/notification";
@@ -11,6 +12,7 @@ interface ILogoutPageProps {
 }
 
 const LogoutPage = ({ router }: ILogoutPageProps) => {
+  const { t } = useTranslation();
   const { isSandboxMode } = useContext(AppContext);
   const { renderFlash } = useContext(NotificationContext);
 
@@ -27,7 +29,7 @@ const LogoutPage = ({ router }: ILogoutPageProps) => {
       } catch (response) {
         console.error(response);
         router.goBack();
-        return renderFlash("error", "Unable to log out of your account");
+        return renderFlash("error", t("auth:logout.error"));
       }
     };
 

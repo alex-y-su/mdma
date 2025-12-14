@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { InjectedRouter } from "react-router";
 import { Params } from "react-router/lib/Router";
+import { useTranslation } from "react-i18next";
 
 import { AppContext } from "context/app";
 import { RoutingContext } from "context/routing";
@@ -21,6 +22,7 @@ interface IMfaPage {
 const baseClass = "mfa-page";
 
 const MfaPage = ({ router, params }: IMfaPage) => {
+  const { t } = useTranslation();
   const { token: mfaToken } = params;
   const {
     config,
@@ -96,19 +98,19 @@ const MfaPage = ({ router, params }: IMfaPage) => {
   if (!shouldFinishMFA) {
     return (
       <AuthenticationFormWrapper className={baseClass}>
-        <Button onClick={onClickFinishLoginButton}>Log in</Button>
+        <Button onClick={onClickFinishLoginButton}>{t("auth:mfa.loginButton")}</Button>
       </AuthenticationFormWrapper>
     );
   }
 
   if (isExpired) {
     return (
-      <AuthenticationFormWrapper className={baseClass} header="Invalid token">
+      <AuthenticationFormWrapper className={baseClass} header={t("auth:mfa.invalidToken.title")}>
         <>
           <div className={`${baseClass}__description`}>
-            <p>Log in again for a new link.</p>
+            <p>{t("auth:mfa.invalidToken.message")}</p>
           </div>
-          <Button onClick={onClickLoginButton}>Back to login</Button>
+          <Button onClick={onClickLoginButton}>{t("auth:mfa.backToLogin")}</Button>
         </>
       </AuthenticationFormWrapper>
     );

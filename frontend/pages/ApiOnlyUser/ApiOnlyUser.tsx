@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { InjectedRouter } from "react-router";
+import { useTranslation } from "react-i18next";
 
 import paths from "router/paths";
 import usersAPI from "services/entities/users";
@@ -15,6 +16,7 @@ interface IApiOnlyUserProps {
 const baseClass = "api-only-user";
 
 const ApiOnlyUser = ({ router }: IApiOnlyUserProps): JSX.Element => {
+  const { t } = useTranslation();
   const { LOGIN, DASHBOARD, LOGOUT } = paths;
   const handleClick = () => router.push(LOGOUT);
 
@@ -38,24 +40,24 @@ const ApiOnlyUser = ({ router }: IApiOnlyUserProps): JSX.Element => {
   }, []);
 
   return (
-    <AuthenticationFormWrapper header="Access denied" className={baseClass}>
+    <AuthenticationFormWrapper header={t("auth:apiOnlyUser.title")} className={baseClass}>
       <>
         <div>
           <p>
-            You attempted to access Fleet with an{" "}
+            {t("auth:apiOnlyUser.description")}{" "}
             <CustomLink
-              text="API only user"
+              text={t("auth:apiOnlyUser.linkText")}
               newTab
               url="https://fleetdm.com/docs/using-fleet/fleetctl-cli#using-fleetctl-with-an-api-only-user"
             />
             .
           </p>
           <p className={`${baseClass}__sub-lead-text`}>
-            This user doesn&apos;t have access to the Fleet UI.
+            {t("auth:apiOnlyUser.noUiAccess")}
           </p>
         </div>
         <Button onClick={handleClick} className={`${baseClass}__login-button`}>
-          Back to login
+          {t("auth:apiOnlyUser.backToLogin")}
         </Button>
       </>
     </AuthenticationFormWrapper>

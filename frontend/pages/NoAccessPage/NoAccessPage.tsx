@@ -2,6 +2,7 @@
 
 import React, { useEffect } from "react";
 import { InjectedRouter } from "react-router";
+import { useTranslation } from "react-i18next";
 import PATHS from "router/paths";
 
 import { CONTACT_FLEET_LINK } from "utilities/constants";
@@ -19,6 +20,7 @@ interface INoAccessPageProps {
 }
 
 const NoAccessPage = ({ router, orgContactUrl }: INoAccessPageProps) => {
+  const { t } = useTranslation();
   const onBackToLogin = () => {
     router.push(PATHS.LOGIN);
   };
@@ -41,7 +43,7 @@ const NoAccessPage = ({ router, orgContactUrl }: INoAccessPageProps) => {
 
   return (
     <AuthenticationFormWrapper
-      header="Access denied"
+      header={t("auth:noAccess.title")}
       headerCta={
         <AuthenticationNav router={router} previousLocation={PATHS.LOGIN} />
       }
@@ -49,18 +51,18 @@ const NoAccessPage = ({ router, orgContactUrl }: INoAccessPageProps) => {
     >
       <div className={`${baseClass}__description`}>
         <p>
-          This account does not currently have access to Fleet.
+          {t("auth:noAccess.message")}
           <br />
           To get access,{" "}
           <CustomLink
             url={orgContactUrl || CONTACT_FLEET_LINK}
-            text="contact your administrator"
+            text={t("auth:noAccess.contactLink")}
           />
           .
         </p>
       </div>
       <Button onClick={onBackToLogin} className={`${baseClass}__btn`}>
-        Back to login
+        {t("auth:noAccess.backToLogin")}
       </Button>
     </AuthenticationFormWrapper>
   );

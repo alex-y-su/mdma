@@ -36,6 +36,8 @@ Files modified:
 - `frontend/pages/hosts/details/cards/Activity/Activity.tsx` ✓
 - `frontend/pages/hosts/details/cards/Policies/HostPolicies.tsx` ✓
 - `frontend/pages/hosts/details/cards/Queries/HostQueries.tsx` ✓
+- `frontend/pages/hosts/details/cards/LocalUserAccounts/LocalUserAccounts.tsx` ✓
+- `frontend/pages/hosts/details/cards/MunkiIssues/MunkiIssues.tsx` ✓
 
 **Remaining files to modify:**
 - `frontend/pages/hosts/ManageHostsPage/components/RunScriptBatchModal/RunScriptBatchModal.tsx`
@@ -43,8 +45,6 @@ Files modified:
 - `frontend/pages/hosts/details/HostDetailsPage/HostDetailsPage.tsx`
 - `frontend/pages/hosts/details/cards/Software/` (multiple files)
 - `frontend/pages/hosts/details/cards/Labels/Labels.tsx`
-- `frontend/pages/hosts/details/cards/LocalUserAccounts/LocalUserAccounts.tsx`
-- `frontend/pages/hosts/details/cards/MunkiIssues/MunkiIssues.tsx`
 
 ### Phase 3: Queries Pages (~35 strings)
 **Files to modify:**

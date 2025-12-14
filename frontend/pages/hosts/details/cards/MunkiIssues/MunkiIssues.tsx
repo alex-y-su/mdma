@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import { IMunkiIssue } from "interfaces/host";
 
@@ -22,12 +23,13 @@ const MunkiIssuesTable = ({
   munkiIssues,
   deviceType,
 }: IMunkiIssuesTableProps): JSX.Element => {
+  const { t } = useTranslation();
   const tableMunkiIssues = munkiIssues;
   const tableHeaders = munkiIssuesTableHeaders;
 
   return (
     <Card className={baseClass} borderRadiusSize="xxlarge" paddingSize="xlarge">
-      <CardHeader header="Munki issues" />
+      <CardHeader header={t("hosts:munkiIssues.title")} />
       {munkiIssues?.length ? (
         <div className={deviceType || ""}>
           <TableContainer
@@ -39,8 +41,8 @@ const MunkiIssuesTable = ({
             resultsTitle="issue"
             emptyComponent={() => (
               <EmptyTable
-                header="No Munki issues detected"
-                info="The last time Munki ran on this host, no issues were reported."
+                header={t("hosts:munkiIssues.noIssuesDetected")}
+                info={t("hosts:munkiIssues.noIssuesInfo")}
               />
             )}
             showMarkAllPages={false}
@@ -50,8 +52,8 @@ const MunkiIssuesTable = ({
         </div>
       ) : (
         <EmptyTable
-          header="No Munki issues detected"
-          info="The last time Munki ran on this host, no issues were reported."
+          header={t("hosts:munkiIssues.noIssuesDetected")}
+          info={t("hosts:munkiIssues.noIssuesInfo")}
         />
       )}
     </Card>

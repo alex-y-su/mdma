@@ -230,5 +230,21 @@
     "letUsKnow": "Let us know",
     "noScheduledQueries": "No queries are scheduled to run on this host",
     "expectingQueries": "Expecting to see queries? Try selecting <strong>Refetch</strong> to ask this host to report fresh vitals."
+  },
+  "localUserAccounts": {
+    "title": "Local user accounts",
+    "collectionDisabled": "User collection has been disabled",
+    "enableFeature": "steps to enable this feature",
+    "checkDocs": "Check out the Fleet documentation for",
+    "searchPlaceholder": "Search local user accounts by username",
+    "noMatchingUsers": "No users match your search criteria",
+    "tryDifferentSearch": "Try a different search.",
+    "noUsersDetected": "No users detected on this host",
+    "expectingUsers": "Expecting to see users? Try again in a few seconds as the system catches up."
+  },
+  "munkiIssues": {
+    "title": "Munki issues",
+    "noIssuesDetected": "No Munki issues detected",
+    "noIssuesInfo": "The last time Munki ran on this host, no issues were reported."
   }
 }

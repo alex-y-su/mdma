@@ -1,4 +1,5 @@
 import React, { useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import classnames from "classnames";
 
 import { IHostUser } from "interfaces/host_users";
@@ -34,6 +35,7 @@ const LocalUserAccounts = ({
   hostUsersEnabled,
   className,
 }: ILocalUserAccountsProps): JSX.Element => {
+  const { t } = useTranslation();
   const tableHeaders = generateTableHeaders();
 
   const renderUsersCount = useCallback(() => {
@@ -47,15 +49,15 @@ const LocalUserAccounts = ({
         borderRadiusSize="xxlarge"
         paddingSize="xlarge"
       >
-        <CardHeader header="Local user accounts" />
+        <CardHeader header={t("hosts:localUserAccounts.title")} />
         <EmptyTable
-          header="User collection has been disabled"
+          header={t("hosts:localUserAccounts.collectionDisabled")}
           info={
             <>
-              Check out the Fleet documentation for{" "}
+              {t("hosts:localUserAccounts.checkDocs")}{" "}
               <CustomLink
                 url="https://fleetdm.com/learn-more-about/enable-user-collection"
-                text="steps to enable this feature"
+                text={t("hosts:localUserAccounts.enableFeature")}
                 newTab
               />
             </>
@@ -74,7 +76,7 @@ const LocalUserAccounts = ({
       paddingSize="xlarge"
     >
       <>
-        <CardHeader header="Local user accounts" />
+        <CardHeader header={t("hosts:localUserAccounts.title")} />
         {users?.length ? (
           <TableContainer
             columnConfigs={tableHeaders}
@@ -82,12 +84,12 @@ const LocalUserAccounts = ({
             isLoading={isLoading}
             defaultSortHeader="username"
             defaultSortDirection="asc"
-            inputPlaceHolder="Search local user accounts by username"
+            inputPlaceHolder={t("hosts:localUserAccounts.searchPlaceholder")}
             onQueryChange={onUsersTableSearchChange}
             emptyComponent={() => (
               <EmptyTable
-                header="No users match your search criteria"
-                info="Try a different search."
+                header={t("hosts:localUserAccounts.noMatchingUsers")}
+                info={t("hosts:localUserAccounts.tryDifferentSearch")}
               />
             )}
             showMarkAllPages={false}
@@ -100,9 +102,8 @@ const LocalUserAccounts = ({
           />
         ) : (
           <EmptyTable
-            header="No users detected on this host"
-            info="Expecting to see users? Try again in a few seconds as the system
-              catches up."
+            header={t("hosts:localUserAccounts.noUsersDetected")}
+            info={t("hosts:localUserAccounts.expectingUsers")}
           />
         )}
       </>

@@ -19,8 +19,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          # IMPORTANT: Change this to the branch you want to base PRs from
-          ref: claude/i18n-auth-translation-e7kvG
+          ref: main
           fetch-depth: 0
 
       - name: Run Claude Code Implementation
@@ -36,10 +35,10 @@ jobs:
 
             Instructions:
             1. Read the issue details thoroughly
-            2. Create a new branch from the current branch for this work
+            2. Create a new branch from main for this work
             3. Implement the changes as described in the issue
             4. Commit your changes with clear commit messages
-            5. Push the branch and create a PR targeting the base branch (claude/i18n-auth-translation-e7kvG)
+            5. Push the branch and create a PR targeting main
 
             Use the repository's CLAUDE.md for guidance on style and conventions.
 

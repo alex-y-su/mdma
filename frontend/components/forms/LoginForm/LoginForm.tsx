@@ -1,4 +1,5 @@
 import React, { FormEvent, useEffect, useState } from "react";
+import { useTranslation, Trans } from "react-i18next";
 import { size } from "lodash";
 import classnames from "classnames";
 import { ILoginUserData } from "interfaces/user";
@@ -32,6 +33,7 @@ const LoginForm = ({
   ssoSettings,
   handleSSOSignOn,
 }: ILoginFormProps): JSX.Element => {
+  const { t } = useTranslation("auth");
   const {
     idp_name: idpName,
     idp_image_url: imageURL,
@@ -57,13 +59,13 @@ const LoginForm = ({
     const validationErrors: { [key: string]: string } = {};
 
     if (!validatePresence(email)) {
-      validationErrors.email = "Email field must be completed";
+      validationErrors.email = t("login.validation.email_required");
     } else if (!validateEmail(email)) {
-      validationErrors.email = "Email must be a valid email address";
+      validationErrors.email = t("login.validation.email_invalid");
     }
 
     if (!validatePresence(password)) {
-      validationErrors.password = "Password field must be completed";
+      validationErrors.password = t("login.validation.password_required");
     }
 
     setErrors(validationErrors);
@@ -83,9 +85,9 @@ const LoginForm = ({
   };
 
   const showLegendWithImage = () => {
-    let legend = "Single sign-on";
+    let legend = t("login.sso_button");
     if (idpName !== "") {
-      legend = `Sign in with ${idpName}`;
+      legend = t("login.sso_sign_in_with", { idpName });
     }
 
     return (
@@ -101,9 +103,9 @@ const LoginForm = ({
   };
 
   const renderSingleSignOnButton = () => {
-    let legend: string | JSX.Element = "Single sign-on";
+    let legend: string | JSX.Element = t("login.sso_button");
     if (idpName !== "") {
-      legend = `Sign in with ${idpName}`;
+      legend = t("login.sso_sign_in_with", { idpName });
     }
     if (imageURL !== "") {
       legend = showLegendWithImage();
@@ -113,7 +115,7 @@ const LoginForm = ({
       <Button
         className={`${baseClass}__sso-btn`}
         type="button"
-        title="Single sign-on"
+        title={t("login.sso_title")}
         variant="inverse"
         onClick={handleSSOSignOn}
       >
@@ -142,12 +144,15 @@ const LoginForm = ({
             className="back-link"
           >
             <Icon name="chevron-left" color="ui-fleet-black-75" />
-            Back to login
+            {t("login.back_to_login")}
           </Button>
-          <h1>Check your email</h1>
+          <h1>{t("login.check_email_title")}</h1>
           <p className={`${baseClass}__text`}>
-            We sent an email to you at <b>{formData.email}</b>. <br />
-            Please click the magic link in the email to sign in.
+            <Trans
+              i18nKey="login.check_email_message"
+              values={{ email: formData.email }}
+              components={[<></>, <b />, <br />]}
+            />
           </p>
         </>
       </div>
@@ -162,15 +167,15 @@ const LoginForm = ({
           error={errors.email}
           autofocus
           type="email"
-          label="Email"
-          placeholder="Email"
+          label={t("login.email_label")}
+          placeholder={t("login.email_placeholder")}
           value={formData.email}
           onChange={onInputChange("email")}
         />
         <InputFieldWithIcon
           error={errors.password}
-          label="Password"
-          placeholder="Password"
+          label={t("login.password_label")}
+          placeholder={t("login.password_placeholder")}
           type="password"
           value={formData.password}
           onChange={onInputChange("password")}
@@ -184,14 +189,14 @@ const LoginForm = ({
             isLoading={isSubmitting}
             type="submit"
           >
-            Log in
+            {t("login.login_button")}
           </Button>
           {ssoEnabled && renderSingleSignOnButton()}
         </div>
         <CustomLink
           className={`${baseClass}__forgot-link`}
           url={paths.FORGOT_PASSWORD}
-          text="Forgot password?"
+          text={t("login.forgot_password_link")}
         />
       </div>
     </form>

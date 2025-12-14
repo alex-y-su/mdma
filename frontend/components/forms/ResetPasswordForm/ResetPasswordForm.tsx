@@ -1,4 +1,5 @@
 import React, { FormEvent, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { size } from "lodash";
 
 import { IResetPasswordForm, IResetPasswordFormErrors } from "interfaces/user";
@@ -31,6 +32,7 @@ const ResetPasswordForm = ({
   serverErrors,
   handleSubmit,
 }: IResetPasswordFormProps): JSX.Element => {
+  const { t } = useTranslation("auth");
   const [errors, setErrors] = useState<IResetPasswordFormErrors>({});
   const [formData, setFormData] = useState<IResetPasswordForm>({
     new_password: "",
@@ -56,16 +58,21 @@ const ResetPasswordForm = ({
     }
 
     if (!validatePresence(newPasswordConfirmation)) {
-      validationErrors.new_password_confirmation =
-        "New password confirmation field must be completed";
+      validationErrors.new_password_confirmation = t(
+        "reset_password.validation.confirm_password_required"
+      );
     }
 
     if (!validatePresence(newPassword)) {
-      validationErrors.new_password = "New password field must be completed";
+      validationErrors.new_password = t(
+        "reset_password.validation.new_password_required"
+      );
     }
 
     if (noMatch) {
-      validationErrors.new_password_confirmation = "Passwords do not match";
+      validationErrors.new_password_confirmation = t(
+        "reset_password.validation.passwords_no_match"
+      );
     }
 
     setErrors(validationErrors);
@@ -100,18 +107,18 @@ const ResetPasswordForm = ({
       <InputFieldWithIcon
         error={errors.new_password}
         autofocus
-        label="New password"
-        placeholder="New password"
+        label={t("reset_password.new_password_label")}
+        placeholder={t("reset_password.new_password_placeholder")}
         onChange={onInputChange("new_password")}
         value={formData.new_password || ""}
         className={`${baseClass}__input`}
         type="password"
-        helpText="12-48 characters, with at least 1 number (e.g. 0 - 9) and 1 symbol (e.g. &*#)."
+        helpText={t("reset_password.new_password_help")}
       />
       <InputFieldWithIcon
         error={errors.new_password_confirmation}
-        label="Confirm password"
-        placeholder="Confirm password"
+        label={t("reset_password.confirm_password_label")}
+        placeholder={t("reset_password.confirm_password_placeholder")}
         onChange={onInputChange("new_password_confirmation")}
         value={formData.new_password_confirmation || ""}
         className={`${baseClass}__input`}
@@ -123,7 +130,7 @@ const ResetPasswordForm = ({
           onClick={onFormSubmit}
           className={`${baseClass}__btn`}
         >
-          Reset password
+          {t("reset_password.submit_button")}
         </Button>
       </div>
     </form>

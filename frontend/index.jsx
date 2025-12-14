@@ -5,6 +5,7 @@ import "core-js/stable";
 import "regenerator-runtime/runtime";
 
 import "./public-path";
+import "./config/i18n"; // Initialize i18n
 import routes from "./router";
 import "./index.scss";
 

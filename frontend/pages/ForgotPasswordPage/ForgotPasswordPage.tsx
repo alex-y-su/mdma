@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useTranslation, Trans } from "react-i18next";
 import { InjectedRouter } from "react-router";
 import PATHS from "router/paths";
 import usersAPI from "services/entities/users";
@@ -15,6 +16,7 @@ interface IForgotPasswordPage {
 }
 
 const ForgotPasswordPage = ({ router }: IForgotPasswordPage) => {
+  const { t } = useTranslation("auth");
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isLoading, setIsLoading] = useState(false);
@@ -47,16 +49,17 @@ const ForgotPasswordPage = ({ router }: IForgotPasswordPage) => {
       return (
         <div className={`${baseClass}__text-wrapper`}>
           <p className={`${baseClass}__text`}>
-            An email was sent to{" "}
-            <span className={`${baseClass}__email`}>{email}</span>. Click the
-            link in the email to proceed with the password reset process. If you
-            did not receive an email please contact your Fleet administrator.
+            <Trans
+              i18nKey="forgot_password.success_message"
+              values={{ email }}
+              components={[<></>, <span className={`${baseClass}__email`} />]}
+            />
             <br />
             <br />
-            You can find more information on resetting passwords at the{" "}
+            {t("forgot_password.success_additional_info")}{" "}
             <CustomLink
               url="https://fleetdm.com/docs/using-fleet/fleetctl-cli?utm_medium=fleetui&utm_campaign=get-api-token#using-fleetctl-with-an-api-only-user"
-              text="Password reset FAQ"
+              text={t("forgot_password.faq_link_text")}
               newTab
             />
           </p>
@@ -76,7 +79,7 @@ const ForgotPasswordPage = ({ router }: IForgotPasswordPage) => {
 
   return (
     <AuthenticationFormWrapper
-      header="Reset password"
+      header={t("forgot_password.header")}
       headerCta={
         <AuthenticationNav previousLocation={PATHS.LOGIN} router={router} />
       }

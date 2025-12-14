@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { InjectedRouter } from "react-router";
 import { AxiosError } from "axios";
@@ -35,18 +36,10 @@ interface IStatusMessages {
   error: string;
 }
 
-const statusMessages: IStatusMessages = {
-  account_disabled:
-    "Single sign-on is not enabled on your account. Please contact your Fleet administrator.",
-  account_invalid: "You do not have a Fleet account.",
-  org_disabled: "Single sign-on is not enabled for your organization.",
-  error:
-    "There was an error with single sign-on. Please contact your Fleet administrator.",
-};
-
 const baseClass = "login-page";
 
 const LoginPage = ({ router, location }: ILoginPageProps) => {
+  const { t } = useTranslation("auth");
   const {
     availableTeams,
     config,
@@ -58,6 +51,13 @@ const LoginPage = ({ router, location }: ILoginPageProps) => {
   } = useContext(AppContext);
   const { renderFlash } = useContext(NotificationContext);
   const { redirectLocation } = useContext(RoutingContext);
+
+  const statusMessages: IStatusMessages = {
+    account_disabled: t("login.status.account_disabled"),
+    account_invalid: t("login.status.account_invalid"),
+    org_disabled: t("login.status.org_disabled"),
+    error: t("login.status.error"),
+  };
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -181,20 +181,20 @@ const LoginPage = ({ router, location }: ILoginPageProps) => {
       // a one-off error for sso login failure to be more readable to users
       const ssoError = {
         status: err.status,
-        data: { errors: [{ name: "base", reason: "Authentication failed" }] },
+        data: { errors: [{ name: "base", reason: t("login.sso_error") }] },
       };
       const errorObject = formatErrorResponse(ssoError);
       setErrors(errorObject);
       return false;
     }
-  }, [redirectLocation]);
+  }, [redirectLocation, t]);
 
   if (isLoadingSSOSettings) {
     return <Spinner className={`${baseClass}__loading-spinner`} />;
   }
 
   return (
-    <AuthenticationFormWrapper header="Welcome to Fleet">
+    <AuthenticationFormWrapper header={t("login.welcome")}>
       <LoginForm
         handleSubmit={onSubmit}
         baseError={errors.base}

@@ -110,6 +110,12 @@
     "last30Days": "Last 30 days",
     "custom": "Custom"
   },
+  "filters": {
+    "allTeams": "All teams",
+    "allTypes": "All types",
+    "newest": "Newest",
+    "oldest": "Oldest"
+  },
   "platforms": {
     "all": "All",
     "windows": "Windows",

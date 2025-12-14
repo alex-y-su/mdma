@@ -5,9 +5,10 @@ import { screen } from "@testing-library/react";
 import { createCustomRenderer } from "test/test-utils";
 import createMockHost from "__mocks__/hostMock";
 
-import ManualLabelForm, {
-  LABEL_TARGET_HOSTS_INPUT_LABEL,
-} from "./ManualLabelForm";
+import ManualLabelForm from "./ManualLabelForm";
+
+// Label text from i18n translations (labels:manualLabel.selectHosts)
+const LABEL_TARGET_HOSTS_INPUT_LABEL = "Select hosts";
 
 describe("ManualLabelForm", () => {
   it("should render a Select Hosts input", () => {

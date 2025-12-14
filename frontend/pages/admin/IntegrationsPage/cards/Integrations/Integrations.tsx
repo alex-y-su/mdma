@@ -33,6 +33,14 @@ import {
 const baseClass = "integrations-management";
 const noIntegrationsClass = "no-integrations";
 
+// Error message constants
+const VALIDATION_FAILED_ERROR =
+  "Could not add integration. Please check your credentials and try again.";
+const BAD_REQUEST_ERROR =
+  "Could not add integration. Please verify the URL and credentials are correct.";
+const UNKNOWN_ERROR =
+  "An unknown error occurred. Please try again.";
+
 const Integrations = (): JSX.Element => {
   const { t } = useTranslation();
   const { renderFlash } = useContext(NotificationContext);

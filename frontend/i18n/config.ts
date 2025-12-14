@@ -19,10 +19,10 @@ export const NAMESPACES = [
   "errors", // Error messages
   "hosts", // Host management
   "labels", // Label management
-  "software", // Software management
   "policies", // Policy management
   "queries", // Query management
   "settings", // Settings pages
+  "software", // Software management
 ] as const;
 
 export type Namespace = typeof NAMESPACES[number];

@@ -1,5 +1,6 @@
 import React, { useRef, useMemo } from "react";
 import classnames from "classnames";
+import { useTranslation } from "react-i18next";
 import Select, {
   components,
   MenuListProps,
@@ -96,25 +97,34 @@ const CustomValueContainer = ({
   );
 };
 
-const TYPE_FILTER_OPTIONS: CustomOptionType[] = Object.values(ActivityType)
-  .map((type) => ({
-    label: ACTIVITY_DISPLAY_NAME_MAP[type],
-    value: type,
-  }))
-  .sort((a, b) => a.label.localeCompare(b.label));
+const generateTypeFilterOptions = (
+  allTypesLabel: string
+): CustomOptionType[] => {
+  const options: CustomOptionType[] = Object.values(ActivityType)
+    .map((type) => ({
+      label: ACTIVITY_DISPLAY_NAME_MAP[type],
+      value: type,
+    }))
+    .sort((a, b) => a.label.localeCompare(b.label));
 
-TYPE_FILTER_OPTIONS.unshift({
-  label: "All types",
-  value: "all",
-});
+  options.unshift({
+    label: allTypesLabel,
+    value: "all",
+  });
 
-const generateOptions = (searchQuery: string) => {
+  return options;
+};
+
+const generateOptions = (
+  searchQuery: string,
+  typeFilterOptions: CustomOptionType[]
+) => {
   const query = searchQuery.toLowerCase().trim();
   if (query === "") {
-    return TYPE_FILTER_OPTIONS;
+    return typeFilterOptions;
   }
 
-  return TYPE_FILTER_OPTIONS.filter((option) => {
+  return typeFilterOptions.filter((option) => {
     if (typeof option.label !== "string") {
       return false;
     }
@@ -133,11 +143,17 @@ const ActivityTypeDropdown = ({
   onSelect,
   className,
 }: IActivityTypeDropdownProps) => {
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = React.useState("");
   const [menuIsOpen, setMenuIsOpen] = React.useState(false);
 
   const selectRef = useRef<SelectInstance<CustomOptionType, false>>(null);
   const isSearchInputFocusedRef = useRef(false);
+
+  const typeFilterOptions = useMemo(
+    () => generateTypeFilterOptions(t("common:filters.allTypes")),
+    [t]
+  );
 
   const handleChange = (option: SingleValue<CustomOptionType>) => {
     if (option === null) return;
@@ -189,8 +205,8 @@ const ActivityTypeDropdown = ({
 
   const getValue = () => {
     return (
-      TYPE_FILTER_OPTIONS.find((option) => option.value === value) ||
-      TYPE_FILTER_OPTIONS[0]
+      typeFilterOptions.find((option) => option.value === value) ||
+      typeFilterOptions[0]
     );
   };
 
@@ -245,7 +261,10 @@ const ActivityTypeDropdown = ({
   };
 
   const classNames = classnames(baseClass, className);
-  const options = useMemo(() => generateOptions(searchQuery), [searchQuery]);
+  const options = useMemo(
+    () => generateOptions(searchQuery, typeFilterOptions),
+    [searchQuery, typeFilterOptions]
+  );
 
   return (
     <FormField

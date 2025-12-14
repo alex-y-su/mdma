@@ -36,7 +36,10 @@
     "noActivity": "No recent activity",
     "manageAutomations": "Manage automations",
     "automationsUpdateSuccess": "Successfully updated activity feed automations.",
-    "automationsUpdateError": "Couldn't update activity feed automations. Please try again."
+    "automationsUpdateError": "Couldn't update activity feed automations. Please try again.",
+    "last3Months": "Last 3 months",
+    "last12Months": "Last 12 months",
+    "searchPlaceholder": "Search activities by user's name or email"
   },
   "software": {
     "title": "Software",
@@ -118,6 +121,10 @@
   "missingHosts": {
     "title": "Missing hosts",
     "tooltip": "Hosts that have not been online in 30 days or more."
+  },
+  "totalHosts": {
+    "title": "Total hosts",
+    "tooltip": "Total number of hosts."
   },
   "activityAutomations": {
     "title": "Manage automations",

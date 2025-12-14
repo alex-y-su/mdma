@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 import { ACTIVITY_DISPLAY_NAME_MAP, ActivityType } from "interfaces/activity";
 
@@ -9,37 +10,6 @@ import DropdownWrapper from "components/forms/fields/DropdownWrapper";
 import ActivityTypeDropdown from "../ActivityTypeDropdown";
 
 const baseClass = "activity-feed-filters";
-
-const DATE_FILTER_OPTIONS = [
-  { label: "All time", value: "all" },
-  { label: "Today", value: "today" },
-  { label: "Yesterday", value: "yesterday" },
-  { label: "Last 7 days", value: "7d" },
-  { label: "Last 30 days", value: "30d" },
-  { label: "Last 3 months", value: "3m" },
-  { label: "Last 12 months", value: "12m" },
-];
-
-// Generate type filter options from ActivityType enum, sort them, and add
-// "All types" option at the beginning of the list
-const TYPE_FILTER_OPTIONS: { label: string; value: string }[] = Object.values(
-  ActivityType
-)
-  .map((type) => ({
-    label: ACTIVITY_DISPLAY_NAME_MAP[type],
-    value: type,
-  }))
-  .sort((a, b) => a.label.localeCompare(b.label));
-
-TYPE_FILTER_OPTIONS.unshift({
-  label: "All types",
-  value: "",
-});
-
-const SORT_OPTIONS = [
-  { label: "Newest", value: "desc" },
-  { label: "Oldest", value: "asc" },
-];
 
 interface ActivityFeedFiltersProps {
   searchQuery: string;
@@ -64,6 +34,29 @@ const ActivityFeedFilters = ({
   setCreatedAtDirection,
   setPageIndex,
 }: ActivityFeedFiltersProps) => {
+  const { t } = useTranslation();
+
+  const dateFilterOptions = useMemo(
+    () => [
+      { label: t("common:time.allTime"), value: "all" },
+      { label: t("common:time.today"), value: "today" },
+      { label: t("common:time.yesterday"), value: "yesterday" },
+      { label: t("common:time.last7Days"), value: "7d" },
+      { label: t("common:time.last30Days"), value: "30d" },
+      { label: t("dashboard:activity.last3Months"), value: "3m" },
+      { label: t("dashboard:activity.last12Months"), value: "12m" },
+    ],
+    [t]
+  );
+
+  const sortOptions = useMemo(
+    () => [
+      { label: t("common:filters.newest"), value: "desc" },
+      { label: t("common:filters.oldest"), value: "asc" },
+    ],
+    [t]
+  );
+
   const onChangeActivityType = (value: string) => {
     setTypeFilter((prev: string[]) => [value]);
     setPageIndex(0);
@@ -72,7 +65,7 @@ const ActivityFeedFilters = ({
   return (
     <div className={baseClass}>
       <SearchField
-        placeholder="Search activities by user's name or email"
+        placeholder={t("dashboard:activity.searchPlaceholder")}
         defaultValue={searchQuery}
         onChange={(value) => {
           setSearchQuery(value);
@@ -90,7 +83,7 @@ const ActivityFeedFilters = ({
           className={`${baseClass}__date-filter-dropdown`}
           iconName="calendar"
           name="date-filter"
-          options={DATE_FILTER_OPTIONS}
+          options={dateFilterOptions}
           value={dateFilter}
           onChange={(value) => {
             if (value === null) return;
@@ -102,7 +95,7 @@ const ActivityFeedFilters = ({
           className={`${baseClass}__sort-created-at-dropdown`}
           name="created-at-filter"
           iconName="filter"
-          options={SORT_OPTIONS}
+          options={sortOptions}
           value={createdAtDirection}
           onChange={(value) => {
             if (value === null) return;

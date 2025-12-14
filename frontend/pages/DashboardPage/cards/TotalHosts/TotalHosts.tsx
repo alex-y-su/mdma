@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import PATHS from "router/paths";
 
 import { getPathWithQueryParams } from "utilities/url";
@@ -13,13 +14,13 @@ interface ITotalHostsProps {
   currentTeamId?: number;
 }
 
-const TOOLTIP_TEXT = "Total number of hosts.";
-
 const TotalHosts = ({
   totalCount,
   selectedPlatformLabelId,
   currentTeamId,
 }: ITotalHostsProps): JSX.Element => {
+  const { t } = useTranslation();
+
   // build the manage hosts URL filtered by low disk space only
   // currently backend cannot filter by both low disk space and label
   const endpoint = selectedPlatformLabelId
@@ -33,8 +34,8 @@ const TotalHosts = ({
     <HostCountCard
       iconName="total-hosts"
       count={totalCount || 0}
-      title="Total hosts"
-      tooltip={TOOLTIP_TEXT}
+      title={t("dashboard:totalHosts.title")}
+      tooltip={t("dashboard:totalHosts.tooltip")}
       path={path}
       className={baseClass}
       iconPosition="left"

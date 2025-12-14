@@ -67,7 +67,7 @@
     "conditionalAccess": "Условный доступ",
     "other": "Другое",
     "otherWorkflows": "Другие рабочие процессы",
-    "availablePremium": "Доступно в Fleet Premium",
+    "availablePremium": "Доступно в TAU Fleet Premium",
     "selectTeamInstall": "Выберите команду для управления\nавтоматизацией установки ПО.",
     "selectTeamCalendar": "Выберите команду для управления\nсобытиями календаря.",
     "selectTeamScript": "Выберите команду для управления\nавтоматизацией запуска скриптов.",
@@ -105,7 +105,7 @@
     "autofillButtonThinking": "Думаю...",
     "autofillButtonText": "Автозаполнение",
     "autofillTooltip": "Функции ИИ отключены в настройках организации",
-    "autofillTooltipEnabled": "Запросы политик (SQL) будут отправлены\nв большую языковую модель (LLM). Fleet\nне использует эти данные для обучения моделей.",
+    "autofillTooltipEnabled": "Запросы политик (SQL) будут отправлены\nв большую языковую модель (LLM). TAU Fleet\nне использует эти данные для обучения моделей.",
     "schema": "Схема",
     "examples": "Примеры"
   },

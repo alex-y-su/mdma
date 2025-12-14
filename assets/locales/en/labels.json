@@ -1,0 +1,106 @@
+{
+  "title": "Labels",
+  "manage": {
+    "title": "Labels",
+    "addLabel": "Add label",
+    "editLabel": "Edit label",
+    "description": "Group hosts for targeting and filtering."
+  },
+  "form": {
+    "name": "Label name",
+    "namePlaceholder": "Label name",
+    "nameRequired": "Label name must be present",
+    "description": "Description",
+    "descriptionPlaceholder": "Label description (optional)",
+    "type": "Type",
+    "platform": "Platform",
+    "platformImmutable": "Label platforms are immutable. To change the platform, delete this label and create a new one.",
+    "queryImmutable": "Label queries are immutable. To change the query, delete this label and create a new one."
+  },
+  "types": {
+    "dynamic": "Dynamic",
+    "manual": "Manual",
+    "hostVitals": "Host vitals"
+  },
+  "columns": {
+    "name": "Name",
+    "description": "Description",
+    "type": "Type",
+    "actions": "Actions",
+    "viewAll": "View all hosts"
+  },
+  "table": {
+    "resultsTitle": "labels",
+    "empty": {
+      "title": "No labels",
+      "description": "Labels you create will appear here."
+    }
+  },
+  "newLabel": {
+    "title": "New label",
+    "description": "Create a new label for targeting and filtering hosts.",
+    "query": "Query",
+    "schema": "Schema",
+    "defaultQuery": "SELECT 1 FROM os_version WHERE major >= 13;",
+    "labelCriteria": "Label criteria",
+    "isEqualTo": "is equal to",
+    "idpGroup": "Identity provider (IdP) group",
+    "idpDepartment": "IdP department",
+    "idpPlaceholder": "IT admins",
+    "departmentPlaceholder": "Engineering",
+    "criteriaHelp": "Currently, label criteria can be IdP group or department on macOS, iOS, iPadOS, and Android hosts.",
+    "queryRequired": "Query text must be present",
+    "criteriaRequired": "Label criteria must be completed",
+    "success": "Label added successfully.",
+    "error": "Couldn't add label. Please try again."
+  },
+  "editLabel": {
+    "title": "Edit label",
+    "success": "Label updated successfully.",
+    "error": "Couldn't edit label. Please try again.",
+    "builtInError": "Built in labels cannot be edited",
+    "hostVitalsReadOnly": "Host vitals labels are not editable. Delete the label and re-add it to make changes."
+  },
+  "deleteLabel": {
+    "title": "Delete label",
+    "confirm": "Are you sure you wish to delete this label?",
+    "profilesWarning": "Configuration profiles that target this label will not be applied to new hosts.",
+    "queriesWarning": "Queries and policies that target this label will continue to run, but may target different hosts.",
+    "success": "Successfully deleted {{name}}.",
+    "error": "Could not delete {{name}}. Please try again."
+  },
+  "manualLabel": {
+    "selectHosts": "Select hosts",
+    "searchPlaceholder": "Search name, hostname, or serial number"
+  },
+  "hostTable": {
+    "host": "Host",
+    "hostname": "Hostname",
+    "serialNumber": "Serial number"
+  },
+  "targetSelector": {
+    "allHosts": "All hosts",
+    "custom": "Custom",
+    "addLabel": "Add label",
+    "toTargetSpecificHosts": "to target specific hosts."
+  },
+  "hostDetails": {
+    "title": "Labels",
+    "noLabels": "No labels are associated with this host."
+  },
+  "customLabelHeading": {
+    "addLabel": "Add label",
+    "filterPlaceholder": "Filter labels by name..."
+  },
+  "tooltips": {
+    "hostVitals": "Host vitals labels allow filtering by IdP attributes when your IdP is connected.",
+    "idpConfig": "To use host vitals labels, connect an IdP in Settings > Integrations > Identity provider (IdP)."
+  },
+  "platforms": {
+    "all": "All platforms",
+    "macos": "macOS",
+    "windows": "Windows",
+    "ubuntu": "Ubuntu",
+    "centos": "Centos"
+  }
+}

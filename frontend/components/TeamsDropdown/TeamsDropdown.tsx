@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import Select, {
   components,
   DropdownIndicatorProps,
@@ -88,6 +89,7 @@ const TeamsDropdown = ({
   onClose,
   asFormField = false,
 }: ITeamsDropdownProps): JSX.Element => {
+  const { t } = useTranslation();
   const teamOptions: INumberDropdownOption[] = useMemo(
     () =>
       generateDropdownOptions(
@@ -282,7 +284,7 @@ const TeamsDropdown = ({
     <div className={dropdownWrapperClasses}>
       <Select<INumberDropdownOption, false>
         options={teamOptions}
-        placeholder="All teams"
+        placeholder={t("common:filters.allTeams")}
         onChange={(newValue) => {
           if (newValue) {
             onChange(newValue.value);
@@ -291,7 +293,7 @@ const TeamsDropdown = ({
         }}
         isDisabled={isDisabled}
         isSearchable
-        noOptionsMessage={() => "No matching teams"}
+        noOptionsMessage={() => t("common:labels.noResults")}
         styles={customStyles}
         components={{
           DropdownIndicator: CustomDropdownIndicator,

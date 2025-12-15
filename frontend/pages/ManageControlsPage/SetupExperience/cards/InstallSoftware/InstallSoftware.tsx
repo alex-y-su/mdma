@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { AxiosError } from "axios";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
@@ -63,6 +64,7 @@ const InstallSoftware = ({
   router,
   urlPlatformParam,
 }: ISetupExperienceCardProps) => {
+  const { t } = useTranslation("settings");
   const isValidPlatform = isSetupExperiencePlatform(urlPlatformParam);
 
   // all uses of selectedPlatform are gated by above boolean
@@ -173,9 +175,9 @@ const InstallSoftware = ({
       if (turnOnMdm) {
         return (
           <GenericMsgWithNavButton
-            header="Additional configuration required"
-            info="To customize, first turn on automatic enrollment."
-            buttonText="Turn on"
+            header={t("controls.setupExperience.installSoftware.noSoftware")}
+            info={t("controls.setupExperience.installSoftware.addDescription")}
+            buttonText={t("controls.setupExperience.installSoftware.addSoftware")}
             path={PATHS.ADMIN_INTEGRATIONS_MDM}
             router={router}
           />
@@ -205,12 +207,12 @@ const InstallSoftware = ({
   return (
     <section className={baseClass}>
       <SectionHeader
-        title="Install software"
+        title={t("controls.setupExperience.installSoftware.title")}
         details={
           <CustomLink
             newTab
             url={`${LEARN_MORE_ABOUT_BASE_LINK}/setup-experience/install-software`}
-            text="Preview end user experience"
+            text={t("controls.setupExperience.installSoftware.description")}
           />
         }
       />

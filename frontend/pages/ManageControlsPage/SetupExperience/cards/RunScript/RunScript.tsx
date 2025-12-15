@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { AxiosError } from "axios";
 
@@ -32,6 +33,7 @@ import getManualAgentInstallSetting from "../../helpers";
 const baseClass = "run-script";
 
 const RunScript = ({ currentTeamId, router }: ISetupExperienceCardProps) => {
+  const { t } = useTranslation("settings");
   const [showDeleteScriptModal, setShowDeleteScriptModal] = useState(false);
 
   const {
@@ -93,10 +95,10 @@ const RunScript = ({ currentTeamId, router }: ISetupExperienceCardProps) => {
     ) {
       return (
         <GenericMsgWithNavButton
-          header="Additional configuration required"
-          info="Supported on macOS. To customize, first turn on automatic enrollment."
+          header={t("controls.setupExperience.runScript.noScript")}
+          info={t("controls.setupExperience.runScript.uploadDescription")}
           path={PATHS.ADMIN_INTEGRATIONS_MDM}
-          buttonText="Turn on"
+          buttonText={t("controls.setupExperience.runScript.uploadScript")}
           router={router}
         />
       );
@@ -110,8 +112,7 @@ const RunScript = ({ currentTeamId, router }: ISetupExperienceCardProps) => {
       <SetupExperienceContentContainer>
         <div className={`${baseClass}__description-container`}>
           <p className={`${baseClass}__description`}>
-            Upload a script to run on macOS hosts that automatically enroll to
-            Fleet.
+            {t("controls.setupExperience.runScript.uploadDescription")}
           </p>
           {!script ? (
             <SetupExperienceScriptUploader
@@ -122,7 +123,7 @@ const RunScript = ({ currentTeamId, router }: ISetupExperienceCardProps) => {
           ) : (
             <>
               <p className={`${baseClass}__run-message`}>
-                Script will run during setup:
+                {t("controls.setupExperience.runScript.description")}
               </p>
               <SetupExperienceScriptCard
                 script={script}
@@ -146,12 +147,12 @@ const RunScript = ({ currentTeamId, router }: ISetupExperienceCardProps) => {
   return (
     <section className={baseClass}>
       <SectionHeader
-        title="Run script"
+        title={t("controls.setupExperience.runScript.title")}
         details={
           <CustomLink
             newTab
             url={`${LEARN_MORE_ABOUT_BASE_LINK}/setup-experience/run-script`}
-            text="Preview end user experience"
+            text={t("controls.setupExperience.runScript.description")}
           />
         }
       />

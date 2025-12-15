@@ -9,6 +9,7 @@ import React, {
 import { InjectedRouter } from "react-router";
 import { Location } from "history";
 import { useQuery } from "react-query";
+import { useTranslation } from "react-i18next";
 
 import { size } from "lodash";
 import classnames from "classnames";
@@ -136,6 +137,7 @@ const EditQueryForm = ({
   showConfirmSaveChangesModal,
   setShowConfirmSaveChangesModal,
 }: IEditQueryFormProps): JSX.Element => {
+  const { t } = useTranslation("queries");
   // Note: The QueryContext values should always be used for any mutable query data such as query name
   // The storedQuery prop should only be used to access immutable metadata such as author id
   const {
@@ -374,7 +376,7 @@ const EditQueryForm = ({
     if (savedQueryMode && !lastEditedQueryName) {
       return setErrors({
         ...errors,
-        name: "Query name must be present",
+        name: t("modals.saveNew.nameRequired"),
       });
     }
 
@@ -398,7 +400,7 @@ const EditQueryForm = ({
   const renderAuthor = (): JSX.Element | null => {
     return storedQuery ? (
       <DataSet
-        title="Author"
+        title={t("columns.author")}
         value={
           <>
             <Avatar
@@ -479,7 +481,7 @@ const EditQueryForm = ({
               >
                 <AutoSizeInputField
                   name="query-name"
-                  placeholder="Add name"
+                  placeholder={t("modals.saveNew.nameField")}
                   value={lastEditedQueryName}
                   inputClassName={`${baseClass}__query-name ${
                     !lastEditedQueryName ? "no-value" : ""
@@ -507,7 +509,7 @@ const EditQueryForm = ({
       );
     }
 
-    return <h1 className={`${baseClass}__query-name no-hover`}>New query</h1>;
+    return <h1 className={`${baseClass}__query-name no-hover`}>{t("create.title")}</h1>;
   };
 
   const editDescription = () => {
@@ -535,7 +537,7 @@ const EditQueryForm = ({
               >
                 <AutoSizeInputField
                   name="query-description"
-                  placeholder="Add description"
+                  placeholder={t("modals.saveNew.descriptionField")}
                   value={lastEditedQueryDescription}
                   maxLength={250}
                   inputClassName={`${baseClass}__query-description ${
@@ -578,8 +580,8 @@ const EditQueryForm = ({
         <RevealButton
           isShowing={showQueryEditor}
           className={baseClass}
-          hideText="Hide SQL"
-          showText="Show SQL"
+          hideText={t("details.sql")}
+          showText={t("details.showQuery")}
           onClick={() => setShowQueryEditor(!showQueryEditor)}
         />
       )}
@@ -587,7 +589,7 @@ const EditQueryForm = ({
         <SQLEditor
           value={lastEditedQueryBody}
           name="query editor"
-          label="Query"
+          label={t("create.sql")}
           wrapperClassName={`${baseClass}__text-editor-wrapper`}
           readOnly={
             (!isObserverPlus && !isAnyTeamObserverPlus) || savedQueryMode
@@ -605,7 +607,7 @@ const EditQueryForm = ({
         <div className={`button-wrap ${baseClass}__button-wrap--new-query`}>
           <TooltipWrapper
             className="live-query-button-tooltip"
-            tipContent="Live queries are disabled in organization settings"
+            tipContent={t("details.liveQueryDisabled")}
             disableTooltip={!disabledLiveQuery}
             position="top"
             showArrow
@@ -623,7 +625,7 @@ const EditQueryForm = ({
               }}
               disabled={disabledLiveQuery}
             >
-              Live query <Icon name="run" />
+              {t("run.liveQuery")} <Icon name="run" />
             </Button>
           </TooltipWrapper>
         </div>
@@ -700,7 +702,7 @@ const EditQueryForm = ({
           <SQLEditor
             value={lastEditedQueryBody}
             error={errors.query}
-            label="Query"
+            label={t("create.sql")}
             labelActionComponent={renderLabelComponent()}
             name="query editor"
             onLoad={onLoad}
@@ -726,11 +728,11 @@ const EditQueryForm = ({
                 searchable={false}
                 options={frequencyOptions}
                 onChange={onChangeSelectFrequency}
-                placeholder="Every day"
+                placeholder={t("schedule.daily")}
                 value={lastEditedQueryFrequency}
-                label="Interval"
+                label={t("modals.saveNew.intervalLabel")}
                 wrapperClassName={`${baseClass}__form-field form-field--frequency`}
-                helpText="This is how often your query collects data."
+                helpText={t("modals.saveNew.intervalHelpText")}
               />
               <Slider
                 onChange={() =>
@@ -741,15 +743,10 @@ const EditQueryForm = ({
                 value={lastEditedQueryAutomationsEnabled}
                 activeText={
                   <>
-                    Automations on
+                    {t("modals.saveNew.automationsOn")}
                     {lastEditedQueryFrequency === 0 && (
                       <TooltipWrapper
-                        tipContent={
-                          <>
-                            Automations and reporting will be paused <br />
-                            for this query until an interval is set.
-                          </>
-                        }
+                        tipContent={t("modals.saveNew.automationsPausedTooltip")}
                         position="right"
                         tipOffset={9}
                         showArrow
@@ -760,12 +757,10 @@ const EditQueryForm = ({
                     )}
                   </>
                 }
-                inactiveText="Automations off"
+                inactiveText={t("modals.saveNew.automationsOff")}
                 helpText={
                   <>
-                    Historical results will
-                    {!lastEditedQueryAutomationsEnabled ? " not " : " "}be sent
-                    to your log destination:{" "}
+                    {t("modals.saveNew.automationsHelpText", { not: !lastEditedQueryAutomationsEnabled ? "not " : "" })}
                     <b>
                       <LogDestinationIndicator
                         logDestination={config?.logging.result.plugin || ""}
@@ -787,9 +782,9 @@ const EditQueryForm = ({
                 onChange={(value: boolean) =>
                   setLastEditedQueryObserverCanRun(value)
                 }
-                helpText="Users with the observer role will be able to run this query on hosts where they have access."
+                helpText={t("modals.saveNew.observersCanRunHelpText")}
               >
-                Observers can run
+                {t("modals.saveNew.observersCanRun")}
               </Checkbox>
               {savedQueryMode && platformSelector.render()}
               {isPremiumTier && (
@@ -802,8 +797,7 @@ const EditQueryForm = ({
                   labels={labels || []}
                   customHelpText={
                     <span className="form-field__help-text">
-                      Query will target hosts that <b>have any</b> of these
-                      labels:
+                      {t("modals.saveNew.targetHelpText")}
                     </span>
                   }
                   suppressTitle
@@ -812,8 +806,8 @@ const EditQueryForm = ({
               <RevealButton
                 isShowing={showAdvancedOptions}
                 className="advanced-options-toggle"
-                hideText="Hide advanced options"
-                showText="Show advanced options"
+                hideText={t("modals.saveNew.hideAdvanced")}
+                showText={t("modals.saveNew.showAdvanced")}
                 caretPosition="after"
                 onClick={toggleAdvancedOptions}
               />
@@ -822,17 +816,17 @@ const EditQueryForm = ({
                   <Dropdown
                     options={MIN_OSQUERY_VERSION_OPTIONS}
                     onChange={onChangeMinOsqueryVersionOptions}
-                    placeholder="Select"
+                    placeholder={t("modals.saveNew.selectPlaceholder")}
                     value={lastEditedQueryMinOsqueryVersion}
-                    label="Minimum osquery version"
+                    label={t("modals.saveNew.minOsqueryVersion")}
                     wrapperClassName={`${baseClass}__form-field ${baseClass}__form-field--osquer-vers`}
                   />
                   <Dropdown
                     options={LOGGING_TYPE_OPTIONS}
                     onChange={onChangeSelectLoggingType}
-                    placeholder="Select"
+                    placeholder={t("modals.saveNew.selectPlaceholder")}
                     value={lastEditedQueryLoggingType}
-                    label="Logging"
+                    label={t("modals.saveNew.logging")}
                     wrapperClassName={`${baseClass}__form-field ${baseClass}__form-field--logging`}
                   />
                   {queryReportsDisabled !== undefined && (
@@ -859,7 +853,7 @@ const EditQueryForm = ({
                         onClick={toggleSaveAsNewQueryModal}
                         disabled={disableSaveFormErrors || disableChildren}
                       >
-                        Save as new
+                        {t("modals.saveAsNewQuery.title")}
                       </Button>
                     )}
                   />
@@ -878,7 +872,7 @@ const EditQueryForm = ({
                         disabled={disableSaveFormErrors || disableChildren}
                         isLoading={isQueryUpdating}
                       >
-                        Save
+                        {t("modals.saveNew.saveButton")}
                       </Button>
                     )}
                   />
@@ -887,7 +881,7 @@ const EditQueryForm = ({
             )}
             <TooltipWrapper
               className="live-query-button-tooltip"
-              tipContent="Live queries are disabled in organization settings"
+              tipContent={t("details.liveQueryDisabled")}
               disableTooltip={!disabledLiveQuery}
               position="top"
               showArrow
@@ -918,7 +912,7 @@ const EditQueryForm = ({
                 }}
                 disabled={disabledLiveQuery}
               >
-                Live query <Icon name="run" />
+                {t("run.liveQuery")} <Icon name="run" />
               </Button>
             </TooltipWrapper>
           </div>

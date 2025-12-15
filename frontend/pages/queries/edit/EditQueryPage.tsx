@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useQuery } from "react-query";
 import { useErrorHandler } from "react-error-boundary";
+import { useTranslation } from "react-i18next";
 import { InjectedRouter, Params } from "react-router/lib/Router";
 import { Location } from "history";
 import PATHS from "router/paths";
@@ -52,6 +53,7 @@ const EditQueryPage = ({
   params: { id: paramsQueryId },
   location,
 }: IEditQueryPageProps): JSX.Element => {
+  const { t } = useTranslation("queries");
   const queryId = paramsQueryId ? parseInt(paramsQueryId, 10) : null;
   const hostId = location.query.host_id
     ? parseInt(location.query.host_id as string, 10)
@@ -268,21 +270,21 @@ const EditQueryPage = ({
             team_id: query.team_id,
           })
         );
-        renderFlash("success", "Query created!");
+        renderFlash("success", t("editPage.queryCreated"));
         setBackendValidators({});
       } catch (createError: any) {
         if (getErrorReason(createError).includes("already exists")) {
           const teamErrorText =
             teamNameForQuery && apiTeamIdForQuery !== 0
-              ? `the ${teamNameForQuery} team`
-              : "all teams";
+              ? t("editPage.teamText", { teamName: teamNameForQuery })
+              : t("editPage.allTeams");
           setBackendValidators({
-            name: `A query with that name already exists for ${teamErrorText}.`,
+            name: t("editPage.duplicateName", { team: teamErrorText }),
           });
         } else {
           renderFlash(
             "error",
-            "Something went wrong creating your query. Please try again."
+            t("editPage.createError")
           );
           setBackendValidators({});
         }
@@ -314,19 +316,19 @@ const EditQueryPage = ({
 
     try {
       await queryAPI.update(queryId, updatedQuery);
-      renderFlash("success", "Query updated!");
+      renderFlash("success", t("editPage.queryUpdated"));
       refetchStoredQuery(); // Required to compare recently saved query to a subsequent save to the query
     } catch (updateError: any) {
       console.error(updateError);
       const reason = getErrorReason(updateError);
       if (reason.includes("Duplicate")) {
-        renderFlash("error", "A query with this name already exists.");
+        renderFlash("error", t("editPage.duplicateError"));
       } else if (reason.includes(INVALID_PLATFORMS_REASON)) {
         renderFlash("error", INVALID_PLATFORMS_FLASH_MESSAGE);
       } else {
         renderFlash(
           "error",
-          "Something went wrong updating your query. Please try again."
+          t("editPage.updateError")
         );
       }
     }
@@ -356,11 +358,10 @@ const EditQueryPage = ({
 
     return (
       <InfoBanner color="yellow">
-        Fleet is unable to run a live query. Refresh the page or log in again.
-        If this keeps happening please{" "}
+        {t("editPage.liveQueryUnavailable")}{" "}
         <CustomLink
           url="https://github.com/fleetdm/fleet/issues/new/choose"
-          text="file an issue"
+          text={t("editPage.fileIssue")}
           newTab
           variant="banner-link"
         />
@@ -395,7 +396,7 @@ const EditQueryPage = ({
           <>
             <div className={`${baseClass}__header-links`}>
               <BackButton
-                text={queryId ? "Back to report" : "Back to queries"}
+                text={queryId ? t("editPage.backToReport") : t("editPage.backToQueries")}
                 path={backToQueriesPath()}
               />
             </div>

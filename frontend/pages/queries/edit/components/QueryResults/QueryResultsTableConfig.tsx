@@ -13,6 +13,7 @@ import {
 } from "utilities/helpers";
 import PATHS from "router/paths";
 import LinkCell from "components/TableContainer/DataTable/LinkCell";
+import i18n from "i18n";
 
 const _unshiftHostname = <T extends object>(columns: Column<T>[]) => {
   const newHeaders = [...columns];
@@ -23,7 +24,7 @@ const _unshiftHostname = <T extends object>(columns: Column<T>[]) => {
     // remove hostname header from headers
     const [displayNameHeader] = newHeaders.splice(displayNameIndex, 1);
     // reformat title and insert at start of headers array
-    newHeaders.unshift({ ...displayNameHeader, id: "Host" });
+    newHeaders.unshift({ ...displayNameHeader, id: i18n.t("queries:report.tableHost") });
   }
   // TODO: Remove after v5 when host_hostname is removed rom API response.
   const hostNameIndex = columns.findIndex((h) => h.id === "host_hostname");
@@ -58,7 +59,7 @@ const generateColumnConfigsFromRows = <T extends Record<keyof T, unknown>>(
         // generic for convenience, can assume keyof T is a string
         accessor: (data) => data[colName as keyof T],
         Cell: (cellProps: CellProps<T>) => {
-          if (cellProps?.cell?.column?.id === "Host") {
+          if (cellProps?.cell?.column?.id === i18n.t("queries:report.tableHost")) {
             // @ts-ignore
             const hostID = cellProps.row.original.host_id;
             return (

@@ -1,6 +1,7 @@
 import React, { useCallback, useContext, useState } from "react";
 import { InjectedRouter } from "react-router";
 import { Location } from "history";
+import { useTranslation } from "react-i18next";
 import { AppContext } from "context/app";
 
 import PATHS from "router/paths";
@@ -48,11 +49,11 @@ interface ISANQFormErrors {
   team?: string;
 }
 
-const validateFormData = (formData: ISANQFormData): ISANQFormErrors => {
+const validateFormData = (formData: ISANQFormData, t: any): ISANQFormErrors => {
   const errors: ISANQFormErrors = {};
 
   if (!formData.queryName || formData.queryName.trim() === "") {
-    errors.queryName = "Name must be present";
+    errors.queryName = t("modals.saveAsNewQuery.nameRequired");
   }
 
   return errors;
@@ -64,6 +65,7 @@ const SaveAsNewQueryModal = ({
   initialQueryData,
   onExit,
 }: ISaveAsNewQueryModal) => {
+  const { t } = useTranslation("queries");
   const { renderFlash } = useContext(NotificationContext);
   const { isPremiumTier } = useContext(AppContext);
 
@@ -102,7 +104,7 @@ const SaveAsNewQueryModal = ({
       const newFormData = { ...formData, [name]: value };
       setFormData(newFormData);
 
-      const newErrors = validateFormData(newFormData);
+      const newErrors = validateFormData(newFormData, t);
       const errsToSet: ISANQFormErrors = {};
       Object.keys(formErrors).forEach((k) => {
         if (k in newErrors) {
@@ -113,11 +115,11 @@ const SaveAsNewQueryModal = ({
 
       setFormErrors(errsToSet);
     },
-    [formData, formErrors]
+    [formData, formErrors, t]
   );
 
   const onInputBlur = () => {
-    setFormErrors(validateFormData(formData));
+    setFormErrors(validateFormData(formData, t));
   };
 
   const onTeamChange = useCallback(
@@ -138,7 +140,7 @@ const SaveAsNewQueryModal = ({
   const handleSave = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    const errors = validateFormData(formData);
+    const errors = validateFormData(formData, t);
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
       return;
@@ -157,23 +159,23 @@ const SaveAsNewQueryModal = ({
     try {
       const { query: newQuery } = await queryAPI.create(createBody);
       setIsSaving(false);
-      renderFlash("success", `Successfully added query ${newQuery.name}.`);
+      renderFlash("success", t("modals.saveAsNewQuery.success", { name: newQuery.name }));
       router.push(
         getPathWithQueryParams(PATHS.QUERY_DETAILS(newQuery.id), {
           team_id: newQuery.team_id,
         })
       );
     } catch (createError: unknown) {
-      let errFlash = "Could not create query. Please try again.";
+      let errFlash = t("modals.saveAsNewQuery.error");
       const reason = getErrorReason(createError);
       if (reason.includes("already exists")) {
         let teamText;
         if (teamId !== APP_CONTEXT_ALL_TEAMS_ID) {
-          teamText = teamName ? `the ${teamName} team` : "this team";
+          teamText = teamName ? t("editPage.teamText", { teamName }) : "this team";
         } else {
-          teamText = "all teams";
+          teamText = t("editPage.allTeams");
         }
-        errFlash = `A query called "${queryName}" already exists for ${teamText}.`;
+        errFlash = t("modals.saveAsNewQuery.duplicateError", { name: queryName, team: teamText });
       } else if (reason.includes(INVALID_PLATFORMS_REASON)) {
         errFlash = INVALID_PLATFORMS_FLASH_MESSAGE;
       }
@@ -183,7 +185,7 @@ const SaveAsNewQueryModal = ({
   };
 
   return (
-    <Modal title="Save as new" onExit={onExit}>
+    <Modal title={t("modals.saveAsNewQuery.title")} onExit={onExit}>
       <form onSubmit={handleSave} className={baseClass}>
         <InputField
           name="queryName"
@@ -192,14 +194,14 @@ const SaveAsNewQueryModal = ({
           value={formData.queryName}
           error={formErrors.queryName}
           inputClassName={`${baseClass}__name`}
-          label="Name"
+          label={t("modals.saveAsNewQuery.nameLabel")}
           autofocus
           ignore1password
           parseTarget
         />
         {isPremiumTier && (userTeams?.length || 0) > 1 && (
           <div className="form-field">
-            <div className="form-field__label">Team</div>
+            <div className="form-field__label">{t("modals.saveAsNewQuery.teamLabel")}</div>
             <TeamsDropdown
               asFormField
               currentUserTeams={userTeams || []}
@@ -216,10 +218,10 @@ const SaveAsNewQueryModal = ({
             // empty SQL error handled by parent
             disabled={Object.keys(formErrors).length > 0 || isSaving}
           >
-            Save
+            {t("modals.saveAsNewQuery.saveButton")}
           </Button>
           <Button onClick={onExit} variant="inverse">
-            Cancel
+            {t("modals.saveAsNewQuery.cancelButton")}
           </Button>
         </div>
       </form>

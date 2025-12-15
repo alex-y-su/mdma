@@ -33,7 +33,19 @@
     "automations": "Automations",
     "report": "Report",
     "lastRun": "Last run",
-    "totalResults": "Total results"
+    "totalResults": "Total results",
+    "backButton": "Back to queries",
+    "showQuery": "Show query",
+    "liveQuery": "Live query",
+    "liveQueryDisabled": "Live queries are disabled in organization settings",
+    "editQuery": "Edit query",
+    "automationsLabel": "Automations:",
+    "automationsTooltip": "Query automations let you send data to your log destination on a schedule. When automations are on, data is sent according to a query's interval.",
+    "logDestination": "Log destination:",
+    "getHelp": "Get help",
+    "reportClipped": "Report clipped.",
+    "reportClippedMessage": "A sample of this query's results is included below.",
+    "reportClippedAutomation": "You can still use query automations to complete this report in your log destination."
   },
   "create": {
     "title": "Create query",
@@ -99,7 +111,8 @@
     "webhook": "Webhook",
     "logging": "Logging",
     "enabled": "Enabled",
-    "disabled": "Disabled"
+    "disabled": "Disabled",
+    "pausedMessage": "will resume for this query when an interval is set."
   },
   "modals": {
     "delete": {
@@ -114,7 +127,24 @@
       "nameLabel": "Query name",
       "descriptionLabel": "Description",
       "saveButton": "Save",
-      "cancelButton": "Cancel"
+      "cancelButton": "Cancel",
+      "nameRequired": "Query name must be present",
+      "nameField": "Name",
+      "descriptionField": "Description",
+      "descriptionHelpText": "What information does your query reveal? (optional)",
+      "intervalLabel": "Interval",
+      "intervalHelpText": "This is how often your query collects data.",
+      "observersCanRun": "Observers can run",
+      "observersCanRunHelpText": "Users with the Observer role will be able to run this query as a live query.",
+      "automationsOn": "Automations on",
+      "automationsOff": "Automations off",
+      "automationsPausedTooltip": "Automations and reporting will be paused for this query until an interval is set.",
+      "automationsHelpText": "Historical results will {{not}}be sent to your log destination: ",
+      "targetHelpText": "Query will target hosts that have any of these labels:",
+      "showAdvanced": "Show advanced options",
+      "hideAdvanced": "Hide advanced options",
+      "minOsqueryVersion": "Minimum osquery version",
+      "logging": "Logging"
     },
     "saveAsNew": {
       "title": "Save as new query",
@@ -124,9 +154,40 @@
       "title": "Save changes",
       "message": "Do you want to save your changes to this query?"
     },
+    "confirmSaveChanges": {
+      "title": "Save changes?",
+      "sqlWarning": "Changing this query's SQL will delete its previous results, since the existing report does not reflect the updated query.",
+      "warning": "The changes you are making to this query will delete its previous results.",
+      "cannotUndo": "You cannot undo this action.",
+      "saveButton": "Save",
+      "cancelButton": "Cancel"
+    },
+    "saveAsNewQuery": {
+      "title": "Save as new",
+      "nameLabel": "Name",
+      "teamLabel": "Team",
+      "nameRequired": "Name must be present",
+      "saveButton": "Save",
+      "cancelButton": "Cancel",
+      "success": "Successfully added query {{name}}.",
+      "duplicateError": "A query called \"{{name}}\" already exists for {{team}}.",
+      "error": "Could not create query. Please try again."
+    },
     "previewData": {
       "title": "Preview data",
-      "noData": "No data available"
+      "noData": "No data available",
+      "description": "The data sent to your configured log destination will look similar to the following JSON:",
+      "snapshotTooltip": "The \"snapshot\" key includes the query's results. These will be unique to your query.",
+      "done": "Done"
+    },
+    "manageAutomations": {
+      "description": "Query automations let you send data gathered from macOS, Windows, and Linux hosts to a log destination. Data is sent according to a query's interval.",
+      "selectLabel": "Choose which queries will send data:",
+      "noQueries": "You have no queries.",
+      "addQueryPrompt": "Add a query to turn on automations.",
+      "logDestination": "Log destination:",
+      "configureHelpText": "Users with the admin role can",
+      "configureLinkText": "configure a different log destination"
     }
   },
   "empty": {
@@ -136,11 +197,72 @@
     "noResults": "No results",
     "noResultsDescription": "This query returned no results"
   },
+  "noResults": {
+    "collectingHeader": "Collecting results...",
+    "collectingMessage": "Fleet is collecting query results. Check back in about {{time}}.",
+    "nothingToReport": "Nothing to report",
+    "nothingToReportYet": "Nothing to report yet",
+    "preventsSaving": "The following setting prevents saving this query's results in Fleet:",
+    "globallyDisabled": "Query reports are globally disabled in organization settings.",
+    "discardDataEnabled": "This query has Discard data enabled.",
+    "loggingNotSnapshot": "The logging setting for this query is not Snapshot.",
+    "resultsNotReported": "Results from this query are",
+    "notReportedInFleet": "not reported in Fleet",
+    "noSchedule": "This query does not collect data on a schedule. Add an interval or run this as a live query to see results.",
+    "noDataYet": "This query has returned no data so far. If you're expecting to see results, try running a live query to get diagnostics."
+  },
   "report": {
     "title": "Query report",
     "lastUpdated": "Last updated",
     "hostsReported": "Hosts reported",
-    "exportCsv": "Export CSV"
+    "exportCsv": "Export CSV",
+    "exportResults": "Export results",
+    "results": "results",
+    "clippedTooltip": "Fleet has retained a sample of early results for reference. Reporting is paused until existing data is deleted. You can reset this report by updating the query's SQL, or by temporarily enabling the discard data setting and disabling it again.",
+    "emptyHeader": "Nothing to report yet",
+    "emptyInfo": "This query has returned no data so far.",
+    "tableHost": "Host",
+    "tableLastFetched": "Last fetched"
+  },
+  "editPage": {
+    "backToReport": "Back to report",
+    "backToQueries": "Back to queries",
+    "queryCreated": "Query created!",
+    "queryUpdated": "Query updated!",
+    "duplicateName": "A query with that name already exists for {{team}}.",
+    "teamText": "the {{teamName}} team",
+    "allTeams": "all teams",
+    "createError": "Something went wrong creating your query. Please try again.",
+    "duplicateError": "A query with this name already exists.",
+    "updateError": "Something went wrong updating your query. Please try again.",
+    "liveQueryUnavailable": "Fleet is unable to run a live query. Refresh the page or log in again. If this keeps happening please",
+    "fileIssue": "file an issue"
+  },
+  "queryResults": {
+    "showQuery": "Show query",
+    "exportResults": "Export results",
+    "exportErrors": "Export errors",
+    "resultsTab": "Results",
+    "errorsTab": "Errors",
+    "noResults": "Your live query returned no results. Expecting to see results? Check to see if the host{{plural}} you targeted reported \"Online\" or check out the \"Errors\" table.",
+    "resultsClipped": "Results clipped.",
+    "resultsClippedMessage": "A sample of this query's results and errors is included below. Please target fewer hosts at once to build a full set of results."
+  },
+  "discardData": {
+    "label": "Discard data",
+    "helpText": "The most recent results for each host will not be available in Fleet.",
+    "globallyDisabledText": "This setting is ignored because query reports in Fleet have been",
+    "globallyDisabledLink": "globally disabled.",
+    "globallyDisabledTooltip": "A Fleet administrator can enable query reports under Organization settings > Advanced options > Disable query reports.",
+    "editAnyway": "Edit anyway",
+    "differentialBanner": "The Discard data setting is ignored when differential logging is enabled. This query's results will not be saved in Fleet."
+  },
+  "liveQuery": {
+    "runError": "Something went wrong running your query. Please try again.",
+    "noHostsTargeted": "Your target selections did not include any hosts. Please try again.",
+    "alreadyCreated": "A campaign with the provided query text has already been created",
+    "forbidden": "It seems you do not have the rights to run this query. If you believe this is in error, please contact your administrator.",
+    "genericError": "Something has gone wrong. Please try again."
   },
   "packs": {
     "title": "Packs",

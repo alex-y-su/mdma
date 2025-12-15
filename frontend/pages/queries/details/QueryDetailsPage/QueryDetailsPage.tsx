@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import { InjectedRouter, Params } from "react-router/lib/Router";
 import { useErrorHandler } from "react-error-boundary";
 import ReactTooltip from "react-tooltip";
+import { useTranslation } from "react-i18next";
 import { COLORS } from "styles/var/colors";
 
 import PATHS from "router/paths";
@@ -68,6 +69,7 @@ const QueryDetailsPage = ({
   params: { id: paramsQueryId },
   location,
 }: IQueryDetailsPageProps): JSX.Element => {
+  const { t } = useTranslation("queries");
   const queryId = parseInt(paramsQueryId, 10);
   if (isNaN(queryId)) {
     router.push(PATHS.MANAGE_QUERIES);
@@ -262,7 +264,7 @@ const QueryDetailsPage = ({
     return (
       <>
         <div className={`${baseClass}__header-links`}>
-          <BackButton text="Back to queries" path={backToQueriesPath()} />
+          <BackButton text={t("details.backButton")} path={backToQueriesPath()} />
         </div>
         {!isLoading && !isApiError && (
           <>
@@ -278,7 +280,7 @@ const QueryDetailsPage = ({
                   onClick={onShowQueryModal}
                   variant="inverse"
                 >
-                  Show query
+                  {t("details.showQuery")}
                 </Button>
                 {canLiveQuery && (
                   <div
@@ -307,7 +309,7 @@ const QueryDetailsPage = ({
                         }}
                         disabled={isLiveQueryDisabled}
                       >
-                        Live query <Icon name="run" />
+                        {t("details.liveQuery")} <Icon name="run" />
                       </Button>
                     </div>
                     <ReactTooltip
@@ -318,7 +320,7 @@ const QueryDetailsPage = ({
                       id="live-query-button"
                       data-html
                     >
-                      Live queries are disabled in organization settings
+                      {t("details.liveQueryDisabled")}
                     </ReactTooltip>
                   </div>
                 )}
@@ -334,7 +336,7 @@ const QueryDetailsPage = ({
                     }}
                     className={`${baseClass}__manage-automations button`}
                   >
-                    Edit query
+                    {t("details.editQuery")}
                   </Button>
                 )}
               </div>
@@ -348,15 +350,11 @@ const QueryDetailsPage = ({
                 <TooltipWrapper
                   tipContent={
                     <>
-                      Query automations let you send data to your log <br />
-                      destination on a schedule. When automations are <b>
-                        on
-                      </b>, <br />
-                      data is sent according to a query&apos;s interval.
+                      {t("details.automationsTooltip")}
                     </>
                   }
                 >
-                  Automations:
+                  {t("details.automationsLabel")}
                 </TooltipWrapper>
                 <QueryAutomationsStatusIndicator
                   automationsEnabled={storedQuery?.automations_enabled || false}
@@ -364,7 +362,7 @@ const QueryDetailsPage = ({
                 />
               </div>
               <div className={`${baseClass}__log-destination`}>
-                <strong>Log destination:</strong>{" "}
+                <strong>{t("details.logDestination")}</strong>{" "}
                 <LogDestinationIndicator
                   logDestination={config?.logging.result.plugin || ""}
                   filesystemDestination={
@@ -383,18 +381,17 @@ const QueryDetailsPage = ({
   const renderClippedBanner = () => (
     <InfoBanner
       color="yellow"
-      cta={<CustomLink url={SUPPORT_LINK} text="Get help" newTab />}
+      cta={<CustomLink url={SUPPORT_LINK} text={t("details.getHelp")} newTab />}
     >
       <div>
-        <b>Report clipped.</b> A sample of this query&apos;s results is included
-        below.
+        <b>{t("details.reportClipped")}</b> {t("details.reportClippedMessage")}
         {
           // Exclude below message for global and team observers/observer+s
           !(
             (currentUser && isGlobalObserver(currentUser)) ||
             isTeamObserver(currentUser, currentTeamId ?? null)
           ) &&
-            " You can still use query automations to complete this report in your log destination."
+            " " + t("details.reportClippedAutomation")
         }
       </div>
     </InfoBanner>

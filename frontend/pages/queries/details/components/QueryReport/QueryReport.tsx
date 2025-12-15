@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 
 import { Row, Column } from "react-table";
 import FileSaver from "file-saver";
@@ -46,6 +47,7 @@ const QueryReport = ({
   queryReport,
   isClipped,
 }: IQueryReportProps): JSX.Element => {
+  const { t } = useTranslation("queries");
   const { lastEditedQueryName } = useContext(QueryContext);
 
   const [filteredResults, setFilteredResults] = useState<Row[]>(
@@ -89,7 +91,7 @@ const QueryReport = ({
           variant="inverse"
         >
           <>
-            Export results
+            {t("report.exportResults")}
             <Icon name="download" color="ui-fleet-black-75" />
           </>
         </Button>
@@ -106,22 +108,17 @@ const QueryReport = ({
           <TooltipWrapper
             tipContent={
               <>
-                Fleet has retained a sample of early results for reference.
-                Reporting is paused until existing data is deleted. <br />
-                <br />
-                You can reset this report by updating the query&apos;s SQL, or
-                by temporarily enabling the <b>discard data</b> setting and
-                disabling it again.
+                {t("report.clippedTooltip")}
               </>
             }
           >
-            {generateResultsCountText("results", count)}
+            {generateResultsCountText(t("report.results"), count)}
           </TooltipWrapper>
         </>
       );
     }
 
-    return <TableCount name="results" count={count} />;
+    return <TableCount name={t("report.results")} count={count} />;
   }, [filteredResults.length, isClipped]);
 
   const renderTable = () => {
@@ -136,8 +133,8 @@ const QueryReport = ({
               <EmptyTable
                 className={baseClass}
                 graphicName="empty-software"
-                header="Nothing to report yet"
-                info="This query has returned no data so far."
+                header={t("report.emptyHeader")}
+                info={t("report.emptyInfo")}
               />
             );
           }}
@@ -148,7 +145,7 @@ const QueryReport = ({
           isMultiColumnFilter
           showMarkAllPages={false}
           isAllPagesSelected={false}
-          resultsTitle="results"
+          resultsTitle={t("report.results")}
           customControl={() => renderTableButtons()}
           setExportRows={setFilteredResults}
           renderCount={renderResultsCount}

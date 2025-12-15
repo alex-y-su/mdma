@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 
@@ -6,11 +6,10 @@ import { ICON_MAP } from "components/icons";
 import Icon from "components/Icon/Icon";
 import TooltipWrapper from "components/TooltipWrapper";
 import Button from "components/buttons/Button";
-import InputField from "../InputField";
 
 const baseClass = "input-icon-field";
 
-class InputFieldWithIcon extends InputField {
+class InputFieldWithIcon extends Component {
   static propTypes = {
     autofocus: PropTypes.bool,
     error: PropTypes.string,
@@ -29,6 +28,36 @@ class InputFieldWithIcon extends InputField {
     inputOptions: PropTypes.object, // eslint-disable-line react/forbid-prop-types
     tooltip: PropTypes.string,
     ignore1Password: PropTypes.bool,
+    value: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.string,
+      PropTypes.number,
+    ]),
+  };
+
+  static defaultProps = {
+    autofocus: false,
+    type: "text",
+    value: "",
+  };
+
+  componentDidMount() {
+    const { autofocus } = this.props;
+
+    if (autofocus && this.input) {
+      this.input.focus();
+    }
+  }
+
+  onInputChange = (evt) => {
+    evt.preventDefault();
+
+    const { value } = evt.target;
+    const { onChange } = this.props;
+
+    if (onChange) {
+      onChange(value);
+    }
   };
 
   renderHeading = () => {

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useTranslation } from "react-i18next";
 
 import { AppContext } from "context/app";
 
@@ -72,6 +73,7 @@ const ManageQueryAutomationsModal = ({
   webhookDestination,
   filesystemDestination,
 }: IManageQueryAutomationsModalProps): JSX.Element => {
+  const { t } = useTranslation("queries");
   // TODO: Error handling, if any
   // const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
@@ -115,7 +117,7 @@ const ManageQueryAutomationsModal = ({
 
   return (
     <Modal
-      title="Manage automations"
+      title={t("automations.manage")}
       onExit={onCancel}
       className={baseClass}
       width="large"
@@ -159,12 +161,12 @@ const ManageQueryAutomationsModal = ({
           </div>
         ) : (
           <div className={`${baseClass}__no-queries`}>
-            <b>You have no queries.</b>
-            <p>Add a query to turn on automations.</p>
+            <b>{t("empty.title")}</b>
+            <p>{t("empty.addFirst")}</p>
           </div>
         )}
         <div className={`${baseClass}__log-destination form-field`}>
-          <div className="form-field__label">Log destination:</div>
+          <div className="form-field__label">{t("automations.logging")}:</div>
           <div className={`${baseClass}__selection`}>
             <LogDestinationIndicator
               logDestination={logDestination}
@@ -187,7 +189,7 @@ const ManageQueryAutomationsModal = ({
           onClick={togglePreviewDataModal}
           className={`${baseClass}__preview-data`}
         >
-          Preview data
+          {t("modals.previewData.title")}
         </Button>
         <div className="modal-cta-wrap">
           <GitOpsModeTooltipWrapper
@@ -200,12 +202,12 @@ const ManageQueryAutomationsModal = ({
                 isLoading={isUpdatingAutomations}
                 disabled={disableChildren}
               >
-                Save
+                {t("modals.saveNew.saveButton")}
               </Button>
             )}
           />
           <Button onClick={onCancel} variant="inverse">
-            Cancel
+            {t("modals.saveNew.cancelButton")}
           </Button>
         </div>
       </div>

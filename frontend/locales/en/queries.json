@@ -126,7 +126,8 @@
     },
     "previewData": {
       "title": "Preview data",
-      "noData": "No data available"
+      "noData": "No data available",
+      "done": "Done"
     }
   },
   "empty": {

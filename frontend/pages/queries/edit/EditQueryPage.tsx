@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useQuery } from "react-query";
 import { useErrorHandler } from "react-error-boundary";
+import { useTranslation } from "react-i18next";
 import { InjectedRouter, Params } from "react-router/lib/Router";
 import { Location } from "history";
 import PATHS from "router/paths";
@@ -52,6 +53,7 @@ const EditQueryPage = ({
   params: { id: paramsQueryId },
   location,
 }: IEditQueryPageProps): JSX.Element => {
+  const { t } = useTranslation("queries");
   const queryId = paramsQueryId ? parseInt(paramsQueryId, 10) : null;
   const hostId = location.query.host_id
     ? parseInt(location.query.host_id as string, 10)
@@ -268,7 +270,7 @@ const EditQueryPage = ({
             team_id: query.team_id,
           })
         );
-        renderFlash("success", "Query created!");
+        renderFlash("success", t("create.submitButton"));
         setBackendValidators({});
       } catch (createError: any) {
         if (getErrorReason(createError).includes("already exists")) {
@@ -314,7 +316,7 @@ const EditQueryPage = ({
 
     try {
       await queryAPI.update(queryId, updatedQuery);
-      renderFlash("success", "Query updated!");
+      renderFlash("success", t("edit.saveChanges"));
       refetchStoredQuery(); // Required to compare recently saved query to a subsequent save to the query
     } catch (updateError: any) {
       console.error(updateError);
@@ -395,7 +397,7 @@ const EditQueryPage = ({
           <>
             <div className={`${baseClass}__header-links`}>
               <BackButton
-                text={queryId ? "Back to report" : "Back to queries"}
+                text={queryId ? t("details.title") : t("manage.title")}
                 path={backToQueriesPath()}
               />
             </div>

@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 
 import { Row, Column } from "react-table";
 import FileSaver from "file-saver";
@@ -46,6 +47,7 @@ const QueryReport = ({
   queryReport,
   isClipped,
 }: IQueryReportProps): JSX.Element => {
+  const { t } = useTranslation("queries");
   const { lastEditedQueryName } = useContext(QueryContext);
 
   const [filteredResults, setFilteredResults] = useState<Row[]>(
@@ -89,7 +91,7 @@ const QueryReport = ({
           variant="inverse"
         >
           <>
-            Export results
+            {t("report.exportCsv")}
             <Icon name="download" color="ui-fleet-black-75" />
           </>
         </Button>
@@ -136,8 +138,8 @@ const QueryReport = ({
               <EmptyTable
                 className={baseClass}
                 graphicName="empty-software"
-                header="Nothing to report yet"
-                info="This query has returned no data so far."
+                header={t("empty.noResults")}
+                info={t("empty.noResultsDescription")}
               />
             );
           }}

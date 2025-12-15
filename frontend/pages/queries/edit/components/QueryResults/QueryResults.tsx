@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { Row, Column } from "react-table";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import classnames from "classnames";
@@ -43,10 +44,6 @@ interface IQueryResultsProps {
 
 const baseClass = "query-results";
 const CSV_TITLE = "New Query";
-const NAV_TITLES = {
-  RESULTS: "Results",
-  ERRORS: "Errors",
-};
 
 const QueryResults = ({
   campaign,
@@ -59,6 +56,7 @@ const QueryResults = ({
   goToQueryEditor,
   targetsTotalCount,
 }: IQueryResultsProps): JSX.Element => {
+  const { t } = useTranslation("queries");
   const { lastEditedQueryBody } = useContext(QueryContext);
 
   const { uiHostCounts, serverHostCounts, queryResults, errors } =
@@ -188,7 +186,7 @@ const QueryResults = ({
           variant="inverse"
         >
           <>
-            Show query <Icon name="eye" />
+            {t("details.sql")} <Icon name="eye" />
           </>
         </Button>
         <Button
@@ -201,7 +199,7 @@ const QueryResults = ({
           variant="inverse"
         >
           <>
-            Export {tableType}
+            {t("run.exportResults")} {tableType}
             <Icon name="download" />
           </>
         </Button>
@@ -293,10 +291,10 @@ const QueryResults = ({
       <TabNav>
         <Tabs selectedIndex={navTabIndex} onSelect={(i) => setNavTabIndex(i)}>
           <TabList>
-            <Tab className={firstTabClass}>{NAV_TITLES.RESULTS}</Tab>
+            <Tab className={firstTabClass}>{t("run.results")}</Tab>
             <Tab disabled={!errors?.length}>
               <TabText count={errors?.length} countVariant="alert">
-                {NAV_TITLES.ERRORS}
+                Errors
               </TabText>
             </Tab>
           </TabList>

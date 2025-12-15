@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import Button from "components/buttons/Button";
 import Modal from "components/Modal";
@@ -18,15 +19,17 @@ const ConfirmSaveChangesModal = ({
   onClose,
   showChangedSQLCopy = false,
 }: IConfirmSaveChangesModalProps) => {
+  const { t } = useTranslation("queries");
+
   const warningText = showChangedSQLCopy
     ? "Changing this query's SQL will delete its previous results, since the existing report does not reflect the updated query."
     : "The changes you are making to this query will delete its previous results.";
 
   return (
-    <Modal title="Save changes?" onExit={onClose}>
+    <Modal title={t("modals.confirmSave.title")} onExit={onClose}>
       <form className={`${baseClass}__form`}>
         <p>{warningText}</p>
-        <p>You cannot undo this action.</p>
+        <p>{t("modals.delete.warning")}</p>
         <div className="modal-cta-wrap">
           <Button
             type="button"
@@ -34,10 +37,10 @@ const ConfirmSaveChangesModal = ({
             className="save-loading"
             isLoading={isUpdating}
           >
-            Save
+            {t("modals.saveNew.saveButton")}
           </Button>
           <Button onClick={onClose} variant="inverse">
-            Cancel
+            {t("modals.saveNew.cancelButton")}
           </Button>
         </div>
       </form>

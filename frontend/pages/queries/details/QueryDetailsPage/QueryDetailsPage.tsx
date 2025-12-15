@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { useQuery } from "react-query";
 import { InjectedRouter, Params } from "react-router/lib/Router";
 import { useErrorHandler } from "react-error-boundary";
+import { useTranslation } from "react-i18next";
 import ReactTooltip from "react-tooltip";
 import { COLORS } from "styles/var/colors";
 
@@ -68,6 +69,7 @@ const QueryDetailsPage = ({
   params: { id: paramsQueryId },
   location,
 }: IQueryDetailsPageProps): JSX.Element => {
+  const { t } = useTranslation("queries");
   const queryId = parseInt(paramsQueryId, 10);
   if (isNaN(queryId)) {
     router.push(PATHS.MANAGE_QUERIES);
@@ -262,7 +264,7 @@ const QueryDetailsPage = ({
     return (
       <>
         <div className={`${baseClass}__header-links`}>
-          <BackButton text="Back to queries" path={backToQueriesPath()} />
+          <BackButton text={t("manage.title")} path={backToQueriesPath()} />
         </div>
         {!isLoading && !isApiError && (
           <>
@@ -278,7 +280,7 @@ const QueryDetailsPage = ({
                   onClick={onShowQueryModal}
                   variant="inverse"
                 >
-                  Show query
+                  {t("details.sql")}
                 </Button>
                 {canLiveQuery && (
                   <div
@@ -307,7 +309,7 @@ const QueryDetailsPage = ({
                         }}
                         disabled={isLiveQueryDisabled}
                       >
-                        Live query <Icon name="run" />
+                        {t("run.liveQuery")} <Icon name="run" />
                       </Button>
                     </div>
                     <ReactTooltip
@@ -334,7 +336,7 @@ const QueryDetailsPage = ({
                     }}
                     className={`${baseClass}__manage-automations button`}
                   >
-                    Edit query
+                    {t("manage.editQuery")}
                   </Button>
                 )}
               </div>
@@ -356,7 +358,7 @@ const QueryDetailsPage = ({
                     </>
                   }
                 >
-                  Automations:
+                  {t("automations.title")}:
                 </TooltipWrapper>
                 <QueryAutomationsStatusIndicator
                   automationsEnabled={storedQuery?.automations_enabled || false}

@@ -1,5 +1,6 @@
 // Used in AddPackageModal.tsx and EditSoftwareModal.tsx
 import React, { useContext, useState, useEffect, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import classnames from "classnames";
 
 import { AppContext } from "context/app";
@@ -111,6 +112,7 @@ const PackageForm = ({
   className,
   gitopsCompatible = false,
 }: IPackageFormProps) => {
+  const { t } = useTranslation("software");
   const { renderFlash } = useContext(NotificationContext);
   const gitOpsModeEnabled = useContext(AppContext).config?.gitops
     .gitops_mode_enabled;
@@ -410,17 +412,17 @@ const PackageForm = ({
               position="left"
             >
               <Button type="submit" disabled={isSubmitDisabled}>
-                {isEditingSoftware ? "Save" : "Add software"}
+                {isEditingSoftware ? t("forms.package.save") : t("forms.package.addSoftware")}
               </Button>
             </TooltipWrapper>
           ) : (
             <Button type="submit" disabled={isSubmitDisabled}>
-              {isEditingSoftware ? "Save" : "Add software"}
+              {isEditingSoftware ? t("forms.package.save") : t("forms.package.addSoftware")}
             </Button>
           )}
 
           <Button variant="inverse" onClick={onCancel}>
-            Cancel
+            {t("forms.package.cancel")}
           </Button>
         </div>
       </form>

@@ -1,6 +1,7 @@
 /** software/vulnerabilities Vulnerabilities tab > Table */
 
 import React, { useCallback, useContext, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { InjectedRouter } from "react-router";
 import { Row } from "react-table";
 
@@ -71,6 +72,7 @@ const SoftwareVulnerabilitiesTable = ({
   teamId,
   isLoading,
 }: ISoftwareVulnerabilitiesTableProps) => {
+  const { t } = useTranslation("software");
   const { isPremiumTier } = useContext(AppContext);
 
   const determineQueryParamChange = useCallback(
@@ -224,10 +226,10 @@ const SoftwareVulnerabilitiesTable = ({
   const renderTableHelpText = () => {
     return (
       <div>
-        Seeing unexpected software or vulnerabilities?{" "}
+        {t("table.helpText")}{" "}
         <CustomLink
           url={GITHUB_NEW_ISSUE_LINK}
-          text="File an issue on GitHub"
+          text={t("table.helpLink")}
           newTab
         />
       </div>
@@ -277,7 +279,7 @@ const SoftwareVulnerabilitiesTable = ({
         disableNextPage={!data?.meta.has_next_results}
         searchable={searchable}
         searchQueryColumn="vulnerability"
-        inputPlaceHolder="Search by CVE"
+        inputPlaceHolder={t("search.byCve")}
         searchToolTipText={VULNERABILITIES_SEARCH_BOX_TOOLTIP}
         onQueryChange={onQueryChange}
         customControl={

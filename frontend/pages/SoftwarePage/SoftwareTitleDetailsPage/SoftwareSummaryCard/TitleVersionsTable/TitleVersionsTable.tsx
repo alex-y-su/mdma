@@ -1,6 +1,7 @@
 /** software/titles/:id > Versions section */
 
 import React, { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { InjectedRouter } from "react-router";
 import { Row } from "react-table";
 import PATHS from "router/paths";
@@ -42,6 +43,8 @@ export const TitleVersionsLastUpdatedInfo = (lastUpdatedAt: string) => {
 // This empty state is no longer ever used since this table is hidden when there is no software.
 // Keeping here for convenience in case that decision is ever changed.
 const NoVersionsDetected = (isAvailableForInstall = false): JSX.Element => {
+  const { t } = useTranslation("software");
+
   return (
     <Card borderRadiusSize="medium">
       <EmptyTable
@@ -58,7 +61,7 @@ const NoVersionsDetected = (isAvailableForInstall = false): JSX.Element => {
               Expecting to see versions?{" "}
               <CustomLink
                 url={GITHUB_NEW_ISSUE_LINK}
-                text="File an issue on GitHub"
+                text={t("table.helpLink")}
                 newTab
               />
             </>

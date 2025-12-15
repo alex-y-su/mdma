@@ -183,6 +183,13 @@
     "integration": "Integration"
   },
   "modals": {
+    "add": {
+      "title": "Add software",
+      "allTeamsMessage": "Please select a team first. Software can't be added when",
+      "allTeams": "All teams",
+      "isSelected": "is selected",
+      "doneButton": "Done"
+    },
     "delete": {
       "title": "Delete software",
       "confirmText": "Are you sure you want to delete",
@@ -232,5 +239,27 @@
       "successNameChangedSuffix": "to",
       "saveButton": "Save"
     }
+  },
+  "search": {
+    "byCve": "Search by CVE",
+    "byName": "Search by name"
+  },
+  "emptyStates": {
+    "softwareInventoryDisabled": {
+      "header": "Software inventory disabled",
+      "info": "Users with the admin role can",
+      "linkText": "turn on software inventory"
+    },
+    "noSoftwareDetected": {
+      "header": "No {{tableName}} detected",
+      "infoInstallable": "Install software on your hosts to see versions.",
+      "infoExpecting": "Expecting to see {{softwareType}}? Check back later.",
+      "infoAndroid": "It may take up to 24 hours for Android to report the software."
+    },
+    "noItemsMatch": {
+      "header": "No items match the current search criteria"
+    },
+    "installableSoftware": "installable software",
+    "vulnerableSoftware": "vulnerable software"
   }
 }

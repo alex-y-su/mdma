@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import CustomLink from "components/CustomLink";
 import EmptyTable from "components/EmptyTable";
 import { IEmptyTableProps } from "interfaces/empty_table";
@@ -19,20 +20,6 @@ export interface IEmptySoftwareTableProps {
   platform?: HostPlatform;
 }
 
-const generateTypeText = (
-  tableName: string,
-  softwareFilter?: ISoftwareDropdownFilterVal,
-  vulnFilters?: ISoftwareVulnFiltersParams
-) => {
-  if (softwareFilter === "installableSoftware") {
-    return "installable software";
-  }
-  if (vulnFilters?.vulnerable) {
-    return "vulnerable software";
-  }
-  return tableName;
-};
-
 const EmptySoftwareTable = ({
   softwareFilter = "allSoftware",
   vulnFilters,
@@ -42,6 +29,22 @@ const EmptySoftwareTable = ({
   installableSoftwareExists,
   platform,
 }: IEmptySoftwareTableProps): JSX.Element => {
+  const { t } = useTranslation("software");
+
+  const generateTypeText = (
+    tableName: string,
+    softwareFilter?: ISoftwareDropdownFilterVal,
+    vulnFilters?: ISoftwareVulnFiltersParams
+  ) => {
+    if (softwareFilter === "installableSoftware") {
+      return t("emptyStates.installableSoftware");
+    }
+    if (vulnFilters?.vulnerable) {
+      return t("emptyStates.vulnerableSoftware");
+    }
+    return tableName;
+  };
+
   const softwareTypeText = generateTypeText(
     tableName,
     softwareFilter,
@@ -58,13 +61,13 @@ const EmptySoftwareTable = ({
   const getEmptySoftwareInfo = (): IEmptyTableProps => {
     if (isSoftwareDisabled) {
       return {
-        header: "Software inventory disabled",
+        header: t("emptyStates.softwareInventoryDisabled.header"),
         info: (
           <>
-            Users with the admin role can{" "}
+            {t("emptyStates.softwareInventoryDisabled.info")}{" "}
             <CustomLink
               url="https://fleetdm.com/docs/using-fleet/vulnerability-processing#configuration"
-              text="turn on software inventory"
+              text={t("emptyStates.softwareInventoryDisabled.linkText")}
               newTab
             />
             .
@@ -73,28 +76,28 @@ const EmptySoftwareTable = ({
       };
     }
 
-    let info = `Expecting to see ${softwareTypeText}? Check back later.`;
+    let info = t("emptyStates.noSoftwareDetected.infoExpecting", { softwareType: softwareTypeText });
     if (isAndroid(platform || "")) {
-      info = `${info} It may take up to 24 hours for Android to report the software.`;
+      info = `${info} ${t("emptyStates.noSoftwareDetected.infoAndroid")}`;
     }
 
     if (!isFiltered) {
       if (softwareFilter === "allSoftware") {
         if (installableSoftwareExists) {
           return {
-            header: `No ${tableName} detected`,
-            info: "Install software on your hosts to see versions.",
+            header: t("emptyStates.noSoftwareDetected.header", { tableName }),
+            info: t("emptyStates.noSoftwareDetected.infoInstallable"),
           };
         }
         return {
-          header: `No ${tableName} detected`,
+          header: t("emptyStates.noSoftwareDetected.header", { tableName }),
           info,
         };
       }
     }
 
     return {
-      header: "No items match the current search criteria",
+      header: t("emptyStates.noItemsMatch.header"),
       info,
     };
   };

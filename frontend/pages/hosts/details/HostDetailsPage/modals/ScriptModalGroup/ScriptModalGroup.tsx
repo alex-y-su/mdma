@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useState } from "react";
 import { useQuery } from "react-query";
+import { useTranslation } from "react-i18next";
 
 import { getErrorReason, IApiError } from "interfaces/errors";
 import { IHost } from "interfaces/host";
@@ -40,6 +41,7 @@ const ScriptModalGroup = ({
   onCloseScriptModalGroup,
   teamIdForApi,
 }: IScriptsProps) => {
+  const { t } = useTranslation("hosts");
   const { renderFlash } = useContext(NotificationContext);
   const [previousModal, setPreviousModal] = useState<ModalGroupOption | null>(
     null
@@ -126,7 +128,7 @@ const ScriptModalGroup = ({
         });
         renderFlash(
           "success",
-          "Script is running or will run when the host comes online."
+          t("modals.scriptGroup.scriptRunningSuccess")
         );
         refetchHostScripts();
       } catch (e) {

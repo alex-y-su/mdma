@@ -2,6 +2,7 @@ import React, { useState, useCallback, useContext } from "react";
 import { useQuery } from "react-query";
 import { filter, includes } from "lodash";
 import { InjectedRouter } from "react-router";
+import { useTranslation } from "react-i18next";
 
 import PATHS from "router/paths";
 
@@ -46,6 +47,7 @@ const SelectQueryModal = ({
   router,
   currentTeamId,
 }: ISelectQueryModalProps): JSX.Element => {
+  const { t } = useTranslation("hosts");
   const { setSelectedQueryTargetsByType } = useContext(QueryContext);
 
   const { data: queries, error: queriesErr } = useQuery<
@@ -140,13 +142,13 @@ const SelectQueryModal = ({
   const renderDescription = (): JSX.Element => {
     return (
       <div className={`${baseClass}__description`}>
-        Choose a query to run on this host
+        {t("modals.selectQuery.description")}
         {(!isOnlyObserver || isObserverPlus || isHostsTeamObserverPlus) && (
           <>
             {" "}
-            or{" "}
+            {t("modals.selectQuery.or")}{" "}
             <Button variant="text-link" onClick={onQueryHostCustom}>
-              create your own query
+              {t("modals.selectQuery.createYourOwnQuery")}
             </Button>
           </>
         )}
@@ -163,10 +165,9 @@ const SelectQueryModal = ({
     if (!queriesFilter && queriesCount === 0) {
       return (
         <div className={`${baseClass}__no-queries`}>
-          <span className="info__header">You have no saved queries.</span>
+          <span className="info__header">{t("modals.selectQuery.noQueriesHeader")}</span>
           <span className="info__data">
-            Expecting to see queries? Try again in a few seconds as the system
-            catches up.
+            {t("modals.selectQuery.noQueriesInfo")}
           </span>
         </div>
       );
@@ -197,7 +198,7 @@ const SelectQueryModal = ({
           <InputFieldWithIcon
             name="query-filter"
             onChange={onFilterQueries}
-            placeholder="Filter queries"
+            placeholder={t("modals.selectQuery.filterQueriesPlaceholder")}
             value={queriesFilter}
             autofocus
             iconSvg="search"
@@ -215,7 +216,7 @@ const SelectQueryModal = ({
             <InputFieldWithIcon
               name="query-filter"
               onChange={onFilterQueries}
-              placeholder="Filter queries"
+              placeholder={t("modals.selectQuery.filterQueriesPlaceholder")}
               value={queriesFilter}
               autofocus
               iconSvg="search"
@@ -224,11 +225,10 @@ const SelectQueryModal = ({
           </div>
           <div className={`${baseClass}__no-queries`}>
             <span className="info__header">
-              No queries match the current search criteria.
+              {t("modals.selectQuery.noMatchHeader")}
             </span>
             <span className="info__data">
-              Expecting to see queries? Try again in a few seconds as the system
-              catches up.
+              {t("modals.selectQuery.noMatchInfo")}
             </span>
           </div>
         </>
@@ -239,7 +239,7 @@ const SelectQueryModal = ({
 
   return (
     <Modal
-      title="Select a query"
+      title={t("modals.selectQuery.title")}
       onExit={onCancel}
       onEnter={onCancel}
       className={baseClass}

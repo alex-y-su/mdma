@@ -372,16 +372,85 @@
     },
     "unlock": {
       "title": "Unlock host",
-      "message": "Enter the unlock PIN to unlock this host."
+      "message": "Enter the unlock PIN to unlock this host.",
+      "successMessage": "Unlocking host or will unlock when it comes online.",
+      "pinDescription": "When the host is returned, use the 6-digit PIN to unlock the host.",
+      "pinLabel": "PIN",
+      "descriptionIos": "This will disable Lost Mode. End users will be able to use the host.",
+      "confirmMessage": "Are you sure you're ready to unlock",
+      "buttonDone": "Done",
+      "buttonUnlock": "Unlock",
+      "buttonCancel": "Cancel"
     },
     "wipe": {
       "title": "Wipe host",
       "message": "Are you sure you want to wipe this host?",
-      "warning": "All data will be permanently deleted."
+      "warning": "All data will be permanently deleted.",
+      "successMessage": "Wiping host or will wipe when the host comes online.",
+      "description": "All content will be erased on this host.",
+      "confirmMessage": "Please check to confirm:",
+      "confirmCheckbox": "I wish to wipe",
+      "buttonWipe": "Wipe",
+      "buttonCancel": "Cancel"
     },
     "diskEncryptionKey": {
       "title": "Disk encryption key",
-      "copyKey": "Copy key"
+      "copyKey": "Copy key",
+      "recoveryTextDarwin": "Use this key to log in to the host if you forgot the password.",
+      "recoveryTextOther": "Use this key to unlock the encrypted drive.",
+      "learnMore": "Learn more",
+      "done": "Done"
+    },
+    "bootstrapPackage": {
+      "title": "Bootstrap package",
+      "failedToInstall": "failed to install with the following error:",
+      "done": "Done",
+      "installed": "Installed",
+      "pending": "Pending",
+      "failed": "Failed",
+      "installedTooltip": "The host acknowledged the MDM command to install bootstrap package.",
+      "pendingTooltip": "Bootstrap package is installing or will install when the host comes online.",
+      "failedTooltip": "The host failed to install bootstrap package. To view errors, select"
+    },
+    "cancelActivity": {
+      "title": "Cancel activity",
+      "description": "If the activity is happening on the host it will still complete. Results won't appear in Fleet.",
+      "confirmButton": "Cancel activity",
+      "cancelButton": "Back",
+      "successMessage": "Activity successfully canceled."
+    },
+    "unenrollMdm": {
+      "title": {
+        "mobile": "Turn off MDM",
+        "macos": "Turn off MDM"
+      },
+      "confirmButton": {
+        "mobile": "Turn off",
+        "macos": "Turn off"
+      },
+      "cancelButton": "Cancel",
+      "successMessage": {
+        "mobile": "MDM is off.",
+        "macosPrefix": "Turning off MDM for",
+        "macosSuffix": "The end user will be prompted to follow the instructions."
+      },
+      "errorMessage": {
+        "mobile": "Couldn't turn off MDM. Please try again.",
+        "macosPrefix": "Couldn't turn off MDM for",
+        "macosSuffix": "Please try again."
+      },
+      "description": {
+        "ios": "iOS and iPadOS hosts must be online to turn off MDM. If the host is offline, it will turn off MDM when it comes online.",
+        "android": "Android hosts must be online to turn off MDM. If the host is offline, it will turn off MDM when it comes online.",
+        "macos": "macOS hosts will turn off MDM the next time they restart."
+      },
+      "reenrollInstructions": {
+        "iosManual": "End users can turn on MDM by selecting Turn on MDM on their My device page.",
+        "iosAccountDriven": "End users can turn on MDM by enrolling their host using Fleet Desktop.",
+        "iosAutomatic": "Hosts automatically enrolled via Apple Business Manager (ABM) will automatically turn on MDM the next time the host restarts.",
+        "android": "End users can turn on MDM by selecting Turn on MDM on their My device page.",
+        "macos": "End users can turn on MDM by selecting Turn on MDM on their My device page."
+      }
     },
     "runScript": {
       "title": "Run script",
@@ -406,6 +475,13 @@
     "enrollMdm": "Enroll in MDM",
     "bitlockerPin": "BitLocker PIN",
     "createLinuxKey": "Create Linux encryption key"
+  },
+  "osSettings": {
+    "unavailable": "Unavailable",
+    "failed": "Failed",
+    "pending": "Pending",
+    "verifying": "Verifying",
+    "verified": "Verified"
   },
   "osSettingsModal": {
     "title": "OS settings",

@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useTranslation } from "react-i18next";
 
 import hostAPI from "services/entities/hosts";
 import { getErrorReason } from "interfaces/errors";
@@ -18,6 +19,7 @@ interface IWipeModalProps {
 }
 
 const WipeModal = ({ id, hostName, onSuccess, onClose }: IWipeModalProps) => {
+  const { t } = useTranslation("hosts");
   const { renderFlash } = useContext(NotificationContext);
   const [lockChecked, setLockChecked] = React.useState(false);
   const [isWiping, setIsWiping] = React.useState(false);
@@ -29,7 +31,7 @@ const WipeModal = ({ id, hostName, onSuccess, onClose }: IWipeModalProps) => {
       onSuccess();
       renderFlash(
         "success",
-        "Wiping host or will wipe when the host comes online."
+        t("modals.wipe.successMessage")
       );
     } catch (e) {
       renderFlash("error", getErrorReason(e));
@@ -39,20 +41,20 @@ const WipeModal = ({ id, hostName, onSuccess, onClose }: IWipeModalProps) => {
   };
 
   return (
-    <Modal className={baseClass} title="Wipe host" onExit={onClose}>
+    <Modal className={baseClass} title={t("modals.wipe.title")} onExit={onClose}>
       <>
         <div className={`${baseClass}__modal-content`}>
-          <p>All content will be erased on this host.</p>
+          <p>{t("modals.wipe.description")}</p>
           <div className={`${baseClass}__confirm-message`}>
             <span>
-              <b>Please check to confirm:</b>
+              <b>{t("modals.wipe.confirmMessage")}</b>
             </span>
             <Checkbox
               wrapperClassName={`${baseClass}__wipe-checkbox`}
               value={lockChecked}
               onChange={(value: boolean) => setLockChecked(value)}
             >
-              I wish to wipe <b>{hostName}</b>
+              {t("modals.wipe.confirmCheckbox")} <b>{hostName}</b>
             </Checkbox>
           </div>
         </div>
@@ -66,10 +68,10 @@ const WipeModal = ({ id, hostName, onSuccess, onClose }: IWipeModalProps) => {
             disabled={!lockChecked}
             isLoading={isWiping}
           >
-            Wipe
+            {t("modals.wipe.buttonWipe")}
           </Button>
           <Button onClick={onClose} variant="inverse-alert">
-            Cancel
+            {t("modals.wipe.buttonCancel")}
           </Button>
         </div>
       </>

@@ -1,4 +1,5 @@
 import React, { useCallback, useContext, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 import { AppContext } from "context/app";
 
@@ -55,6 +56,7 @@ const RunScriptModal = ({
   isRunningScript,
   isHidden = false,
 }: IRunScriptModalProps) => {
+  const { t } = useTranslation("hosts");
   const { config } = useContext(AppContext);
 
   const onSelectAction = useCallback(
@@ -103,7 +105,7 @@ const RunScriptModal = ({
 
   return (
     <Modal
-      title="Run script"
+      title={t("modals.runScript.title")}
       onExit={onClose}
       onEnter={onClose}
       className={`${baseClass}`}
@@ -118,8 +120,8 @@ const RunScriptModal = ({
             !isError &&
             (!tableData || tableData.length === 0) && (
               <EmptyTable
-                header="No scripts available for this host"
-                info="Expecting to see scripts? Close this modal and try again."
+                header={t("modals.runScript.noScriptsHeader")}
+                info={t("modals.runScript.noScriptsInfo")}
               />
             )}
           {!isLoadingHostScripts &&
@@ -144,7 +146,7 @@ const RunScriptModal = ({
             )}
         </div>
         <div className="modal-cta-wrap">
-          <Button onClick={onClose}>Done</Button>
+          <Button onClick={onClose}>{t("modals.runScript.done")}</Button>
         </div>
       </>
     </Modal>

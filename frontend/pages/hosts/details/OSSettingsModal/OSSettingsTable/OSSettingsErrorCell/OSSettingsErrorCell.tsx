@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 import classnames from "classnames";
 import { noop } from "lodash";
 
@@ -21,11 +22,12 @@ interface IRefetchButtonProps {
 }
 
 const RefetchButton = ({ isFetching, onClick }: IRefetchButtonProps) => {
+  const { t } = useTranslation("hosts");
   const classNames = classnames(`${baseClass}__resend-button`, "resend-link", {
     [`${baseClass}__resending`]: isFetching,
   });
 
-  const buttonText = isFetching ? "Resending..." : "Resend";
+  const buttonText = isFetching ? t("osSettingsModal.errorCell.resending") : t("osSettingsModal.errorCell.resend");
 
   // add additonal props when we need to display a tooltip for the button
 
@@ -44,7 +46,8 @@ const RefetchButton = ({ isFetching, onClick }: IRefetchButtonProps) => {
 };
 
 const formatAndroidProfileNotAppliedError = (
-  detail: IHostMdmProfile["detail"]
+  detail: IHostMdmProfile["detail"],
+  t: (key: string) => string
 ) => {
   if (
     detail.includes("settings couldn't apply to a host") ||
@@ -54,7 +57,7 @@ const formatAndroidProfileNotAppliedError = (
       <>
         {detail}{" "}
         <CustomLink
-          text="Learn more"
+          text={t("osSettingsModal.errorCell.learnMore")}
           url="https://fleetdm.com/learn-more-about/android-profile-errors"
           newTab
           variant="tooltip-link"
@@ -70,10 +73,10 @@ const formatAndroidProfileNotAppliedError = (
  * certificate profiles. It return a JSX element with the formatted message or null if
  * the detail does not match any of the expected patterns.
  */
-const formatDetailCertificateError = (detail: IHostMdmProfile["detail"]) => {
+const formatDetailCertificateError = (detail: IHostMdmProfile["detail"], t: (key: string) => string) => {
   const formattedCertificatesPath = (
     <b>
-      Settings {">"} Integrations {">"} Certificates
+      {t("osSettingsModal.errorCell.settings")} {">"} {t("osSettingsModal.errorCell.integrations")} {">"} {t("osSettingsModal.errorCell.certificates")}
     </b>
   );
 
@@ -83,10 +86,8 @@ const formatDetailCertificateError = (detail: IHostMdmProfile["detail"]) => {
   if (matchTokenErr?.groups) {
     return (
       <>
-        Couldn&apos;t get certificate from DigiCert. The <b>API token</b>{" "}
-        configured in <b>{matchTokenErr.groups.ca}</b> certificate authority is
-        invalid. Please go to {formattedCertificatesPath}, correct it and
-        resend.
+        {t("osSettingsModal.errorCell.couldntGetCert")} <b>{t("osSettingsModal.errorCell.apiToken")}</b>{" "}
+        {t("osSettingsModal.errorCell.configuredIn")} <b>{matchTokenErr.groups.ca}</b> {t("osSettingsModal.errorCell.certAuthorityInvalid")} {t("osSettingsModal.errorCell.pleaseGoTo")} {formattedCertificatesPath}, {t("osSettingsModal.errorCell.correctAndResend")}.
       </>
     );
   }
@@ -100,13 +101,13 @@ const formatDetailCertificateError = (detail: IHostMdmProfile["detail"]) => {
   if (matchProfileIdErr?.groups || matchDeletedProfileErr?.groups) {
     return (
       <>
-        Couldn&apos;t get certificate from DigiCert. The <b>Profile GUID</b>{" "}
-        configured in{" "}
+        {t("osSettingsModal.errorCell.couldntGetCert")} <b>{t("osSettingsModal.errorCell.profileGuid")}</b>{" "}
+        {t("osSettingsModal.errorCell.configuredIn")}{" "}
         <b>
           {matchProfileIdErr?.groups?.ca || matchDeletedProfileErr?.groups?.ca}
         </b>{" "}
-        certificate authority doesn&apos;t exist. Please go to{" "}
-        {formattedCertificatesPath}, correct it and resend.
+        {t("osSettingsModal.errorCell.certAuthorityDoesntExist")} {t("osSettingsModal.errorCell.pleaseGoTo")}{" "}
+        {formattedCertificatesPath}, {t("osSettingsModal.errorCell.correctAndResend")}.
       </>
     );
   }
@@ -117,13 +118,12 @@ const formatDetailCertificateError = (detail: IHostMdmProfile["detail"]) => {
   if (matchFleetVarErr?.groups) {
     return (
       <>
-        Fleet couldn&apos;t populate {matchFleetVarErr.groups.field} because{" "}
-        <b>{matchFleetVarErr.groups.ca}</b> certificate authority doesn&apos;t
-        exist. Please go to{" "}
+        {t("osSettingsModal.errorCell.fleetCouldntPopulate")} {matchFleetVarErr.groups.field} {t("osSettingsModal.errorCell.because")}{" "}
+        <b>{matchFleetVarErr.groups.ca}</b> {t("osSettingsModal.errorCell.certAuthorityDoesntExist")} {t("osSettingsModal.errorCell.pleaseGoTo")}{" "}
         <b>
-          Settings {">"} Integrations {">"} Certificates
+          {t("osSettingsModal.errorCell.settings")} {">"} {t("osSettingsModal.errorCell.integrations")} {">"} {t("osSettingsModal.errorCell.certificates")}
         </b>
-        , add it and resend the configuration profile.
+        , {t("osSettingsModal.errorCell.addAndResendProfile")}.
       </>
     );
   }
@@ -136,18 +136,18 @@ const formatDetailCertificateError = (detail: IHostMdmProfile["detail"]) => {
  * host IdP email profiles. It returns a JSX element with the formatted message or null if
  * the detail does not match any of the expected patterns.
  */
-const formatDetailIdpEmailError = (detail: IHostMdmProfile["detail"]) => {
+const formatDetailIdpEmailError = (detail: IHostMdmProfile["detail"], t: (key: string) => string) => {
   if (detail.includes("There is no IdP email for this host.")) {
     return (
       <>
-        There is no IdP email for this host.
+        {t("osSettingsModal.errorCell.noIdpEmail")}
         <br />
-        Fleet couldn&apos;t populate
+        {t("osSettingsModal.errorCell.fleetCouldntPopulateVar")}
         <br />
         $FLEET_VAR_HOST_END_USER_EMAIL_IDP.
         <br />
         <CustomLink
-          text="Learn more"
+          text={t("osSettingsModal.errorCell.learnMore")}
           url="https://fleetdm.com/learn-more-about/idp-email"
           newTab
           variant="tooltip-link"
@@ -202,24 +202,26 @@ const formatDetailWindowsProfile = (detail: string) => {
  */
 const generateErrorTooltip = (
   cellValue: string,
-  profile: IHostMdmProfileWithAddedStatus
+  profile: IHostMdmProfileWithAddedStatus,
+  t: (key: string) => string
 ) => {
   if (profile.status !== "failed") return null;
 
   // Special case to handle IdP email errors
-  const idpEmailError = formatDetailIdpEmailError(profile.detail);
+  const idpEmailError = formatDetailIdpEmailError(profile.detail, t);
   if (idpEmailError) {
     return idpEmailError;
   }
 
   // Special case to handle certificate profile errors
-  const certificateError = formatDetailCertificateError(profile.detail);
+  const certificateError = formatDetailCertificateError(profile.detail, t);
   if (certificateError) {
     return certificateError;
   }
 
   const androidProfileNotAppliedError = formatAndroidProfileNotAppliedError(
-    profile.detail
+    profile.detail,
+    t
   );
   if (androidProfileNotAppliedError) {
     return androidProfileNotAppliedError;
@@ -245,6 +247,7 @@ const OSSettingsErrorCell = ({
   resendRequest,
   onProfileResent = noop,
 }: IOSSettingsErrorCellProps) => {
+  const { t } = useTranslation("hosts");
   const { renderFlash } = useContext(NotificationContext);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -254,7 +257,7 @@ const OSSettingsErrorCell = ({
       await resendRequest(profile.profile_uuid);
       onProfileResent();
     } catch (e) {
-      renderFlash("error", "Couldn't resend. Please try again.");
+      renderFlash("error", t("osSettingsModal.errorCell.couldntResend"));
     }
     setIsLoading(false);
   };
@@ -264,7 +267,7 @@ const OSSettingsErrorCell = ({
   const showRefetchButton = canResendProfiles && (isFailed || isVerified);
   const value = (isFailed && profile.detail) || DEFAULT_EMPTY_CELL_VALUE;
 
-  const tooltip = generateErrorTooltip(value, profile);
+  const tooltip = generateErrorTooltip(value, profile, t);
 
   return (
     <div className={baseClass}>

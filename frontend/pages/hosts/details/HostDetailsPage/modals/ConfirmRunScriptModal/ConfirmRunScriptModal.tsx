@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import Modal from "components/Modal";
 import Button from "components/buttons/Button";
@@ -24,17 +25,21 @@ const ConfirmRunScriptModal = ({
   isRunningScript,
   isHidden,
 }: IConfirmRunScriptModal) => {
+  const { t } = useTranslation("hosts");
+
   return (
     <Modal
-      title="Run script?"
+      title={t("modals.confirmRunScript.title")}
       onExit={onClose}
       isLoading={isRunningScript}
       isHidden={isHidden}
     >
       <form className={`${baseClass}__form`}>
         <p>
-          {scriptName ? <b>{scriptName}</b> : "The script"} will run on{" "}
-          <b>{hostName}</b>.
+          {t("modals.confirmRunScript.message", {
+            scriptName: scriptName || t("modals.confirmRunScript.defaultScriptName"),
+            hostName,
+          })}
         </p>
         <div className="modal-cta-wrap">
           <Button
@@ -43,10 +48,10 @@ const ConfirmRunScriptModal = ({
             className="save-loading"
             isLoading={isRunningScript}
           >
-            Run
+            {t("modals.confirmRunScript.run")}
           </Button>
           <Button onClick={onCancel} variant="inverse">
-            Cancel
+            {t("modals.confirmRunScript.cancel")}
           </Button>
         </div>
       </form>

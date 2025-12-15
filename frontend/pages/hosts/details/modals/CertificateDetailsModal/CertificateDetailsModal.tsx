@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import { IHostCertificate } from "interfaces/certificates";
 
@@ -19,6 +20,8 @@ const CertificateDetailsModal = ({
   certificate,
   onExit,
 }: ICertificateDetailsModalProps) => {
+  const { t } = useTranslation("hosts");
+
   // Destructure the certificate object so we can check for presence of values
   const {
     subject: {
@@ -79,30 +82,30 @@ const CertificateDetailsModal = ({
   const showSignatureSection = Boolean(signing_algorithm);
 
   return (
-    <Modal className={baseClass} title="Certificate details" onExit={onExit}>
+    <Modal className={baseClass} title={t("certificates.modal.title")} onExit={onExit}>
       <>
         <div className={`${baseClass}__content`}>
           {showSubjectSection && (
             <div className={`${baseClass}__section`}>
-              <h3>Subject name</h3>
+              <h3>{t("certificates.modal.subjectName")}</h3>
               <dl>
                 {subjectCountry && (
                   <DataSet
-                    title="Country or region"
+                    title={t("certificates.modal.countryOrRegion")}
                     value={<TooltipTruncatedText value={subjectCountry} />}
                     orientation="horizontal"
                   />
                 )}
                 {subjectOrganization && (
                   <DataSet
-                    title="Organization"
+                    title={t("certificates.modal.organization")}
                     value={<TooltipTruncatedText value={subjectOrganization} />}
                     orientation="horizontal"
                   />
                 )}
                 {subjectOrganizationalUnit && (
                   <DataSet
-                    title="Organizational unit"
+                    title={t("certificates.modal.organizationalUnit")}
                     value={
                       <TooltipTruncatedText value={subjectOrganizationalUnit} />
                     }
@@ -111,7 +114,7 @@ const CertificateDetailsModal = ({
                 )}
                 {subjectCommonName && (
                   <DataSet
-                    title="Common name"
+                    title={t("certificates.modal.commonName")}
                     value={<TooltipTruncatedText value={subjectCommonName} />}
                     orientation="horizontal"
                   />
@@ -121,25 +124,25 @@ const CertificateDetailsModal = ({
           )}
           {showIssuerNameSection && (
             <div className={`${baseClass}__section`}>
-              <h3>Issuer name</h3>
+              <h3>{t("certificates.modal.issuerName")}</h3>
               <dl>
                 {issuerCountry && (
                   <DataSet
-                    title="Country or region"
+                    title={t("certificates.modal.countryOrRegion")}
                     value={<TooltipTruncatedText value={issuerCountry} />}
                     orientation="horizontal"
                   />
                 )}
                 {issuerOrganization && (
                   <DataSet
-                    title="Organization"
+                    title={t("certificates.modal.organization")}
                     value={<TooltipTruncatedText value={issuerOrganization} />}
                     orientation="horizontal"
                   />
                 )}
                 {issuerOrganizationalUnit && (
                   <DataSet
-                    title="Organizational unit"
+                    title={t("certificates.modal.organizationalUnit")}
                     value={
                       <TooltipTruncatedText value={issuerOrganizationalUnit} />
                     }
@@ -148,7 +151,7 @@ const CertificateDetailsModal = ({
                 )}
                 {issuerCommonName && (
                   <DataSet
-                    title="Common name"
+                    title={t("certificates.modal.commonName")}
                     value={<TooltipTruncatedText value={issuerCommonName} />}
                     orientation="horizontal"
                   />
@@ -158,11 +161,11 @@ const CertificateDetailsModal = ({
           )}
           {showValidityPeriodSection && (
             <div className={`${baseClass}__section`}>
-              <h3>Validity period</h3>
+              <h3>{t("certificates.modal.validityPeriod")}</h3>
               <dl>
                 {not_valid_before && (
                   <DataSet
-                    title="Not valid before"
+                    title={t("certificates.modal.notValidBefore")}
                     value={
                       <TooltipTruncatedText
                         value={monthDayYearFormat(not_valid_before)}
@@ -173,7 +176,7 @@ const CertificateDetailsModal = ({
                 )}
                 {not_valid_after && (
                   <DataSet
-                    title="Not valid after"
+                    title={t("certificates.modal.notValidAfter")}
                     value={
                       <TooltipTruncatedText
                         value={monthDayYearFormat(not_valid_after)}
@@ -187,39 +190,39 @@ const CertificateDetailsModal = ({
           )}
           {showKeyInfoSection && (
             <div className={`${baseClass}__section`}>
-              <h3>Key info</h3>
+              <h3>{t("certificates.modal.keyInfo")}</h3>
               <dl>
                 {key_algorithm && (
                   <DataSet
-                    title="Algorithm"
+                    title={t("certificates.modal.algorithm")}
                     value={<TooltipTruncatedText value={key_algorithm} />}
                     orientation="horizontal"
                   />
                 )}
                 {!!key_strength && (
                   <DataSet
-                    title="Key size"
+                    title={t("certificates.modal.keySize")}
                     value={<TooltipTruncatedText value={key_strength} />}
                     orientation="horizontal"
                   />
                 )}
                 {key_usage && (
                   <DataSet
-                    title="Key usage"
+                    title={t("certificates.modal.keyUsage")}
                     value={<TooltipTruncatedText value={key_usage} />}
                     orientation="horizontal"
                   />
                 )}
                 {serial && (
                   <DataSet
-                    title="Serial number (hex)"
+                    title={t("certificates.modal.serialNumberHex")}
                     value={<TooltipTruncatedText value={serial} />}
                     orientation="horizontal"
                   />
                 )}
                 {serialDecimal && (
                   <DataSet
-                    title="Serial number (decimal)"
+                    title={t("certificates.modal.serialNumberDecimal")}
                     value={<TooltipTruncatedText value={serialDecimal} />}
                     orientation="horizontal"
                   />
@@ -229,13 +232,13 @@ const CertificateDetailsModal = ({
           )}
           {/* will always show this section */}
           <div className={`${baseClass}__section`}>
-            <h3>Basic constraints</h3>
+            <h3>{t("certificates.modal.basicConstraints")}</h3>
             <dl>
               <DataSet
-                title="Certificate authority"
+                title={t("certificates.modal.certificateAuthority")}
                 value={
                   <TooltipTruncatedText
-                    value={certificate_authority ? "Yes" : "No"}
+                    value={certificate_authority ? t("certificates.modal.yes") : t("certificates.modal.no")}
                   />
                 }
                 orientation="horizontal"
@@ -244,10 +247,10 @@ const CertificateDetailsModal = ({
           </div>
           {showSignatureSection && (
             <div className={`${baseClass}__section`}>
-              <h3>Signature</h3>
+              <h3>{t("certificates.modal.signature")}</h3>
               <dl>
                 <DataSet
-                  title="Algorithm"
+                  title={t("certificates.modal.algorithm")}
                   value={<TooltipTruncatedText value={signing_algorithm} />}
                   orientation="horizontal"
                 />
@@ -256,7 +259,7 @@ const CertificateDetailsModal = ({
           )}
         </div>
         <div className="modal-cta-wrap">
-          <Button onClick={onExit}>Done</Button>
+          <Button onClick={onExit}>{t("certificates.modal.done")}</Button>
         </div>
       </>
     </Modal>

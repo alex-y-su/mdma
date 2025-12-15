@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import Button from "components/buttons/Button";
 import Modal from "components/Modal";
 import { IHostMdmData } from "interfaces/host";
@@ -32,6 +33,7 @@ const OSSettingsModal = ({
   resendRequest,
   onProfileResent,
 }: IOSSettingsModalProps) => {
+  const { t } = useTranslation("hosts");
   // the caller should ensure that hostMDMData is not undefined and that platform is supported otherwise we will allow an empty modal will be rendered.
   // https://fleetdm.com/handbook/company/why-this-way#why-make-it-obvious-when-stuff-breaks
 
@@ -42,7 +44,7 @@ const OSSettingsModal = ({
 
   return (
     <Modal
-      title="OS settings"
+      title={t("osSettingsModal.title")}
       onExit={onClose}
       className={baseClass}
       width="xlarge"
@@ -55,7 +57,7 @@ const OSSettingsModal = ({
           onProfileResent={onProfileResent}
         />
         <div className="modal-cta-wrap">
-          <Button onClick={onClose}>Done</Button>
+          <Button onClick={onClose}>{t("osSettingsModal.done")}</Button>
         </div>
       </>
     </Modal>

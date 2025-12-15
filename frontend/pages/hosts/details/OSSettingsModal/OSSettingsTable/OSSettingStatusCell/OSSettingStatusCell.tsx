@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import ReactTooltip from "react-tooltip";
 import { uniqueId } from "lodash";
 
@@ -36,6 +37,7 @@ const OSSettingStatusCell = ({
   profileName = "",
   hostPlatform,
 }: IOSSettingStatusCellProps) => {
+  const { t } = useTranslation("hosts");
   let displayOption: ProfileDisplayOption = null;
 
   if (hostPlatform === "linux") {
@@ -108,6 +110,6 @@ const OSSettingStatusCell = ({
     );
   }
   // graceful error - this state should not be reached based on the API spec
-  return <TextCell value="Unrecognized" />;
+  return <TextCell value={t("osSettingsModal.unrecognized")} />;
 };
 export default OSSettingStatusCell;

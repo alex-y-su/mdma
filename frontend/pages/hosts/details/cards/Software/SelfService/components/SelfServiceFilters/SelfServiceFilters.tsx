@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { SingleValue } from "react-select-5";
 import SearchField from "components/forms/fields/SearchField";
 import DropdownWrapper, {
@@ -18,24 +19,28 @@ const SelfServiceFilters = ({
   category_id,
   onSearchQueryChange,
   onCategoriesDropdownChange,
-}: SelfServiceFiltersProps) => (
-  <div className="software-self-service__header-filters">
-    <SearchField
-      placeholder="Search by name"
-      onChange={onSearchQueryChange}
-      defaultValue={query}
-    />
-    <DropdownWrapper
-      options={CATEGORIES_NAV_ITEMS.map((category) => ({
-        ...category,
-        value: String(category.id),
-      }))}
-      value={String(category_id || 0)}
-      onChange={onCategoriesDropdownChange}
-      name="categories-dropdown"
-      className="software-self-service__categories-dropdown"
-    />
-  </div>
-);
+}: SelfServiceFiltersProps) => {
+  const { t } = useTranslation("hosts");
+
+  return (
+    <div className="software-self-service__header-filters">
+      <SearchField
+        placeholder={t("selfService.searchByName")}
+        onChange={onSearchQueryChange}
+        defaultValue={query}
+      />
+      <DropdownWrapper
+        options={CATEGORIES_NAV_ITEMS.map((category) => ({
+          ...category,
+          value: String(category.id),
+        }))}
+        value={String(category_id || 0)}
+        onChange={onCategoriesDropdownChange}
+        name="categories-dropdown"
+        className="software-self-service__categories-dropdown"
+      />
+    </div>
+  );
+};
 
 export default SelfServiceFilters;

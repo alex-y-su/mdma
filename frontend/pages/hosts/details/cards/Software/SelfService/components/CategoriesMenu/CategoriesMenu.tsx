@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import classNames from "classnames";
 
 import LinkWithContext from "components/LinkWithContext";
@@ -20,6 +21,7 @@ const CategoriesMenu = ({
   queryParams,
   className,
 }: ICategoriesMenu) => {
+  const { t } = useTranslation("hosts");
   const wrapperClasses = classNames(baseClass, className);
 
   return (

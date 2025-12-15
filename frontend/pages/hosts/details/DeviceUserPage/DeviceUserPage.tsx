@@ -2,6 +2,7 @@ import React, { useState, useContext, useCallback, useEffect } from "react";
 import { InjectedRouter, Params } from "react-router/lib/Router";
 import { useQuery } from "react-query";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import { useTranslation } from "react-i18next";
 import useIsMobileWidth from "hooks/useIsMobileWidth";
 import { AxiosError } from "axios";
 
@@ -139,6 +140,7 @@ const DeviceUserPage = ({
   router,
   params: { device_auth_token },
 }: IDeviceUserPageProps): JSX.Element => {
+  const { t } = useTranslation("hosts");
   const deviceAuthToken = device_auth_token;
   const isMobileView = useIsMobileWidth();
   const isMobileDevice = isIPhone(navigator) || isIPad(navigator);
@@ -299,7 +301,7 @@ const DeviceUserPage = ({
               resetHostRefetchStates();
               renderFlash(
                 "error",
-                `This host is offline. Please try refetching host vitals later.`
+                t("detailsPage.banners.offlineRefetch")
               );
             }
           } else {
@@ -314,14 +316,14 @@ const DeviceUserPage = ({
                 resetHostRefetchStates();
                 renderFlash(
                   "error",
-                  `This host is offline. Please try refetching host vitals later.`
+                  t("detailsPage.banners.offlineRefetch")
                 );
               }
             } else {
               resetHostRefetchStates();
               renderFlash(
                 "error",
-                "We're having trouble fetching fresh vitals for this host. Please try again later."
+                t("detailsPage.banners.refetchTrouble")
               );
             }
           }
@@ -510,8 +512,8 @@ const DeviceUserPage = ({
 
   // Updates title that shows up on browser tabs
   useEffect(() => {
-    document.title = `My device | ${DOCUMENT_TITLE_SUFFIX}`;
-  }, [location.pathname, host]);
+    document.title = `${t("header.myDevice")} | ${DOCUMENT_TITLE_SUFFIX}`;
+  }, [location.pathname, host, t]);
 
   const renderActionButtons = () => {
     return (
@@ -530,7 +532,7 @@ const DeviceUserPage = ({
         deviceAuthToken
       );
     } catch (e) {
-      renderFlash("error", "Failed to trigger key creation.");
+      renderFlash("error", t("deviceUser.errors.failedTriggerKey"));
       setShowCreateLinuxKeyModal(false);
     } finally {
       setIsTriggeringCreateLinuxKey(false);
@@ -603,7 +605,7 @@ const DeviceUserPage = ({
       return <Spinner {...(isMobileView && { variant: "mobile" })} />;
     }
     if (isErrorSetupSteps) {
-      return <DataError description="Could not get software setup status." />;
+      return <DataError description={t("deviceUser.errors.setupStatus")} />;
     }
     if (
       checkForSetupExperienceSoftware &&
@@ -698,21 +700,21 @@ const DeviceUserPage = ({
               <TabList>
                 {isPremiumTier && isSoftwareEnabled && hasSelfService && (
                   <Tab>
-                    <TabText>Self-service</TabText>
+                    <TabText>{t("selfService.title")}</TabText>
                   </Tab>
                 )}
                 <Tab>
-                  <TabText>Details</TabText>
+                  <TabText>{t("details.title")}</TabText>
                 </Tab>
                 {isSoftwareEnabled && (
                   <Tab>
-                    <TabText>Software</TabText>
+                    <TabText>{t("details.software.title")}</TabText>
                   </Tab>
                 )}
                 {isPremiumTier && (
                   <Tab>
                     <TabText count={failingPoliciesCount} countVariant="alert">
-                      Policies
+                      {t("details.policies")}
                     </TabText>
                   </Tab>
                 )}
@@ -901,7 +903,7 @@ const DeviceUserPage = ({
             <div className="site-nav-better-link">
               <CustomLink
                 url="https://www.fleetdm.com/better"
-                text="About Fleet"
+                text={t("deviceUser.aboutFleet")}
                 newTab
               />
             </div>

@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import InfoBanner from "components/InfoBanner";
 import Button from "components/buttons/Button";
@@ -34,6 +35,7 @@ const DeviceUserBanners = ({
   diskEncryptionKeyAvailable,
   onTriggerEscrowLinuxKey,
 }: IDeviceUserBannersProps) => {
+  const { t } = useTranslation("hosts");
   const isMdmUnenrolled =
     mdmEnrollmentStatus === "Off" || mdmEnrollmentStatus === null;
 
@@ -50,13 +52,13 @@ const DeviceUserBanners = ({
   const turnOnMdmButton = mdmManualEnrolmentUrl ? (
     <CustomLink
       url={mdmManualEnrolmentUrl}
-      text="Turn on MDM"
+      text={t("deviceUser.banners.turnOnMdm")}
       newTab
       variant="banner-link"
     />
   ) : (
     <Button variant="text-link-dark" onClick={onClickTurnOnMdm}>
-      Turn on MDM
+      {t("deviceUser.banners.turnOnMdm")}
     </Button>
   );
 
@@ -64,9 +66,7 @@ const DeviceUserBanners = ({
     if (showTurnOnAppleMdmBanner) {
       return (
         <InfoBanner color="yellow" cta={turnOnMdmButton}>
-          Mobile device management (MDM) is off. MDM allows your organization to
-          change settings and install software. This lets your organization keep
-          your device up to date so you don&apos;t have to.
+          {t("deviceUser.banners.mdmOff")}
         </InfoBanner>
       );
     }
@@ -74,9 +74,7 @@ const DeviceUserBanners = ({
     if (showMacDiskEncryptionKeyResetRequired) {
       return (
         <InfoBanner color="yellow">
-          Disk encryption: Log out of your device or restart it to safeguard
-          your data in case your device is lost or stolen. After, select{" "}
-          <strong>Refetch</strong> to clear this banner.
+          {t("deviceUser.banners.diskEncryptionRotateKey")}
         </InfoBanner>
       );
     }
@@ -98,15 +96,13 @@ const DeviceUserBanners = ({
             cta={
               <CustomLink
                 url="https://fleetdm.com/learn-more-about/encrypt-linux-device"
-                text="Guide"
+                text={t("banners.diskEncryption.guide")}
                 variant="banner-link"
               />
             }
             color="yellow"
           >
-            Disk encryption: Follow the instructions in the guide to encrypt
-            your device. This lets your organization help you unlock your device
-            if you forget your password.
+            {t("deviceUser.banners.linuxEncryptDevice")}
           </InfoBanner>
         );
       }
@@ -121,14 +117,12 @@ const DeviceUserBanners = ({
                 onClick={onTriggerEscrowLinuxKey}
                 className="create-key-button"
               >
-                Create key
+                {t("deviceUser.banners.createKey")}
               </Button>
             }
             color="yellow"
           >
-            Disk encryption: Create a new disk encryption key. This lets your
-            organization help you unlock your device if you forget your
-            passphrase.
+            {t("deviceUser.banners.linuxCreateKey")}
           </InfoBanner>
         );
       }
@@ -143,13 +137,11 @@ const DeviceUserBanners = ({
           color="yellow"
           cta={
             <Button variant="text-link-dark" onClick={onClickCreatePIN}>
-              Create PIN
+              {t("deviceUser.banners.createPin")}
             </Button>
           }
         >
-          Disk encryption: Create a BitLocker PIN to safeguard your data in case
-          your device is lost or stolen. After, select <strong>Refetch</strong>{" "}
-          to clear this banner.
+          {t("deviceUser.banners.windowsCreatePin")}
         </InfoBanner>
       );
     }

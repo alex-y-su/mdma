@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import CardHeader from "components/CardHeader";
 import CustomLink from "components/CustomLink";
 
@@ -8,22 +9,26 @@ const SelfServiceHeader = ({
 }: {
   contactUrl: string;
   variant?: "mobile-header";
-}) => (
-  <CardHeader
-    header="Self-service"
-    subheader={
-      <>
-        Install organization-approved apps provided by your IT department.{" "}
-        {contactUrl && (
-          <span>
-            If you need help,{" "}
-            <CustomLink url={contactUrl} text="reach out to IT" newTab />
-          </span>
-        )}
-      </>
-    }
-    variant={variant}
-  />
-);
+}) => {
+  const { t } = useTranslation("hosts");
+
+  return (
+    <CardHeader
+      header={t("selfService.title")}
+      subheader={
+        <>
+          {t("selfService.description")}{" "}
+          {contactUrl && (
+            <span>
+              {t("selfService.needHelp")}{" "}
+              <CustomLink url={contactUrl} text={t("selfService.reachOutToIT")} newTab />
+            </span>
+          )}
+        </>
+      }
+      variant={variant}
+    />
+  );
+};
 
 export default SelfServiceHeader;

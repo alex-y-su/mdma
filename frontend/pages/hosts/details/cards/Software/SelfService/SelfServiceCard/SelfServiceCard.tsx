@@ -1,4 +1,5 @@
 import React, { useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { InjectedRouter } from "react-router";
 
 import { getPathWithQueryParams } from "utilities/url";
@@ -63,6 +64,7 @@ const SelfServiceCard = ({
   isMobileView,
   onClickInstallAction,
 }: ISelfServiceCardProps) => {
+  const { t } = useTranslation("hosts");
   const initialSortHeader = queryParams.order_key || "name";
   const initialSortDirection = queryParams.order_direction || "asc";
 
@@ -135,7 +137,7 @@ const SelfServiceCard = ({
   if (isError)
     return (
       <EmptyTable
-        header="Error loading software."
+        header={t("selfService.errorLoading")}
         {...(isMobileView && { variant: "mobile" })}
       />
     );
@@ -145,8 +147,8 @@ const SelfServiceCard = ({
     return (
       <EmptyTable
         graphicName="empty-software"
-        header="No self-service software available yet"
-        info="Your organization didn’t add any self-service software."
+        header={t("selfService.noSoftwareAvailable")}
+        info={t("selfService.noSoftwareInfo")}
         {...(isMobileView && { variant: "mobile" })}
       />
     );

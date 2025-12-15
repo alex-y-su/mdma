@@ -9,6 +9,7 @@ import React, {
 import { useQuery } from "react-query";
 import { InjectedRouter } from "react-router";
 import { AxiosError } from "axios";
+import { useTranslation } from "react-i18next";
 
 import { NotificationContext } from "context/notification";
 import { INotification } from "interfaces/notification";
@@ -141,6 +142,7 @@ const SoftwareSelfService = ({
   hostDisplayName,
   isMobileView = false,
 }: ISoftwareSelfServiceProps) => {
+  const { t } = useTranslation("hosts");
   const { renderFlash, renderMultiFlash } = useContext(NotificationContext);
 
   /** Guards against setState/side-effects after unmount */
@@ -385,7 +387,7 @@ const SoftwareSelfService = ({
         pendingSoftwareIdsRef.current = new Set();
         renderFlash(
           "error",
-          "We're having trouble checking pending installs. Please refresh the page."
+          t("selfService.errorCheckingPending")
         );
       },
     }
@@ -439,11 +441,11 @@ const SoftwareSelfService = ({
         // We only show toast message if API returns an error
         renderFlash(
           "error",
-          `Couldn't ${isScriptPackage ? "run" : "install"}. Please try again.`
+          isScriptPackage ? t("selfService.errorRun") : t("selfService.errorInstall")
         );
       }
     },
-    [deviceToken, onInstallOrUninstall, registerUserSoftwareAction, renderFlash]
+    [deviceToken, onInstallOrUninstall, registerUserSoftwareAction, renderFlash, t]
   );
 
   const onClickUninstallAction = useCallback(
@@ -480,10 +482,10 @@ const SoftwareSelfService = ({
         onInstallOrUninstall();
       } catch (error) {
         // Only show toast message if API returns an error
-        renderFlash("error", "Couldn't update software. Please try again.");
+        renderFlash("error", t("selfService.errorUpdate"));
       }
     },
-    [deviceToken, registerUserSoftwareAction, onInstallOrUninstall, renderFlash]
+    [deviceToken, registerUserSoftwareAction, onInstallOrUninstall, renderFlash, t]
   );
 
   const onClickUpdateAll = useCallback(async () => {
@@ -496,7 +498,7 @@ const SoftwareSelfService = ({
 
     // This should not happen
     if (!updateAvailableSoftware.length) {
-      renderFlash("success", "No updates available.");
+      renderFlash("success", t("selfService.noUpdatesAvailable"));
       return;
     }
 
@@ -520,7 +522,7 @@ const SoftwareSelfService = ({
           id: `update-error-${software.id}`,
           alertType: "error",
           isVisible: true,
-          message: `Couldn't update ${software.name}. Please try again.`,
+          message: t("selfService.errorUpdateSoftware", { name: software.name }),
           persistOnPageChange: false,
         })
       );
@@ -545,6 +547,7 @@ const SoftwareSelfService = ({
     enhancedSoftware,
     registerUserSoftwareAction,
     onInstallOrUninstall,
+    t,
   ]);
 
   const onShowUpdateDetails = useCallback(

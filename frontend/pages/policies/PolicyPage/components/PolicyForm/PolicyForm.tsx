@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 import React, { useState, useContext, useEffect, KeyboardEvent } from "react";
 import { useQuery } from "react-query";
+import { useTranslation } from "react-i18next";
 
 import { IAceEditor } from "react-ace/lib/types";
 import ReactTooltip from "react-tooltip";
@@ -105,6 +106,7 @@ const PolicyForm = ({
   onClickAutofillResolution,
   resetAiAutofillData,
 }: IPolicyFormProps): JSX.Element => {
+  const { t } = useTranslation("policies");
   const [errors, setErrors] = useState<{ [key: string]: any }>({}); // string | null | undefined or boolean | undefined
   const [isSaveNewPolicyModalOpen, setIsSaveNewPolicyModalOpen] = useState(
     false
@@ -314,14 +316,14 @@ const PolicyForm = ({
     if (isEditMode && !lastEditedQueryName) {
       return setErrors({
         ...errors,
-        name: "Policy name must be present",
+        name: t("create.nameRequired"),
       });
     }
 
     if (isEditMode && !isAnyPlatformSelected) {
       return setErrors({
         ...errors,
-        name: "At least one platform must be selected",
+        name: t("create.platformRequired"),
       });
     }
 
@@ -379,7 +381,7 @@ const PolicyForm = ({
     return storedPolicy ? (
       <DataSet
         className={`${baseClass}__author`}
-        title="Author"
+        title={t("details.author")}
         value={
           <>
             <Avatar
@@ -405,7 +407,7 @@ const PolicyForm = ({
         {showOpenSchemaActionText && (
           <Button variant="inverse" onClick={onOpenSchemaSidebar}>
             <>
-              Schema
+              {t("create.schema")}
               <Icon name="info" />
             </>
           </Button>
@@ -413,7 +415,7 @@ const PolicyForm = ({
         {!policyIdForEdit && (
           // only when creating a new policy
           <CustomLink
-            text="Examples"
+            text={t("create.examples")}
             url={`${LEARN_MORE_ABOUT_BASE_LINK}/policy-templates`}
             newTab
           />
@@ -480,7 +482,7 @@ const PolicyForm = ({
               >
                 <AutoSizeInputField
                   name="policy-name"
-                  placeholder="Add name here"
+                  placeholder={t("create.namePlaceholder")}
                   value={lastEditedQueryName}
                   hasError={errors && errors.name}
                   inputClassName={`${baseClass}__policy-name ${
@@ -512,7 +514,7 @@ const PolicyForm = ({
       <h1
         className={`${baseClass}__policy-name ${baseClass}__policy-name--new no-hover`}
       >
-        New policy
+        {t("create.newPolicy")}
       </h1>
     );
   };
@@ -536,7 +538,7 @@ const PolicyForm = ({
               >
                 <AutoSizeInputField
                   name="policy-description"
-                  placeholder="Add description here."
+                  placeholder={t("create.descriptionPlaceholder")}
                   value={lastEditedQueryDescription}
                   inputClassName={`${baseClass}__policy-description ${
                     !lastEditedQueryDescription ? "no-value" : ""
@@ -567,7 +569,7 @@ const PolicyForm = ({
     if (isEditMode) {
       return (
         <div className={`form-field ${baseClass}__policy-resolve`}>
-          <div className="form-field__label">Resolve</div>
+          <div className="form-field__label">{t("details.resolve")}</div>
           <GitOpsModeTooltipWrapper
             position="right"
             tipOffset={16}
@@ -584,7 +586,7 @@ const PolicyForm = ({
                 >
                   <AutoSizeInputField
                     name="policy-resolution"
-                    placeholder="Add resolution here."
+                    placeholder={t("create.resolutionPlaceholder")}
                     value={lastEditedQueryResolution}
                     inputClassName={`${baseClass}__policy-resolution ${
                       !lastEditedQueryResolution ? "no-value" : ""
@@ -635,14 +637,9 @@ const PolicyForm = ({
           disabled={gitOpsModeEnabled}
         >
           <TooltipWrapper
-            tipContent={
-              <p>
-                If automations are turned on, this
-                <br /> information is included.
-              </p>
-            }
+            tipContent={t("create.criticalTooltip")}
           >
-            Critical
+            {t("details.critical")}
           </TooltipWrapper>
         </Checkbox>
       </div>
@@ -668,7 +665,7 @@ const PolicyForm = ({
         content={lastEditedQueryDescription}
       />
       <p className="resolve-title">
-        <strong>Resolve:</strong>
+        <strong>{t("details.resolve")}:</strong>
       </p>
       <p className={`${baseClass}__policy-resolution no-hover`}>
         {lastEditedQueryResolution}
@@ -676,8 +673,8 @@ const PolicyForm = ({
       <RevealButton
         isShowing={showQueryEditor}
         className={baseClass}
-        hideText="Hide SQL"
-        showText="Show SQL"
+        hideText={`${t("results.showQuery").replace("Show query", "Hide SQL")}`}
+        showText={`${t("results.showQuery").replace("Show query", "Show SQL")}`}
         onClick={() => setShowQueryEditor(!showQueryEditor)}
       />
       {showQueryEditor && (
@@ -697,7 +694,7 @@ const PolicyForm = ({
             onClick={goToSelectTargets}
             disabled={isEditMode && !isAnyPlatformSelected}
           >
-            Run
+            {t("run")}
           </Button>
         </div>
       )}
@@ -730,7 +727,7 @@ const PolicyForm = ({
           <SQLEditor
             value={lastEditedQueryBody}
             error={errors.query}
-            label="Query"
+            label={t("details.query")}
             labelActionComponent={renderLabelComponent()}
             name="query editor"
             onLoad={onLoad}
@@ -782,7 +779,7 @@ const PolicyForm = ({
                         className="save-loading"
                         isLoading={isUpdatingPolicy}
                       >
-                        Save
+                        {t("save.save")}
                       </Button>
                     </span>
                     <ReactTooltip
@@ -792,11 +789,7 @@ const PolicyForm = ({
                       id="save-policy-button"
                       backgroundColor={COLORS["tooltip-bg"]}
                     >
-                      Select the platforms this
-                      <br />
-                      policy will be checked on
-                      <br />
-                      to save or run the policy.
+                      {t("create.platformTooltipRun")}
                     </ReactTooltip>
                   </>
                 )}
@@ -818,7 +811,7 @@ const PolicyForm = ({
                 }
                 variant="inverse"
               >
-                Run <Icon name="run" />
+                {t("run")} <Icon name="run" />
               </Button>
             </span>
             <ReactTooltip
@@ -830,13 +823,9 @@ const PolicyForm = ({
               data-html
             >
               {disabledLiveQuery ? (
-                <>Live queries are disabled in organization settings</>
+                <>{t("create.liveQueriesDisabled")}</>
               ) : (
-                <>
-                  Select the platforms this <br />
-                  policy will be checked on <br />
-                  to save or run the policy.
-                </>
+                <>{t("create.platformTooltipRun")}</>
               )}
             </ReactTooltip>
           </div>

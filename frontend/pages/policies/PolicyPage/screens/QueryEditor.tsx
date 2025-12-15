@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { InjectedRouter } from "react-router/lib/Router";
+import { useTranslation } from "react-i18next";
 
 import globalPoliciesAPI from "services/entities/global_policies";
 import teamPoliciesAPI from "services/entities/team_policies";
@@ -50,6 +51,7 @@ const QueryEditor = ({
   renderLiveQueryWarning,
   teamIdForApi,
 }: IQueryEditorProps): JSX.Element | null => {
+  const { t } = useTranslation("policies");
   const { currentUser, isPremiumTier, filteredPoliciesPath } = useContext(
     AppContext
   );
@@ -73,7 +75,7 @@ const QueryEditor = ({
     if (storedPolicyError) {
       renderFlash(
         "error",
-        "Something went wrong retrieving your policy. Please try again."
+        t ? "Something went wrong retrieving your policy. Please try again." : "Something went wrong retrieving your policy. Please try again."
       );
     }
   }, []);

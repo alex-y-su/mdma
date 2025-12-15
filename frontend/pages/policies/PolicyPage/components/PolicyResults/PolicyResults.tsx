@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import { useTranslation } from "react-i18next";
 import classnames from "classnames";
 import FileSaver from "file-saver";
 import { get } from "lodash";
@@ -41,10 +42,6 @@ interface IPolicyResultsProps {
 
 const baseClass = "query-results";
 const CSV_TITLE = "New Policy";
-const NAV_TITLES = {
-  RESULTS: "Results",
-  ERRORS: "Errors",
-};
 
 const PolicyResults = ({
   campaign,
@@ -56,6 +53,7 @@ const PolicyResults = ({
   goToQueryEditor,
   targetsTotalCount,
 }: IPolicyResultsProps): JSX.Element => {
+  const { t } = useTranslation("policies");
   const { lastEditedQueryBody } = useContext(PolicyContext);
 
   const { hosts: hostResponses, uiHostCounts, serverHostCounts, errors } =
@@ -118,7 +116,7 @@ const PolicyResults = ({
           variant="inverse"
         >
           <>
-            Show query <Icon name="eye" />
+            {t("results.showQuery")} <Icon name="eye" />
           </>
         </Button>
         <Button
@@ -129,7 +127,7 @@ const PolicyResults = ({
           variant="inverse"
         >
           <>
-            Export {tableType}
+            {tableType === "errors" ? t("results.exportErrors") : t("results.exportResults")}
             <Icon name="download" color="ui-fleet-black-75" />
           </>
         </Button>
@@ -169,11 +167,9 @@ const PolicyResults = ({
     if (finishedWithNoResults) {
       return (
         <p className="no-results-message">
-          Your live query returned no results.
+          {t("results.noResults")}
           <span>
-            Expecting to see results? Check to see if the host
-            {`${targetsTotalCount > 1 ? "s" : ""}`} you targeted reported
-            &ldquo;Online&rdquo; or check out the &ldquo;Errors&rdquo; table.
+            {t("results.noResultsExpecting", { plural: targetsTotalCount > 1 ? "s" : "" })}
           </span>
         </p>
       );
@@ -181,15 +177,11 @@ const PolicyResults = ({
 
     return (
       <div className={`${baseClass}__results-table-container`}>
-        <InfoBanner>
-          Hosts that responded with results are marked <strong>Yes</strong>.
-          Hosts that responded with no results are marked <strong>No</strong>.
-        </InfoBanner>
+        <InfoBanner dangerouslySetInnerHTML={{ __html: t("results.passFailInfo") }} />
         <div className={`${baseClass}__results-table-header`}>
           <span className={`${baseClass}__results-meta`}>
             <span className={`${baseClass}__results-count`}>
-              {uiHostCounts.successful} result
-              {uiHostCounts.successful !== 1 && "s"}
+              {t("results.resultCount", { count: uiHostCounts.successful })}
             </span>
             {isQueryFinished && renderPassFailPcts()}
           </span>
@@ -212,7 +204,7 @@ const PolicyResults = ({
         <div className={`${baseClass}__errors-table-header`}>
           {errors && (
             <span className={`${baseClass}__error-count`}>
-              {errors.length} error{errors.length !== 1 && "s"}
+              {t("results.errorCount", { count: errors.length })}
             </span>
           )}
           <div className={`${baseClass}__errors-cta`}>
@@ -252,11 +244,11 @@ const PolicyResults = ({
         <Tabs selectedIndex={navTabIndex} onSelect={(i) => setNavTabIndex(i)}>
           <TabList>
             <Tab className={firstTabClass}>
-              <TabText>{NAV_TITLES.RESULTS}</TabText>
+              <TabText>{t("results.title")}</TabText>
             </Tab>
             <Tab disabled={!errors?.length}>
               <TabText count={errors?.length} countVariant="alert">
-                {NAV_TITLES.ERRORS}
+                {t("results.errors")}
               </TabText>
             </Tab>
           </TabList>

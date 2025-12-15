@@ -4,6 +4,7 @@
 import React from "react";
 import { millisecondsToHours, millisecondsToMinutes } from "date-fns";
 import { Tooltip as ReactTooltip5 } from "react-tooltip-5";
+import { useTranslation } from "react-i18next";
 // @ts-ignore
 import Checkbox from "components/forms/fields/Checkbox";
 import HeaderCell from "components/TableContainer/DataTable/HeaderCell";
@@ -60,25 +61,23 @@ interface IDataColumn {
   sortType?: string;
 }
 
-const getPolicyRefreshTime = (ms: number): string => {
+const getPolicyRefreshTime = (ms: number, t: any): string => {
   const seconds = ms / 1000;
   if (seconds < 60) {
-    return `${seconds} seconds`;
+    return t("results.seconds", { count: seconds });
   }
   if (seconds < 3600) {
     const minutes = millisecondsToMinutes(ms);
-    return `${minutes} minute${minutes > 1 ? "s" : ""}`;
+    return t("results.minute", { count: minutes });
   }
   const hours = millisecondsToHours(ms);
-  return `${hours} hour${hours > 1 ? "s" : ""}`;
+  return t("results.hour", { count: hours });
 };
 
-const getTooltip = (osqueryPolicyMs: number): JSX.Element => {
+const getTooltip = (osqueryPolicyMs: number, t: any): JSX.Element => {
   return (
     <>
-      Fleet is collecting policy results. Try again
-      <br />
-      in about {getPolicyRefreshTime(osqueryPolicyMs)} as the system catches up.
+      {t("results.policyRefresh", { time: getPolicyRefreshTime(osqueryPolicyMs, t) })}
     </>
   );
 };
@@ -92,14 +91,15 @@ const generateTableHeaders = (
     tableType?: string;
   },
   isPremiumTier?: boolean,
-  isPrimoMode?: boolean
+  isPrimoMode?: boolean,
+  t?: any
 ): IDataColumn[] => {
   const { selectedTeamId, hasPermissionAndPoliciesToDelete } = options;
   const viewingTeamPolicies = selectedTeamId !== -1;
 
   const tableHeaders: IDataColumn[] = [
     {
-      title: "Name",
+      title: t ? t("columns.name") : "Name",
       Header: (cellProps) => (
         <HeaderCell
           value={cellProps.column.title}
@@ -138,12 +138,12 @@ const generateTableHeaders = (
                       offset={8}
                       positionStrategy="fixed"
                     >
-                      This policy has been marked as critical.
+                      {t ? t("columns.criticalTooltip") : "This policy has been marked as critical."}
                     </ReactTooltip5>
                   </div>
                 )}
                 {viewingTeamPolicies && team_id === null && (
-                  <InheritedBadge tooltipContent="This policy runs on all hosts." />
+                  <InheritedBadge tooltipContent={t ? t("results.inheritedTooltip") : "This policy runs on all hosts."} />
                 )}
               </>
             }
@@ -156,7 +156,7 @@ const generateTableHeaders = (
       sortType: "caseInsensitive",
     },
     {
-      title: "Pass",
+      title: t ? t("columns.pass") : "Pass",
       Header: (cellProps) => (
         <HeaderCell
           value={<PassingColumnHeader isPassing />}
@@ -168,9 +168,10 @@ const generateTableHeaders = (
         const { has_run, id, next_update_ms } = cellProps.row.original;
 
         if (has_run) {
+          const count = parseInt(cellProps.cell.value.toString(), 10);
           return (
             <LinkCell
-              value={`${cellProps.cell.value} host${
+              value={t ? t("columns.hosts", { count }) : `${cellProps.cell.value} host${
                 cellProps.cell.value.toString() === "1" ? "" : "s"
               }`}
               path={getPathWithQueryParams(PATHS.MANAGE_HOSTS, {
@@ -193,14 +194,14 @@ const generateTableHeaders = (
               offset={8}
               positionStrategy="fixed"
             >
-              {getTooltip(next_update_ms)}
+              {t ? getTooltip(next_update_ms, t) : getTooltip(next_update_ms, (key: string) => key)}
             </ReactTooltip5>
           </div>
         );
       },
     },
     {
-      title: "Fail",
+      title: t ? t("columns.fail") : "Fail",
       Header: (cellProps) => (
         <HeaderCell
           value={<PassingColumnHeader isPassing={false} />}
@@ -212,9 +213,10 @@ const generateTableHeaders = (
         const { has_run, id, next_update_ms } = cellProps.row.original;
 
         if (has_run) {
+          const count = parseInt(cellProps.cell.value.toString(), 10);
           return (
             <LinkCell
-              value={`${cellProps.cell.value} host${
+              value={t ? t("columns.hosts", { count }) : `${cellProps.cell.value} host${
                 cellProps.cell.value.toString() === "1" ? "" : "s"
               }`}
               path={getPathWithQueryParams(PATHS.MANAGE_HOSTS, {
@@ -237,7 +239,7 @@ const generateTableHeaders = (
               offset={8}
               positionStrategy="fixed"
             >
-              {getTooltip(next_update_ms)}
+              {t ? getTooltip(next_update_ms, t) : getTooltip(next_update_ms, (key: string) => key)}
             </ReactTooltip5>
           </div>
         );

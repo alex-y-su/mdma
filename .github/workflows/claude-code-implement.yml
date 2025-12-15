@@ -63,3 +63,6 @@ jobs:
 
           # Increase max turns for larger tasks
           max_turns: 200
+
+          # YOLO mode - skip all permission prompts
+          claude_args: "--dangerously-skip-permissions"

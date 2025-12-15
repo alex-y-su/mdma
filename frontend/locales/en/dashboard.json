@@ -226,7 +226,8 @@
     "type": "Type",
     "serverUrl": "Server URL",
     "vulnerabilities": "Vulnerabilities",
-    "notSupported": "Not supported"
+    "notSupported": "Not supported",
+    "unknown": "Unknown"
   },
   "munkiIssues": {
     "issueTooltip": "Issues reported the last time Munki ran on each host."

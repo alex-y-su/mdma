@@ -154,5 +154,85 @@
   "operatingSystems": {
     "emptyHeader": "No {{platform}} operating systems detected",
     "emptyInfo": "This report is updated every hour to protect the performance of your devices."
+  },
+  "hostCountCard": {
+    "notSupported": "Not supported"
+  },
+  "mdmSolutionModal": {
+    "done": "Done",
+    "columns": {
+      "serverUrl": "Server URL",
+      "serverUrlTooltip": "The MDM server URL is used to connect hosts with the MDM service. For cross-platform MDM solutions, each operating system has a different URL.",
+      "hosts": "Hosts"
+    }
+  },
+  "activityDetails": {
+    "automationModal": {
+      "title": "Details",
+      "webhookLabel": "Fleet will send a JSON payload to this URL whenever a new activity is generated:",
+      "done": "Done"
+    },
+    "appStoreModal": {
+      "title": "Details",
+      "name": "Name",
+      "appStoreId": "App Store ID",
+      "googlePlayId": "Google Play ID",
+      "selfService": "Self-Service",
+      "yes": "Yes",
+      "no": "No",
+      "done": "Done"
+    },
+    "librarySoftwareModal": {
+      "title": "Software details",
+      "name": "Name",
+      "packageName": "Package name",
+      "selfService": "Self-Service",
+      "target": "Target",
+      "includeAny": "include any",
+      "excludeAny": "exclude any",
+      "allHosts": "All hosts",
+      "labels": "labels",
+      "yes": "Yes",
+      "no": "No",
+      "done": "Done"
+    },
+    "runScriptModal": {
+      "title": "Script details",
+      "scriptContent": "Script content:",
+      "statusRunning": "Script is running or will run when the host comes online.",
+      "statusSuccess": "Exit code: 0 (Script ran successfully.)",
+      "statusFailed": "Exit code: {{exitCode}} (Script failed.)",
+      "statusError": "Error: {{message}}",
+      "timeout": "Timeout. Fleet stopped the script {{timeoutValue}}to protect host performance.",
+      "after": "after",
+      "timeoutTooltip": "Timeout can be configured by updating agent options.",
+      "outputLabel": "The {{outputRecorded}} when {{hostname}} ran the script{{wasAdHoc}}:",
+      "outputRecorded": "output recorded",
+      "outputTooltip": "Fleet records the last 10,000 characters to prevent downtime.",
+      "above": " above",
+      "dataError": "Close this modal and try again.",
+      "done": "Done"
+    },
+    "scriptBatchHostCountCell": {
+      "cancel": "Cancel"
+    }
+  },
+  "tableHeaders": {
+    "name": "Name",
+    "version": "Version",
+    "hosts": "Hosts",
+    "status": "Status",
+    "issue": "Issue",
+    "type": "Type",
+    "serverUrl": "Server URL",
+    "vulnerabilities": "Vulnerabilities",
+    "notSupported": "Not supported",
+    "unknown": "Unknown"
+  },
+  "munkiIssues": {
+    "issueTooltip": "Issues reported the last time Munki ran on each host."
+  },
+  "osVersions": {
+    "vulnerabilitiesTooltip": "Vulnerabilities on Linux are currently supported for Ubuntu, Debian, and Amazon Linux."
   }
 }

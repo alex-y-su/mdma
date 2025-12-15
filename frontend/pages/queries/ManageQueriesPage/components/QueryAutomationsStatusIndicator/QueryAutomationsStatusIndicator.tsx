@@ -1,5 +1,6 @@
 import StatusIndicator from "components/StatusIndicator";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 interface IQueryAutomationsStatusIndicator {
   automationsEnabled: boolean;
@@ -10,6 +11,8 @@ const QueryAutomationsStatusIndicator = ({
   automationsEnabled,
   interval,
 }: IQueryAutomationsStatusIndicator) => {
+  const { t } = useTranslation("queries");
+
   let status;
   if (automationsEnabled) {
     if (interval === 0) {
@@ -26,8 +29,7 @@ const QueryAutomationsStatusIndicator = ({
       ? {
           tooltipText: (
             <>
-              <strong>Automations</strong> will resume for this query when an
-              interval is set.
+              <strong>{t("automations.title")}</strong> {t("automations.pausedTooltip")}
             </>
           ),
         }

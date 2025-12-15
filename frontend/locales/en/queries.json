@@ -99,7 +99,18 @@
     "webhook": "Webhook",
     "logging": "Logging",
     "enabled": "Enabled",
-    "disabled": "Disabled"
+    "disabled": "Disabled",
+    "description": "Query automations let you send data gathered from macOS, Windows, and Linux hosts to a log destination. Data is sent according to a query's interval.",
+    "chooseQueries": "Choose which queries will send data:",
+    "noQueries": "You have no queries.",
+    "addQueryPrompt": "Add a query to turn on automations.",
+    "logDestination": "Log destination:",
+    "adminCanConfigure": "Users with the admin role can",
+    "configureLogDestination": "configure a different log destination",
+    "previewData": "Preview data",
+    "save": "Save",
+    "cancel": "Cancel",
+    "pausedTooltip": "will resume for this query when an interval is set."
   },
   "modals": {
     "delete": {
@@ -126,7 +137,8 @@
     },
     "previewData": {
       "title": "Preview data",
-      "noData": "No data available"
+      "noData": "No data available",
+      "done": "Done"
     }
   },
   "empty": {

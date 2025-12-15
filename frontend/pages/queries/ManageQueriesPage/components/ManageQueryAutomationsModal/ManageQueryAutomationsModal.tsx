@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useTranslation } from "react-i18next";
 
 import { AppContext } from "context/app";
 
@@ -72,6 +73,7 @@ const ManageQueryAutomationsModal = ({
   webhookDestination,
   filesystemDestination,
 }: IManageQueryAutomationsModalProps): JSX.Element => {
+  const { t } = useTranslation("queries");
   // TODO: Error handling, if any
   // const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
@@ -115,7 +117,7 @@ const ManageQueryAutomationsModal = ({
 
   return (
     <Modal
-      title="Manage automations"
+      title={t("automations.manage")}
       onExit={onCancel}
       className={baseClass}
       width="large"
@@ -123,14 +125,12 @@ const ManageQueryAutomationsModal = ({
     >
       <div className={`${baseClass} form`}>
         <div className={`${baseClass}__heading`}>
-          Query automations let you send data gathered from macOS, Windows, and
-          Linux hosts to a log destination. Data is sent according to a
-          query&apos;s interval.
+          {t("automations.description")}
         </div>
         {availableQueries?.length ? (
           <div className={`${baseClass}__select form-field`}>
             <div className="form-field__label">
-              Choose which queries will send data:
+              {t("automations.chooseQueries")}
             </div>
             <div className={`${baseClass}__checkboxes`}>
               {queryItems &&
@@ -159,12 +159,12 @@ const ManageQueryAutomationsModal = ({
           </div>
         ) : (
           <div className={`${baseClass}__no-queries`}>
-            <b>You have no queries.</b>
-            <p>Add a query to turn on automations.</p>
+            <b>{t("automations.noQueries")}</b>
+            <p>{t("automations.addQueryPrompt")}</p>
           </div>
         )}
         <div className={`${baseClass}__log-destination form-field`}>
-          <div className="form-field__label">Log destination:</div>
+          <div className="form-field__label">{t("automations.logDestination")}</div>
           <div className={`${baseClass}__selection`}>
             <LogDestinationIndicator
               logDestination={logDestination}
@@ -173,10 +173,10 @@ const ManageQueryAutomationsModal = ({
             />
           </div>
           <div className={`${baseClass}__configure form-field__help-text`}>
-            Users with the admin role can&nbsp;
+            {t("automations.adminCanConfigure")}&nbsp;
             <CustomLink
               url="https://fleetdm.com/docs/using-fleet/log-destinations"
-              text="configure a different log destination"
+              text={t("automations.configureLogDestination")}
               newTab
             />
           </div>
@@ -187,7 +187,7 @@ const ManageQueryAutomationsModal = ({
           onClick={togglePreviewDataModal}
           className={`${baseClass}__preview-data`}
         >
-          Preview data
+          {t("automations.previewData")}
         </Button>
         <div className="modal-cta-wrap">
           <GitOpsModeTooltipWrapper
@@ -200,12 +200,12 @@ const ManageQueryAutomationsModal = ({
                 isLoading={isUpdatingAutomations}
                 disabled={disableChildren}
               >
-                Save
+                {t("automations.save")}
               </Button>
             )}
           />
           <Button onClick={onCancel} variant="inverse">
-            Cancel
+            {t("automations.cancel")}
           </Button>
         </div>
       </div>

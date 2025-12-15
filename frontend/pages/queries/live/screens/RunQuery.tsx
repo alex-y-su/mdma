@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import SockJS from "sockjs-client";
+import { useTranslation } from "react-i18next";
 
 import { QueryContext } from "context/query";
 import { NotificationContext } from "context/notification";
@@ -38,6 +39,7 @@ const RunQuery = ({
   goToQueryEditor,
   targetsTotalCount,
 }: IRunQueryProps): JSX.Element | null => {
+  const { t } = useTranslation("queries");
   const { lastEditedQueryBody } = useContext(QueryContext);
   const { renderFlash } = useContext(NotificationContext);
 
@@ -161,7 +163,7 @@ const RunQuery = ({
     if (!lastEditedQueryBody) {
       renderFlash(
         "error",
-        "Something went wrong running your query. Please try again."
+        t("liveQuery.runError")
       );
       return false;
     }
@@ -184,20 +186,20 @@ const RunQuery = ({
       if (err.includes("no hosts targeted")) {
         renderFlash(
           "error",
-          "Your target selections did not include any hosts. Please try again."
+          t("liveQuery.noHostsTargeted")
         );
       } else if (err.includes("resource already created")) {
         renderFlash(
           "error",
-          "A campaign with the provided query text has already been created"
+          t("liveQuery.alreadyCreated")
         );
       } else if (err.includes("forbidden") || err.includes("unauthorized")) {
         renderFlash(
           "error",
-          "It seems you do not have the rights to run this query. If you believe this is in error, please contact your administrator."
+          t("liveQuery.forbidden")
         );
       } else {
-        renderFlash("error", "Something has gone wrong. Please try again.");
+        renderFlash("error", t("liveQuery.genericError"));
       }
 
       return teardownDistributedQuery();

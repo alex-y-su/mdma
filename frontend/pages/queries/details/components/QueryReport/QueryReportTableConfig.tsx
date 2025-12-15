@@ -17,6 +17,7 @@ import { IHeaderProps, IWebSocketData } from "interfaces/datatable_config";
 
 import PATHS from "router/paths";
 import LinkCell from "components/TableContainer/DataTable/LinkCell";
+import i18n from "i18n";
 
 type IQueryReportTableColumnConfig = Column<IWebSocketData>;
 type ITableHeaderProps = IHeaderProps<IWebSocketData>;
@@ -31,7 +32,7 @@ const _unshiftHostname = (headers: IQueryReportTableColumnConfig[]) => {
     // remove hostname header from headers
     const [displayNameHeader] = newHeaders.splice(displayNameIndex, 1);
     // reformat title and insert at start of headers array
-    newHeaders.unshift({ ...displayNameHeader, id: "Host" });
+    newHeaders.unshift({ ...displayNameHeader, id: i18n.t("queries:report.tableHost") });
   }
   // TODO: Remove after v5 when host_hostname is removed rom API response.
   const hostNameIndex = headers.findIndex((h) => h.id === "host_hostname");
@@ -59,7 +60,7 @@ const generateReportColumnConfigsFromResults = (
         <HeaderCell
           value={
             headerProps.column.id === "last_fetched"
-              ? "Last fetched"
+              ? i18n.t("queries:report.tableLastFetched")
               : headerProps.column.id
           }
           isSortedDesc={headerProps.column.isSortedDesc}
@@ -68,7 +69,7 @@ const generateReportColumnConfigsFromResults = (
       accessor: (data) => data[colName],
       Cell: (cellProps: ITableCellProps) => {
         if (typeof cellProps.cell.value !== "string") return null;
-        if (cellProps.column.id === "Host") {
+        if (cellProps.column.id === i18n.t("queries:report.tableHost")) {
           const hostID = cellProps.row.original.host_id as number;
           if (queryId === null) {
             return <>cellProps.cell.value</>;

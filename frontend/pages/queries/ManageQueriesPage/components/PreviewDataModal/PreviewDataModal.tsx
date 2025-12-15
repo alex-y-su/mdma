@@ -1,6 +1,7 @@
 /* This component is used for creating and editing both global and team scheduled queries */
 
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { syntaxHighlight } from "utilities/helpers";
 
 import Modal from "components/Modal";
@@ -16,6 +17,7 @@ interface IPreviewDataModalProps {
 const PreviewDataModal = ({
   onCancel,
 }: IPreviewDataModalProps): JSX.Element => {
+  const { t } = useTranslation("queries");
   const json = {
     action: "snapshot",
     snapshot: [
@@ -35,26 +37,20 @@ const PreviewDataModal = ({
   };
 
   return (
-    <Modal title="Example data" onExit={onCancel} className={baseClass}>
+    <Modal title={t("modals.previewData.title")} onExit={onCancel} className={baseClass}>
       <div className={`${baseClass}__preview-modal`}>
         <p>
           <TooltipWrapper
-            tipContent={
-              <>
-                The &quot;snapshot&quot; key includes the query&apos;s results.
-                These will be unique to your query.
-              </>
-            }
+            tipContent={t("modals.previewData.snapshotTooltip")}
           >
-            The data sent to your configured log destination will look similar
-            to the following JSON:
+            {t("modals.previewData.description")}
           </TooltipWrapper>
         </p>
         <div className={`${baseClass}__host-status-webhook-preview`}>
           <pre dangerouslySetInnerHTML={{ __html: syntaxHighlight(json) }} />
         </div>
         <div className="modal-cta-wrap">
-          <Button onClick={onCancel}>Done</Button>
+          <Button onClick={onCancel}>{t("modals.previewData.done")}</Button>
         </div>
       </div>
     </Modal>

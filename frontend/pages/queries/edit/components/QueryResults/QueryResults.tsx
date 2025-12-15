@@ -5,6 +5,7 @@ import classnames from "classnames";
 import FileSaver from "file-saver";
 import { QueryContext } from "context/query";
 import { useDebouncedCallback } from "use-debounce";
+import { useTranslation } from "react-i18next";
 
 import {
   generateCSVFilename,
@@ -43,10 +44,6 @@ interface IQueryResultsProps {
 
 const baseClass = "query-results";
 const CSV_TITLE = "New Query";
-const NAV_TITLES = {
-  RESULTS: "Results",
-  ERRORS: "Errors",
-};
 
 const QueryResults = ({
   campaign,
@@ -59,6 +56,7 @@ const QueryResults = ({
   goToQueryEditor,
   targetsTotalCount,
 }: IQueryResultsProps): JSX.Element => {
+  const { t } = useTranslation("queries");
   const { lastEditedQueryBody } = useContext(QueryContext);
 
   const { uiHostCounts, serverHostCounts, queryResults, errors } =
@@ -157,12 +155,7 @@ const QueryResults = ({
   const renderNoResults = () => {
     return (
       <p className="no-results-message">
-        Your live query returned no results.
-        <span>
-          Expecting to see results? Check to see if the host
-          {`${targetsTotalCount > 1 ? "s" : ""}`} you targeted reported
-          &ldquo;Online&rdquo; or check out the &ldquo;Errors&rdquo; table.
-        </span>
+        {t("queryResults.noResults", { plural: targetsTotalCount > 1 ? "s" : "" })}
       </p>
     );
   };
@@ -179,7 +172,7 @@ const QueryResults = ({
     [filteredResults.length, filteredErrors.length]
   );
 
-  const renderTableButtons = (tableType: "results" | "errors") => {
+  const renderTableButtons = (tableType: "errors" | "results") => {
     return (
       <div className={`${baseClass}__results-cta`}>
         <Button
@@ -188,7 +181,7 @@ const QueryResults = ({
           variant="inverse"
         >
           <>
-            Show query <Icon name="eye" />
+            {t("queryResults.showQuery")} <Icon name="eye" />
           </>
         </Button>
         <Button
@@ -201,7 +194,7 @@ const QueryResults = ({
           variant="inverse"
         >
           <>
-            Export {tableType}
+            {tableType === "errors" ? t("queryResults.exportErrors") : t("queryResults.exportResults")}
             <Icon name="download" />
           </>
         </Button>
@@ -281,22 +274,20 @@ const QueryResults = ({
       {isQueryClipped && (
         <InfoBanner
           color="yellow"
-          cta={<CustomLink url={SUPPORT_LINK} text="Get help" newTab />}
+          cta={<CustomLink url={SUPPORT_LINK} text={t("details.getHelp")} newTab />}
         >
           <div>
-            <b>Results clipped.</b> A sample of this query&apos;s results and
-            errors is included below. Please target fewer hosts at once to build
-            a full set of results.
+            <b>{t("queryResults.resultsClipped")}</b> {t("queryResults.resultsClippedMessage")}
           </div>
         </InfoBanner>
       )}
       <TabNav>
         <Tabs selectedIndex={navTabIndex} onSelect={(i) => setNavTabIndex(i)}>
           <TabList>
-            <Tab className={firstTabClass}>{NAV_TITLES.RESULTS}</Tab>
+            <Tab className={firstTabClass}>{t("queryResults.resultsTab")}</Tab>
             <Tab disabled={!errors?.length}>
               <TabText count={errors?.length} countVariant="alert">
-                {NAV_TITLES.ERRORS}
+                {t("queryResults.errorsTab")}
               </TabText>
             </Tab>
           </TabList>

@@ -5,6 +5,7 @@ import TooltipWrapper from "components/TooltipWrapper";
 import { QueryLoggingOption } from "interfaces/schedulable_query";
 import React, { useState } from "react";
 import { Link } from "react-router";
+import { useTranslation } from "react-i18next";
 
 const baseClass = "discard-data-option";
 
@@ -21,6 +22,7 @@ const DiscardDataOption = ({
   discardData,
   setDiscardData,
 }: IDiscardDataOptionProps) => {
+  const { t } = useTranslation("queries");
   const [forceEditDiscardData, setForceEditDiscardData] = useState(false);
   const disable = queryReportsDisabled && !forceEditDiscardData;
 
@@ -28,20 +30,11 @@ const DiscardDataOption = ({
     <div className="help-text">
       {disable ? (
         <>
-          This setting is ignored because query reports in Fleet have been{" "}
+          {t("discardData.globallyDisabledText")}{" "}
           <TooltipWrapper
-            tipContent={
-              <>
-                A Fleet administrator can enable query reports under <br />
-                <b>
-                  Organization settings &gt; Advanced options &gt; Disable query
-                  reports
-                </b>
-                .
-              </>
-            }
+            tipContent={t("discardData.globallyDisabledTooltip")}
           >
-            {"globally disabled."}
+            {t("discardData.globallyDisabledLink")}
           </TooltipWrapper>{" "}
           <Link
             to=""
@@ -52,7 +45,7 @@ const DiscardDataOption = ({
             className={`${baseClass}__edit-anyway`}
           >
             <>
-              Edit anyway
+              {t("discardData.editAnyway")}
               <Icon
                 name="chevron-right"
                 color="ui-fleet-black-75"
@@ -62,7 +55,7 @@ const DiscardDataOption = ({
           </Link>
         </>
       ) : (
-        "The most recent results for each host will not be available in Fleet."
+        t("discardData.helpText")
       )}
     </div>
   );
@@ -73,8 +66,7 @@ const DiscardDataOption = ({
       ) && (
         <>
           <InfoBanner color="purple">
-            The <b>Discard data</b> setting is ignored when differential logging
-            is enabled. This query&apos;s results will not be saved in Fleet.
+            {t("discardData.differentialBanner")}
           </InfoBanner>
         </>
       )}
@@ -87,7 +79,7 @@ const DiscardDataOption = ({
         }
         helpText={renderHelpText()}
       >
-        Discard data
+        {t("discardData.label")}
       </Checkbox>
     </div>
   );

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useQuery } from "react-query";
+import { useTranslation } from "react-i18next";
 
 import { size } from "lodash";
 
@@ -55,11 +56,11 @@ export interface ISaveNewQueryModalProps {
   platformSelector: IPlatformSelector;
 }
 
-const validateQueryName = (name: string) => {
+const validateQueryName = (name: string, t: any) => {
   const errors: { [key: string]: string } = {};
 
   if (!name) {
-    errors.name = "Query name must be present";
+    errors.name = t("modals.saveNew.nameRequired");
   }
 
   const valid = !size(errors);
@@ -77,6 +78,7 @@ const SaveNewQueryModal = ({
   queryReportsDisabled,
   platformSelector,
 }: ISaveNewQueryModalProps): JSX.Element => {
+  const { t } = useTranslation("queries");
   const { config, isPremiumTier } = useContext(AppContext);
 
   const [name, setName] = useState("");
@@ -156,7 +158,7 @@ const SaveNewQueryModal = ({
 
     const trimmedName = name.trim();
 
-    const { valid, errors: newErrors } = validateQueryName(trimmedName);
+    const { valid, errors: newErrors } = validateQueryName(trimmedName, t);
     setErrors({
       ...errors,
       ...newErrors,
@@ -194,7 +196,7 @@ const SaveNewQueryModal = ({
   };
 
   return (
-    <Modal title="Save query" onExit={toggleSaveNewQueryModal}>
+    <Modal title={t("modals.saveNew.title")} onExit={toggleSaveNewQueryModal}>
       <form
         onSubmit={onClickSaveQuery}
         className={baseClass}
@@ -209,7 +211,7 @@ const SaveNewQueryModal = ({
           value={name}
           error={errors.name}
           inputClassName={`${baseClass}__name`}
-          label="Name"
+          label={t("modals.saveNew.nameField")}
           autofocus
           ignore1password
         />
@@ -218,9 +220,9 @@ const SaveNewQueryModal = ({
           onChange={(value: string) => setDescription(value)}
           value={description}
           inputClassName={`${baseClass}__description`}
-          label="Description"
+          label={t("modals.saveNew.descriptionField")}
           type="textarea"
-          helpText="What information does your query reveal? (optional)"
+          helpText={t("modals.saveNew.descriptionHelpText")}
         />
         <Dropdown
           searchable={false}
@@ -228,35 +230,30 @@ const SaveNewQueryModal = ({
           onChange={(value: number) => {
             setSelectedFrequency(value);
           }}
-          placeholder="Every hour"
+          placeholder={t("schedule.daily")}
           value={selectedFrequency}
-          label="Interval"
+          label={t("modals.saveNew.intervalLabel")}
           wrapperClassName={`${baseClass}__form-field form-field--frequency`}
-          helpText="This is how often your query collects data."
+          helpText={t("modals.saveNew.intervalHelpText")}
         />
         <Checkbox
           name="observerCanRun"
           onChange={setObserverCanRun}
           value={observerCanRun}
           wrapperClassName="observer-can-run-wrapper"
-          helpText="Users with the Observer role will be able to run this query as a live query."
+          helpText={t("modals.saveNew.observersCanRunHelpText")}
         >
-          Observers can run
+          {t("modals.saveNew.observersCanRun")}
         </Checkbox>
         <Slider
           onChange={() => setAutomationsEnabled(!automationsEnabled)}
           value={automationsEnabled}
           activeText={
             <>
-              Automations on
+              {t("modals.saveNew.automationsOn")}
               {selectedFrequency === 0 && (
                 <TooltipWrapper
-                  tipContent={
-                    <>
-                      Automations and reporting will be paused <br />
-                      for this query until an interval is set.
-                    </>
-                  }
+                  tipContent={t("modals.saveNew.automationsPausedTooltip")}
                   position="right"
                   tipOffset={9}
                   showArrow
@@ -267,11 +264,10 @@ const SaveNewQueryModal = ({
               )}
             </>
           }
-          inactiveText="Automations off"
+          inactiveText={t("modals.saveNew.automationsOff")}
           helpText={
             <>
-              Historical results will {!automationsEnabled ? "not " : ""}be sent
-              to your log destination:{" "}
+              {t("modals.saveNew.automationsHelpText", { not: !automationsEnabled ? "not " : "" })}
               <b>
                 <LogDestinationIndicator
                   logDestination={config?.logging.result.plugin || ""}
@@ -297,7 +293,7 @@ const SaveNewQueryModal = ({
             labels={labels || []}
             customHelpText={
               <span className="form-field__help-text">
-                Query will target hosts that <b>have any</b> of these labels:
+                {t("modals.saveNew.targetHelpText")}
               </span>
             }
             suppressTitle
@@ -306,8 +302,8 @@ const SaveNewQueryModal = ({
         <RevealButton
           isShowing={showAdvancedOptions}
           className="advanced-options-toggle"
-          hideText="Hide advanced options"
-          showText="Show advanced options"
+          hideText={t("modals.saveNew.hideAdvanced")}
+          showText={t("modals.saveNew.showAdvanced")}
           caretPosition="after"
           onClick={toggleAdvancedOptions}
         />
@@ -316,17 +312,17 @@ const SaveNewQueryModal = ({
             <Dropdown
               options={MIN_OSQUERY_VERSION_OPTIONS}
               onChange={setSelectedMinOsqueryVersionOptions}
-              placeholder="Select"
+              placeholder={t("modals.saveNew.selectPlaceholder")}
               value={selectedMinOsqueryVersionOptions}
-              label="Minimum osquery version"
+              label={t("modals.saveNew.minOsqueryVersion")}
               wrapperClassName={`${baseClass}__form-field ${baseClass}__form-field--osquer-vers`}
             />
             <Dropdown
               options={LOGGING_TYPE_OPTIONS}
               onChange={setSelectedLoggingType}
-              placeholder="Select"
+              placeholder={t("modals.saveNew.selectPlaceholder")}
               value={selectedLoggingType}
-              label="Logging"
+              label={t("modals.saveNew.logging")}
               wrapperClassName={`${baseClass}__form-field ${baseClass}__form-field--logging`}
             />
             {queryReportsDisabled !== undefined && (
@@ -349,10 +345,10 @@ const SaveNewQueryModal = ({
             isLoading={isLoading || isFetchingLabels}
             disabled={!canSave}
           >
-            Save
+            {t("modals.saveNew.saveButton")}
           </Button>
           <Button onClick={toggleSaveNewQueryModal} variant="inverse">
-            Cancel
+            {t("modals.saveNew.cancelButton")}
           </Button>
         </div>
       </form>

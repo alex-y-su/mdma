@@ -1,5 +1,6 @@
 import GitOpsModeTooltipWrapper from "components/GitOpsModeTooltipWrapper";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import Button from "components/buttons/Button";
 import Icon from "components/Icon";
 
@@ -10,9 +11,10 @@ interface IScriptListHeading {
 }
 
 const ScriptListHeading = ({ onClickAddScript }: IScriptListHeading) => {
+  const { t } = useTranslation("settings");
   return (
     <div className={baseClass}>
-      <span className={`${baseClass}__heading-title`}>Scripts</span>
+      <span className={`${baseClass}__heading-title`}>{t("controls.scripts.title")}</span>
       <span className={`${baseClass}__heading-actions`}>
         <GitOpsModeTooltipWrapper
           position="left"
@@ -26,7 +28,7 @@ const ScriptListHeading = ({ onClickAddScript }: IScriptListHeading) => {
             >
               <>
                 <Icon name="plus" color="core-fleet-green" />
-                Add script
+                {t("controls.scripts.addScript")}
               </>
             </Button>
           )}

@@ -60,19 +60,22 @@ const onDownload = async (script: IScript, renderFlash: any) => {
 const ScriptListItemDetails = ({
   platform,
   createdAt,
-}: IScriptListItemDetailsProps) => (
-  <div className={`${baseClass}__details`}>
-    {platform && (
-      <>
-        <span>{platform}</span>
-        <span>&bull;</span>
-      </>
-    )}
-    <span>
-      Uploaded <HumanTimeDiffWithDateTip timeString={createdAt} />
-    </span>
-  </div>
-);
+}: IScriptListItemDetailsProps) => {
+  // Note: "Uploaded" doesn't have a translation key, keeping as-is
+  return (
+    <div className={`${baseClass}__details`}>
+      {platform && (
+        <>
+          <span>{platform}</span>
+          <span>&bull;</span>
+        </>
+      )}
+      <span>
+        Uploaded <HumanTimeDiffWithDateTip timeString={createdAt} />
+      </span>
+    </div>
+  );
+};
 
 const ScriptListItem = ({
   script,

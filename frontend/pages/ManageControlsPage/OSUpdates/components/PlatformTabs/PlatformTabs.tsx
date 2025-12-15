@@ -1,5 +1,6 @@
 import React from "react";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
+import { useTranslation } from "react-i18next";
 import TabNav from "components/TabNav";
 import TabText from "components/TabText";
 import CustomLink from "components/CustomLink";
@@ -49,6 +50,7 @@ const PlatformTabs = ({
   isWindowsMdmEnabled,
   isAndroidMdmEnabled,
 }: IPlatformTabsProps) => {
+  const { t } = useTranslation("settings");
   // FIXME: This behaves unexpectedly when a user switches tabs or changes the teams dropdown while a form is
   // submitting.
 
@@ -73,18 +75,18 @@ const PlatformTabs = ({
         >
           <TabList>
             <Tab key="macOS" data-text="macOS">
-              <TabText>macOS</TabText>
+              <TabText>{t("controls.osUpdates.platforms.macos")}</TabText>
             </Tab>
             {isWindowsMdmEnabled && (
               <Tab key="Windows" data-text="Windows">
-                <TabText>Windows</TabText>
+                <TabText>{t("controls.osUpdates.platforms.windows")}</TabText>
               </Tab>
             )}
             <Tab key="iOS" data-text="iOS">
-              <TabText>iOS</TabText>
+              <TabText>{t("controls.osUpdates.platforms.ios")}</TabText>
             </Tab>
             <Tab key="iPadOS" data-text="iPadOS">
-              <TabText>iPadOS</TabText>
+              <TabText>{t("controls.osUpdates.platforms.ipados")}</TabText>
             </Tab>
             {isAndroidMdmEnabled && (
               <Tab key="Android" data-text="Android">

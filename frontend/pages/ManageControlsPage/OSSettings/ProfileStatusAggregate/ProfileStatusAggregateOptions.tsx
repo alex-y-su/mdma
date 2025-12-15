@@ -19,7 +19,7 @@ const AGGREGATE_STATUS_DISPLAY_OPTIONS: IAggregateDisplayOption[] = [
   },
   {
     value: "verifying",
-    text: "Verifying",
+    text: i18n.t("controls.osSettings.diskEncryption.status.verifying", { ns: "settings" }),
     iconName: "successPartial",
     tooltipText: (
       <>

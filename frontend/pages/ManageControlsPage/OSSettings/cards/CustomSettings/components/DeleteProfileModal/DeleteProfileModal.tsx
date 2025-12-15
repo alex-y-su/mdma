@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useTranslation } from "react-i18next";
 
 import { AppContext } from "context/app";
 
@@ -29,6 +30,7 @@ const DeleteProfileModal = ({
   onDelete,
   isDeleting,
 }: DeleteProfileModalProps) => {
+  const { t } = useTranslation("settings");
   const { isPremiumTier, currentTeam } = useContext(AppContext);
 
   const messageSuffix = generateMessageSuffix(isPremiumTier, currentTeam?.id);
@@ -36,7 +38,7 @@ const DeleteProfileModal = ({
   return (
     <Modal
       className={baseClass}
-      title="Delete configuration profile"
+      title={t("controls.osSettings.customSettings.deleteProfile")}
       onExit={onCancel}
       onEnter={() => onDelete(profileId)}
       width="large"

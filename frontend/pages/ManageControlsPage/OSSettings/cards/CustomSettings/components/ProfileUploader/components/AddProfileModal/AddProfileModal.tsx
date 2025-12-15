@@ -1,6 +1,7 @@
 import React, { useCallback, useContext, useRef, useState } from "react";
 import { useQuery } from "react-query";
 import { AxiosResponse } from "axios";
+import { useTranslation } from "react-i18next";
 
 import { NotificationContext } from "context/notification";
 
@@ -39,43 +40,47 @@ interface IFileChooserProps {
   onFileOpen: (files: FileList | null) => void;
 }
 
-const FileChooser = ({ isLoading, onFileOpen }: IFileChooserProps) => (
-  <div className={`${baseClass}__file-chooser`}>
-    <ProfileGraphic
-      baseClass={baseClass}
-      title="Upload configuration profile"
-      message={
-        <>
-          .mobileconfig and .json for macOS, iOS, and iPadOS.
-          <br />
-          .json for Android.
-          <br />
-          .xml for Windows.
-        </>
-      }
-    />
-    <Button
-      className={`${baseClass}__upload-button`}
-      variant="brand-inverse-icon"
-      isLoading={isLoading}
-    >
-      <label htmlFor="upload-profile">
-        <span className={`${baseClass}__file-chooser--button-wrap`}>
-          <Icon name="upload" />
-          Choose file
-        </span>
-      </label>
-    </Button>
-    <input
-      accept=".json,.mobileconfig,application/x-apple-aspen-config,.xml"
-      id="upload-profile"
-      type="file"
-      onChange={(e) => {
-        onFileOpen(e.target.files);
-      }}
-    />
-  </div>
-);
+const FileChooser = ({ isLoading, onFileOpen }: IFileChooserProps) => {
+  const { t } = useTranslation("settings");
+
+  return (
+    <div className={`${baseClass}__file-chooser`}>
+      <ProfileGraphic
+        baseClass={baseClass}
+        title={t("controls.osSettings.customSettings.uploadProfile")}
+        message={
+          <>
+            .mobileconfig and .json for macOS, iOS, and iPadOS.
+            <br />
+            .json for Android.
+            <br />
+            .xml for Windows.
+          </>
+        }
+      />
+      <Button
+        className={`${baseClass}__upload-button`}
+        variant="brand-inverse-icon"
+        isLoading={isLoading}
+      >
+        <label htmlFor="upload-profile">
+          <span className={`${baseClass}__file-chooser--button-wrap`}>
+            <Icon name="upload" />
+            Choose file
+          </span>
+        </label>
+      </Button>
+      <input
+        accept=".json,.mobileconfig,application/x-apple-aspen-config,.xml"
+        id="upload-profile"
+        type="file"
+        onChange={(e) => {
+          onFileOpen(e.target.files);
+        }}
+      />
+    </div>
+  );
+};
 
 interface IFileDetailsProps {
   details: IParseFileResult;
@@ -109,6 +114,7 @@ const AddProfileModal = ({
   onUpload,
   setShowModal,
 }: IAddProfileModalProps) => {
+  const { t } = useTranslation("settings");
   const { renderFlash } = useContext(NotificationContext);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -208,7 +214,7 @@ const AddProfileModal = ({
   };
 
   return (
-    <Modal title="Add profile" onExit={onDone}>
+    <Modal title={t("controls.osSettings.customSettings.addProfile")} onExit={onDone}>
       <>
         {isPremiumTier && isLoadingLabels && <Spinner />}
         {isPremiumTier && !isLoadingLabels && isErrorLabels && <DataError />}
@@ -247,7 +253,7 @@ const AddProfileModal = ({
                   !fileDetails
                 }
               >
-                Add profile
+                {t("controls.osSettings.customSettings.addProfile")}
               </Button>
             </div>
           </div>

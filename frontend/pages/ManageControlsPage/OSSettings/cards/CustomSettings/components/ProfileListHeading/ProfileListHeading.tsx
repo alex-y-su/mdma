@@ -2,6 +2,7 @@ import GitOpsModeTooltipWrapper from "components/GitOpsModeTooltipWrapper";
 import Icon from "components/Icon";
 import Button from "components/buttons/Button";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const baseClass = "profile-list-heading";
 
@@ -12,6 +13,8 @@ interface IProfileListHeadingProps {
 const ProfileListHeading = ({
   onClickAddProfile,
 }: IProfileListHeadingProps) => {
+  const { t } = useTranslation("settings");
+
   return (
     <div className={baseClass}>
       <span className={`${baseClass}__profile-name-heading`}>
@@ -30,7 +33,7 @@ const ProfileListHeading = ({
             >
               <>
                 <Icon name="plus" color="core-fleet-green" />
-                Add profile
+                {t("controls.osSettings.customSettings.addProfile")}
               </>
             </Button>
           )}

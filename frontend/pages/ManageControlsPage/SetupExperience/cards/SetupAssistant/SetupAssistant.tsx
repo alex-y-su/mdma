@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { AxiosError } from "axios";
 
@@ -30,6 +31,7 @@ const SetupAssistant = ({
   currentTeamId,
   router,
 }: ISetupExperienceCardProps) => {
+  const { t } = useTranslation("settings");
   const [showDeleteProfileModal, setShowDeleteProfileModal] = useState(false);
 
   const { data: globalConfig, isLoading: isLoadingGlobalConfig } = useQuery<
@@ -95,7 +97,7 @@ const SetupAssistant = ({
       <SetupExperienceContentContainer>
         <div className={`${baseClass}__upload-container`}>
           <p className={`${baseClass}__section-description`}>
-            Add an automatic enrollment profile to customize Setup Assistant.
+            {t("controls.setupExperience.setupAssistant.uploadDescription")}
           </p>
           {enrollmentProfileNotFound || !enrollmentProfileData ? (
             <SetupAssistantProfileUploader
@@ -130,9 +132,9 @@ const SetupAssistant = ({
     ) {
       return (
         <GenericMsgWithNavButton
-          header="Additional configuration required"
-          info="To customize, first turn on automatic enrollment."
-          buttonText="Turn on"
+          header={t("controls.setupExperience.setupAssistant.noProfile")}
+          info={t("controls.setupExperience.setupAssistant.uploadDescription")}
+          buttonText={t("controls.setupExperience.setupAssistant.uploadProfile")}
           path={PATHS.ADMIN_INTEGRATIONS_MDM}
           router={router}
         />
@@ -144,11 +146,11 @@ const SetupAssistant = ({
   return (
     <section className={baseClass}>
       <SectionHeader
-        title="Setup Assistant"
+        title={t("controls.setupExperience.setupAssistant.title")}
         details={
           <CustomLink
             url="https://fleetdm.com/learn-more-about/setup-assistant"
-            text="Preview end user experience"
+            text={t("controls.setupExperience.setupAssistant.description")}
             newTab
           />
         }

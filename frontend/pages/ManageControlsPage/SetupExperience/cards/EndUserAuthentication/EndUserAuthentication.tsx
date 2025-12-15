@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import PATHS from "router/paths";
 import { useQuery } from "react-query";
 
@@ -50,6 +51,7 @@ const EndUserAuthentication = ({
   currentTeamId,
   router,
 }: ISetupExperienceCardProps) => {
+  const { t } = useTranslation("settings");
   const { data: globalConfig, isLoading: isLoadingGlobalConfig } = useQuery<
     IConfig,
     Error
@@ -84,9 +86,9 @@ const EndUserAuthentication = ({
       <SetupExperienceContentContainer>
         {!isIdPConfigured(mdmConfig) ? (
           <GenericMsgWithNavButton
-            header="Require end user authentication during setup"
-            info="Connect Fleet to your identity provider (IdP) to get started."
-            buttonText="Connect"
+            header={t("controls.setupExperience.endUserAuth.title")}
+            info={t("controls.setupExperience.endUserAuth.description")}
+            buttonText={t("controls.setupExperience.endUserAuth.enabled")}
             router={router}
             path={PATHS.ADMIN_INTEGRATIONS_IDENTITY_PROVIDER}
           />
@@ -103,12 +105,12 @@ const EndUserAuthentication = ({
   return (
     <section className={baseClass}>
       <SectionHeader
-        title="End user authentication"
+        title={t("controls.setupExperience.endUserAuth.title")}
         details={
           <CustomLink
             newTab
             url={`${LEARN_MORE_ABOUT_BASE_LINK}/setup-experience/end-user-authentication`}
-            text="Preview end user experience"
+            text={t("controls.setupExperience.endUserAuth.description")}
           />
         }
       />

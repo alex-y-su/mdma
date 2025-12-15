@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useTranslation } from "react-i18next";
 
 import { AppContext } from "context/app";
 
@@ -27,6 +28,7 @@ const RerunScriptModal = ({
   onCancel,
   onRerun,
 }: IRerunScriptModalProps) => {
+  const { t } = useTranslation("settings");
   const { isPremiumTier, currentTeam } = useContext(AppContext);
 
   const messageSuffix = generateMessageSuffix(isPremiumTier, currentTeam?.id);
@@ -34,20 +36,18 @@ const RerunScriptModal = ({
   return (
     <Modal
       className={baseClass}
-      title="Rerun Script"
+      title={t("controls.scripts.modals.rerun.title")}
       onExit={onCancel}
       onEnter={() => onRerun(scriptId)}
     >
       <>
         <p>
-          This action will rerun script{" "}
-          <span className={`${baseClass}__script-name`}>{scriptName}</span> on
-          all macOS hosts {messageSuffix}.
+          {t("controls.scripts.modals.rerun.message")}
         </p>
         <p>This may cause the script to run more than once on some hosts.</p>
         <div className="modal-cta-wrap">
           <Button type="button" onClick={() => onRerun(scriptId)}>
-            Rerun
+            {t("controls.scripts.rerunScript")}
           </Button>
           <Button onClick={onCancel} variant="inverse">
             Cancel

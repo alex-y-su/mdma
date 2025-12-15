@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { isEmpty } from "lodash";
+import { useTranslation } from "react-i18next";
 
 import { APP_CONTEXT_NO_TEAM_ID } from "interfaces/team";
 import { NotificationContext } from "context/notification";
@@ -116,6 +117,7 @@ const AppleOSTargetForm = ({
   refetchAppConfig,
   refetchTeamConfig,
 }: IAppleOSTargetFormProps) => {
+  const { t } = useTranslation("settings");
   const { renderFlash } = useContext(NotificationContext);
   const gitOpsModeEnabled = useContext(AppContext).config?.gitops
     .gitops_mode_enabled;
@@ -188,7 +190,7 @@ const AppleOSTargetForm = ({
   return (
     <form className={baseClass} onSubmit={handleSubmit}>
       <InputField
-        label="Minimum version"
+        label={t("controls.osUpdates.minimumVersion")}
         disabled={gitOpsModeEnabled}
         tooltip={getMinimumVersionTooltip()}
         helpText={
@@ -207,9 +209,9 @@ const AppleOSTargetForm = ({
       />
       <InputField
         disabled={gitOpsModeEnabled}
-        label="Deadline"
+        label={t("controls.osUpdates.deadline")}
         tooltip="The end user can't dismiss the OS update once they reach this deadline. Deadline is 12:00 (Noon), the host's local time."
-        helpText="YYYY-MM-DD format only (e.g., “2024-07-01”)."
+        helpText={t("controls.osUpdates.form.deadlineHelp")}
         value={deadline}
         error={deadlineError}
         onChange={handleDeadlineChange}

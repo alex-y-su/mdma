@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { isEmpty } from "lodash";
+import { useTranslation } from "react-i18next";
 
 import { APP_CONTEXT_NO_TEAM_ID } from "interfaces/team";
 
@@ -99,6 +100,7 @@ const WindowsTargetForm = ({
   refetchAppConfig,
   refetchTeamConfig,
 }: IWindowsTargetFormProps) => {
+  const { t } = useTranslation("settings");
   const { renderFlash } = useContext(NotificationContext);
   const gitOpsModeEnabled = useContext(AppContext).config?.gitops
     .gitops_mode_enabled;
@@ -163,7 +165,7 @@ const WindowsTargetForm = ({
     <form className={baseClass} onSubmit={handleSubmit}>
       <InputField
         disabled={gitOpsModeEnabled}
-        label="Deadline"
+        label={t("controls.osUpdates.deadline")}
         tooltip="Number of days the end user has before updates are installed and the host is forced to restart."
         helpText="Number of days from 0 to 30."
         value={deadlineDays}

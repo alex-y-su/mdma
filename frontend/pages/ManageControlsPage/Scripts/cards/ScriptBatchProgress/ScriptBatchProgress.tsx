@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useQuery } from "react-query";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
+import { useTranslation } from "react-i18next";
 
 import PATHS from "router/paths";
 
@@ -57,6 +58,7 @@ const ScriptBatchProgress = ({
   router,
   teamId,
 }: IScriptBatchProgressProps) => {
+  const { t } = useTranslation("settings");
   const [pageNumber, setPageNumber] = useState(0);
 
   const paginatedListRef = useRef<IPaginatedListHandle<IScriptBatchSummaryV2>>(
@@ -209,7 +211,7 @@ const ScriptBatchProgress = ({
   return (
     <>
       <div className={baseClass}>
-        <SectionHeader title="Batch progress" alignLeftHeaderVertically />
+        <SectionHeader title={t("controls.scripts.batchDetails.progress")} alignLeftHeaderVertically />
         <TabNav secondary>
           <Tabs
             selectedIndex={STATUS_BY_INDEX.indexOf(selectedStatus)}

@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import Modal from "components/Modal";
 import Button from "components/buttons/Button";
@@ -18,9 +19,10 @@ const CancelScriptBatchModal = ({
   scriptName,
   isCanceling,
 }: ICancelScriptBatchModal) => {
+  const { t } = useTranslation("settings");
   return (
     <Modal
-      title="Cancel script?"
+      title={t("controls.scripts.modals.cancel.title")}
       onExit={onExit}
       onEnter={onSubmit}
       className={baseClass}
@@ -28,8 +30,7 @@ const CancelScriptBatchModal = ({
       <>
         <div className={`${baseClass}__content`}>
           <p>
-            This will cancel any pending script runs for{" "}
-            {scriptName ? <b>{scriptName}</b> : "this batch"}.
+            {t("controls.scripts.modals.cancel.message")}
           </p>
           <p>
             If this script is currently running on a host, it will complete, but
@@ -43,7 +44,7 @@ const CancelScriptBatchModal = ({
               onClick={onSubmit}
               variant="alert"
             >
-              Cancel script
+              {t("controls.scripts.cancelScript")}
             </Button>
             <Button variant="inverse-alert" onClick={onExit}>
               Back

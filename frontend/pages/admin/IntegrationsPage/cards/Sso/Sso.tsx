@@ -1,4 +1,5 @@
 import React, { useCallback, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { IInputFieldParseTarget } from "interfaces/form_field";
 
@@ -44,7 +45,7 @@ interface ISsoFormErrors {
   idp_name?: string | null;
 }
 
-const validate = (formData: ISsoFormData) => {
+const validate = (formData: ISsoFormData, t: any) => {
   const errors: ISsoFormErrors = {};
 
   const {
@@ -58,28 +59,26 @@ const validate = (formData: ISsoFormData) => {
 
   if (enableSso) {
     if (idpImageUrl && !validUrl({ url: idpImageUrl })) {
-      errors.idp_image_url = `${idpImageUrl} is not a valid URL`;
+      errors.idp_image_url = t("settings:integrations.sso.errors.invalid_url", { url: idpImageUrl });
     }
 
     if (!metadata) {
       if (!metadataUrl) {
-        errors.metadata_url =
-          "Metadata URL is required (if metadata is not present)";
-        errors.metadata =
-          "Metadata is required (if metadata URL is not present)";
+        errors.metadata_url = t("settings:integrations.sso.errors.metadata_url_required");
+        errors.metadata = t("settings:integrations.sso.errors.metadata_required");
       } else if (
         !validUrl({ url: metadataUrl, protocols: ["http", "https"] })
       ) {
-        errors.metadata_url = `${metadataUrl} is not a valid URL`;
+        errors.metadata_url = t("settings:integrations.sso.errors.invalid_url", { url: metadataUrl });
       }
     }
 
     if (!entityId) {
-      errors.entity_id = "Entity ID must be present";
+      errors.entity_id = t("settings:integrations.sso.errors.entity_id_required");
     }
 
     if (!idpName) {
-      errors.idp_name = "Identity provider name must be present";
+      errors.idp_name = t("settings:integrations.sso.errors.idp_name_required");
     }
   }
 
@@ -96,6 +95,7 @@ const Sso = ({
   router,
   subsection,
 }: IAppConfigFormProps): JSX.Element => {
+  const { t } = useTranslation("settings");
   const gitOpsModeEnabled = appConfig.gitops.gitops_mode_enabled;
   const selectedAuthTarget = subsection as string;
 
@@ -130,7 +130,7 @@ const Sso = ({
   const onInputChange = ({ name, value }: IInputFieldParseTarget) => {
     const newFormData = { ...formData, [name]: value };
     setFormData(newFormData);
-    const newErrs = validate(newFormData);
+    const newErrs = validate(newFormData, t);
     // only set errors that are updates of existing errors
     // new errors are only set onBlur or submit
     const errsToSet: Record<string, string> = {};
@@ -146,13 +146,13 @@ const Sso = ({
   };
 
   const onInputBlur = () => {
-    setFormErrors(validate(formData));
+    setFormErrors(validate(formData, t));
   };
 
   const onFormSubmit = async (evt: React.MouseEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    const errs = validate(formData);
+    const errs = validate(formData, t);
     if (Object.keys(errs).length > 0) {
       setFormErrors(errs);
       return;
@@ -191,7 +191,7 @@ const Sso = ({
       if (
         formDirty &&
         // eslint-disable-next-line no-alert
-        !confirm("Switch tabs?\n\nChanges you made will not be saved.")
+        !confirm(t("integrations.sso.confirm_switch_tabs"))
       ) {
         return;
       }
@@ -206,7 +206,7 @@ const Sso = ({
           : PATHS.ADMIN_INTEGRATIONS_SSO_FLEET_USERS
       );
     },
-    [formDirty, router]
+    [formDirty, router, t]
   );
 
   const renderFleetSsoTab = () => {
@@ -225,42 +225,41 @@ const Sso = ({
             value={enableSso}
             parseTarget
           >
-            Enable single sign-on
+            {t("integrations.sso.enable_sso")}
           </Checkbox>
           <InputField
-            label="Identity provider name"
+            label={t("integrations.sso.idp_name_label")}
             onChange={onInputChange}
             name="idpName"
             value={idpName}
             parseTarget
             onBlur={onInputBlur}
             error={formErrors.idp_name}
-            tooltip="A required human friendly name for the identity provider that will provide single sign-on authentication."
+            tooltip={t("integrations.sso.idp_name_tooltip")}
           />
           <InputField
-            label="Entity ID"
-            helpText="The URI you provide here must exactly match the Entity ID field used in identity provider configuration."
+            label={t("integrations.sso.entity_id_label")}
+            helpText={t("integrations.sso.entity_id_help")}
             onChange={onInputChange}
             name="entityId"
             value={entityId}
             parseTarget
             onBlur={onInputBlur}
             error={formErrors.entity_id}
-            tooltip="The required entity ID is a URI that you use to identify Fleet when configuring the identity provider."
+            tooltip={t("integrations.sso.entity_id_tooltip")}
           />
           <InputField
-            label="IdP image URL"
+            label={t("integrations.sso.idp_image_url_label")}
             onChange={onInputChange}
             name="idpImageUrl"
             value={idpImageUrl}
             parseTarget
             onBlur={onInputBlur}
             error={formErrors.idp_image_url}
-            tooltip={`An optional link to an image such
-            as a logo for the identity provider.`}
+            tooltip={t("integrations.sso.idp_image_url_tooltip")}
           />
           <InputField
-            label="Metadata"
+            label={t("integrations.sso.metadata_label")}
             type="textarea"
             onChange={onInputChange}
             name="metadata"
@@ -268,23 +267,18 @@ const Sso = ({
             parseTarget
             onBlur={onInputBlur}
             error={formErrors.metadata}
-            tooltip="Metadata XML provided by the identity provider."
+            tooltip={t("integrations.sso.metadata_tooltip")}
           />
           <InputField
-            label="Metadata URL"
-            helpText={
-              <>
-                If both <b>Metadata URL</b> and <b>Metadata</b> are specified,{" "}
-                <b>Metadata URL</b> will be used.
-              </>
-            }
+            label={t("integrations.sso.metadata_url_label")}
+            helpText={t("integrations.sso.metadata_url_help")}
             onChange={onInputChange}
             name="metadataUrl"
             value={metadataUrl}
             parseTarget
             onBlur={onInputBlur}
             error={formErrors.metadata_url}
-            tooltip="Metadata URL provided by the identity provider."
+            tooltip={t("integrations.sso.metadata_url_tooltip")}
           />
           <Checkbox
             onChange={onInputChange}
@@ -293,7 +287,7 @@ const Sso = ({
             value={enableSsoIdpLogin}
             parseTarget
           >
-            Allow SSO login initiated by identity provider
+            {t("integrations.sso.allow_idp_login")}
           </Checkbox>
           {isPremiumTier && (
             <Checkbox
@@ -306,14 +300,14 @@ const Sso = ({
                 <>
                   <CustomLink
                     url={`${LEARN_MORE_ABOUT_BASE_LINK}/just-in-time-provisioning`}
-                    text="Learn more"
+                    text={t("integrations.sso.learn_more")}
                     newTab
                   />{" "}
-                  about just-in-time (JIT) user provisioning.
+                  {t("integrations.sso.jit_help_text")}
                 </>
               }
             >
-              Create user and sync permissions on login
+              {t("integrations.sso.jit_provisioning")}
             </Checkbox>
           )}
         </div>
@@ -326,7 +320,7 @@ const Sso = ({
               className="button-wrap"
               isLoading={isUpdatingSettings}
             >
-              Save
+              {t("common:save")}
             </Button>
           )}
         />
@@ -351,7 +345,7 @@ const Sso = ({
   );
 
   return (
-    <SettingsSection title="Single sign-on (SSO)">
+    <SettingsSection title={t("integrations.sso.title")}>
       <TabNav secondary>
         <Tabs
           selectedIndex={AUTH_TARGETS_BY_INDEX.indexOf(selectedAuthTarget)}
@@ -359,10 +353,10 @@ const Sso = ({
         >
           <TabList>
             <Tab>
-              <TabText>Fleet users</TabText>
+              <TabText>{t("integrations.sso.fleet_users")}</TabText>
             </Tab>
             <Tab>
-              <TabText>End users</TabText>
+              <TabText>{t("integrations.sso.end_users")}</TabText>
             </Tab>
           </TabList>
           <TabPanel key="fleet-users">{renderFleetSsoTab()}</TabPanel>

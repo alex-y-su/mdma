@@ -16,48 +16,58 @@ import { IHydrantFormData } from "../HydrantForm/HydrantForm";
 import { ISmallstepFormData } from "../SmallstepForm/SmallstepForm";
 import { ICustomESTFormData } from "../CustomESTForm/CustomESTForm";
 
-// keep these alphabetized
-const DEFAULT_CERT_AUTHORITY_OPTIONS: IDropdownOption[] = [
+/**
+ * Generates the dropdown options for certificate authority types.
+ * keep these alphabetized
+ */
+const generateDefaultCertAuthorityOptions = (
+  t: (key: string) => string
+): IDropdownOption[] => [
   {
-    label: "Custom EST (Enrollment Over Secure Transport)",
+    label: t("certificateAuthorities.types.customEst"),
     value: "custom_est_proxy",
   },
   {
-    label: "Custom SCEP (Simple Certificate Enrollment Protocol)",
+    label: t("certificateAuthorities.types.customScep"),
     value: "custom_scep_proxy",
   },
-  { label: "DigiCert", value: "digicert" },
+  { label: t("certificateAuthorities.types.digicert"), value: "digicert" },
   {
-    label: "Tau Platform EST (Enrollment Over Secure Transport)",
+    label: t("certificateAuthorities.types.hydrant"),
     value: "hydrant",
   },
   {
-    label: "Microsoft NDES (Network Device Enrollment Service)",
+    label: t("certificateAuthorities.types.ndes"),
     value: "ndes_scep_proxy",
   },
-  { label: "Smallstep", value: "smallstep" },
+  { label: t("certificateAuthorities.types.smallstep"), value: "smallstep" },
 ];
 
 /**
  * conditionally generates the dropdown options disabling the ndes option
  * if one already exists
  */
-export const generateDropdownOptions = (hasNDESCert: boolean) => {
+export const generateDropdownOptions = (
+  hasNDESCert: boolean,
+  t: (key: string) => string
+) => {
+  const options = generateDefaultCertAuthorityOptions(t);
+
   if (!hasNDESCert) {
-    return DEFAULT_CERT_AUTHORITY_OPTIONS;
+    return options;
   }
 
   // We only allow one NDES configuration, if ones exists disable the option and
   // add a tooltip.
-  const ndesOption = DEFAULT_CERT_AUTHORITY_OPTIONS.find((option) => {
+  const ndesOption = options.find((option) => {
     return option.value === "ndes_scep_proxy";
   });
   if (ndesOption) {
     ndesOption.disabled = true;
-    ndesOption.tooltipContent = "Only one NDES can be added.";
+    ndesOption.tooltipContent = t("certificateAuthorities.addModal.ndesLimit");
   }
 
-  return DEFAULT_CERT_AUTHORITY_OPTIONS;
+  return options;
 };
 
 /**
@@ -181,74 +191,59 @@ export const generateAddCertAuthorityData = (
 };
 
 /**
- * errors used in the add certificate authority flow
- */
-const DEFAULT_ERROR = "Please try again.";
-const INVALID_API_TOKEN_ERROR =
-  "Invalid API token. Please correct and try again.";
-const INVALID_PROFILE_GUID_ERROR =
-  "Invalid profile GUID. Please correct and try again.";
-const INVALID_URL_ERROR = "Invalid URL. Please correct and try again.";
-const PRIVATE_KEY_NOT_CONFIGURED_ERROR = (
-  <>
-    Private key must be configured.{" "}
-    <CustomLink
-      text="Learn more"
-      url={`${LEARN_MORE_ABOUT_BASE_LINK}/fleet-server-private-key`}
-      newTab
-      variant="flash-message-link"
-    />
-  </>
-);
-const INVALID_SCEP_URL_ERROR =
-  "Invalid SCEP URL. Please correct and try again.";
-const INVALID_ADMIN_URL_OR_CREDENTIALS_ERROR =
-  "Invalid admin URL or credentials. Please correct and try again.";
-const NDES_PASSWORD_CACHE_FULL_ERROR =
-  "The NDES password cache is full. Please increase the number of cached passwords in NDES and try again.";
-const INVALID_CHALLENGE_ERROR =
-  "Invalid challenge. Please correct and try again.";
-const INVALID_CHALLENGE_URL_OR_CREDENTIALS_ERROR =
-  "Invalid challenge URL or credentials. Please correct and try again.";
-
-/**
  * Gets the error message we want to display from the api error message.
  * This is used in both add and edit certificate authority flows.
  */
-export const getDisplayErrMessage = (err: unknown): string | JSX.Element => {
-  let message: string | JSX.Element = DEFAULT_ERROR;
+export const getDisplayErrMessage = (
+  err: unknown,
+  t: (key: string) => string
+): string | JSX.Element => {
   const reason = getErrorReason(err).toLowerCase();
 
   if (reason.includes("invalid api token")) {
-    message = INVALID_API_TOKEN_ERROR;
+    return t("certificateAuthorities.errors.invalidApiToken");
   } else if (reason.includes("invalid profile guid")) {
-    message = INVALID_PROFILE_GUID_ERROR;
+    return t("certificateAuthorities.errors.invalidProfileGuid");
   } else if (
     reason.includes("invalid url") ||
     reason.includes("no such host")
   ) {
-    message = INVALID_URL_ERROR;
+    return t("certificateAuthorities.errors.invalidUrl");
   } else if (reason.includes("private key")) {
-    message = PRIVATE_KEY_NOT_CONFIGURED_ERROR;
+    return (
+      <>
+        {t("certificateAuthorities.errors.privateKeyNotConfigured")}{" "}
+        <CustomLink
+          text={t("certificateAuthorities.errors.learnMore")}
+          url={`${LEARN_MORE_ABOUT_BASE_LINK}/fleet-server-private-key`}
+          newTab
+          variant="flash-message-link"
+        />
+      </>
+    );
   } else if (reason.includes("invalid scep url")) {
-    message = INVALID_SCEP_URL_ERROR;
+    return t("certificateAuthorities.errors.invalidScepUrl");
   } else if (reason.includes("invalid admin url or credentials")) {
-    message = INVALID_ADMIN_URL_OR_CREDENTIALS_ERROR;
+    return t("certificateAuthorities.errors.invalidAdminUrlOrCredentials");
   } else if (reason.includes("password cache is full")) {
-    message = NDES_PASSWORD_CACHE_FULL_ERROR;
+    return t("certificateAuthorities.errors.ndesPasswordCacheFull");
   } else if (reason.includes("invalid challenge url")) {
-    message = INVALID_CHALLENGE_URL_OR_CREDENTIALS_ERROR;
+    return t("certificateAuthorities.errors.invalidChallengeUrlOrCredentials");
   } else if (reason.includes("invalid challenge")) {
-    message = INVALID_CHALLENGE_ERROR;
-  } else {
-    message = DEFAULT_ERROR;
+    return t("certificateAuthorities.errors.invalidChallenge");
   }
 
-  return message;
+  return t("certificateAuthorities.errors.default");
 };
 
-export const getErrorMessage = (err: unknown): JSX.Element => {
+export const getErrorMessage = (
+  err: unknown,
+  t: (key: string) => string
+): JSX.Element => {
   return (
-    <>Couldn&apos;t add certificate authority. {getDisplayErrMessage(err)}</>
+    <>
+      {t("certificateAuthorities.addModal.errorPrefix")}{" "}
+      {getDisplayErrMessage(err, t)}
+    </>
   );
 };

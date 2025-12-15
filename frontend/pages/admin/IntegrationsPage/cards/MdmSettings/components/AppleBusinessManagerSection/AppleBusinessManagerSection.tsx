@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useTranslation } from "react-i18next";
 import { InjectedRouter } from "react-router";
 import PATHS from "router/paths";
 
@@ -23,6 +24,7 @@ const AppleBusinessManagerSection = ({
   isPremiumTier,
   isVppOn,
 }: IAutomaticEnrollmentSectionProps) => {
+  const { t } = useTranslation("settings");
   const { config } = useContext(AppContext);
 
   const navigateToAppleAutomaticEnrollment = () => {
@@ -34,7 +36,7 @@ const AppleBusinessManagerSection = ({
   };
 
   return (
-    <SettingsSection title="Apple Business Manager (ABM)" className={baseClass}>
+    <SettingsSection title={t("mdmSettings.abm.title")} className={baseClass}>
       {!isPremiumTier ? (
         <PremiumFeatureMessage alignment="left" />
       ) : (

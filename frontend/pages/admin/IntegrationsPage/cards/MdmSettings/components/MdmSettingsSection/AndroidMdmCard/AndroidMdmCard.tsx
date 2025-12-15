@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useTranslation } from "react-i18next";
 
 import { AppContext } from "context/app";
 
@@ -16,13 +17,15 @@ interface ITurnOnAndroidMdmCardProps {
 const TurnOnAndroidMdmCard = ({
   onClickTurnOn,
 }: ITurnOnAndroidMdmCardProps) => {
+  const { t } = useTranslation("settings");
+
   return (
     <SectionCard
       className={baseClass}
-      header="Turn on Android MDM"
-      cta={<Button onClick={onClickTurnOn}>Turn on</Button>}
+      header={t("integrations.mdm.android.turn_on_header")}
+      cta={<Button onClick={onClickTurnOn}>{t("integrations.mdm.android.turn_on")}</Button>}
     >
-      Enforce settings, OS updates, and more.
+      {t("integrations.mdm.android.turn_on_content")}
     </SectionCard>
   );
 };
@@ -34,6 +37,8 @@ interface ITurnOffAndroidMdmCardProps {
 const TurnOffAndroidMdmCard = ({
   onClickEdit,
 }: ITurnOffAndroidMdmCardProps) => {
+  const { t } = useTranslation("settings");
+
   return (
     <SectionCard
       className={baseClass}
@@ -41,11 +46,11 @@ const TurnOffAndroidMdmCard = ({
       cta={
         <Button onClick={onClickEdit} variant="inverse">
           <Icon name="pencil" />
-          Edit
+          {t("integrations.mdm.edit")}
         </Button>
       }
     >
-      Android MDM turned on.
+      {t("integrations.mdm.android.turned_on")}
     </SectionCard>
   );
 };

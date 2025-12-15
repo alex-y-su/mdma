@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 // @ts-ignore
 import InputField from "components/forms/fields/InputField";
@@ -36,6 +37,7 @@ const NDESForm = ({
   onSubmit,
   onCancel,
 }: INDESFormProps) => {
+  const { t } = useTranslation("settings");
   const [formValidation, setFormValidation] = useState<INDESFormValidation>(
     () => validateFormData(formData)
   );
@@ -57,47 +59,47 @@ const NDESForm = ({
   return (
     <form onSubmit={onSubmitForm}>
       <InputField
-        label="SCEP URL"
+        label={t("certificateAuthorities.forms.scepUrl")}
         name="scepURL"
         value={scepURL}
         error={formValidation.scepURL?.message}
         onChange={onInputChange}
         parseTarget
         placeholder="https://example.com/certsrv/mscep/mscep.dll"
-        helpText="The URL used by client devices to request and retrieve certificates."
+        helpText={t("certificateAuthorities.forms.scepUrlHelpNdes")}
       />
       <InputField
-        label="Admin URL"
+        label={t("certificateAuthorities.forms.adminUrl")}
         name="adminURL"
         value={adminURL}
         error={formValidation.adminURL?.message}
         onChange={onInputChange}
         parseTarget
         placeholder="https://example.com/certsrv/mscep_admin/"
-        helpText="The admin interface for managing the SCEP service and viewing configuration details."
+        helpText={t("certificateAuthorities.forms.adminUrlHelp")}
       />
       <InputField
-        label="Username"
+        label={t("certificateAuthorities.forms.username")}
         name="username"
         value={username}
         onChange={onInputChange}
         parseTarget
         placeholder="username@example.microsoft.com"
-        helpText="The username in the down-level logon name format required to log in to the SCEP admin page."
+        helpText={t("certificateAuthorities.forms.usernameHelpNdes")}
       />
       <InputField
-        label="Password"
+        label={t("certificateAuthorities.forms.password")}
         name="password"
         value={password}
         type="password"
         onChange={onInputChange}
         parseTarget
         blockAutoComplete
-        helpText="The password required to log in to the SCEP admin page."
+        helpText={t("certificateAuthorities.forms.passwordHelpNdes")}
       />
       <div className="modal-cta-wrap">
         <TooltipWrapper
-          tipContent="Complete all required fields to save."
+          tipContent={t("certificateAuthorities.forms.completeRequired")}
           underline={false}
           position="top"
           disableTooltip={formValidation.isValid}
@@ -112,7 +114,7 @@ const NDESForm = ({
           </Button>
         </TooltipWrapper>
         <Button variant="inverse" onClick={onCancel}>
-          Cancel
+          {t("certificateAuthorities.forms.cancel")}
         </Button>
       </div>
     </form>

@@ -2,6 +2,7 @@ import React, { useCallback, useContext, useRef, useState } from "react";
 import { InjectedRouter } from "react-router";
 import { AxiosError } from "axios";
 import { useQuery } from "react-query";
+import { useTranslation } from "react-i18next";
 
 import PATHS from "router/paths";
 import { AppContext } from "context/app";
@@ -33,11 +34,12 @@ interface IAddVppMessageProps {
 }
 
 const AddVppMessage = ({ onAddVpp }: IAddVppMessageProps) => {
+  const { t } = useTranslation("settings");
   return (
     <EmptyTable
-      header="Add your VPP"
-      info="Install Apple App Store apps purchased through Apple Business Manager."
-      primaryButton={<Button onClick={onAddVpp}>Add VPP</Button>}
+      header={t("mdmSettings.vpp.addVppHeader")}
+      info={t("mdmSettings.vpp.addVppInfo")}
+      primaryButton={<Button onClick={onAddVpp}>{t("mdmSettings.vpp.addVpp")}</Button>}
     />
   );
 };
@@ -47,6 +49,7 @@ interface IVppPageProps {
 }
 
 const VppPage = ({ router }: IVppPageProps) => {
+  const { t } = useTranslation("settings");
   const { config, isPremiumTier } = useContext(AppContext);
 
   const [showRenewModal, setShowRenewModal] = useState(false);
@@ -142,10 +145,9 @@ const VppPage = ({ router }: IVppPageProps) => {
         <GenericMsgWithNavButton
           path={PATHS.ADMIN_INTEGRATIONS_MDM}
           router={router}
-          header="Turn on Apple MDM"
-          buttonText="Turn on"
-          info=" To install Apple App Store apps purchased through Apple Business
-        Manager, first turn on Apple MDM."
+          header={t("mdmSettings.vpp.turnOnMdmHeader")}
+          buttonText={t("mdmSettings.vpp.turnOnButton")}
+          info={t("mdmSettings.vpp.turnOnMdmInfo")}
         />
       );
     }
@@ -167,8 +169,7 @@ const VppPage = ({ router }: IVppPageProps) => {
       return (
         <>
           <PageDescription
-            content="Add your VPP to install Apple App Store apps purchased through Apple
-            Business Manager."
+            content={t("mdmSettings.vpp.pageDescription")}
           />
           <VppTable
             vppTokens={vppTokens}
@@ -187,15 +188,15 @@ const VppPage = ({ router }: IVppPageProps) => {
     <MainContent className={baseClass}>
       <>
         <div className={`${baseClass}__header-links`}>
-          <BackButton text="Back to MDM" path={PATHS.ADMIN_INTEGRATIONS_MDM} />
+          <BackButton text={t("mdmSettings.vpp.backToMdm")} path={PATHS.ADMIN_INTEGRATIONS_MDM} />
         </div>
         <div className={`${baseClass}__page-content`}>
           <div className={`${baseClass}__page-header-section`}>
-            <h1>Volume Purchasing Program (VPP)</h1>
+            <h1>{t("mdmSettings.vpp.pageTitle")}</h1>
             {isPremiumTier &&
               vppTokens?.length !== 0 &&
               !!config?.mdm.enabled_and_configured && (
-                <Button onClick={onAddVpp}>Add VPP</Button>
+                <Button onClick={onAddVpp}>{t("mdmSettings.vpp.addVpp")}</Button>
               )}
           </div>
           <>{renderContent()}</>

@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { ICertificateAuthorityPartial } from "interfaces/certificates";
 
@@ -44,6 +45,7 @@ const HydrantForm = ({
   onSubmit,
   onCancel,
 }: IHydrantFormProps) => {
+  const { t } = useTranslation("settings");
   const validations = useMemo(
     () => generateFormValidations(certAuthorities ?? [], isEditing),
     [certAuthorities, isEditing]
@@ -74,43 +76,43 @@ const HydrantForm = ({
     <form className={baseClass} onSubmit={onSubmitForm}>
       <InputField
         name="name"
-        label="Name"
+        label={t("certificateAuthorities.forms.name")}
         value={name}
         onChange={onInputChange}
         error={formValidation.name?.message}
-        helpText="Letters, numbers, and underscores only. Fleet will create configuration profile variables with the name as suffix (e.g. $FLEET_VAR_HYDRANT_DATA_WIFI_CERTIFICATE)."
+        helpText={t("certificateAuthorities.forms.nameHelpHydrant")}
         parseTarget
         placeholder="WIFI_CERTIFICATE"
       />
       <InputField
         name="url"
-        label="URL"
+        label={t("certificateAuthorities.forms.url")}
         value={url}
         onChange={onInputChange}
         error={formValidation.url?.message}
         parseTarget
-        helpText="EST endpoint provided by Tau Platform."
+        helpText={t("certificateAuthorities.forms.urlHelpHydrant")}
         placeholder="https://example.tau-platform.com/.well-known/est/abc123"
       />
       <InputField
         name="clientId"
-        label="Client ID"
+        label={t("certificateAuthorities.forms.clientId")}
         value={clientId}
         onChange={onInputChange}
         parseTarget
-        helpText="Client ID provided by Tau Platform."
+        helpText={t("certificateAuthorities.forms.clientIdHelp")}
       />
       <InputField
         name="clientSecret"
-        label="Client secret"
+        label={t("certificateAuthorities.forms.clientSecret")}
         value={clientSecret}
         onChange={onInputChange}
         parseTarget
-        helpText="Client secret provided by Tau Platform."
+        helpText={t("certificateAuthorities.forms.clientSecretHelp")}
       />
       <div className="modal-cta-wrap">
         <TooltipWrapper
-          tipContent="Complete all required fields to save."
+          tipContent={t("certificateAuthorities.forms.completeRequired")}
           underline={false}
           position="top"
           disableTooltip={formValidation.isValid}
@@ -125,7 +127,7 @@ const HydrantForm = ({
           </Button>
         </TooltipWrapper>
         <Button variant="inverse" onClick={onCancel}>
-          Cancel
+          {t("certificateAuthorities.forms.cancel")}
         </Button>
       </div>
     </form>

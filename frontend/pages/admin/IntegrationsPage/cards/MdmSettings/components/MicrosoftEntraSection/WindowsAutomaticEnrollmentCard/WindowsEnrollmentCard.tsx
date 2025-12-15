@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import Button from "components/buttons/Button";
 import Icon from "components/Icon/Icon";
@@ -11,17 +12,18 @@ interface IWindowsAutomaticEnrollmentCardProps {
 const WindowsAutomaticEnrollmentCard = ({
   viewDetails,
 }: IWindowsAutomaticEnrollmentCardProps) => {
+  const { t } = useTranslation("settings");
+
   return (
     <SectionCard
-      header="Windows enrollment"
+      header={t("mdmSettings.windows.enrollmentCard.header")}
       cta={
         <Button onClick={viewDetails} variant="inverse" iconStroke>
-          Details <Icon name="chevron-right" color="ui-fleet-black-75" />
+          {t("mdmSettings.windows.enrollmentCard.details")} <Icon name="chevron-right" color="ui-fleet-black-75" />
         </Button>
       }
     >
-      To enable end users to enroll to Fleet via Microsoft Entra (e.g.
-      Autopilot), you need to connect Fleet to Entra first.
+      {t("mdmSettings.windows.enrollmentCard.description")}
     </SectionCard>
   );
 };

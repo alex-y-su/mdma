@@ -1,4 +1,5 @@
 import React, { useCallback, useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { size } from "lodash";
 import { useQuery } from "react-query";
 
@@ -104,6 +105,7 @@ const OktaConditionalAccessModal = ({
   onCancel,
   onSuccess,
 }: IOktaConditionalAccessModalProps) => {
+  const { t } = useTranslation("settings");
   const { renderFlash } = useContext(NotificationContext);
   const { config } = useContext(AppContext);
 

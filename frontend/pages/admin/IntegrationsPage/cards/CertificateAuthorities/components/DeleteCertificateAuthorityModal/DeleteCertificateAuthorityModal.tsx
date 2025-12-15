@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { ICertificateAuthorityPartial } from "interfaces/certificates";
 import certificatesAPI from "services/entities/certificates";
@@ -18,6 +19,7 @@ const DeleteCertificateAuthorityModal = ({
   certAuthority,
   onExit,
 }: IDeleteCertificateAuthorityModalProps) => {
+  const { t } = useTranslation("settings");
   const { renderFlash } = useContext(NotificationContext);
   const [isUpdating, setIsUpdating] = useState(false);
 
@@ -27,7 +29,7 @@ const DeleteCertificateAuthorityModal = ({
       await certificatesAPI.deleteCertificateAuthority(certAuthority.id);
       renderFlash(
         "success",
-        "Successfully deleted your certificate authority."
+        t("certificateAuthorities.deleteModal.successMessage")
       );
       setIsUpdating(false);
       onExit();
@@ -35,7 +37,7 @@ const DeleteCertificateAuthorityModal = ({
       setIsUpdating(false);
       renderFlash(
         "error",
-        "Couldn't delete certificate authority. Please try again."
+        t("certificateAuthorities.deleteModal.errorMessage")
       );
     }
   };
@@ -43,13 +45,14 @@ const DeleteCertificateAuthorityModal = ({
   return (
     <Modal
       className={baseClass}
-      title="Delete certificate authority (CA)"
+      title={t("certificateAuthorities.deleteModal.title")}
       onExit={onExit}
     >
       <>
         <p>
-          Fleet won&apos;t remove certificates from the certificate authority (
-          <b>{certAuthority.name}</b>) on existing hosts.
+          {t("certificateAuthorities.deleteModal.warningMessage", {
+            name: certAuthority.name,
+          })}
         </p>
         <div className="modal-cta-wrap">
           <Button
@@ -58,10 +61,10 @@ const DeleteCertificateAuthorityModal = ({
             isLoading={isUpdating}
             disabled={isUpdating}
           >
-            Delete
+            {t("certificateAuthorities.deleteModal.deleteButton")}
           </Button>
           <Button variant="inverse-alert" onClick={onExit}>
-            Cancel
+            {t("certificateAuthorities.deleteModal.cancelButton")}
           </Button>
         </div>
       </>

@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import { InjectedRouter } from "react-router";
 import { useQuery } from "react-query";
+import { useTranslation } from "react-i18next";
 
 import PATHS from "router/paths";
 import { AppContext } from "context/app";
@@ -35,6 +36,7 @@ interface ITurnOnAndroidMdmProps {
 }
 
 const TurnOnAndroidMdm = ({ router }: ITurnOnAndroidMdmProps) => {
+  const { t } = useTranslation("settings");
   const { renderFlash } = useContext(NotificationContext);
 
   // TODO: figure out issue with aborting the SSE fetch when the window is closed
@@ -48,17 +50,17 @@ const TurnOnAndroidMdm = ({ router }: ITurnOnAndroidMdmProps) => {
       try {
         await mdmAndroidAPI.startSSE(abortController.signal);
         abortController.abort();
-        renderFlash("success", "Android MDM turned on successfully.", {
+        renderFlash("success", t("mdmSettings.android.turnOnSuccess"), {
           persistOnPageChange: true,
         });
         setSetupSse(false);
         router.push(PATHS.ADMIN_INTEGRATIONS_MDM);
       } catch {
-        renderFlash("error", "Couldn't turn on Android MDM. Please try again.");
+        renderFlash("error", t("mdmSettings.android.turnOnError"));
         setSetupSse(false);
       }
     },
-    [renderFlash, router]
+    [renderFlash, router, t]
   );
 
   useEffect(() => {
@@ -97,10 +99,9 @@ const TurnOnAndroidMdm = ({ router }: ITurnOnAndroidMdmProps) => {
         renderFlash(
           "error",
           <>
-            Couldn&apos;t connect. Android enterprise already exists for this
-            Fleet server. For help, please contact{" "}
+            {t("mdmSettings.android.connectErrorExists")}{" "}
             <CustomLink
-              text="Fleet support"
+              text={t("mdmSettings.android.fleetSupport")}
               url={SUPPORT_LINK}
               newTab
               variant="flash-message-link"
@@ -108,7 +109,7 @@ const TurnOnAndroidMdm = ({ router }: ITurnOnAndroidMdmProps) => {
           </>
         );
       } else {
-        renderFlash("error", "Couldn't connect. Please try again");
+        renderFlash("error", t("mdmSettings.android.connectError"));
       }
     }
     setFetchingSignupUrl(false);
@@ -117,15 +118,15 @@ const TurnOnAndroidMdm = ({ router }: ITurnOnAndroidMdmProps) => {
   return (
     <>
       <div className={`${baseClass}__turn-on-description`}>
-        <p>Connect Android Enterprise to turn on Android MDM. </p>
+        <p>{t("mdmSettings.android.connectDescription")} </p>
         <CustomLink
-          text="Learn More"
+          text={t("mdmSettings.android.learnMore")}
           newTab
           url="https://fleetdm.com/learn-more-about/how-to-connect-android-enterprise"
         />
       </div>
       <Button isLoading={fetchingSignupUrl} onClick={onConnectMdm}>
-        Connect
+        {t("mdmSettings.android.connectButton")}
       </Button>
     </>
   );
@@ -136,6 +137,7 @@ interface ITurnOffAndroidMdmProps {
 }
 
 const TurnOffAndroidMdm = ({ onClickTurnOff }: ITurnOffAndroidMdmProps) => {
+  const { t } = useTranslation("settings");
   const { data, isLoading, isError } = useQuery(
     ["android_enterprise"],
     () => mdmAndroidAPI.getAndroidEnterprise(),
@@ -162,22 +164,22 @@ const TurnOffAndroidMdm = ({ onClickTurnOff }: ITurnOffAndroidMdmProps) => {
             position="top"
             tipContent={
               <>
-                Android Enterprise in{" "}
+                {t("mdmSettings.android.enterpriseInConsole")}{" "}
                 <CustomLink
                   newTab
-                  text="Google Admin Console"
+                  text={t("mdmSettings.android.googleAdminConsole")}
                   url="https://fleetdm.com/learn-more-about/google-admin-emm"
                   variant="tooltip-link"
                 />
               </>
             }
           >
-            Android Enterprise Id
+            {t("mdmSettings.android.enterpriseId")}
           </TooltipWrapper>
         }
         value={data.android_enterprise_id}
       />
-      <Button onClick={onClickTurnOff}>Turn off Android MDM</Button>
+      <Button onClick={onClickTurnOff}>{t("mdmSettings.android.turnOffButton")}</Button>
     </>
   );
 };
@@ -187,6 +189,7 @@ interface IAndroidMdmPageProps {
 }
 
 const AndroidMdmPage = ({ router }: IAndroidMdmPageProps) => {
+  const { t } = useTranslation("settings");
   const { isAndroidMdmEnabledAndConfigured } = useContext(AppContext);
   const [showTurnOffMdmModal, setShowTurnOffMdmModal] = useState(false);
 
@@ -194,12 +197,12 @@ const AndroidMdmPage = ({ router }: IAndroidMdmPageProps) => {
     <MainContent className={baseClass}>
       <div className={`${baseClass}__header-links`}>
         <BackButton
-          text="Back to MDM"
+          text={t("mdmSettings.android.backToMdm")}
           path={PATHS.ADMIN_INTEGRATIONS_MDM}
           className={`${baseClass}__back-to-mdm`}
         />
       </div>
-      <h1>Android Enterprise</h1>
+      <h1>{t("mdmSettings.android.pageTitle")}</h1>
 
       <div className={`${baseClass}__content`}>
         {!isAndroidMdmEnabledAndConfigured ? (

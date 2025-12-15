@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { InjectedRouter } from "react-router";
 import { AxiosError } from "axios";
+import { useTranslation } from "react-i18next";
 
 import PATHS from "router/paths";
 import { IMdmApple } from "interfaces/mdm";
@@ -31,6 +32,7 @@ const MdmSettingsSection = ({
   router,
   appleAPNSInfo,
 }: IMdmSectionProps) => {
+  const { t } = useTranslation("settings");
   // TODO: feature flag check, remove when feature releases
   const { config } = useContext(AppContext);
 
@@ -77,7 +79,7 @@ const MdmSettingsSection = ({
 
   return (
     <SettingsSection
-      title="Mobile device management (MDM)"
+      title={t("integrations.mdm.title")}
       className={baseClass}
     >
       {renderContent()}

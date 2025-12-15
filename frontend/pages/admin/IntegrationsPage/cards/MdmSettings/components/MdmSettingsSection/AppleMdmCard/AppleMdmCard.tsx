@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import Button from "components/buttons/Button";
 import Icon from "components/Icon";
@@ -14,13 +15,15 @@ interface ITurnOnAppleMdmCardProps {
 }
 
 const TurnOnAppleMdmCard = ({ onClickTurnOn }: ITurnOnAppleMdmCardProps) => {
+  const { t } = useTranslation("settings");
+
   return (
     <SectionCard
       className={baseClass}
-      header="Turn on Apple (macOS, iOS, iPadOS) MDM"
-      cta={<Button onClick={onClickTurnOn}>Turn on</Button>}
+      header={t("integrations.mdm.apple.turn_on_header")}
+      cta={<Button onClick={onClickTurnOn}>{t("integrations.mdm.apple.turn_on")}</Button>}
     >
-      Enforce settings, OS updates, disk encryption, and more.
+      {t("integrations.mdm.apple.turn_on_content")}
     </SectionCard>
   );
 };
@@ -32,17 +35,19 @@ interface ITurnOffAppleMdmCardProps {
 const SeeDetailsAppleMdmCard = ({
   onClickDetails,
 }: ITurnOffAppleMdmCardProps) => {
+  const { t } = useTranslation("settings");
+
   return (
     <SectionCard
       iconName="success"
       cta={
         <Button onClick={onClickDetails} variant="inverse">
           <Icon name="pencil" />
-          Edit
+          {t("integrations.mdm.edit")}
         </Button>
       }
     >
-      Apple (macOS, iOS, iPadOS) MDM turned on.
+      {t("integrations.mdm.apple.turned_on")}
     </SectionCard>
   );
 };

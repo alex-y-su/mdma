@@ -178,6 +178,8 @@
       }
     },
     "integrations": {
+      "updateSuccess": "Successfully updated settings.",
+      "updateError": "Could not update settings",
       "navItems": {
         "ticketDestinations": "Ticket destinations",
         "mdm": "MDM",
@@ -188,6 +190,49 @@
         "identityProvider": "Identity provider (IdP)",
         "hostStatusWebhook": "Host status webhook",
         "conditionalAccess": "Conditional access"
+      },
+      "addIntegrationModal": {
+        "title": "Add ticket destination",
+        "destinationLabel": "Ticket destination",
+        "suggestDestination": "Suggest a new destination"
+      },
+      "deleteIntegrationModal": {
+        "title": "Delete integration",
+        "message": "This action will delete the",
+        "integrationSuffix": "integration.",
+        "automationsWarning": "The automations that use this integration will be turned off.",
+        "deleteButton": "Delete",
+        "cancelButton": "Cancel"
+      },
+      "integrationForm": {
+        "testingConnection": "Testing connection",
+        "urlLabel": "URL",
+        "urlError": "{{url}} is not a valid HTTPS URL",
+        "usernameLabel": "Username",
+        "emailLabel": "Email",
+        "apiTokenLabel": "API token",
+        "projectKeyLabel": "Project key",
+        "projectKeyTooltip": {
+          "line1": "To find the Jira project key, head to your project in",
+          "line2": "Jira. Your project key is located in the URL. For example, in",
+          "line3": "\"jira.example.com/projects/JRAEXAMPLE,\"",
+          "line4": "\"JRAEXAMPLE\" is your project key."
+        },
+        "groupIdLabel": "Group ID",
+        "groupIdTooltip": {
+          "line1": "To find the Zendesk group ID, select",
+          "adminPath1": "Admin",
+          "adminPath2": "People",
+          "adminPath3": "Groups",
+          "line2": "Find the group and select it.",
+          "line3": "The group ID will appear in the search field."
+        },
+        "addButton": "Add",
+        "completeFieldsTooltip": {
+          "line1": "Complete all fields to save",
+          "line2": "the integration."
+        },
+        "cancelButton": "Cancel"
       },
       "ticketDestinations": {
         "title": "Ticket destinations",
@@ -326,7 +371,13 @@
         "role": "Role",
         "add": "Add",
         "save": "Save",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "validation": {
+          "nameRequired": "Name field must be completed",
+          "emailRequired": "Email field must be completed",
+          "emailInvalid": "{{email}} is not a valid email",
+          "passwordRequired": "Password field must be completed"
+        }
       }
     },
     "teams": {
@@ -425,17 +476,133 @@
       "turnOn": "Turn on Apple MDM",
       "turnOff": "Turn off Apple MDM",
       "renewCert": "Renew certificate",
-      "apnsExpiry": "APNs certificate expires"
+      "apnsExpiry": "APNs certificate expires",
+      "backToMdm": "Back to MDM",
+      "pageTitle": "Apple Push Certificate Portal",
+      "commonName": "Common name (CN)",
+      "organizationName": "Organization name",
+      "mdmServerUrl": "MDM server URL",
+      "renewDate": "Renew date",
+      "turnOffButton": "Turn off MDM",
+      "renewCertButton": "Renew certificate",
+      "turnOffSuccess": "MDM turned off successfully.",
+      "turnOffError": "Couldn't turn off MDM. Please try again.",
+      "setup": {
+        "description": "Connect Fleet to Apple Push Certificates Portal to turn on MDM.",
+        "step1": "Download a certificate signing request (CSR) for Apple Push Notification service (APNs).",
+        "step2Start": "Sign in to",
+        "step2End": "If you don't have an Apple ID, select Create yours now.",
+        "step3": "In Apple Push Certificates Portal, select Create a Certificate, upload your CSR, and download your APNs certificate.",
+        "step4": "Upload APNs certificate (.pem file) below.",
+        "applePortalLink": "Apple Push Certificates Portal",
+        "apnsCertFile": "APNs certificate (.pem)",
+        "upload": "Upload",
+        "uploading": "Uploading...",
+        "noFileSelected": "No file selected",
+        "turnOnSuccess": "MDM turned on successfully.",
+        "uploadError": "Couldn't connect. Please try again.",
+        "downloadError": "Something's gone wrong. Please try again."
+      },
+      "renew": {
+        "modalTitle": "Renew certificate",
+        "step1": "1. Download a certificate signing request (CSR) for Apple Push Notification service (APNs).",
+        "step2Start": "2. Sign in to",
+        "step3": "3. In Apple Push Certificates Portal, select Renew next to your certificate (make sure that the certificate's Common Name (CN) matches the one presented in Fleet).",
+        "step4": "4. Upload your CSR and download new APNs certificate.",
+        "step5": "5. Upload APNs certificate (.pem file) below.",
+        "applePortalLink": "Apple Push Certificates Portal",
+        "apnsCertFile": "APNs certificate (.pem)",
+        "chooseFile": "Choose file",
+        "renewButton": "Renew certificate",
+        "noCertFile": "Please provide a certificate file.",
+        "success": "APNs certificate renewed successfully.",
+        "error": "Couldn't renew. Please try again.",
+        "downloadError": "Something's gone wrong. Please try again."
+      },
+      "turnOffModal": {
+        "title": "Turn off MDM",
+        "message": "If you want to use MDM features again, you'll have to upload a new APNs certificate and all end users will have to turn MDM off and back on.",
+        "confirmButton": "Turn off",
+        "cancelButton": "Cancel"
+      }
     },
     "android": {
       "title": "Android MDM",
       "turnOn": "Turn on Android MDM",
-      "turnOff": "Turn off Android MDM"
+      "turnOff": "Turn off Android MDM",
+      "backToMdm": "Back to MDM",
+      "pageTitle": "Android Enterprise",
+      "connectDescription": "Connect Android Enterprise to turn on Android MDM.",
+      "learnMore": "Learn More",
+      "connectButton": "Connect",
+      "turnOnSuccess": "Android MDM turned on successfully.",
+      "turnOnError": "Couldn't turn on Android MDM. Please try again.",
+      "connectErrorExists": "Couldn't connect. Android enterprise already exists for this Fleet server. For help, please contact",
+      "fleetSupport": "Fleet support",
+      "connectError": "Couldn't connect. Please try again",
+      "enterpriseInConsole": "Android Enterprise in",
+      "googleAdminConsole": "Google Admin Console",
+      "enterpriseId": "Android Enterprise Id",
+      "turnOffButton": "Turn off Android MDM",
+      "turnOffModalTitle": "Turn off Android MDM",
+      "turnOffModalWarning1": "If you want to use MDM features again, you'll have to reconnect Android Enterprise.",
+      "turnOffModalWarning2": "End users will lose access to organization resources and all data in their Android work partition.",
+      "turnOffConfirm": "Turn off",
+      "turnOffCancel": "Cancel",
+      "turnOffSuccess": "Android MDM turned off successfully.",
+      "turnOffError": "Couldn't turn off Android MDM. Please try again."
     },
     "windows": {
       "title": "Windows MDM",
       "turnOn": "Turn on Windows MDM",
-      "turnOff": "Turn off Windows MDM"
+      "turnOff": "Turn off Windows MDM",
+      "backToMdm": "Back to MDM",
+      "pageTitle": "Windows MDM",
+      "updateSuccess": "Windows MDM settings successfully updated.",
+      "sliderOn": "Windows MDM on",
+      "sliderOff": "Windows MDM off",
+      "descriptionOn": "Turns on MDM for Windows hosts that enroll to Fleet (excluding servers).",
+      "descriptionOff": "Hosts with MDM already turned on will not have MDM removed.",
+      "endUserExperience": "End user experience",
+      "automaticLabel": "Automatic",
+      "automaticHelp": "MDM is turned on when Fleet's agent is installed on Windows hosts (excluding servers).",
+      "manualLabel": "Manual",
+      "manualHelpRequires": "Requires",
+      "manualHelpLink": "connecting Fleet to Microsoft Entra.",
+      "manualHelpEnd": "End users have to manually turn on MDM in Settings > Access work or school.",
+      "autoMigrate": "Automatically migrate hosts connected to another MDM solution",
+      "saveButton": "Save",
+      "entraPageTitle": "Microsoft Entra",
+      "entraDescription": "The end user will see Microsoft's default initial setup. You can further simplify the initial device setup with Autopilot, which is similar to Apple's Automated Device Enrollment (DEP).",
+      "learnMore": "Learn more",
+      "entraWarning1": "Some Intune/Entra deployments enable automatic enrollment into Intune. Check to ensure Automatic Enrollment is not enabled, or your devices will not appear in Fleet.",
+      "entraWarning2": "In your Intune settings, select Devices, and under Device onbarding, open the Enrollment submenu. Select Automatic Enrollment and ensure both MDM user scope and Windows Information Protection (WIP) user scope are set to None.",
+      "entraStep1": "Sign in to Azure portal",
+      "entraStep2": "At the top of the page, search \"Domain names\" and select Domain names. Then select + Add custom domain, type your Fleet URL (e.g. fleet.acme.com), and select Add domain.",
+      "entraStep3": "Use the information presented in Azure AD to create a new TXT/MX record with your domain registrar, then select Verify.",
+      "entraCloudBanner": "If you're a managed-cloud customer, please reach out to Fleet to create a TXT/MX record for you.",
+      "entraStep4": "At the top of the page, search for \"Mobility\" and select Mobility (MDM and WIP).",
+      "entraStep5": "Select + Add application, then select + Create your own application.",
+      "entraStep6": "Enter \"Fleet\" as the name of your application and select Create.",
+      "entraStep7": "Set MDM user scope to All, then copy the URLs below, paste them in Azure AD, and select Save.",
+      "mdmTermsOfUseLabel": "MDM terms of use URL",
+      "mdmTermsOfUseTooltip": "The terms of use URL is used to display the terms of service to end users before turning on MDM their host. The terms of use text informs users about policies that will be enforced on the host.",
+      "mdmDiscoveryLabel": "MDM discovery URL",
+      "mdmDiscoveryTooltip": "The enrollment URL is used to connect hosts with the MDM service.",
+      "entraStep8": "While on this same page, select Custom MDM application settings link.",
+      "entraStep9": "Click on the Application ID URI which will bring you to the Expose an API submenu with an edit button next to the text box.",
+      "entraStep10": "Replace with your Fleet URL (e.g. fleet.acme.com) and select Save.",
+      "entraStep11": "Select API permissions from the sidebar, then select + Add a permission.",
+      "entraStep12": "Select Microsoft Graph, then select Delegated permissions, and select Group > Group.Read.All and Group > Group.ReadWrite.All and Add permissions.",
+      "entraStep13": "Again select + Add a permission and then Microsoft Graph and Application permissions, select the following:",
+      "entraPermission1": "Device > Device.Read.All",
+      "entraPermission2": "Device > Device.ReadWrite.All",
+      "entraPermission3": "Directory > Directory.Read.All",
+      "entraPermission4": "Group > Group.Read.All",
+      "entraPermission5": "User > User.Read.All",
+      "entraStep14": "Select Add permissions.",
+      "entraStep15": "Select Grant admin consent for <your tenant name>, and confirm.",
+      "entraStep16": "You're ready to automatically enroll Windows hosts to Fleet."
     },
     "vpp": {
       "title": "Volume Purchasing Program (VPP)",

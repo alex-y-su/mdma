@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { useQuery } from "react-query";
+import { useTranslation } from "react-i18next";
 
 import { AppContext } from "context/app";
 import { dateAgo } from "utilities/date_format";
@@ -19,12 +20,14 @@ import SectionCard from "../../../MdmSettings/components/SectionCard";
 const baseClass = "identity-provider-section";
 
 const AddEndUserInfoCard = () => {
+  const { t } = useTranslation("settings");
+
   return (
     <SectionCard
-      header="Add end user information to your hosts"
+      header={t("integrations.identity_provider.add_card_header")}
       cta={
         <CustomLink
-          text="Learn how"
+          text={t("integrations.identity_provider.learn_how")}
           newTab
           url="https://fleetdm.com/learn-more-about/connect-idp"
           className={`${baseClass}__learn-more-link`}
@@ -32,8 +35,7 @@ const AddEndUserInfoCard = () => {
       }
     >
       <p className={`${baseClass}__section-card-content`}>
-        To add end user information, connect Fleet to Okta, Entra ID, or another
-        identity provider (IdP).
+        {t("integrations.identity_provider.add_card_content")}
       </p>
     </SectionCard>
   );
@@ -46,12 +48,14 @@ interface IReceivedEndUserInfoCardProps {
 const ReceivedEndUserInfoCard = ({
   receivedAt,
 }: IReceivedEndUserInfoCardProps) => {
+  const { t } = useTranslation("settings");
+
   return (
     <SectionCard
       iconName="success"
       cta={
         <CustomLink
-          text="Learn more"
+          text={t("integrations.identity_provider.learn_more")}
           newTab
           url="https://fleetdm.com/learn-more-about/troubleshoot-idp-connection"
           className={`${baseClass}__learn-more-link`}
@@ -59,7 +63,7 @@ const ReceivedEndUserInfoCard = ({
       }
     >
       <p className={`${baseClass}__section-card-content`}>
-        Received end user information from your IdP{" "}
+        {t("integrations.identity_provider.received_info")}{" "}
         <TooltipWrapper
           showArrow
           position="top"
@@ -84,12 +88,14 @@ const FailedEndUserInfoCard = ({
   receivedAt,
   details,
 }: IFailedEndUserInfoCardProps) => {
+  const { t } = useTranslation("settings");
+
   return (
     <SectionCard
       iconName="error"
       cta={
         <CustomLink
-          text="Learn more"
+          text={t("integrations.identity_provider.learn_more")}
           newTab
           url="https://fleetdm.com/learn-more-about/troubleshoot-idp-connection"
           className={`${baseClass}__learn-more-link`}
@@ -100,12 +106,11 @@ const FailedEndUserInfoCard = ({
         <TooltipWrapper
           showArrow
           position="top"
-          tipContent={`Error: ${details}`}
+          tipContent={t("integrations.identity_provider.error_tooltip", { details })}
           underline={false}
           className={`${baseClass}__received-tooltip`}
         >
-          Failed to receive end user information from your IdP (
-          {dateAgo(receivedAt)}).
+          {t("integrations.identity_provider.failed_to_receive", { timeAgo: dateAgo(receivedAt) })}
         </TooltipWrapper>
       </p>
     </SectionCard>
@@ -113,6 +118,7 @@ const FailedEndUserInfoCard = ({
 };
 
 const IdentityProviderSection = () => {
+  const { t } = useTranslation("settings");
   const { isPremiumTier } = useContext(AppContext);
 
   const { data: scimIdPDetails, isLoading, isError } = useQuery(
@@ -158,7 +164,7 @@ const IdentityProviderSection = () => {
     return null;
   };
   return (
-    <SettingsSection title="Identity provider (IdP)">
+    <SettingsSection title={t("integrations.identity_provider.title")}>
       {renderContent()}
     </SettingsSection>
   );

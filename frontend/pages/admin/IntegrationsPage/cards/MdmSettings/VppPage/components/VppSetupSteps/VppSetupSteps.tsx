@@ -1,5 +1,6 @@
 import CustomLink from "components/CustomLink";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const baseClass = "vpp-setup-steps";
 
@@ -11,22 +12,22 @@ interface IVppSetupStepsProps {
 }
 
 const VppSetupSteps = ({ extendendSteps = false }: IVppSetupStepsProps) => {
+  const { t } = useTranslation("settings");
   return (
     <ol className={baseClass}>
       <li>
         <span>1.</span>
         <p>
-          Sign in to{" "}
+          {t("mdmSettings.vpp.setup.step1Start")}{" "}
           <CustomLink
             newTab
             url="https://business.apple.com"
-            text="Apple Business Manager"
+            text={t("mdmSettings.vpp.setup.abmLink")}
           />
           {extendendSteps && (
             <>
               <br />
-              If your organization doesn&apos;t have an account, select{" "}
-              <b>Sign up now</b>.
+              {t("mdmSettings.vpp.setup.step1Extended")}
             </>
           )}
         </p>
@@ -34,32 +35,29 @@ const VppSetupSteps = ({ extendendSteps = false }: IVppSetupStepsProps) => {
       <li>
         <span>2.</span>
         <p>
-          Select your <b>account name</b> at the bottom left of the screen, then
-          select <b>Preferences</b>.
+          {t("mdmSettings.vpp.setup.step2")}
         </p>
       </li>
       <li>
         <span>3.</span>
         <p>
-          Select <b>Payments and Billing</b> in the menu.
+          {t("mdmSettings.vpp.setup.step3")}
         </p>
       </li>
       <li>
         <span>4.</span>
         <p>
-          Under the <b>Content Tokens</b>, download the token for the location
-          you want to use.
+          {t("mdmSettings.vpp.setup.step4")}
           {extendendSteps && (
             <>
-              <br /> Each token is based on a location in Apple Business
-              Manager.
+              <br /> {t("mdmSettings.vpp.setup.step4Extended")}
             </>
           )}
         </p>
       </li>
       <li>
         <span>5.</span>
-        <p>Upload content token (.vpptoken file) below.</p>
+        <p>{t("mdmSettings.vpp.setup.step5")}</p>
       </li>
     </ol>
   );

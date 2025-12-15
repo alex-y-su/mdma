@@ -1,4 +1,5 @@
 import React, { useCallback, useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import mdmAppleAPI from "services/entities/mdm_apple";
 import { NotificationContext } from "context/notification";
@@ -21,6 +22,7 @@ const DeleteVppModal = ({
   onCancel,
   onDeletedToken,
 }: IDeleteVppModalProps) => {
+  const { t } = useTranslation("settings");
   const { renderFlash } = useContext(NotificationContext);
 
   const [isDeleting, setIsDeleting] = useState(false);
@@ -30,31 +32,28 @@ const DeleteVppModal = ({
 
     try {
       await mdmAppleAPI.deleteVppToken(tokenId);
-      renderFlash("success", "Deleted successfully.");
+      renderFlash("success", t("mdmSettings.vpp.deleteModal.deleteSuccess"));
       onDeletedToken();
     } catch (e) {
       // TODO: Check API sends back correct error messages
-      renderFlash("error", "Couldn’t delete. Please try again.");
+      renderFlash("error", t("mdmSettings.vpp.deleteModal.deleteError"));
       onCancel();
     }
-  }, [onCancel, onDeletedToken, renderFlash, tokenId]);
+  }, [onCancel, onDeletedToken, renderFlash, tokenId, t]);
 
   return (
     <Modal
-      title="Delete VPP"
+      title={t("mdmSettings.vpp.deleteModal.title")}
       className={baseClass}
       onExit={onCancel}
       isContentDisabled={isDeleting}
     >
       <>
         <p>
-          Apps purchased for the <b>{orgName}</b> location won&apos;t appear in
-          Fleet, and policies that trigger automatic install of these apps will
-          be deleted. Apps won&apos;t be uninstalled from hosts.
+          {t("mdmSettings.vpp.deleteModal.warning", { orgName })}
         </p>
         <p>
-          If you want to enable VPP integration again, you&apos;ll have to
-          upload a new token.
+          {t("mdmSettings.vpp.deleteModal.reEnableInfo")}
         </p>
 
         <div className="modal-cta-wrap">
@@ -65,14 +64,14 @@ const DeleteVppModal = ({
             disabled={isDeleting}
             isLoading={isDeleting}
           >
-            Delete
+            {t("mdmSettings.vpp.deleteModal.deleteButton")}
           </Button>
           <Button
             onClick={onCancel}
             disabled={isDeleting}
             variant="inverse-alert"
           >
-            Cancel
+            {t("mdmSettings.vpp.deleteModal.cancelButton")}
           </Button>
         </div>
       </>

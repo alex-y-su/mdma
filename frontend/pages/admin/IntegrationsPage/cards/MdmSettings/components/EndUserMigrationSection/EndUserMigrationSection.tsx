@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { InjectedRouter } from "react-router";
 import classnames from "classnames";
 
@@ -31,11 +32,6 @@ import MdmMigrationVideo from "../../../../../../../../assets/videos/mdm-migrati
 
 const baseClass = "end-user-migration-section";
 
-const VOLUNTARY_MODE_DESCRIPTION =
-  "The end user sees the above window when they select Migrate to Fleet in the Fleet Desktop menu. If they’re unenrolled from your old MDM, the window appears every 15-20 minutes.";
-const FORCED_MODE_DESCRIPTION =
-  "The end user sees the above window every 15-20 minutes.";
-
 interface IEndUserMigrationFormData {
   isEnabled: boolean;
   mode: "voluntary" | "forced";
@@ -55,6 +51,7 @@ const validateWebhookUrl = (val: string) => {
 };
 
 const EndUserMigrationSection = ({ router }: IEndUserMigrationSectionProps) => {
+  const { t } = useTranslation("settings");
   const { config, isPremiumTier, setConfig } = useContext(AppContext);
   const { renderFlash } = useContext(NotificationContext);
 
@@ -116,7 +113,7 @@ const EndUserMigrationSection = ({ router }: IEndUserMigrationSectionProps) => {
           },
         },
       });
-      renderFlash("success", "Successfully updated end user migration!");
+      renderFlash("success", t("mdmSettings.endUserMigration.updateSuccess"));
       setConfig(updatedConfig);
     } catch (err) {
       if (
@@ -127,7 +124,7 @@ const EndUserMigrationSection = ({ router }: IEndUserMigrationSectionProps) => {
         setIsValidWebhookUrl(false);
         return;
       }
-      renderFlash("error", "Could not update. Please try again.");
+      renderFlash("error", t("mdmSettings.endUserMigration.updateError"));
     }
   };
 
@@ -140,7 +137,7 @@ const EndUserMigrationSection = ({ router }: IEndUserMigrationSectionProps) => {
   if (!isPremiumTier) {
     return (
       <div className={baseClass}>
-        <SectionHeader title="End user migration workflow" />
+        <SectionHeader title={t("mdmSettings.endUserMigration.title")} />
         <PremiumFeatureMessage />
       </div>
     );
@@ -149,21 +146,21 @@ const EndUserMigrationSection = ({ router }: IEndUserMigrationSectionProps) => {
   if (!config?.mdm.apple_bm_enabled_and_configured) {
     return (
       <div className={baseClass}>
-        <SectionHeader title="End user migration workflow" />
+        <SectionHeader title={t("mdmSettings.endUserMigration.title")} />
         <EmptyTable
           className={`${baseClass}__abm-connect-message`}
-          header="Migration workflow for macOS hosts"
-          info="Connect to Apple Business Manager to get started."
-          primaryButton={<Button onClick={onClickConnect}>Connect</Button>}
+          header={t("mdmSettings.endUserMigration.connectHeader")}
+          info={t("mdmSettings.endUserMigration.connectInfo")}
+          primaryButton={<Button onClick={onClickConnect}>{t("mdmSettings.endUserMigration.connect")}</Button>}
         />
       </div>
     );
   }
 
   return (
-    <SettingsSection className={baseClass} title="End user migration workflow">
+    <SettingsSection className={baseClass} title={t("mdmSettings.endUserMigration.title")}>
       <form>
-        <p>Control the end user migration workflow for macOS hosts.</p>
+        <p>{t("mdmSettings.endUserMigration.description")}</p>
         {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
         <video
           src={MdmMigrationVideo}
@@ -176,19 +173,19 @@ const EndUserMigrationSection = ({ router }: IEndUserMigrationSectionProps) => {
         <Slider
           value={formData.isEnabled}
           onChange={toggleMigrationEnabled}
-          activeText="Enabled"
-          inactiveText="Disabled"
+          activeText={t("mdmSettings.endUserMigration.enabled")}
+          inactiveText={t("mdmSettings.endUserMigration.disabled")}
           disabled={isGitOpsModeEnabled}
         />
         <div className={`form ${formClasses}`}>
           <div className={`form-field ${baseClass}__mode-field`}>
-            <div className="form-field__label">Mode</div>
+            <div className="form-field__label">{t("mdmSettings.endUserMigration.mode")}</div>
             <Radio
               disabled={!formData.isEnabled || isGitOpsModeEnabled}
               checked={formData.mode === "voluntary"}
               value="voluntary"
               id="voluntary"
-              label="Voluntary"
+              label={t("mdmSettings.endUserMigration.voluntary")}
               onChange={onChangeMode}
               className={`${baseClass}__voluntary-radio`}
               name="mode-type"
@@ -198,7 +195,7 @@ const EndUserMigrationSection = ({ router }: IEndUserMigrationSectionProps) => {
               checked={formData.mode === "forced"}
               value="forced"
               id="forced"
-              label="Forced"
+              label={t("mdmSettings.endUserMigration.forced")}
               onChange={onChangeMode}
               className={`${baseClass}__forced-radio`}
               name="mode-type"
@@ -206,29 +203,20 @@ const EndUserMigrationSection = ({ router }: IEndUserMigrationSectionProps) => {
           </div>
           <p>
             {formData.mode === "voluntary"
-              ? VOLUNTARY_MODE_DESCRIPTION
-              : FORCED_MODE_DESCRIPTION}
+              ? t("mdmSettings.endUserMigration.voluntaryDescription")
+              : t("mdmSettings.endUserMigration.forcedDescription")}
           </p>
           <p>
-            To edit the organization name, avatar (logo), and contact link, head
-            to the <b>Organization settings</b> &gt; <b>Organization info</b>{" "}
-            page.
+            {t("mdmSettings.endUserMigration.editOrgInfo")}
           </p>
           <InputField
             readOnly={!formData.isEnabled || isGitOpsModeEnabled}
             name="webhook_url"
-            label="Webhook URL"
+            label={t("mdmSettings.endUserMigration.webhookUrl")}
             value={formData.webhookUrl}
             onChange={onChangeWebhookUrl}
-            error={!isValidWebhookUrl && "Must be a valid URL."}
-            helpText={
-              <>
-                When the end users clicks <b>Start</b>, a JSON payload is sent
-                to this URL if the end user is enrolled to your old MDM. Receive
-                this webhook using your automation tool (ex. Tines) to unenroll
-                your end users from your old MDM solution.
-              </>
-            }
+            error={!isValidWebhookUrl && t("mdmSettings.endUserMigration.validation.validUrl")}
+            helpText={t("mdmSettings.endUserMigration.webhookUrlHelp")}
           />
         </div>
         <Button
@@ -236,13 +224,13 @@ const EndUserMigrationSection = ({ router }: IEndUserMigrationSectionProps) => {
           variant="inverse"
           onClick={toggleExamplePayloadModal}
         >
-          Preview payload
+          {t("mdmSettings.endUserMigration.previewPayload")}
         </Button>
         <GitOpsModeTooltipWrapper
           tipOffset={8}
           renderChildren={(disableChildren) => (
             <Button onClick={onSubmit} disabled={disableChildren}>
-              Save
+              {t("mdmSettings.endUserMigration.save")}
             </Button>
           )}
         />

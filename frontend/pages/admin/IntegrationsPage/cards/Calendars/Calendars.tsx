@@ -1,5 +1,6 @@
 import React, { useState, useContext, useCallback } from "react";
 import { useQuery } from "react-query";
+import { useTranslation } from "react-i18next";
 
 import { IConfig } from "interfaces/config";
 import { IInputFieldParseTarget } from "interfaces/form_field";
@@ -69,6 +70,7 @@ const isErrorWithMessage = (error: unknown): error is ErrorWithMessage => {
 const baseClass = "calendars-integration";
 
 const Calendars = (): JSX.Element => {
+  const { t } = useTranslation("settings");
   const { renderFlash } = useContext(NotificationContext);
   const { currentTeam, isPremiumTier } = useContext(AppContext);
 
@@ -110,10 +112,10 @@ const Calendars = (): JSX.Element => {
 
     // Must set all keys or no keys at all
     if (!curFormData.apiKeyJson && !!curFormData.domain) {
-      errors.apiKeyJson = "API key JSON must be completed";
+      errors.apiKeyJson = t("integrations.calendars.validation.apiKeyRequired");
     }
     if (!curFormData.domain && !!curFormData.apiKeyJson) {
-      errors.domain = "Domain must be completed";
+      errors.domain = t("integrations.calendars.validation.domainRequired");
     }
     if (curFormData.apiKeyJson) {
       try {
@@ -140,7 +142,7 @@ const Calendars = (): JSX.Element => {
 
   if (!isPremiumTier)
     return (
-      <SettingsSection title="Calendars">
+      <SettingsSection title={t("integrations.calendars.title")}>
         <PremiumFeatureMessage />
       </SettingsSection>
     );
@@ -172,11 +174,11 @@ const Calendars = (): JSX.Element => {
       await configAPI.update({ integrations: destination });
       renderFlash(
         "success",
-        "Successfully saved calendar integration settings."
+        t("integrations.calendars.saveSuccess")
       );
       refetchConfig();
     } catch (e) {
-      renderFlash("error", "Could not save calendar integration settings.");
+      renderFlash("error", t("integrations.calendars.saveError"));
     } finally {
       setIsUpdatingSettings(false);
     }
@@ -271,7 +273,7 @@ const Calendars = (): JSX.Element => {
                 <Card>
                   <form onSubmit={onFormSubmit} autoComplete="off">
                     <InputField
-                      label="API key JSON"
+                      label={t("integrations.calendars.apiKeyJson")}
                       onChange={onInputChange}
                       name="apiKeyJson"
                       value={apiKeyJson}
@@ -284,7 +286,7 @@ const Calendars = (): JSX.Element => {
                       disabled={gomEnabled}
                     />
                     <InputField
-                      label="Primary domain"
+                      label={t("integrations.calendars.primaryDomain")}
                       onChange={onInputChange}
                       name="domain"
                       value={domain}
@@ -292,10 +294,10 @@ const Calendars = (): JSX.Element => {
                       placeholder="example.com"
                       helpText={
                         <>
-                          You can find your primary domain in Google Workspace{" "}
+                          {t("integrations.calendars.primaryDomainHelp")}{" "}
                           <CustomLink
                             url={GOOGLE_WORKSPACE_DOMAINS}
-                            text="here"
+                            text={t("integrations.calendars.here")}
                             newTab
                           />
                         </>
@@ -313,7 +315,7 @@ const Calendars = (): JSX.Element => {
                             className="save-loading"
                             isLoading={isUpdatingSettings}
                           >
-                            Save
+                            {t("integrations.calendars.save")}
                           </Button>
                         )}
                       />
@@ -412,15 +414,9 @@ const Calendars = (): JSX.Element => {
   }
 
   return (
-    <SettingsSection title="Calendars">
+    <SettingsSection title={t("integrations.calendars.title")}>
       <PageDescription
-        content={
-          <>
-            To create calendar events for end users with failing policies,
-            you&apos;ll need to configure a dedicated Google Workspace service
-            account.
-          </>
-        }
+        content={t("integrations.calendars.description")}
         variant="right-panel"
       />
       {renderForm()}

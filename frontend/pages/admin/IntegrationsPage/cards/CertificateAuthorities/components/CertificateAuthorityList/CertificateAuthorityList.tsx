@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 import { ICertificateAuthorityPartial } from "interfaces/certificates";
 
@@ -17,31 +18,32 @@ export type ICertAuthorityListData = ICertificateAuthorityPartial & {
  * to provide a user-friendly description for each certificate authority.
  */
 export const generateListData = (
-  certAuthorities: ICertificateAuthorityPartial[]
+  certAuthorities: ICertificateAuthorityPartial[],
+  t: (key: string) => string
 ) => {
   return certAuthorities.map<ICertAuthorityListData>((cert) => {
     let description = "";
     switch (cert.type) {
       case "ndes_scep_proxy":
-        description = "Microsoft Network Device Enrollment Service (NDES)";
+        description = t("certificateAuthorities.descriptions.ndes");
         break;
       case "digicert":
-        description = "DigiCert";
+        description = t("certificateAuthorities.descriptions.digicert");
         break;
       case "custom_scep_proxy":
-        description = "Custom Simple Certificate Enrollment Protocol (SCEP)";
+        description = t("certificateAuthorities.descriptions.customScep");
         break;
       case "hydrant":
-        description = "Tau Platform (EST - Enrollment Over Secure Transport)";
+        description = t("certificateAuthorities.descriptions.hydrant");
         break;
       case "smallstep":
-        description = "Smallstep";
+        description = t("certificateAuthorities.descriptions.smallstep");
         break;
       case "custom_est_proxy":
-        description = "Custom Enrollment Over Secure Transport (EST)";
+        description = t("certificateAuthorities.descriptions.customEst");
         break;
       default:
-        description = "Unknown Certificate Authority Type";
+        description = t("certificateAuthorities.descriptions.unknown");
     }
 
     return {
@@ -64,8 +66,11 @@ const CertificateAuthorityList = ({
   onClickEdit,
   onClickDelete,
 }: ICertificateAuthorityListProps) => {
-  const listData = useMemo(() => generateListData(certAuthorities), [
+  const { t } = useTranslation("settings");
+
+  const listData = useMemo(() => generateListData(certAuthorities, t), [
     certAuthorities,
+    t,
   ]);
 
   return (

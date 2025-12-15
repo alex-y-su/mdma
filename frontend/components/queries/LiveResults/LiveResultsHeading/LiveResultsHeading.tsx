@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import strUtils from "utilities/strings";
 
@@ -20,36 +21,44 @@ interface IFinishButtonsProps {
 const FinishedButtons = ({
   onClickDone,
   onClickRunAgain,
-}: IFinishButtonsProps) => (
-  <div className={`${baseClass}__btn-wrapper`}>
-    <Button className={`${baseClass}__done-btn`} onClick={onClickDone}>
-      Done
-    </Button>
-    <Button
-      className={`${baseClass}__run-btn`}
-      onClick={onClickRunAgain}
-      variant="brand-inverse-icon"
-    >
-      Run again
-    </Button>
-  </div>
-);
+}: IFinishButtonsProps) => {
+  const { t } = useTranslation("common");
+
+  return (
+    <div className={`${baseClass}__btn-wrapper`}>
+      <Button className={`${baseClass}__done-btn`} onClick={onClickDone}>
+        {t("buttons.done")}
+      </Button>
+      <Button
+        className={`${baseClass}__run-btn`}
+        onClick={onClickRunAgain}
+        variant="brand-inverse-icon"
+      >
+        {t("liveQuery.runAgain")}
+      </Button>
+    </div>
+  );
+};
 
 interface IStopButtonProps {
   onClickStop: (evt: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-const StopButton = ({ onClickStop }: IStopButtonProps) => (
-  <div className={`${baseClass}__btn-wrapper`}>
-    <Button
-      className={`${baseClass}__stop-btn`}
-      onClick={onClickStop}
-      variant="alert"
-    >
-      <>Stop</>
-    </Button>
-  </div>
-);
+const StopButton = ({ onClickStop }: IStopButtonProps) => {
+  const { t } = useTranslation("common");
+
+  return (
+    <div className={`${baseClass}__btn-wrapper`}>
+      <Button
+        className={`${baseClass}__stop-btn`}
+        onClick={onClickStop}
+        variant="alert"
+      >
+        <>{t("buttons.stop")}</>
+      </Button>
+    </div>
+  );
+};
 
 interface ILiveResultsHeadingProps {
   numHostsTargeted: number;
@@ -77,14 +86,15 @@ const LiveResultsHeading = ({
   onClickStop,
   resultsType = "query",
 }: ILiveResultsHeadingProps) => {
+  const { t } = useTranslation("common");
   const percentResponded =
     numHostsTargeted > 0
       ? Math.round((numHostsResponded / numHostsTargeted) * 100)
       : 0;
 
   const PAGE_TITLES = {
-    RUNNING: `Running ${resultsType}`,
-    FINISHED: `${resultsType[0].toUpperCase()}${resultsType.slice(1)} finished`,
+    RUNNING: t("liveQuery.running", { type: resultsType }),
+    FINISHED: t("liveQuery.finished", { type: resultsType }),
   };
 
   const pageTitle = isFinished ? PAGE_TITLES.FINISHED : PAGE_TITLES.RUNNING;
@@ -100,41 +110,37 @@ const LiveResultsHeading = ({
           <span>&nbsp;{pluralizeHost(numHostsTargeted)} targeted</span>
         </div>
         <div className={`${baseClass}__percent-responded`}>
-          {!isFinished && <span>Fleet is talking to your hosts.&nbsp;</span>}
+          {!isFinished && <span>{t("liveQuery.fleetTalking")}&nbsp;</span>}
           <span>
             ({`${percentResponded}% `}
             <TooltipWrapper
               tipContent={
                 isFinished ? (
                   <>
-                    Results:{" "}
+                    {t("liveQuery.results")}:{" "}
                     <b>
                       {numHostsRespondedResults}{" "}
                       {pluralizeHost(numHostsRespondedResults)}
                     </b>
                     <br />
-                    No results:{" "}
+                    {t("liveQuery.noResults")}:{" "}
                     <b>
                       {numHostsRespondedNoErrorsAndNoResults}{" "}
                       {pluralizeHost(numHostsRespondedNoErrorsAndNoResults)}
                     </b>
                     <br />
-                    Errors:{" "}
+                    {t("liveQuery.errors")}:{" "}
                     <b>
                       {numHostsRespondedErrors}{" "}
                       {pluralizeHost(numHostsRespondedErrors)}
                     </b>
                   </>
                 ) : (
-                  <>
-                    Hosts that respond may
-                    <br /> return results, errors, or <br />
-                    no results
-                  </>
+                  <>{t("liveQuery.hostsRespondMayReturn")}</>
                 )
               }
             >
-              responded
+              {t("liveQuery.responded")}
             </TooltipWrapper>
             )
           </span>
@@ -150,14 +156,9 @@ const LiveResultsHeading = ({
         {!isFinished && (
           <div className={`${baseClass}__tooltip`}>
             <TooltipWrapper
-              tipContent={
-                <>
-                  The hosts&apos; distributed interval can <br />
-                  impact live query response times.
-                </>
-              }
+              tipContent={t("liveQuery.distributedIntervalTooltip")}
             >
-              Taking longer than 15 seconds?
+              {t("liveQuery.takingLonger")}
             </TooltipWrapper>
           </div>
         )}

@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Row } from "react-table";
 import { isEmpty, pullAllBy } from "lodash";
 
@@ -48,6 +49,7 @@ const TargetsInput = ({
   handleRowSelect,
   setSearchText,
 }: ITargetsInputProps): JSX.Element => {
+  const { t } = useTranslation("common");
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const dropdownHosts =
     searchResults && pullAllBy(searchResults, targetedHosts, "id");
@@ -106,10 +108,9 @@ const TargetsInput = ({
               emptyComponent={() => (
                 <div className="empty-search">
                   <div className="empty-search__inner">
-                    <h4>No matching hosts.</h4>
+                    <h4>{t("targets.noMatchingHosts")}</h4>
                     <p>
-                      Expecting to see hosts? Try again in a few seconds as the
-                      system catches up.
+                      {t("targets.expectingHostsMessage")}
                     </p>
                   </div>
                 </div>

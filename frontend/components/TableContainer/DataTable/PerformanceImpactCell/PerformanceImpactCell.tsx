@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import classnames from "classnames";
 import { uniqueId } from "lodash";
 
@@ -26,6 +27,7 @@ const PerformanceImpactCell = ({
   isHostSpecific = false,
   customIdPrefix,
 }: IPerformanceImpactCellProps): JSX.Element => {
+  const { t } = useTranslation("common");
   const { indicator, id } = value;
   const pillClassName = classnames(
     "data-table__pill",
@@ -43,41 +45,18 @@ const PerformanceImpactCell = ({
   const tooltipText = () => {
     switch (indicator) {
       case "Minimal":
-        return (
-          <>
-            Running this query very frequently has little to no <br /> impact on
-            your device&apos;s performance.
-          </>
-        );
+        return t("performanceImpact.minimalTooltip");
       case "Considerable":
-        return (
-          <>
-            Running this query frequently can have a noticeable <br />
-            impact on your device&apos;s performance.
-          </>
-        );
+        return t("performanceImpact.considerableTooltip");
       case "Excessive":
-        return (
-          <>
-            Running this query, even infrequently, can have a <br />
-            significant impact on your device&apos;s performance.
-          </>
-        );
+        return t("performanceImpact.excessiveTooltip");
       case "Denylisted":
-        return (
-          <>
-            This query has been <br /> stopped from running <br /> because of
-            excessive <br /> resource consumption.
-          </>
-        );
+        return t("performanceImpact.denylistedTooltip");
       case "Undetermined":
-        return (
-          <>
-            Performance impact will be available when{" "}
-            {isHostSpecific ? "the" : "this"} <br />
-            query runs{isHostSpecific && " on this host"}.
-          </>
-        );
+        return t("performanceImpact.undeterminedTooltip", {
+          queryType: isHostSpecific ? t("performanceImpact.the") : t("performanceImpact.this"),
+          hostSuffix: isHostSpecific ? t("performanceImpact.onThisHost") : ""
+        });
       default:
         return null;
     }
@@ -91,7 +70,14 @@ const PerformanceImpactCell = ({
         data-for={`${customIdPrefix || "pill"}__${id?.toString() || tooltipId}`}
         data-tip-disable={disableTooltip}
       >
-        <span className={pillClassName}>{indicator}</span>
+        <span className={pillClassName}>
+          {indicator === "Minimal" && t("performanceImpact.minimal")}
+          {indicator === "Considerable" && t("performanceImpact.considerable")}
+          {indicator === "Excessive" && t("performanceImpact.excessive")}
+          {indicator === "Undetermined" && t("performanceImpact.undetermined")}
+          {indicator === "Denylisted" && t("performanceImpact.denylisted")}
+          {!["Minimal", "Considerable", "Excessive", "Undetermined", "Denylisted"].includes(indicator) && indicator}
+        </span>
       </span>
       <ReactTooltip
         place="top"

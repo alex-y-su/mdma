@@ -1,5 +1,6 @@
 import SoftwareIcon from "pages/SoftwarePage/components/icons/SoftwareIcon";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const baseClass = "setup-software-process-cell";
 
@@ -8,11 +9,13 @@ interface ISetupSoftwareProcessCell {
 }
 
 const SetupSoftwareProcessCell = ({ name }: ISetupSoftwareProcessCell) => {
+  const { t } = useTranslation("common");
+
   return (
     <span className={baseClass}>
       <SoftwareIcon name={name || ""} size="small" />
       <div>
-        Install <b>{name || "Unknown software"}</b>
+        {t("setupProcess.install")} <b>{name || t("setupProcess.unknownSoftware")}</b>
       </div>
     </span>
   );

@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import CustomLink from "components/CustomLink";
 import InfoBanner from "components/InfoBanner";
@@ -10,6 +11,8 @@ interface IVppRenewalMessageProps {
 }
 
 const VppRenewalMessage = ({ expired }: IVppRenewalMessageProps) => {
+  const { t } = useTranslation("common");
+
   return (
     <InfoBanner
       className={baseClass}
@@ -17,26 +20,15 @@ const VppRenewalMessage = ({ expired }: IVppRenewalMessageProps) => {
       cta={
         <CustomLink
           url="/settings/integrations/mdm/vpp"
-          text="Renew VPP"
+          text={t("vpp.renewButton")}
           className={`${baseClass}`}
           variant="banner-link"
         />
       }
     >
-      {expired ? (
-        <>
-          Your Volume Purchasing Program (VPP) content token has expired. You
-          can’t add or install App Store apps. Users with the admin role in
-          Fleet can renew VPP.
-        </>
-      ) : (
-        <>
-          Your Volume Purchasing Program (VPP) content token is less than 30
-          days from expiration. If it expires, you won’t be able to add or
-          install App Store apps. Users with the admin role in Fleet can renew
-          VPP.
-        </>
-      )}
+      {expired
+        ? t("vpp.expiredMessage")
+        : t("vpp.expiringMessage")}
     </InfoBanner>
   );
 };

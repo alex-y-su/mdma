@@ -248,5 +248,66 @@
     "updated": "Updated {{time}}",
     "never": "never",
     "fleetPeriodicallyQueries": "Fleet periodically queries all hosts to retrieve {{whatToRetrieve}}."
+  },
+  "vpp": {
+    "renewButton": "Renew VPP",
+    "expiredMessage": "Your Volume Purchasing Program (VPP) content token has expired. You can't add or install App Store apps. Users with the admin role in Fleet can renew VPP.",
+    "expiringMessage": "Your Volume Purchasing Program (VPP) content token is less than 30 days from expiration. If it expires, you won't be able to add or install App Store apps. Users with the admin role in Fleet can renew VPP."
+  },
+  "software": {
+    "canBeInstalledOn": "Software can be installed on the {{location}}.",
+    "libraryTab": "Library tab",
+    "hostDetailsPage": "Host details page",
+    "policyTriggersInstall": "A policy triggers install.",
+    "policiesTriggersInstall": "{{count}} policies trigger install."
+  },
+  "performanceImpact": {
+    "minimal": "Minimal",
+    "considerable": "Considerable",
+    "excessive": "Excessive",
+    "undetermined": "Undetermined",
+    "denylisted": "Denylisted",
+    "minimalTooltip": "Running this query very frequently has little to no impact on your device's performance.",
+    "considerableTooltip": "Running this query frequently can have a noticeable impact on your device's performance.",
+    "excessiveTooltip": "Running this query, even infrequently, can have a significant impact on your device's performance.",
+    "denylistedTooltip": "This query has been stopped from running because of excessive resource consumption.",
+    "undeterminedTooltip": "Performance impact will be available when {{queryType}} query runs{{hostSuffix}}.",
+    "the": "the",
+    "this": "this",
+    "onThisHost": " on this host"
+  },
+  "setupStatus": {
+    "pending": "Pending",
+    "installing": "Installing",
+    "installed": "Installed",
+    "running": "Running",
+    "ran": "Ran",
+    "failed": "Failed"
+  },
+  "setupProcess": {
+    "install": "Install",
+    "run": "Run",
+    "unknownSoftware": "Unknown software",
+    "unknownScript": "Unknown script"
+  },
+  "installer": {
+    "unavailablePlatform": "Currently unavailable for this platform."
+  },
+  "targets": {
+    "noMatchingHosts": "No matching hosts.",
+    "expectingHostsMessage": "Expecting to see hosts? Try again in a few seconds as the system catches up."
+  },
+  "liveQuery": {
+    "running": "Running {{type}}",
+    "finished": "{{type, titlecase}} finished",
+    "runAgain": "Run again",
+    "fleetTalking": "Fleet is talking to your hosts.",
+    "responded": "responded",
+    "results": "Results",
+    "noResults": "No results",
+    "errors": "Errors",
+    "hostsRespondMayReturn": "Hosts that respond may return results, errors, or no results",
+    "takingLonger": "Taking longer than 15 seconds?",
+    "distributedIntervalTooltip": "The hosts' distributed interval can impact live query response times."
   }
 }

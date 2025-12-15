@@ -11,6 +11,7 @@
 
 import classnames from "classnames";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import Select, {
   components,
   DropdownIndicatorProps,
@@ -442,6 +443,7 @@ const DropdownWrapper = ({
   variant,
   nowrapMenu,
 }: IDropdownWrapper) => {
+  const { t } = useTranslation("common");
   const wrapperClassNames = classnames(baseClass, className, {
     [`${baseClass}__table-filter`]: variant === "table-filter",
     [`${wrapperClassname}`]: !!wrapperClassname,
@@ -521,7 +523,7 @@ const DropdownWrapper = ({
         value={getCurrentValue()}
         onChange={handleChange}
         isDisabled={isDisabled}
-        noOptionsMessage={() => "No results found"}
+        noOptionsMessage={() => t("search.noResults")}
         tabIndex={isDisabled ? -1 : 0} // Ensures disabled dropdown has no keyboard accessibility
         placeholder={placeholder}
         onMenuOpen={onMenuOpen}

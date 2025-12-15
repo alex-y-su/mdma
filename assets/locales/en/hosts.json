@@ -9,7 +9,12 @@
   "details": {
     "title": "Host details",
     "about": "About",
-    "software": "Software",
+    "software": {
+      "title": "Software",
+      "libraryNotSupported": "Software library is currently not supported on this host.",
+      "installComingSoon": "Software install is coming soon.",
+      "learnMore": "Learn more"
+    },
     "queries": "Queries",
     "policies": "Policies",
     "scripts": "Scripts",
@@ -90,6 +95,9 @@
     "platform": "Platform",
     "dynamic": "Dynamic",
     "manual": "Manual"
+  },
+  "actionsDropdown": {
+    "placeholder": "Actions"
   },
   "actions": {
     "refetch": "Refetch host",
@@ -257,6 +265,15 @@
       "mdmOff": "MDM is turned off for this host",
       "pendingLock": "Lock pending",
       "pendingWipe": "Wipe pending"
+    }
+  },
+  "banners": {
+    "turnOnMdm": "To enforce settings, OS updates, disk encryption, and more, ask the end user to follow the Turn on MDM instructions on their My device page.",
+    "diskEncryption": {
+      "actionRequired": "Disk encryption: Requires action from the end user. Ask the user to follow Disk encryption instructions on their My device page.",
+      "macActionRequired": "Disk encryption: Requires action from the end user. Ask the end user to log out of their device or restart it.",
+      "linuxOffRequiresReinstall": "Disk encryption: Disk encryption is off. Currently, to turn on full disk encryption, the end user has to re-install their operating system.",
+      "guide": "Guide"
     }
   },
   "header": {

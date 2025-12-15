@@ -232,6 +232,11 @@
     "issueTooltip": "Issues reported the last time Munki ran on each host."
   },
   "osVersions": {
-    "vulnerabilitiesTooltip": "Vulnerabilities on Linux are currently supported for Ubuntu, Debian, and Amazon Linux."
+    "vulnerabilitiesTooltip": "Vulnerabilities on Linux are currently supported for Ubuntu, Debian, and Amazon Linux.",
+    "chromebookUpdatesInfo": "Chromebooks automatically receive updates from Google until their auto-update expiration date.",
+    "learnMore": "Learn more",
+    "osVendorUpdatesInfo": "releases updates and fixes for supported operating systems.",
+    "seeSupportedOs": "See supported operating systems",
+    "lastUpdatedLabel": "operating systems"
   }
 }

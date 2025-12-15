@@ -284,7 +284,13 @@
       "queriesCount": "Запросы",
       "hostsCount": "Устройства",
       "lastModified": "Последнее изменение",
-      "status": "Статус"
+      "status": "Статус",
+      "query": "Запрос",
+      "frequency": "Частота",
+      "platform": "Платформа",
+      "logging": "Логирование",
+      "performanceImpact": "Влияние на производительность",
+      "actions": "Действия"
     },
     "table": {
       "searchPlaceholder": "Поиск по названию"
@@ -292,7 +298,9 @@
     "actions": {
       "enable": "Включить",
       "disable": "Отключить",
-      "delete": "Удалить"
+      "delete": "Удалить",
+      "edit": "Редактировать",
+      "remove": "Удалить"
     },
     "empty": {
       "noPacks": "У вас нет пакетов",
@@ -301,22 +309,55 @@
       "tryAgain": "Ожидаете увидеть пакеты? Попробуйте снова через несколько секунд, пока система обновится."
     },
     "edit": {
+      "title": "Редактировать пакет",
       "backButton": "Назад к пакетам",
       "updateSuccess": "Пакет успешно обновлён.",
       "updateError": "Не удалось обновить пакет. Пожалуйста, попробуйте снова.",
       "duplicateNameError": "Не удалось обновить пакет. Названия пакетов должны быть уникальными.",
       "removeQuerySuccess": "Успешно удалён {{queryOrQueries}} из этого пакета.",
-      "removeQueryError": "Не удалось удалить {{queryOrQueries}} из этого пакета. Пожалуйста, попробуйте снова."
+      "removeQueryError": "Не удалось удалить {{queryOrQueries}} из этого пакета. Пожалуйста, попробуйте снова.",
+      "saveButton": "Сохранить",
+      "cancelButton": "Отмена"
     },
     "create": {
+      "title": "Новый пакет",
       "success": "Пакет успешно создан. Добавьте запросы в ваш пакет.",
       "error": "Не удалось создать пакет.",
-      "duplicateNameError": "Не удалось создать пакет. Названия пакетов должны быть уникальными."
+      "duplicateNameError": "Не удалось создать пакет. Названия пакетов должны быть уникальными.",
+      "nameLabel": "Название",
+      "namePlaceholder": "Название",
+      "descriptionLabel": "Описание",
+      "descriptionPlaceholder": "Добавьте описание вашего пакета",
+      "targetsLabel": "Выберите цели пакета",
+      "saveButton": "Сохранить пакет запросов",
+      "nameRequired": "Название пакета обязательно"
     },
     "status": {
       "enabled": "Включён",
       "disabled": "Отключён"
     },
+    "queries": {
+      "title": "Запросы",
+      "searchPlaceholder": "Поиск запросов",
+      "addButton": "Добавить запрос",
+      "removeButton": "Удалить",
+      "noQueries": "В вашем пакете нет запросов.",
+      "noMatchTitle": "Нет запросов, соответствующих критериям поиска",
+      "noMatchInfo": "Попробуйте другой поиск."
+    },
+    "logging": {
+      "snapshot": "Снимок",
+      "differential": "Дифференциальный",
+      "differentialIgnoreRemovals": "Дифференциальный (игнорировать удаление)"
+    },
+    "platforms": {
+      "all": "Все",
+      "windows": "Windows",
+      "linux": "Linux",
+      "macos": "macOS",
+      "any": "Любая"
+    },
+    "performanceImpactTooltip": "Это среднее влияние на производительность для всех устройств, на которых был запланирован этот запрос.",
     "modals": {
       "delete": {
         "title": "Удалить пакет",

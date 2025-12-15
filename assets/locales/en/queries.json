@@ -284,7 +284,13 @@
       "queriesCount": "Queries",
       "hostsCount": "Hosts",
       "lastModified": "Last modified",
-      "status": "Status"
+      "status": "Status",
+      "query": "Query",
+      "frequency": "Frequency",
+      "platform": "Platform",
+      "logging": "Logging",
+      "performanceImpact": "Performance impact",
+      "actions": "Actions"
     },
     "table": {
       "searchPlaceholder": "Search by name"
@@ -292,7 +298,9 @@
     "actions": {
       "enable": "Enable",
       "disable": "Disable",
-      "delete": "Delete"
+      "delete": "Delete",
+      "edit": "Edit",
+      "remove": "Remove"
     },
     "empty": {
       "noPacks": "You don't have any packs",
@@ -301,22 +309,55 @@
       "tryAgain": "Expecting to see packs? Try again in a few seconds as the system catches up."
     },
     "edit": {
+      "title": "Edit pack",
       "backButton": "Back to packs",
       "updateSuccess": "Successfully updated this pack.",
       "updateError": "Could not update pack. Please try again.",
       "duplicateNameError": "Unable to update pack. Pack names must be unique.",
       "removeQuerySuccess": "Successfully removed {{queryOrQueries}} from this pack.",
-      "removeQueryError": "Unable to remove {{queryOrQueries}} from this pack. Please try again."
+      "removeQueryError": "Unable to remove {{queryOrQueries}} from this pack. Please try again.",
+      "saveButton": "Save",
+      "cancelButton": "Cancel"
     },
     "create": {
+      "title": "New pack",
       "success": "Pack successfully created. Add queries to your pack.",
       "error": "Unable to create pack.",
-      "duplicateNameError": "Unable to create pack. Pack names must be unique."
+      "duplicateNameError": "Unable to create pack. Pack names must be unique.",
+      "nameLabel": "Name",
+      "namePlaceholder": "Name",
+      "descriptionLabel": "Description",
+      "descriptionPlaceholder": "Add a description of your pack",
+      "targetsLabel": "Select pack targets",
+      "saveButton": "Save query pack",
+      "nameRequired": "Pack name must be present"
     },
     "status": {
       "enabled": "Enabled",
       "disabled": "Disabled"
     },
+    "queries": {
+      "title": "Queries",
+      "searchPlaceholder": "Search queries",
+      "addButton": "Add query",
+      "removeButton": "Remove",
+      "noQueries": "Your pack has no queries.",
+      "noMatchTitle": "No queries match your search criteria",
+      "noMatchInfo": "Try a different search."
+    },
+    "logging": {
+      "snapshot": "Snapshot",
+      "differential": "Differential",
+      "differentialIgnoreRemovals": "Differential (ignore removal)"
+    },
+    "platforms": {
+      "all": "All",
+      "windows": "Windows",
+      "linux": "Linux",
+      "macos": "macOS",
+      "any": "Any"
+    },
+    "performanceImpactTooltip": "This is the average performance impact across all hosts where this query was scheduled.",
     "modals": {
       "delete": {
         "title": "Delete pack",

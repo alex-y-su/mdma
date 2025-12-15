@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import useDeepEffect from "hooks/useDeepEffect";
 
 import Button from "components/buttons/Button";
@@ -54,6 +55,7 @@ const EditPackForm = ({
   formData,
   isUpdatingPack,
 }: IEditPackForm): JSX.Element => {
+  const { t } = useTranslation("queries");
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [packName, setPackName] = useState(formData.name);
   const [packDescription, setPackDescription] = useState(formData.description);
@@ -85,7 +87,7 @@ const EditPackForm = ({
     if (packName === "") {
       return setErrors({
         ...errors,
-        name: "Pack name must be present",
+        name: t("packs.create.nameRequired"),
       });
     }
 
@@ -102,12 +104,12 @@ const EditPackForm = ({
       onSubmit={onFormSubmit}
       autoComplete="off"
     >
-      <h1>Edit pack</h1>
+      <h1>{t("packs.edit.title")}</h1>
       <InputField
         onChange={onChangePackName}
         value={packName}
-        placeholder="Name"
-        label="Name"
+        placeholder={t("packs.create.namePlaceholder")}
+        label={t("packs.create.nameLabel")}
         name="name"
         error={errors.name}
         inputWrapperClass={`${baseClass}__pack-title`}
@@ -116,13 +118,13 @@ const EditPackForm = ({
         onChange={onChangePackDescription}
         value={packDescription}
         inputWrapperClass={`${baseClass}__pack-description`}
-        label="Description"
+        label={t("packs.create.descriptionLabel")}
         name="description"
-        placeholder="Add a description of your pack"
+        placeholder={t("packs.create.descriptionPlaceholder")}
         type="textarea"
       />
       <SelectTargetsDropdown
-        label="Select pack targets"
+        label={t("packs.create.targetsLabel")}
         name="selected-pack-targets"
         onFetchTargets={onFetchTargets}
         onSelect={onChangePackTargets}
@@ -139,14 +141,14 @@ const EditPackForm = ({
       />
       <div className={`${baseClass}__pack-buttons`}>
         <Button onClick={onCancelEditPack} type="button" variant="inverse">
-          Cancel
+          {t("packs.edit.cancelButton")}
         </Button>
         <Button
           type="submit"
           className="save-loading"
           isLoading={isUpdatingPack}
         >
-          Save
+          {t("packs.edit.saveButton")}
         </Button>
       </div>
     </form>

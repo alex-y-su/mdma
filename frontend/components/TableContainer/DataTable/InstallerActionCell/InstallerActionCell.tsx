@@ -1,5 +1,6 @@
 import React from "react";
 import { InjectedRouter } from "react-router";
+import { useTranslation } from "react-i18next";
 
 import PATHS from "router/paths";
 import { getPathWithQueryParams } from "utilities/url";
@@ -27,6 +28,7 @@ const InstallerActionCell = ({
   className = "w250",
   teamId,
 }: IInstallerActionCellProps) => {
+  const { t } = useTranslation("common");
   const cellClasses = classnames(baseClass, className);
 
   // Not all FMAs are supported for all platforms
@@ -34,7 +36,7 @@ const InstallerActionCell = ({
     return (
       <TextCell
         className={cellClasses}
-        emptyCellTooltipText="Currently unavailable for this platform."
+        emptyCellTooltipText={t("installer.unavailablePlatform")}
       />
     );
   }
@@ -74,7 +76,7 @@ const InstallerActionCell = ({
   return (
     <div className={cellClasses}>
       <Button variant="pill" onClick={onClick}>
-        Add
+        {t("buttons.add")}
       </Button>
     </div>
   );

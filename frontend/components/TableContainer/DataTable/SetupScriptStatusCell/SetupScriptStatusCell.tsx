@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import { SetupStepStatus } from "interfaces/setup";
 
@@ -12,25 +13,27 @@ interface ISetupScriptStatusCell {
   status: SetupStepStatus;
 }
 
-const serverToUiStatus = (
-  status: SetupStepStatus
-): { label: string; icon: IconNames | "spinner" } => {
-  switch (status) {
-    case "pending":
-      return { label: "Pending", icon: "pending-outline" };
-    case "running":
-      return { label: "Running", icon: "spinner" };
-    case "success":
-      return { label: "Ran", icon: "success" };
-    case "failure":
-    case "cancelled":
-      return { label: "Failed", icon: "error" };
-    default:
-      return { label: "Pending", icon: "pending-outline" };
-  }
-};
-
 const SetupScriptStatusCell = ({ status }: ISetupScriptStatusCell) => {
+  const { t } = useTranslation("common");
+
+  const serverToUiStatus = (
+    status: SetupStepStatus
+  ): { label: string; icon: IconNames | "spinner" } => {
+    switch (status) {
+      case "pending":
+        return { label: t("setupStatus.pending"), icon: "pending-outline" };
+      case "running":
+        return { label: t("setupStatus.running"), icon: "spinner" };
+      case "success":
+        return { label: t("setupStatus.ran"), icon: "success" };
+      case "failure":
+      case "cancelled":
+        return { label: t("setupStatus.failed"), icon: "error" };
+      default:
+        return { label: t("setupStatus.pending"), icon: "pending-outline" };
+    }
+  };
+
   const { label, icon } = serverToUiStatus(status);
   return (
     <div className={baseClass}>

@@ -1,5 +1,6 @@
 import React from "react";
 import { InjectedRouter } from "react-router";
+import { useTranslation } from "react-i18next";
 
 import { getSelfServiceTooltip } from "pages/SoftwarePage/helpers";
 
@@ -37,20 +38,21 @@ interface InstallIconConfig {
   }: InstallIconTooltip) => JSX.Element;
 }
 
-const getPolicyTooltip = (count = 0) =>
-  count === 1
-    ? "A policy triggers install."
-    : `${count} policies trigger install.`;
-
 const installIconMap: Record<InstallType, InstallIconConfig> = {
   manual: {
     iconName: "install",
-    tooltip: ({ pageContext }) => (
-      <>
-        Software can be installed on the{" "}
-        {pageContext === "hostDetails" ? "Library tab" : "Host details page"}.
-      </>
-    ),
+    tooltip: ({ pageContext }) => {
+      const { t } = useTranslation("common");
+      return (
+        <>
+          {t("software.canBeInstalledOn", {
+            location: pageContext === "hostDetails"
+              ? t("software.libraryTab")
+              : t("software.hostDetailsPage")
+          })}
+        </>
+      );
+    },
   },
   selfService: {
     iconName: "user",
@@ -59,9 +61,16 @@ const installIconMap: Record<InstallType, InstallIconConfig> = {
   },
   automatic: {
     iconName: "refresh",
-    tooltip: ({ automaticInstallPoliciesCount = 0 }) => (
-      <>{getPolicyTooltip(automaticInstallPoliciesCount)}</>
-    ),
+    tooltip: ({ automaticInstallPoliciesCount = 0 }) => {
+      const { t } = useTranslation("common");
+      return (
+        <>
+          {automaticInstallPoliciesCount === 1
+            ? t("software.policyTriggersInstall")
+            : t("software.policiesTriggersInstall", { count: automaticInstallPoliciesCount })}
+        </>
+      );
+    },
   },
   automaticSelfService: {
     iconName: "automatic-self-service",
@@ -69,13 +78,18 @@ const installIconMap: Record<InstallType, InstallIconConfig> = {
       automaticInstallPoliciesCount = 0,
       isIosOrIpadosApp = false,
       isAndroidPlayStoreApp = false,
-    }) => (
-      <>
-        {getPolicyTooltip(automaticInstallPoliciesCount)}
-        <br />
-        {getSelfServiceTooltip(isIosOrIpadosApp, isAndroidPlayStoreApp)}
-      </>
-    ),
+    }) => {
+      const { t } = useTranslation("common");
+      return (
+        <>
+          {automaticInstallPoliciesCount === 1
+            ? t("software.policyTriggersInstall")
+            : t("software.policiesTriggersInstall", { count: automaticInstallPoliciesCount })}
+          <br />
+          {getSelfServiceTooltip(isIosOrIpadosApp, isAndroidPlayStoreApp)}
+        </>
+      );
+    },
   },
 };
 

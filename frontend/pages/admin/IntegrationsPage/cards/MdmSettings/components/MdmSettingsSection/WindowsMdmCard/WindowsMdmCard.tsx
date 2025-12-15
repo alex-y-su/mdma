@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useTranslation } from "react-i18next";
 
 import { AppContext } from "context/app";
 
@@ -15,13 +16,15 @@ interface ITurnOnWindowsMdmCardProps {
 const TurnOnWindowsMdmCard = ({
   onClickTurnOn,
 }: ITurnOnWindowsMdmCardProps) => {
+  const { t } = useTranslation("settings");
+
   return (
     <SectionCard
       className={baseClass}
-      header="Turn on Windows MDM"
-      cta={<Button onClick={onClickTurnOn}>Turn on</Button>}
+      header={t("integrations.mdm.windows.turn_on_header")}
+      cta={<Button onClick={onClickTurnOn}>{t("integrations.mdm.windows.turn_on")}</Button>}
     >
-      Turn MDM on for Windows hosts with fleetd.
+      {t("integrations.mdm.windows.turn_on_content")}
     </SectionCard>
   );
 };
@@ -33,17 +36,19 @@ interface ITurnOffWindowsMdmCardProps {
 const TurnOffWindowsMdmCard = ({
   onClickEdit,
 }: ITurnOffWindowsMdmCardProps) => {
+  const { t } = useTranslation("settings");
+
   return (
     <SectionCard
       iconName="success"
       cta={
         <Button onClick={onClickEdit} variant="inverse">
           <Icon name="pencil" />
-          Edit
+          {t("integrations.mdm.edit")}
         </Button>
       }
     >
-      Windows MDM turned on (servers excluded).
+      {t("integrations.mdm.windows.turned_on")}
     </SectionCard>
   );
 };

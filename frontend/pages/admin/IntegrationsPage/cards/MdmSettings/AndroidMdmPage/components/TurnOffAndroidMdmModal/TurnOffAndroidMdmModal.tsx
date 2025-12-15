@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { InjectedRouter } from "react-router";
+import { useTranslation } from "react-i18next";
 
 import PATHS from "router/paths";
 import mdmAndroidAPI from "services/entities/mdm_android";
@@ -19,38 +20,37 @@ const TurnOffAndroidMdmModal = ({
   onExit,
   router,
 }: ITurnOffAndroidMdmModalProps) => {
+  const { t } = useTranslation("settings");
   const { renderFlash } = useContext(NotificationContext);
 
   const onTurnOffAndroidMdm = async () => {
     try {
       await mdmAndroidAPI.turnOffAndroidMdm();
-      renderFlash("success", "Android MDM turned off successfully.", {
+      renderFlash("success", t("mdmSettings.android.turnOffSuccess"), {
         persistOnPageChange: true,
       });
       router.push(PATHS.ADMIN_INTEGRATIONS_MDM);
     } catch (e) {
       onExit();
-      renderFlash("error", "Couldn't turn off Android MDM. Please try again.");
+      renderFlash("error", t("mdmSettings.android.turnOffError"));
     }
   };
 
   return (
-    <Modal title="Turn off Android MDM" className={baseClass} onExit={onExit}>
+    <Modal title={t("mdmSettings.android.turnOffModalTitle")} className={baseClass} onExit={onExit}>
       <>
         <p>
-          If you want to use MDM features again, you&apos;ll have to reconnect
-          Android Enterprise.
+          {t("mdmSettings.android.turnOffModalWarning1")}
         </p>
         <p>
-          End users will lose access to organization resources and all data in
-          their Android work partition.
+          {t("mdmSettings.android.turnOffModalWarning2")}
         </p>
         <div className="modal-cta-wrap">
           <Button onClick={onTurnOffAndroidMdm} variant="alert">
-            Turn off
+            {t("mdmSettings.android.turnOffConfirm")}
           </Button>
           <Button onClick={onExit} variant="inverse-alert">
-            Cancel
+            {t("mdmSettings.android.turnOffCancel")}
           </Button>
         </div>
       </>

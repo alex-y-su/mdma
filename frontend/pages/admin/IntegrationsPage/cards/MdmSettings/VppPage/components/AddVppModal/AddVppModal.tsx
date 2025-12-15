@@ -1,4 +1,5 @@
 import React, { useCallback, useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { NotificationContext } from "context/notification";
 import mdmAppleAPI from "services/entities/mdm_apple";
@@ -18,6 +19,7 @@ interface IAddVppModalProps {
 }
 
 const AddVppModal = ({ onCancel, onAdded }: IAddVppModalProps) => {
+  const { t } = useTranslation("settings");
   const { renderFlash } = useContext(NotificationContext);
 
   const [tokenFile, setTokenFile] = useState<File | null>(null);
@@ -34,13 +36,13 @@ const AddVppModal = ({ onCancel, onAdded }: IAddVppModalProps) => {
     setIsUploading(true);
     if (!tokenFile) {
       setIsUploading(false);
-      renderFlash("error", "No token selected.");
+      renderFlash("error", t("mdmSettings.vpp.addModal.noTokenSelected"));
       return;
     }
 
     try {
       await mdmAppleAPI.uploadVppToken(tokenFile);
-      renderFlash("success", "Added successfully.");
+      renderFlash("success", t("mdmSettings.vpp.addModal.addSuccess"));
       onAdded();
     } catch (e) {
       renderFlash("error", getErrorMessage(e));
@@ -48,12 +50,12 @@ const AddVppModal = ({ onCancel, onAdded }: IAddVppModalProps) => {
     } finally {
       setIsUploading(false);
     }
-  }, [tokenFile, renderFlash, onAdded, onCancel]);
+  }, [tokenFile, renderFlash, onAdded, onCancel, t]);
 
   return (
     <Modal
       className={baseClass}
-      title="Add VPP"
+      title={t("mdmSettings.vpp.addModal.title")}
       onExit={onCancel}
       width="large"
     >
@@ -64,10 +66,10 @@ const AddVppModal = ({ onCancel, onAdded }: IAddVppModalProps) => {
             isUploading ? `${baseClass}__file-uploader--loading` : ""
           }`}
           accept=".vpptoken"
-          message="Content token (.vpptoken)"
+          message={t("mdmSettings.vpp.addModal.contentToken")}
           graphicName="file-vpp"
           buttonType="brand-inverse-icon"
-          buttonMessage={isUploading ? "Uploading..." : "Upload"}
+          buttonMessage={isUploading ? t("mdmSettings.vpp.addModal.uploading") : t("mdmSettings.vpp.addModal.upload")}
           fileDetails={tokenFile ? { name: tokenFile.name } : undefined}
           onFileUpload={onSelectFile}
         />
@@ -77,7 +79,7 @@ const AddVppModal = ({ onCancel, onAdded }: IAddVppModalProps) => {
             isLoading={isUploading}
             disabled={!tokenFile || isUploading}
           >
-            Add VPP
+            {t("mdmSettings.vpp.addVpp")}
           </Button>
         </div>
       </>

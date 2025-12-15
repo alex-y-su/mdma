@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import Modal from "components/Modal";
 import Button from "components/buttons/Button";
@@ -22,11 +23,13 @@ interface IExampleWebhookUrlPayloadModalProps {
 const ExampleWebhookUrlPayloadModal = ({
   onCancel,
 }: IExampleWebhookUrlPayloadModalProps) => {
+  const { t } = useTranslation("settings");
+
   return (
-    <Modal title="Example payload" onExit={onCancel} className={baseClass}>
+    <Modal title={t("integrations.webhook_payload.title")} onExit={onCancel} className={baseClass}>
       <>
         <p>
-          An example request sent to your configured <b>Webhook URL</b>.
+          {t("integrations.webhook_payload.description")}
         </p>
         <pre className={`${baseClass}__endpoint-preview`}>
           POST https://organization.com/send-request-here
@@ -41,7 +44,7 @@ const ExampleWebhookUrlPayloadModal = ({
           />
         </div>
         <div className="modal-cta-wrap">
-          <Button onClick={onCancel}>Done</Button>
+          <Button onClick={onCancel}>{t("common:done")}</Button>
         </div>
       </>
     </Modal>

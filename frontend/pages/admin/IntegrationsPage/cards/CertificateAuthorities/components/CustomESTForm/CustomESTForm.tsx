@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 import { ICertificateAuthorityPartial } from "interfaces/certificates";
 
@@ -38,6 +39,7 @@ const CustomESTForm = ({
   onSubmit,
   onCancel,
 }: ICustomESTFormProps) => {
+  const { t } = useTranslation("settings");
   const validationsConfig = useMemo(() => {
     return generateFormValidations(certAuthorities ?? [], isEditing);
   }, [certAuthorities, isEditing]);
@@ -56,17 +58,17 @@ const CustomESTForm = ({
   return (
     <form onSubmit={onSubmitForm}>
       <InputField
-        label="Name"
+        label={t("certificateAuthorities.forms.name")}
         name="name"
         value={name}
         error={validations.name?.message}
         onChange={onChange}
         parseTarget
         placeholder="WIFI_CERTIFICATE"
-        helpText="Letters, numbers, and underscores only."
+        helpText={t("certificateAuthorities.forms.nameHelpSimple")}
       />
       <InputField
-        label="URL"
+        label={t("certificateAuthorities.forms.url")}
         name="url"
         value={url}
         error={validations.url?.message}
@@ -75,27 +77,27 @@ const CustomESTForm = ({
         placeholder="https://example.com/well-known/est/abc123"
       />
       <InputField
-        label="Username"
+        label={t("certificateAuthorities.forms.username")}
         name="username"
         value={username}
         error={validations.username?.message}
         onChange={onChange}
         parseTarget
-        helpText="The username used to authenticate with the EST endpoint."
+        helpText={t("certificateAuthorities.forms.usernameHelpEst")}
       />
       <InputField
         type="password"
-        label="Password"
+        label={t("certificateAuthorities.forms.password")}
         name="password"
         value={password}
         error={validations.password?.message}
         onChange={onChange}
         parseTarget
-        helpText="The password used to authenticate with the EST endpoint."
+        helpText={t("certificateAuthorities.forms.passwordHelpEst")}
       />
       <div className="modal-cta-wrap">
         <TooltipWrapper
-          tipContent="Complete all required fields to save."
+          tipContent={t("certificateAuthorities.forms.completeRequired")}
           underline={false}
           position="top"
           disableTooltip={validations.isValid}
@@ -110,7 +112,7 @@ const CustomESTForm = ({
           </Button>
         </TooltipWrapper>
         <Button variant="inverse" onClick={onCancel}>
-          Cancel
+          {t("certificateAuthorities.forms.cancel")}
         </Button>
       </div>
     </form>

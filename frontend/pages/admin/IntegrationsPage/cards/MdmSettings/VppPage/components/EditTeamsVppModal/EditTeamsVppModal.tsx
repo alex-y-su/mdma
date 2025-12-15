@@ -1,4 +1,5 @@
 import React, { useCallback, useContext, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { AppContext } from "context/app";
 import { NotificationContext } from "context/notification";
@@ -110,10 +111,11 @@ export const getOptions = (
   availableTeams: ITeamSummary[],
   tokens: IMdmVppToken[],
   currentToken: IMdmVppToken,
-  pendingTeamIds: string[]
+  pendingTeamIds: string[],
+  t: (key: string) => string
 ) => {
   const allTeamsOption = {
-    label: "All teams",
+    label: t("mdmSettings.vpp.allTeams"),
     value: APP_CONTEXT_ALL_TEAMS_ID,
   };
 
@@ -178,6 +180,7 @@ const EditTeamsVppModal = ({
   onCancel,
   onSuccess,
 }: IEditTeamsVppModalProps) => {
+  const { t } = useTranslation("settings");
   const { renderFlash } = useContext(NotificationContext);
   const { availableTeams } = useContext(AppContext);
 
@@ -204,9 +207,10 @@ const EditTeamsVppModal = ({
       availableTeams || [],
       tokens,
       currentToken,
-      selectedValueArr
+      selectedValueArr,
+      t
     );
-  }, [availableTeams, tokens, currentToken, selectedValueArr]);
+  }, [availableTeams, tokens, currentToken, selectedValueArr, t]);
 
   const isAnyTokenAllTeams = useMemo(() => tokens.some(isTokenAllTeams), [
     tokens,
@@ -225,15 +229,15 @@ const EditTeamsVppModal = ({
           tokenId: currentToken.id,
           teamIds: teamIdsFromSelectedValue(selectedValue),
         });
-        renderFlash("success", "Edited successfully.");
+        renderFlash("success", t("mdmSettings.vpp.editTeamsModal.editSuccess"));
         onSuccess();
       } catch (e) {
-        renderFlash("error", "Couldn’t edit. Please try again.");
+        renderFlash("error", t("mdmSettings.vpp.editTeamsModal.editError"));
       } finally {
         setIsSaving(false);
       }
     },
-    [currentToken.id, selectedValue, renderFlash, onSuccess]
+    [currentToken.id, selectedValue, renderFlash, onSuccess, t]
   );
 
   const isDropdownDisabled = options.length === 0 && isAnyTokenAllTeams;
@@ -241,18 +245,17 @@ const EditTeamsVppModal = ({
   return (
     <Modal
       className={baseClass}
-      title="Edit teams"
+      title={t("mdmSettings.vpp.editTeamsModal.title")}
       onExit={onCancel}
       width="large"
       isContentDisabled={isSaving}
     >
       <>
         <p>
-          Edit teams for <b>{currentToken.org_name}</b>.
+          {t("mdmSettings.vpp.editTeamsModal.description", { orgName: currentToken.org_name })}
         </p>
         <p>
-          If you delete a team, App Store apps will be deleted from that team.
-          Installed apps won&apos;t be uninstalled from hosts.
+          {t("mdmSettings.vpp.editTeamsModal.warning")}
         </p>
         <form onSubmit={onSave} className={baseClass} autoComplete="off">
           <TooltipWrapper
@@ -261,9 +264,7 @@ const EditTeamsVppModal = ({
             showArrow
             tipContent={
               <div className={`${baseClass}__tooltip--all-teams`}>
-                You can&apos;t choose teams because you already have a VPP token
-                assigned to all teams. First, edit teams for that VPP token to
-                choose teams here.
+                {t("mdmSettings.vpp.editTeamsModal.disabledTooltip")}
               </div>
             }
             disableTooltip={!isDropdownDisabled}
@@ -272,22 +273,17 @@ const EditTeamsVppModal = ({
               options={options}
               multi
               onChange={onChange}
-              placeholder="Search teams"
+              placeholder={t("mdmSettings.vpp.editTeamsModal.searchTeams")}
               value={selectedValue}
-              label="Teams"
+              label={t("mdmSettings.vpp.editTeamsModal.teamsLabel")}
               className={`${baseClass}__vpp-dropdown`}
               wrapperClassName={`${baseClass}__form-field--vpp-teams ${
                 isDropdownDisabled ? `${baseClass}__form-field--disabled` : ""
               }`}
               tooltip={
-                isDropdownDisabled ? undefined : (
-                  <>
-                    Each team can have only one VPP token. Teams that already
-                    have a VPP token won&apos;t show up here.
-                  </>
-                )
+                isDropdownDisabled ? undefined : t("mdmSettings.vpp.editTeamsModal.dropdownTooltip")
               }
-              helpText="App Store apps in this VPP token’s Apple Business Manager (ABM) will only be available to install on hosts in these teams."
+              helpText={t("mdmSettings.vpp.editTeamsModal.helpText")}
               disabled={isDropdownDisabled}
             />
           </TooltipWrapper>
@@ -298,7 +294,7 @@ const EditTeamsVppModal = ({
               isLoading={isSaving}
               disabled={isDropdownDisabled}
             >
-              Save
+              {t("mdmSettings.vpp.editTeamsModal.saveButton")}
             </Button>
           </div>
         </form>

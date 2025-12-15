@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import { IEulaMetadataResponse } from "services/entities/mdm";
 
@@ -17,14 +18,15 @@ const UploadedEulaView = ({
   eulaMetadata,
   onDelete,
 }: IUploadedEulaViewProps) => {
+  const { t } = useTranslation("settings");
+
   return (
     <div className={baseClass}>
       <p>
-        Require end users to agree to a EULA when they first set up their new
-        macOS hosts.{" "}
+        {t("integrations.eula.description")}{" "}
         <CustomLink
           url="https://fleetdm.com/learn-more-about/setup-experience/end-user-authentication"
-          text="Learn more"
+          text={t("integrations.eula.learn_more")}
           newTab
         />
       </p>

@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import Button from "components/buttons/Button";
 import Icon from "components/Icon";
@@ -14,10 +15,11 @@ interface IVppCardProps {
 }
 
 const VppCard = ({ isAppleMdmOn, isVppOn, viewDetails }: IVppCardProps) => {
+  const { t } = useTranslation("settings");
+
   const AppleMdmDisabledCard = (
-    <SectionCard header="Volume Purchasing Program (VPP)">
-      To enable Volume Purchasing Program (VPP), first turn on Apple (macOS,
-      iOS, iPadOS) MDM.
+    <SectionCard header={t("mdmSettings.vpp.disabledHeader")}>
+      {t("mdmSettings.vpp.disabledMessage")}
     </SectionCard>
   );
 
@@ -27,28 +29,27 @@ const VppCard = ({ isAppleMdmOn, isVppOn, viewDetails }: IVppCardProps) => {
       cta={
         <Button onClick={viewDetails} variant="inverse">
           <Icon name="pencil" />
-          Edit
+          {t("mdmSettings.vpp.edit")}
         </Button>
       }
     >
-      Volume Purchasing Program (VPP) is enabled.
+      {t("mdmSettings.vpp.enabledMessage")}
     </SectionCard>
   );
 
   const VppOffCard = (
     <SectionCard
-      header="Volume Purchasing Program (VPP)"
+      header={t("mdmSettings.vpp.header")}
       cta={
         <Button
           className={`${baseClass}__add-vpp-button`}
           onClick={viewDetails}
         >
-          Add VPP
+          {t("mdmSettings.vpp.addVpp")}
         </Button>
       }
     >
-      Add a VPP connection to install Apple App Store apps purchased through
-      Apple Business Manager.
+      {t("mdmSettings.vpp.offMessage")}
     </SectionCard>
   );
 

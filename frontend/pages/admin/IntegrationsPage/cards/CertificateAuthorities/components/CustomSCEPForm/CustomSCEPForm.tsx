@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { ICertificateAuthorityPartial } from "interfaces/certificates";
 
@@ -44,6 +45,7 @@ const CustomSCEPForm = ({
   onSubmit,
   onCancel,
 }: ICustomSCEPFormProps) => {
+  const { t } = useTranslation("settings");
   const validations = useMemo(
     () => generateFormValidations(certAuthorities ?? [], isEditing),
     [certAuthorities, isEditing]
@@ -75,17 +77,17 @@ const CustomSCEPForm = ({
   return (
     <form onSubmit={onSubmitForm}>
       <InputField
-        label="Name"
+        label={t("certificateAuthorities.forms.name")}
         name="name"
         value={name}
         error={formValidation.name?.message}
         onChange={onInputChange}
         parseTarget
         placeholder="WIFI_CERTIFICATE"
-        helpText="Letters, numbers, and underscores only. Fleet will create configuration profile variables with the name as suffix (e.g. $FLEET_VAR_CUSTOM_SCEP_CHALLENGE_WIFI_CERTIFICATE)."
+        helpText={t("certificateAuthorities.forms.nameHelpCustomScep")}
       />
       <InputField
-        label="SCEP URL"
+        label={t("certificateAuthorities.forms.scepUrl")}
         name="scepURL"
         value={scepURL}
         error={formValidation.scepURL?.message}
@@ -95,16 +97,16 @@ const CustomSCEPForm = ({
       />
       <InputField
         type="password"
-        label="Challenge"
+        label={t("certificateAuthorities.forms.challenge")}
         name="challenge"
         value={challenge}
         onChange={onInputChange}
         parseTarget
-        helpText="Password to authenticate with a SCEP server."
+        helpText={t("certificateAuthorities.forms.challengeHelp")}
       />
       <div className="modal-cta-wrap">
         <TooltipWrapper
-          tipContent="Complete all required fields to save."
+          tipContent={t("certificateAuthorities.forms.completeRequired")}
           underline={false}
           position="top"
           disableTooltip={formValidation.isValid}
@@ -119,7 +121,7 @@ const CustomSCEPForm = ({
           </Button>
         </TooltipWrapper>
         <Button variant="inverse" onClick={onCancel}>
-          Cancel
+          {t("certificateAuthorities.forms.cancel")}
         </Button>
       </div>
     </form>

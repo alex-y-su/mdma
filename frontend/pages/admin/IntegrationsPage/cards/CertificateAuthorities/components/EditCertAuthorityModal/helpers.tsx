@@ -341,8 +341,14 @@ export const updateFormData = (
   return newData;
 };
 
-export const getErrorMessage = (err: unknown): JSX.Element => {
+export const getErrorMessage = (
+  err: unknown,
+  t: (key: string) => string
+): JSX.Element => {
   return (
-    <>Couldn&apos;t edit certificate authority. {getDisplayErrMessage(err)}</>
+    <>
+      {t("certificateAuthorities.editModal.errorPrefix")}{" "}
+      {getDisplayErrMessage(err, t)}
+    </>
   );
 };

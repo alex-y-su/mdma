@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { ICertificateAuthorityPartial } from "interfaces/certificates";
 
@@ -48,6 +49,7 @@ const DigicertForm = ({
   onSubmit,
   onCancel,
 }: IDigicertFormProps) => {
+  const { t } = useTranslation("settings");
   const validations = useMemo(
     () => generateFormValidations(certAuthorities ?? [], isEditing),
     [certAuthorities, isEditing]
@@ -86,79 +88,70 @@ const DigicertForm = ({
     <form className={baseClass} onSubmit={onSubmitForm}>
       <InputField
         name="name"
-        label="Name"
+        label={t("certificateAuthorities.forms.name")}
         value={name}
         onChange={onInputChange}
         error={formValidation.name?.message}
-        helpText="Letters, numbers, and underscores only. Fleet will create configuration profile variables with the name as suffix (e.g. $FLEET_VAR_DIGICERT_DATA_WIFI_CERTIFICATE)."
+        helpText={t("certificateAuthorities.forms.nameHelpDigicert")}
         parseTarget
         placeholder="WIFI_CERTIFICATE"
       />
       <InputField
         name="url"
-        label="URL"
+        label={t("certificateAuthorities.forms.url")}
         value={url}
         onChange={onInputChange}
         error={formValidation.url?.message}
         parseTarget
-        helpText="DigiCert ONE instance URL."
+        helpText={t("certificateAuthorities.forms.urlHelpDigicert")}
       />
       <InputField
         type="password"
         name="apiToken"
-        label="API token"
+        label={t("certificateAuthorities.forms.apiToken")}
         value={apiToken}
         onChange={onInputChange}
         parseTarget
-        helpText="DigiCert One API token for service user."
+        helpText={t("certificateAuthorities.forms.apiTokenHelp")}
       />
       <InputField
         name="profileId"
-        label="Profile GUID"
+        label={t("certificateAuthorities.forms.profileGuid")}
         value={profileId}
         onChange={onInputChange}
         parseTarget
-        helpText={
-          <>
-            You can find the <b>Profile GUID</b> by opening one of the{" "}
-            <CustomLink
-              text="DigiCert profiles"
-              url="https://demo.one.digicert.com/mpki/policies/profiles"
-              newTab
-            />
-          </>
-        }
+        helpText={t("certificateAuthorities.forms.profileGuidHelp")}
       />
       <InputField
         name="commonName"
-        label="Certificate common name (CN)"
+        label={t("certificateAuthorities.forms.commonName")}
         value={commonName}
         onChange={onInputChange}
         parseTarget
-        helpText="Certificates delivered to your hosts will have this CN in the subject."
+        helpText={t("certificateAuthorities.forms.commonNameHelp")}
         placeholder="$FLEET_VAR_HOST_HARDWARE_SERIAL"
       />
       <InputField
         name="userPrincipalName"
-        label="User principal name (UPN)"
+        label={t("certificateAuthorities.forms.userPrincipalName")}
         value={userPrincipalName}
         onChange={onInputChange}
         parseTarget
-        helpText="Certificates delivered to your hosts will have this UPN attribute in Subject Alternative Name (SAN). (optional)"
+        helpText={t("certificateAuthorities.forms.userPrincipalNameHelp")}
         placeholder="$FLEET_VAR_HOST_HARDWARE_SERIAL"
       />
       <InputField
         name="certificateSeatId"
-        label="Certificate seat ID"
+        label={t("certificateAuthorities.forms.certificateSeatId")}
         value={certificateSeatId}
         onChange={onInputChange}
         parseTarget
-        helpText="Certificates delivered to your hosts will be assigned to this seat ID in DigiCert."
+        helpText={t("certificateAuthorities.forms.certificateSeatIdHelp")}
         placeholder="$FLEET_VAR_HOST_HARDWARE_SERIAL"
       />
       <div className="modal-cta-wrap">
         <TooltipWrapper
-          tipContent="Complete all required fields to save."
+          tipContent={t("certificateAuthorities.forms.completeRequired")}
           underline={false}
           position="top"
           disableTooltip={formValidation.isValid}
@@ -173,7 +166,7 @@ const DigicertForm = ({
           </Button>
         </TooltipWrapper>
         <Button variant="inverse" onClick={onCancel}>
-          Cancel
+          {t("certificateAuthorities.forms.cancel")}
         </Button>
       </div>
     </form>

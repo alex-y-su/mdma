@@ -1,5 +1,6 @@
 import React from "react";
 import classnames from "classnames";
+import { useTranslation } from "react-i18next";
 
 import { ITokenTeam } from "interfaces/mdm";
 
@@ -11,13 +12,13 @@ const baseClass = "teams-cell";
 
 const NUM_TEAMS_IN_TOOLTIP = 3;
 
-const generateCell = (teams: ITokenTeam[] | null) => {
+const generateCell = (teams: ITokenTeam[] | null, t: (key: string, options?: any) => string) => {
   if (!teams) {
     return <TextCell value="---" grey />;
   }
 
   if (teams.length === 0) {
-    return <TextCell value="All teams" />;
+    return <TextCell value={t("mdmSettings.vpp.allTeams")} />;
   }
 
   let text = "";
@@ -26,13 +27,13 @@ const generateCell = (teams: ITokenTeam[] | null) => {
     italicize = false;
     text = teams[0].name;
   } else {
-    text = `${teams.length} teams`;
+    text = t("mdmSettings.vpp.teamsCount", { count: teams.length });
   }
 
   return <TextCell value={text} italic={italicize} />;
 };
 
-const condenseTeams = (teams: ITokenTeam[]) => {
+const condenseTeams = (teams: ITokenTeam[], t: (key: string, options?: any) => string) => {
   const condensed =
     (teams?.length &&
       teams
@@ -42,16 +43,16 @@ const condenseTeams = (teams: ITokenTeam[]) => {
     [];
 
   return teams.length > NUM_TEAMS_IN_TOOLTIP
-    ? condensed.concat(`+${teams.length - NUM_TEAMS_IN_TOOLTIP} more`)
+    ? condensed.concat(t("mdmSettings.vpp.moreTeams", { count: teams.length - NUM_TEAMS_IN_TOOLTIP }))
     : condensed;
 };
 
-const generateTooltip = (teams: ITokenTeam[] | null, tooltipId: string) => {
+const generateTooltip = (teams: ITokenTeam[] | null, tooltipId: string, t: (key: string, options?: any) => string) => {
   if (teams === null || teams.length <= 1) {
     return null;
   }
 
-  const condensedTeams = condenseTeams(teams);
+  const condensedTeams = condenseTeams(teams, t);
 
   return (
     <ReactTooltip
@@ -75,6 +76,7 @@ interface ITeamsCellProps {
 }
 
 const TeamsCell = ({ teams, className }: ITeamsCellProps) => {
+  const { t } = useTranslation("settings");
   const tooltipId = uniqueId();
   const classNames = classnames(baseClass, className);
 
@@ -83,15 +85,15 @@ const TeamsCell = ({ teams, className }: ITeamsCellProps) => {
   }
 
   if (teams.length === 0) {
-    return <TextCell value="All teams" />;
+    return <TextCell value={t("mdmSettings.vpp.allTeams")} />;
   }
 
   if (teams.length === 1) {
     return <TextCell value={teams[0].name} />;
   }
 
-  const cell = generateCell(teams);
-  const tooltip = generateTooltip(teams, tooltipId);
+  const cell = generateCell(teams, t);
+  const tooltip = generateTooltip(teams, tooltipId, t);
 
   return (
     <>

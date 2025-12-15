@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import Button from "components/buttons/Button";
 import Card from "components/Card";
@@ -13,13 +14,15 @@ interface IAddCertAuthoityCardProps {
 const AddCertAuthorityCard = ({
   onAddCertAuthority,
 }: IAddCertAuthoityCardProps) => {
+  const { t } = useTranslation("settings");
+
   return (
     <Card paddingSize="xxlarge" className={baseClass}>
       <div className={`${baseClass}__content`}>
         <p className={`${baseClass}__title`}>
-          Add your certificate authority (CA)
+          {t("certificateAuthorities.addCard.title")}
         </p>
-        <p>Help your end users connect to Wi-Fi or VPNs.</p>
+        <p>{t("certificateAuthorities.addCard.description")}</p>
       </div>
       <GitOpsModeTooltipWrapper
         renderChildren={(disableChildren) => (
@@ -28,7 +31,7 @@ const AddCertAuthorityCard = ({
             className={`${baseClass}__button`}
             onClick={onAddCertAuthority}
           >
-            Add CA
+            {t("certificateAuthorities.addCard.button")}
           </Button>
         )}
       />

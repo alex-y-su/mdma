@@ -1,4 +1,5 @@
 import React, { useState, useContext, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 
 import { NotificationContext } from "context/notification";
 
@@ -25,6 +26,7 @@ const RenewVppModal = ({
   onCancel,
   onRenewedToken,
 }: IRenewVppModalProps) => {
+  const { t } = useTranslation("settings");
   const { renderFlash } = useContext(NotificationContext);
   const [isRenewing, setIsRenewing] = useState(false);
   const [tokenFile, setTokenFile] = useState<File | null>(null);
@@ -41,7 +43,7 @@ const RenewVppModal = ({
 
     if (!tokenFile) {
       setIsRenewing(false);
-      renderFlash("error", "No token selected.");
+      renderFlash("error", t("mdmSettings.vpp.renewModal.noTokenSelected"));
       return;
     }
 
@@ -49,7 +51,7 @@ const RenewVppModal = ({
       await mdmAppleAPI.renewVppToken(tokenId, tokenFile);
       renderFlash(
         "success",
-        "Volume Purchasing Program (VPP) integration enabled successfully."
+        t("mdmSettings.vpp.renewModal.renewSuccess")
       );
       onRenewedToken();
     } catch (e) {
@@ -57,11 +59,11 @@ const RenewVppModal = ({
       onCancel();
     }
     setIsRenewing(false);
-  }, [onCancel, onRenewedToken, renderFlash, tokenFile, tokenId]);
+  }, [onCancel, onRenewedToken, renderFlash, tokenFile, tokenId, t]);
 
   return (
     <Modal
-      title="Renew VPP"
+      title={t("mdmSettings.vpp.renewModal.title")}
       onExit={onCancel}
       className={baseClass}
       isContentDisabled={isRenewing}
@@ -69,16 +71,16 @@ const RenewVppModal = ({
     >
       <>
         <p className={`${baseClass}__description`}>
-          Renew Volume Purchasing Program for <b>{orgName}</b> location.
+          {t("mdmSettings.vpp.renewModal.description", { orgName })}
         </p>
         <VppSetupSteps />
         <FileUploader
           className={`${baseClass}__file-uploader`}
           accept=".vpptoken"
-          message="Content token (.vpptoken)"
+          message={t("mdmSettings.vpp.renewModal.contentToken")}
           graphicName="file-vpp"
           buttonType="brand-inverse-icon"
-          buttonMessage="Upload"
+          buttonMessage={t("mdmSettings.vpp.renewModal.upload")}
           fileDetails={tokenFile ? { name: tokenFile.name } : undefined}
           onFileUpload={onSelectFile}
         />
@@ -88,7 +90,7 @@ const RenewVppModal = ({
             isLoading={isRenewing}
             disabled={!tokenFile}
           >
-            Renew token
+            {t("mdmSettings.vpp.renewModal.renewButton")}
           </Button>
         </div>
       </>

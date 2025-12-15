@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { size } from "lodash";
 
 import { NotificationContext } from "context/notification";
@@ -24,10 +25,10 @@ interface IFormErrors {
   [MSETID]?: string | null;
 }
 
-const validate = (formData: IFormData) => {
+const validate = (formData: IFormData, t: any) => {
   const errs: IFormErrors = {};
   if (!formData[MSETID]) {
-    errs[MSETID] = "Tenant ID must be present";
+    errs[MSETID] = t("integrations.conditionalAccess.entra.validation.tenantIdRequired");
   }
   return errs;
 };
@@ -41,6 +42,7 @@ const EntraConditionalAccessModal = ({
   onCancel,
   onSuccess,
 }: IEntraConditionalAccessModalProps) => {
+  const { t } = useTranslation("settings");
   const { renderFlash } = useContext(NotificationContext);
 
   const [isUpdating, setIsUpdating] = useState(false);
@@ -52,7 +54,7 @@ const EntraConditionalAccessModal = ({
   const onSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    const errs = validate(formData);
+    const errs = validate(formData, t);
     if (Object.keys(errs).length > 0) {
       setFormErrors(errs);
       return;
@@ -71,7 +73,7 @@ const EntraConditionalAccessModal = ({
     } catch (e) {
       renderFlash(
         "error",
-        "Could not update conditional access integration settings."
+        t("integrations.conditionalAccess.entra.updateError")
       );
       setIsUpdating(false);
     }
@@ -83,12 +85,12 @@ const EntraConditionalAccessModal = ({
   };
 
   const onInputBlur = () => {
-    setFormErrors(validate(formData));
+    setFormErrors(validate(formData, t));
   };
 
   return (
     <Modal
-      title="Microsoft Entra conditional access"
+      title={t("integrations.conditionalAccess.entra.title")}
       onExit={onCancel}
       className={baseClass}
       width="large"
@@ -96,17 +98,16 @@ const EntraConditionalAccessModal = ({
       <>
         <form onSubmit={onSubmit} autoComplete="off">
           <p className={`${baseClass}__instructions`}>
-            To configure Microsoft Entra conditional access, follow the
-            instructions in the{" "}
+            {t("integrations.conditionalAccess.entra.instructions")}{" "}
             <CustomLink
               url={`${LEARN_MORE_ABOUT_BASE_LINK}/entra-conditional-access`}
-              text="guide"
+              text={t("integrations.conditionalAccess.entra.guide")}
               newTab
             />
           </p>
           <InputField
-            label="Microsoft Entra tenant ID"
-            helpText="You can find this in your Microsoft Entra admin center."
+            label={t("integrations.conditionalAccess.entra.tenantId")}
+            helpText={t("integrations.conditionalAccess.entra.tenantIdHelp")}
             onChange={onInputChange}
             name={MSETID}
             value={formData[MSETID]}
@@ -120,10 +121,10 @@ const EntraConditionalAccessModal = ({
               disabled={!!size(formErrors)}
               isLoading={isUpdating}
             >
-              Save
+              {t("integrations.conditionalAccess.entra.save")}
             </Button>
             <Button onClick={onCancel} variant="inverse">
-              Cancel
+              {t("integrations.conditionalAccess.entra.cancel")}
             </Button>
           </div>
         </form>

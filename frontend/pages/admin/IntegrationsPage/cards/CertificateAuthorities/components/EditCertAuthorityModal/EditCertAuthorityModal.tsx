@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useQuery } from "react-query";
+import { useTranslation } from "react-i18next";
 
 import { DEFAULT_USE_QUERY_OPTIONS } from "utilities/constants";
 import { NotificationContext } from "context/notification";
@@ -36,6 +37,7 @@ const EditCertAuthorityModal = ({
   certAuthority,
   onExit,
 }: IEditCertAuthorityModalProps) => {
+  const { t } = useTranslation("settings");
   const { renderFlash } = useContext(NotificationContext);
   const [isUpdating, setIsUpdating] = useState(false);
   const [isDirty, setIsDirty] = useState(false);
@@ -76,10 +78,10 @@ const EditCertAuthorityModal = ({
         certAuthority.id,
         editPatchData
       );
-      renderFlash("success", "Successfully edited certificate authority.");
+      renderFlash("success", t("certificateAuthorities.editModal.successMessage"));
       onExit();
     } catch (e) {
-      renderFlash("error", getErrorMessage(e));
+      renderFlash("error", getErrorMessage(e, t));
     }
     setIsUpdating(false);
   };
@@ -121,7 +123,7 @@ const EditCertAuthorityModal = ({
       <FormComponent
         // @ts-ignore TODO: figure out how to fix this type issue
         formData={formData}
-        submitBtnText="Save"
+        submitBtnText={t("certificateAuthorities.editModal.submitButton")}
         isSubmitting={isUpdating}
         isEditing
         isDirty={isDirty}
@@ -135,7 +137,7 @@ const EditCertAuthorityModal = ({
   return (
     <Modal
       className={baseClass}
-      title="Edit certificate authority (CA)"
+      title={t("certificateAuthorities.editModal.title")}
       width="large"
       onExit={onExit}
       isContentDisabled={isUpdating}

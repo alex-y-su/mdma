@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { AxiosResponse } from "axios";
+import { useTranslation } from "react-i18next";
 
 import { IApiError } from "interfaces/errors";
 import mdmAPI from "services/entities/mdm";
@@ -17,6 +18,7 @@ interface IEulaUploaderProps {
 }
 
 const EulaUploader = ({ onUpload }: IEulaUploaderProps) => {
+  const { t } = useTranslation("settings");
   const { renderFlash } = useContext(NotificationContext);
   const [showLoading, setShowLoading] = useState(false);
 
@@ -39,7 +41,7 @@ const EulaUploader = ({ onUpload }: IEulaUploaderProps) => {
 
     try {
       await mdmAPI.uploadEULA(file);
-      renderFlash("success", "Successfully updated end user authentication!");
+      renderFlash("success", t("integrations.eula.upload_success"));
       onUpload();
     } catch (e) {
       const error = e as AxiosResponse<IApiError>;
@@ -53,17 +55,16 @@ const EulaUploader = ({ onUpload }: IEulaUploaderProps) => {
   return (
     <div className={baseClass}>
       <p>
-        Require end users to agree to a EULA when they first set up their new
-        macOS hosts.{" "}
+        {t("integrations.eula.description")}{" "}
         <CustomLink
           url="https://fleetdm.com/learn-more-about/end-user-license-agreement"
-          text="Learn more"
+          text={t("integrations.eula.learn_more")}
           newTab
         />
       </p>
       <FileUploader
         graphicName="file-pdf"
-        message="PDF (.pdf)"
+        message={t("integrations.eula.upload_message")}
         onFileUpload={onUploadFile}
         accept=".pdf"
         isLoading={showLoading}

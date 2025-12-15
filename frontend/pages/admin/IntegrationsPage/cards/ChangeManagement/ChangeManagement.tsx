@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { useQuery } from "react-query";
 
@@ -38,22 +39,21 @@ interface IChangeManagementFormErrors {
   repository_url?: string | null;
 }
 
-const validate = (formData: IChangeManagementFormData) => {
+const validate = (formData: IChangeManagementFormData, t: any) => {
   const errs: IChangeManagementFormErrors = {};
   const { gitOpsModeEnabled, repoURL } = formData;
   if (gitOpsModeEnabled) {
     if (!repoURL) {
-      errs.repository_url =
-        "Git repository URL is required when GitOps mode is enabled";
+      errs.repository_url = t("integrations.changeManagement.validation.repoUrlRequired");
     } else if (!validUrl({ url: repoURL, protocols: ["http", "https"] })) {
-      errs.repository_url =
-        "Git repository URL must include protocol (e.g. https://)";
+      errs.repository_url = t("integrations.changeManagement.validation.repoUrlProtocol");
     }
   }
   return errs;
 };
 
 const ChangeManagement = () => {
+  const { t } = useTranslation("settings");
   const { setConfig } = useContext(AppContext);
   const { renderFlash } = useContext(NotificationContext);
 
@@ -86,7 +86,7 @@ const ChangeManagement = () => {
 
   if (!isPremiumTier)
     return (
-      <SettingsSection title="Change management">
+      <SettingsSection title={t("integrations.changeManagement.title")}>
         <PremiumFeatureMessage />
       </SettingsSection>
     );
@@ -103,7 +103,7 @@ const ChangeManagement = () => {
   const handleSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    const errs = validate(formData);
+    const errs = validate(formData, t);
     if (Object.keys(errs).length > 0) {
       setFormErrors(errs);
       return;
@@ -124,10 +124,10 @@ const ChangeManagement = () => {
 
       setConfig(updatedConfig);
 
-      renderFlash("success", "Successfully updated settings");
+      renderFlash("success", t("integrations.changeManagement.updateSuccess"));
     } catch (e) {
       const message = getErrorReason(e);
-      renderFlash("error", message || "Failed to update settings");
+      renderFlash("error", message || t("integrations.changeManagement.updateError"));
     } finally {
       setIsUpdating(false);
     }
@@ -136,7 +136,7 @@ const ChangeManagement = () => {
   const onInputChange = ({ name, value }: IInputFieldParseTarget) => {
     const newFormData = { ...formData, [name]: value };
     setFormData(newFormData);
-    const newErrs = validate(newFormData);
+    const newErrs = validate(newFormData, t);
     // only set errors that are updates of existing errors
     // new errors are only set onBlur or submit
     const errsToSet: Record<string, string> = {};
@@ -151,22 +151,20 @@ const ChangeManagement = () => {
   };
 
   const onInputBlur = () => {
-    setFormErrors(validate(formData));
+    setFormErrors(validate(formData, t));
   };
 
   return (
     <div className={baseClass}>
-      <SectionHeader title="Change management" />
+      <SectionHeader title={t("integrations.changeManagement.title")} />
       <PageDescription
         content={
           <>
-            When using a git repository to manage Fleet, you can optionally put
-            the UI in GitOps mode. This prevents you from making changes in the
-            UI that would be overridden by GitOps workflows.{" "}
+            {t("integrations.changeManagement.description")}{" "}
             <CustomLink
               newTab
               url={`${LEARN_MORE_ABOUT_BASE_LINK}/gitops`}
-              text="Learn more about GitOps"
+              text={t("integrations.changeManagement.learnMore")}
             />
           </>
         }
@@ -179,20 +177,20 @@ const ChangeManagement = () => {
           value={gitOpsModeEnabled}
           parseTarget
         >
-          <TooltipWrapper tipContent="GitOps mode is a UI-only setting. API permissions are restricted based on user role.">
-            Enable GitOps mode
+          <TooltipWrapper tipContent={t("integrations.changeManagement.gitOpsModeTooltip")}>
+            {t("integrations.changeManagement.enableGitOpsMode")}
           </TooltipWrapper>
         </Checkbox>
         {/* Git repository URL */}
         <InputField
-          label="Git repository URL"
+          label={t("integrations.changeManagement.repoUrl")}
           onChange={onInputChange}
           name="repoURL"
           value={repoURL}
           parseTarget
           onBlur={onInputBlur}
           error={formErrors.repository_url}
-          helpText="When GitOps mode is enabled, you will be directed here to make changes."
+          helpText={t("integrations.changeManagement.repoUrlHelp")}
           disabled={!gitOpsModeEnabled}
         />
         <div className="button-wrap">
@@ -201,7 +199,7 @@ const ChangeManagement = () => {
             disabled={!!Object.keys(formErrors).length}
             isLoading={isUpdating}
           >
-            Save
+            {t("integrations.changeManagement.save")}
           </Button>
         </div>
       </form>

@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { InjectedRouter } from "react-router";
+import { useTranslation } from "react-i18next";
 
 import PATHS from "router/paths";
 import configAPI from "services/entities/config";
@@ -32,6 +33,7 @@ const useSetWindowsMdm = ({
   enrollmentType,
   router,
 }: ISetWindowsMdmOptions) => {
+  const { t } = useTranslation("settings");
   const { setConfig } = useContext(AppContext);
   const { renderFlash } = useContext(NotificationContext);
 
@@ -47,7 +49,7 @@ const useSetWindowsMdm = ({
         true
       );
       setConfig(updatedConfig);
-      renderFlash("success", "Windows MDM settings successfully updated.", {
+      renderFlash("success", t("mdmSettings.windows.updateSuccess"), {
         persistOnPageChange: true,
       });
     } catch (e) {
@@ -67,6 +69,7 @@ interface IWindowsMdmPageProps {
 }
 
 const WindowsMdmPage = ({ router }: IWindowsMdmPageProps) => {
+  const { t } = useTranslation("settings");
   const { config, isPremiumTier } = useContext(AppContext);
   const gitOpsModeEnabled = config?.gitops.gitops_mode_enabled;
 
@@ -116,25 +119,25 @@ const WindowsMdmPage = ({ router }: IWindowsMdmPageProps) => {
   };
 
   const descriptionText = mdmOn
-    ? "Turns on MDM for Windows hosts that enroll to Fleet (excluding servers)."
-    : "Hosts with MDM already turned on will not have MDM removed.";
+    ? t("mdmSettings.windows.descriptionOn")
+    : t("mdmSettings.windows.descriptionOff");
 
   return (
     <MainContent className={baseClass}>
       <>
         <div className={`${baseClass}__header-links`}>
           <BackButton
-            text="Back to MDM"
+            text={t("mdmSettings.windows.backToMdm")}
             path={PATHS.ADMIN_INTEGRATIONS_MDM}
             className={`${baseClass}__back-to-mdm`}
           />
         </div>
-        <h1>Windows MDM</h1>
+        <h1>{t("mdmSettings.windows.pageTitle")}</h1>
         <form>
           <Slider
             value={mdmOn}
-            activeText="Windows MDM on"
-            inactiveText="Windows MDM off"
+            activeText={t("mdmSettings.windows.sliderOn")}
+            inactiveText={t("mdmSettings.windows.sliderOff")}
             onChange={onChangeMdmOn}
             disabled={gitOpsModeEnabled}
           />
@@ -150,22 +153,22 @@ const WindowsMdmPage = ({ router }: IWindowsMdmPageProps) => {
                does not work well with flexbox. the wrapper div helps the gap styling apply. */}
               <div>
                 <legend className="form-field__label">
-                  End user experience
+                  {t("mdmSettings.windows.endUserExperience")}
                 </legend>
               </div>
               <Radio
                 id="automatic-enrollment"
-                label="Automatic"
+                label={t("mdmSettings.windows.automaticLabel")}
                 value="automaticEnrollment"
                 name="enrollmentType"
                 checked={enrollmentType === "automatic"}
                 onChange={onChangeEnrollmentType}
                 disabled={!mdmOn}
-                helpText="MDM is turned on when Fleet's agent is installed on Windows hosts (excluding servers)."
+                helpText={t("mdmSettings.windows.automaticHelp")}
               />
               <Radio
                 id="manual-enrollment"
-                label="Manual"
+                label={t("mdmSettings.windows.manualLabel")}
                 value="manualEnrollment"
                 name="enrollmentType"
                 checked={enrollmentType === "manual"}
@@ -173,15 +176,14 @@ const WindowsMdmPage = ({ router }: IWindowsMdmPageProps) => {
                 disabled={!mdmOn}
                 helpText={
                   <>
-                    Requires{" "}
+                    {t("mdmSettings.windows.manualHelpRequires")}{" "}
                     <CustomLink
-                      text="connecting Fleet to Microsoft Entra."
+                      text={t("mdmSettings.windows.manualHelpLink")}
                       url={
                         PATHS.ADMIN_INTEGRATIONS_AUTOMATIC_ENROLLMENT_WINDOWS
                       }
                     />{" "}
-                    End users have to manually turn on MDM in{" "}
-                    <b>Settings &gt; Access work or school.</b>
+                    {t("mdmSettings.windows.manualHelpEnd")}
                   </>
                 }
               />
@@ -193,14 +195,14 @@ const WindowsMdmPage = ({ router }: IWindowsMdmPageProps) => {
               value={autoMigration}
               onChange={onChangeAutoMigration}
             >
-              Automatically migrate hosts connected to another MDM solution
+              {t("mdmSettings.windows.autoMigrate")}
             </Checkbox>
           )}
           <GitOpsModeTooltipWrapper
             tipOffset={8}
             renderChildren={(disableChildren) => (
               <Button onClick={onSaveMdm} disabled={disableChildren}>
-                Save
+                {t("mdmSettings.windows.saveButton")}
               </Button>
             )}
           />

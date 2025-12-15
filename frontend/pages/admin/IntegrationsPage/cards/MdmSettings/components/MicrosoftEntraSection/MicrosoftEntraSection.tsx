@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { InjectedRouter } from "react-router";
 
 import PATHS from "router/paths";
@@ -19,12 +20,14 @@ const MicrosoftEntraSection = ({
   router,
   isPremiumTier,
 }: IMicrosoftEntraSectionProps) => {
+  const { t } = useTranslation("settings");
+
   const navigateToWindowsEnrollment = () => {
     router.push(PATHS.ADMIN_INTEGRATIONS_AUTOMATIC_ENROLLMENT_WINDOWS);
   };
 
   return (
-    <SettingsSection title="Microsoft Entra" className={baseClass}>
+    <SettingsSection title={t("mdmSettings.windows.entraPageTitle")} className={baseClass}>
       {!isPremiumTier ? (
         <PremiumFeatureMessage alignment="left" />
       ) : (

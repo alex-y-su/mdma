@@ -5,6 +5,7 @@ import React, {
   useState,
 } from "react";
 import { AxiosResponse } from "axios";
+import { useTranslation } from "react-i18next";
 
 import { expandErrorReasonRequired } from "interfaces/errors";
 import configAPI from "services/entities/config";
@@ -44,6 +45,7 @@ const EndUserAuthSection = ({
   // rather than using the common config update handler.
   onSubmit: announceChanges,
 }: IEndUserAuthSectionProps) => {
+  const { t } = useTranslation("settings");
   const { config, isPremiumTier } = useContext(AppContext);
   const gitOpsModeEnabled = config?.gitops.gitops_mode_enabled;
 
@@ -99,7 +101,7 @@ const EndUserAuthSection = ({
             },
           },
         });
-        renderFlash("success", "Successfully updated end user authentication!");
+        renderFlash("success", t("integrations.end_user_auth.success"));
         originalFormData.current = { ...formData };
         setDirty(false);
         // Notify parent component of changes, since we're calling our own API
@@ -110,14 +112,14 @@ const EndUserAuthSection = ({
         if (ae.status === 422) {
           renderFlash(
             "error",
-            `Couldn't update: ${expandErrorReasonRequired(err)}.`
+            t("integrations.end_user_auth.error_with_reason", { reason: expandErrorReasonRequired(err) })
           );
           return;
         }
-        renderFlash("error", "Couldn't update. Please try again.");
+        renderFlash("error", t("integrations.end_user_auth.error"));
       }
     },
-    [formData, renderFlash, setDirty]
+    [formData, renderFlash, setDirty, t]
   );
 
   const renderContent = () => {
@@ -128,12 +130,7 @@ const EndUserAuthSection = ({
     return (
       <form>
         <p>
-          If enabled in{" "}
-          <strong>
-            Controls &gt; Setup experience &gt; End user authentication
-          </strong>
-          , end users will be required to authenticate when they first set up
-          their host.
+          {t("integrations.end_user_auth.description")}
         </p>
         <div
           className={`form ${
@@ -141,57 +138,52 @@ const EndUserAuthSection = ({
           }`}
         >
           <InputField
-            label="Identity provider name"
+            label={t("integrations.end_user_auth.idp_name_label")}
             onChange={onInputChange}
             onBlur={onBlur}
             name="idp_name"
             value={formData.idp_name}
             parseTarget
             error={formErrors?.idp_name}
-            tooltip="A required human friendly name for the identity provider that will provide single sign-on authentication."
+            tooltip={t("integrations.end_user_auth.idp_name_tooltip")}
           />
           <InputField
-            label="Entity ID"
+            label={t("integrations.end_user_auth.entity_id_label")}
             onChange={onInputChange}
             onBlur={onBlur}
             name="entity_id"
             value={formData.entity_id}
             parseTarget
             error={formErrors?.entity_id}
-            tooltip="The required entity ID is a URI that you use to identify Fleet when configuring the identity provider."
+            tooltip={t("integrations.end_user_auth.entity_id_tooltip")}
           />
           <InputField
-            label="Metadata URL"
-            helpText={
-              <>
-                If both <b>Metadata URL</b> and <b>Metadata</b> are specified,{" "}
-                <b>Metadata URL</b> will be used.
-              </>
-            }
+            label={t("integrations.end_user_auth.metadata_url_label")}
+            helpText={t("integrations.end_user_auth.metadata_url_help")}
             onChange={onInputChange}
             onBlur={onBlur}
             name="metadata_url"
             value={formData.metadata_url}
             parseTarget
             error={formErrors?.metadata_url}
-            tooltip="Metadata URL provided by the identity provider."
+            tooltip={t("integrations.end_user_auth.metadata_url_tooltip")}
           />
           <InputField
-            label="Metadata"
+            label={t("integrations.end_user_auth.metadata_label")}
             type="textarea"
             onChange={onInputChange}
             name="metadata"
             value={formData.metadata}
             parseTarget
             error={formErrors?.metadata}
-            tooltip="Metadata XML provided by the identity provider."
+            tooltip={t("integrations.end_user_auth.metadata_tooltip")}
           />
         </div>
         <GitOpsModeTooltipWrapper
           tipOffset={-8}
           renderChildren={(disableChildren) => (
             <TooltipWrapper
-              tipContent="Complete all required fields to save end user authentication."
+              tipContent={t("integrations.end_user_auth.save_tooltip")}
               disableTooltip={enableSaveButton || disableChildren}
               underline={false}
             >
@@ -200,7 +192,7 @@ const EndUserAuthSection = ({
                 onClick={onSubmit}
                 className="button-wrap"
               >
-                Save
+                {t("common:save")}
               </Button>
             </TooltipWrapper>
           )}

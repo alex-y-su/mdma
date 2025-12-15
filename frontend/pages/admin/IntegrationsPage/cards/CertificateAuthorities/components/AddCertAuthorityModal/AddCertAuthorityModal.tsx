@@ -1,4 +1,5 @@
 import React, { useContext, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { NotificationContext } from "context/notification";
 import certificatesAPI from "services/entities/certificates";
@@ -51,13 +52,15 @@ const AddCertAuthorityModal = ({
   certAuthorities,
   onExit,
 }: IAddCertAuthorityModalProps) => {
+  const { t } = useTranslation("settings");
   const { renderFlash } = useContext(NotificationContext);
 
   const dropdownOptions = useMemo(() => {
     return generateDropdownOptions(
-      certAuthorities.some((cert) => cert.type === "ndes_scep_proxy")
+      certAuthorities.some((cert) => cert.type === "ndes_scep_proxy"),
+      t
     );
-  }, [certAuthorities]);
+  }, [certAuthorities, t]);
 
   const [
     certAuthorityType,
@@ -193,16 +196,16 @@ const AddCertAuthorityModal = ({
     setIsAdding(true);
     try {
       await certificatesAPI.addCertificateAuthority(addCertAuthorityData);
-      renderFlash("success", "Successfully added your certificate authority.");
+      renderFlash("success", t("certificateAuthorities.addModal.successMessage"));
       onExit();
     } catch (e) {
-      renderFlash("error", getErrorMessage(e));
+      renderFlash("error", getErrorMessage(e, t));
     }
     setIsAdding(false);
   };
 
   const renderForm = () => {
-    const submitBtnText = "Add CA";
+    const submitBtnText = t("certificateAuthorities.addModal.submitButton");
 
     switch (certAuthorityType) {
       case "digicert":
@@ -284,7 +287,7 @@ const AddCertAuthorityModal = ({
   return (
     <Modal
       className={baseClass}
-      title="Add certificate authority (CA)"
+      title={t("certificateAuthorities.addModal.title")}
       width="large"
       onExit={onExit}
       isContentDisabled={isAdding}

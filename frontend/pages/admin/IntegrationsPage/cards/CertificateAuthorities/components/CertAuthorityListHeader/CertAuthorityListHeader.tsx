@@ -1,7 +1,9 @@
+import React from "react";
+import { useTranslation } from "react-i18next";
+
 import Button from "components/buttons/Button";
 import GitOpsModeTooltipWrapper from "components/GitOpsModeTooltipWrapper";
 import Icon from "components/Icon";
-import React from "react";
 
 const baseClass = "cert-authority-list-header";
 
@@ -12,9 +14,11 @@ interface ICertAuthorityListHeaderProps {
 const CertAuthorityListHeader = ({
   onClickAddCertAuthority,
 }: ICertAuthorityListHeaderProps) => {
+  const { t } = useTranslation("settings");
+
   return (
     <div className={baseClass}>
-      <span className={`${baseClass}__name`}>Certificate authority (CA)</span>
+      <span className={`${baseClass}__name`}>{t("certificateAuthorities.header.title")}</span>
       <span className={`${baseClass}__actions`}>
         <GitOpsModeTooltipWrapper
           position="left"
@@ -28,7 +32,7 @@ const CertAuthorityListHeader = ({
             >
               <>
                 <Icon name="plus" />
-                Add CA
+                {t("certificateAuthorities.header.addButton")}
               </>
             </Button>
           )}

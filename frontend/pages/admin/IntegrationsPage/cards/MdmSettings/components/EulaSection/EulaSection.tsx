@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import mdmAPI, { IEulaMetadataResponse } from "services/entities/mdm";
 import { NotificationContext } from "context/notification";
@@ -24,6 +25,7 @@ const EulaSection = ({
   onUpload,
   onDelete,
 }: IEulaSectionProps) => {
+  const { t } = useTranslation("settings");
   const { renderFlash } = useContext(NotificationContext);
   const [showDeleteEulaModal, setShowDeleteEulaModal] = useState(false);
 
@@ -32,9 +34,9 @@ const EulaSection = ({
 
     try {
       await mdmAPI.deleteEULA(eulaMetadata.token);
-      renderFlash("success", "Successfully deleted!");
+      renderFlash("success", t("integrations.eula.delete_success"));
     } catch {
-      renderFlash("error", "Couldn’t delete. Please try again.");
+      renderFlash("error", t("integrations.eula.delete_error"));
     } finally {
       setShowDeleteEulaModal(false);
       onDelete();
@@ -44,7 +46,7 @@ const EulaSection = ({
   return (
     <SettingsSection
       className={baseClass}
-      title="End user license agreement (EULA)"
+      title={t("integrations.eula.title")}
       id="end-user-license-agreement"
     >
       <div className={`${baseClass}__content`}>

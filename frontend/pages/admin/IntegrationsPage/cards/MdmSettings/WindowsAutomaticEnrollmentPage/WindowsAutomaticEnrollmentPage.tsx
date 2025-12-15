@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useTranslation } from "react-i18next";
 
 import PATHS from "router/paths";
 import { AppContext } from "context/app";
@@ -23,6 +24,7 @@ const generateMdmDiscoveryUrl = (domain: string) => {
 const baseClass = "windows-automatic-enrollment-page";
 
 const WindowsAutomaticEnrollmentPage = () => {
+  const { t } = useTranslation("settings");
   const { config } = useContext(AppContext);
 
   return (
@@ -30,38 +32,29 @@ const WindowsAutomaticEnrollmentPage = () => {
       <>
         <div className={`${baseClass}__header-links`}>
           <BackButton
-            text="Back to MDM"
+            text={t("mdmSettings.windows.backToMdm")}
             path={PATHS.ADMIN_INTEGRATIONS_MDM}
             className={`${baseClass}__back-to-automatic-enrollment`}
           />
         </div>
-        <h1>Microsoft Entra</h1>
+        <h1>{t("mdmSettings.windows.entraPageTitle")}</h1>
         <PageDescription
           content={
             <>
-              The end user will see Microsoft&apos;s default initial setup. You
-              can further simplify the initial device setup with Autopilot,
-              which is similar to Apple&apos;s Automated Device Enrollment
-              (DEP).{" "}
+              {t("mdmSettings.windows.entraDescription")}{" "}
               <CustomLink
                 newTab
-                text="Learn more"
+                text={t("mdmSettings.windows.learnMore")}
                 url="https://fleetdm.com/learn-more-about/setup-windows-mdm"
               />
             </>
           }
         />
         <p>
-          Some Intune/Entra deployments enable automatic enrollment into Intune.
-          Check to ensure <b>Automatic Enrollment</b> is not enabled, or your
-          devices will not appear in Fleet.{" "}
+          {t("mdmSettings.windows.entraWarning1")}
         </p>
         <p>
-          In your Intune settings, select <b>Devices</b>, and under{" "}
-          <b>Device onbarding</b>, open the <b>Enrollment</b> submenu. Select{" "}
-          <b>Automatic Enrollment</b> and ensure both <b>MDM user scope</b> and{" "}
-          <b>Windows Information Protection (WIP) user scope</b> are set to{" "}
-          <b>None</b>.
+          {t("mdmSettings.windows.entraWarning2")}
         </p>
         {/* Ideally we'd use the native browser list styles and css to display
         the list numbers but this does not allow us to style the list items as we'd
@@ -71,25 +64,21 @@ const WindowsAutomaticEnrollmentPage = () => {
             <span>1.</span>
             <CustomLink
               newTab
-              text="Sign in to Azure portal"
+              text={t("mdmSettings.windows.entraStep1")}
               url="https://fleetdm.com/sign-in-to/microsoft-automatic-enrollment-tool"
             />
           </li>
           <li>
             <span>2.</span>
             <p>
-              At the top of the page, search “Domain names“ and select{" "}
-              <b>Domain names</b>. Then select <b>+ Add custom domain</b>, type
-              your Fleet URL (e.g. fleet.acme.com), and select <b>Add domain</b>
-              .
+              {t("mdmSettings.windows.entraStep2")}
             </p>
           </li>
           <li>
             <span>3.</span>
             <div>
               <p>
-                Use the information presented in Azure AD to create a new TXT/MX
-                record with your domain registrar, then select <b>Verify</b>.
+                {t("mdmSettings.windows.entraStep3")}
               </p>
               <InfoBanner
                 className={`${baseClass}__cloud-customer-banner`}
@@ -99,8 +88,7 @@ const WindowsAutomaticEnrollmentPage = () => {
                 <div className={`${baseClass}__banner-content`}>
                   <Icon name="error-outline" color="ui-fleet-black-75" />
                   <p>
-                    If you&apos;re a managed-cloud customer, please reach out to
-                    Fleet to create a TXT/MX record for you.
+                    {t("mdmSettings.windows.entraCloudBanner")}
                   </p>
                 </div>
               </InfoBanner>
@@ -109,37 +97,31 @@ const WindowsAutomaticEnrollmentPage = () => {
           <li>
             <span>4.</span>
             <p>
-              At the top of the page, search for “Mobility“ and select{" "}
-              <b>Mobility (MDM and WIP)</b>.
+              {t("mdmSettings.windows.entraStep4")}
             </p>
           </li>
           <li>
             <span>5.</span>
             <p>
-              Select <b>+ Add application</b>, then select{" "}
-              <b>+ Create your own application</b>.
+              {t("mdmSettings.windows.entraStep5")}
             </p>
           </li>
           <li>
             <span>6.</span>
-            Enter “Fleet” as the name of your application and select{" "}
-            <b>Create</b>.
+            {t("mdmSettings.windows.entraStep6")}
           </li>
           <li>
             <span>7.</span>
             <div>
               <p>
-                Set MDM user scope to <b>All</b>, then copy the URLs below,
-                paste them in Azure AD, and select <b>Save</b>.
+                {t("mdmSettings.windows.entraStep7")}
               </p>
               <div className={`${baseClass}__url-inputs-wrapper`}>
                 <InputField
                   inputWrapperClass={`${baseClass}__url-input`}
-                  label="MDM terms of use URL"
+                  label={t("mdmSettings.windows.mdmTermsOfUseLabel")}
                   name="mdmTermsOfUseUrl"
-                  tooltip="The terms of use URL is used to display the terms of service to end users
-                  before turning on MDM their host. The terms of use text informs users about
-                  policies that will be enforced on the host."
+                  tooltip={t("mdmSettings.windows.mdmTermsOfUseTooltip")}
                   value={generateMdmTermsOfUseUrl(
                     config?.server_settings.server_url || ""
                   )}
@@ -147,9 +129,9 @@ const WindowsAutomaticEnrollmentPage = () => {
                 />
                 <InputField
                   inputWrapperClass={`${baseClass}__url-input`}
-                  label="MDM discovery URL"
+                  label={t("mdmSettings.windows.mdmDiscoveryLabel")}
                   name="mdmDiscoveryUrl"
-                  tooltip="The enrollment URL is used to connect hosts with the MDM service."
+                  tooltip={t("mdmSettings.windows.mdmDiscoveryTooltip")}
                   value={generateMdmDiscoveryUrl(
                     config?.server_settings.server_url || ""
                   )}
@@ -161,73 +143,62 @@ const WindowsAutomaticEnrollmentPage = () => {
           <li>
             <span>8.</span>
             <p>
-              While on this same page, select{" "}
-              <b>Custom MDM application settings</b> link.
+              {t("mdmSettings.windows.entraStep8")}
             </p>
           </li>
           <li>
             <span>9.</span>
             <p>
-              Click on the <b>Application ID URI</b> which will bring you to the{" "}
-              <b>Expose an API</b> submenu with an edit button next to the text
-              box.
+              {t("mdmSettings.windows.entraStep9")}
             </p>
           </li>
           <li>
             <span>10.</span>
             <p>
-              Replace with your Fleet URL (e.g. fleet.acme.com) and select{" "}
-              <b>Save</b>.
+              {t("mdmSettings.windows.entraStep10")}
             </p>
           </li>
           <li>
             <span>11.</span>
             <p>
-              Select <b>API permissions</b> from the sidebar, then select{" "}
-              <b>+ Add a permission</b>.
+              {t("mdmSettings.windows.entraStep11")}
             </p>
           </li>
           <li>
             <span>12.</span>
             <p>
-              Select <b>Microsoft Graph</b>, then select{" "}
-              <b>Delegated permissions</b>, and select{" "}
-              <b>Group &gt; Group.Read.All</b> and{" "}
-              <b>Group &gt; Group.ReadWrite.All</b> and <b>Add permissions</b>.
+              {t("mdmSettings.windows.entraStep12")}
             </p>
           </li>
           <li>
             <span>13.</span>
             <div>
-              Again select <b>+ Add a permission</b> and then{" "}
-              <b>Microsoft Graph</b> and <b>Application permissions</b>, select
-              the following:
+              {t("mdmSettings.windows.entraStep13")}
               <ul className={`${baseClass}__permissions-list`}>
-                <li>Device &gt; Device.Read.All</li>
-                <li>Device &gt; Device.ReadWrite.All</li>
-                <li>Directory &gt; Directory.Read.All</li>
-                <li>Group &gt; Group.Read.All</li>
-                <li>User &gt; User.Read.All</li>
+                <li>{t("mdmSettings.windows.entraPermission1")}</li>
+                <li>{t("mdmSettings.windows.entraPermission2")}</li>
+                <li>{t("mdmSettings.windows.entraPermission3")}</li>
+                <li>{t("mdmSettings.windows.entraPermission4")}</li>
+                <li>{t("mdmSettings.windows.entraPermission5")}</li>
               </ul>
             </div>
           </li>
           <li>
             <span>14.</span>
             <p>
-              Select <b>Add permissions</b>.
+              {t("mdmSettings.windows.entraStep14")}
             </p>
           </li>
           <li>
             <span>15.</span>
             <p>
-              Select <b>Grant admin consent for &lt;your tenant name&gt;</b>,
-              and confirm.
+              {t("mdmSettings.windows.entraStep15")}
             </p>
           </li>
           <li>
             <span>16.</span>
             <p>
-              You&apos;re ready to automatically enroll Windows hosts to Fleet.
+              {t("mdmSettings.windows.entraStep16")}
             </p>
           </li>
         </ol>

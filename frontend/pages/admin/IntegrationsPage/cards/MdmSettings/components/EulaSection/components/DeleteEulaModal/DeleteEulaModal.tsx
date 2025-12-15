@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import Modal from "components/Modal";
 import Button from "components/buttons/Button";
@@ -11,24 +12,25 @@ interface IDeleteEulaModalProps {
 }
 
 const DeleteEulaModal = ({ onDelete, onCancel }: IDeleteEulaModalProps) => {
+  const { t } = useTranslation("settings");
+
   return (
     <Modal
       className={baseClass}
-      title="Delete EULA"
+      title={t("integrations.eula.delete_modal_title")}
       onExit={onCancel}
       onEnter={() => onDelete()}
     >
       <>
         <p>
-          End users won’t be required to agree to this EULA on macOS hosts that
-          automatically enroll.
+          {t("integrations.eula.delete_modal_content")}
         </p>
         <div className="modal-cta-wrap">
           <Button type="button" onClick={() => onDelete()} variant="alert">
-            Delete
+            {t("common:delete")}
           </Button>
           <Button onClick={onCancel} variant="inverse-alert">
-            Cancel
+            {t("common:cancel")}
           </Button>
         </div>
       </>

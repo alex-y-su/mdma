@@ -1,5 +1,6 @@
 import React from "react";
 import { CellProps, Column } from "react-table";
+import i18n from "i18next";
 
 import { IMdmAbmToken, IMdmVppToken } from "interfaces/mdm";
 import { IHeaderProps, IStringCellProps } from "interfaces/datatable_config";
@@ -21,18 +22,23 @@ type ITeamsCellProps = CellProps<IMdmVppToken, IMdmVppToken["teams"]>;
 
 type ITableHeaderProps = IHeaderProps<IMdmVppToken>;
 
-const DEFAULT_ACTION_OPTIONS: IDropdownOption[] = [
-  { value: "editTeams", label: "Edit teams", disabled: false },
-  { value: "renew", label: "Renew", disabled: false },
-  { value: "delete", label: "Delete", disabled: false },
-];
+const getDefaultActionOptions = (): IDropdownOption[] => {
+  const t = i18n.getFixedT(null, "settings");
+  return [
+    { value: "editTeams", label: t("mdmSettings.vpp.table.actions.editTeams"), disabled: false },
+    { value: "renew", label: t("mdmSettings.vpp.table.actions.renew"), disabled: false },
+    { value: "delete", label: t("mdmSettings.vpp.table.actions.delete"), disabled: false },
+  ];
+};
 
 const generateActions = (gitopsModeEnabled: boolean, repoURL: string) => {
+  const defaultOptions = getDefaultActionOptions();
+
   if (!gitopsModeEnabled) {
-    return DEFAULT_ACTION_OPTIONS;
+    return defaultOptions;
   }
 
-  return DEFAULT_ACTION_OPTIONS.map((option) => {
+  return defaultOptions.map((option) => {
     if (option.value !== "editTeams") {
       return option;
     }
@@ -45,25 +51,28 @@ const generateActions = (gitopsModeEnabled: boolean, repoURL: string) => {
   });
 };
 
-const RENEW_DATE_CELL_STATUS_CONFIG: IRenewDateCellStatusConfig = {
-  warning: {
-    tooltipText: (
-      <>
-        VPP content token is less than 30 days from expiration.
-        <br />
-        To renew, go to <b>Actions {">"} Renew</b>.
-      </>
-    ),
-  },
-  error: {
-    tooltipText: (
-      <>
-        VPP content token is expired.
-        <br />
-        To renew, go to <b>Actions {">"} Renew</b>.
-      </>
-    ),
-  },
+const getRenewDateCellStatusConfig = (): IRenewDateCellStatusConfig => {
+  const t = i18n.getFixedT(null, "settings");
+  return {
+    warning: {
+      tooltipText: (
+        <>
+          {t("mdmSettings.vpp.table.renewWarning")}
+          <br />
+          {t("mdmSettings.vpp.table.renewInstructions")}
+        </>
+      ),
+    },
+    error: {
+      tooltipText: (
+        <>
+          {t("mdmSettings.vpp.table.renewError")}
+          <br />
+          {t("mdmSettings.vpp.table.renewInstructions")}
+        </>
+      ),
+    },
+  };
 };
 
 export const generateTableConfig = (
@@ -71,13 +80,16 @@ export const generateTableConfig = (
   gitopsModeEnabled: boolean,
   repoURL: string
 ): IAbmTableConfig[] => {
+  const t = i18n.getFixedT(null, "settings");
+  const renewDateConfig = getRenewDateCellStatusConfig();
+
   return [
     {
       accessor: "org_name",
       sortType: "caseInsensitive",
       Header: (cellProps: ITableHeaderProps) => (
         <HeaderCell
-          value="Organization name"
+          value={t("mdmSettings.vpp.table.orgName")}
           isSortedDesc={cellProps.column.isSortedDesc}
         />
       ),
@@ -87,7 +99,7 @@ export const generateTableConfig = (
     },
     {
       accessor: "location",
-      Header: "Location",
+      Header: t("mdmSettings.vpp.table.location"),
       disableSortBy: true,
       Cell: (cellProps: ITableStringCellProps) => (
         <TextCell value={cellProps.cell.value} />
@@ -95,12 +107,12 @@ export const generateTableConfig = (
     },
     {
       accessor: "renew_date",
-      Header: "Renew date",
+      Header: t("mdmSettings.vpp.table.renewDate"),
       disableSortBy: true,
       Cell: (cellProps: IRenewDateCellProps) => (
         <RenewDateCell
           value={cellProps.cell.value}
-          statusConfig={RENEW_DATE_CELL_STATUS_CONFIG}
+          statusConfig={renewDateConfig}
           className="vpp-renew-date-cell"
         />
       ),
@@ -108,7 +120,7 @@ export const generateTableConfig = (
 
     {
       accessor: "teams",
-      Header: "Teams",
+      Header: t("mdmSettings.vpp.table.teams"),
       disableSortBy: true,
       Cell: (cellProps: ITeamsCellProps) => (
         <TeamsCell teams={cellProps.cell.value} className="vpp-teams-cell" />
@@ -126,7 +138,7 @@ export const generateTableConfig = (
           onChange={(value: string) =>
             actionSelectHandler(value, cellProps.row.original)
           }
-          placeholder="Actions"
+          placeholder={t("mdmSettings.vpp.table.actions.placeholder")}
           variant="small-button"
         />
       ),

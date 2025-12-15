@@ -1,5 +1,6 @@
 import React from "react";
 import { formatDistanceToNow } from "date-fns";
+import { useTranslation } from "react-i18next";
 
 import endpoints from "utilities/endpoints";
 import { IEulaMetadataResponse } from "services/entities/mdm";
@@ -17,6 +18,8 @@ interface IEulaListItemProps {
 }
 
 const EulaListItem = ({ eulaData, onDelete }: IEulaListItemProps) => {
+  const { t } = useTranslation("settings");
+
   const onOpenEula = () => {
     window.open(`/api${endpoints.MDM_EULA(eulaData.token)}`, "_blank");
   };
@@ -30,9 +33,9 @@ const EulaListItem = ({ eulaData, onDelete }: IEulaListItemProps) => {
             {eulaData.name}
           </span>
           <span className={`${baseClass}__list-item-uploaded`}>
-            {`Uploaded ${formatDistanceToNow(
-              new Date(eulaData.created_at)
-            )} ago`}
+            {t("integrations.eula.uploaded_ago", {
+              timeAgo: formatDistanceToNow(new Date(eulaData.created_at))
+            })}
           </span>
         </div>
       </div>

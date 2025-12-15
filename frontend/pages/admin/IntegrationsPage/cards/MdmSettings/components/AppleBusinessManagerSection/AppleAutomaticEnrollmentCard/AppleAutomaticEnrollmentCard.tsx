@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import Button from "components/buttons/Button";
 import Icon from "components/Icon/Icon";
@@ -16,10 +17,11 @@ const AppleAutomaticEnrollmentCard = ({
   viewDetails,
   configured,
 }: IAppleAutomaticEnrollmentCardProps) => {
+  const { t } = useTranslation("settings");
+
   const AppleMdmDisabledCard = (
-    <SectionCard header="Automatic enrollment for Apple (macOS, iOS, iPadOS) hosts.">
-      To enable automatic enrollment for macOS, iOS, and iPadOS hosts, first
-      turn on Apple MDM.
+    <SectionCard header={t("mdmSettings.abm.appleEnrollmentCard.disabledHeader")}>
+      {t("mdmSettings.abm.appleEnrollmentCard.disabledMessage")}
     </SectionCard>
   );
 
@@ -29,27 +31,24 @@ const AppleAutomaticEnrollmentCard = ({
       cta={
         <Button onClick={viewDetails} variant="inverse">
           <Icon name="pencil" />
-          Edit
+          {t("mdmSettings.abm.appleEnrollmentCard.edit")}
         </Button>
       }
     >
-      Company-owned (ADE) and personal (BYOD) enrollment for Apple (macOS, iOS,
-      iPadOS) is enabled.
+      {t("mdmSettings.abm.appleEnrollmentCard.configuredMessage")}
     </SectionCard>
   );
 
   const AbmNotConfiguredCard = (
     <SectionCard
-      header="Apple (macOS, iOS, iPadOS) company-owned and personal hosts enrollment"
+      header={t("mdmSettings.abm.appleEnrollmentCard.notConfiguredHeader")}
       cta={
         <Button className="add-abm-button" onClick={viewDetails}>
-          Add ABM
+          {t("mdmSettings.abm.appleEnrollmentCard.addAbm")}
         </Button>
       }
     >
-      Company-owned Apple hosts will enroll with Automated Device Enrollment
-      (ADE) when they&apos;re first unboxed. Personal (BYOD) hosts will enroll
-      when end users sign in with Managed Apple Account.
+      {t("mdmSettings.abm.appleEnrollmentCard.notConfiguredMessage")}
     </SectionCard>
   );
 

@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import TableContainer from "components/TableContainer";
 
 import generateTableHeaders, {
@@ -20,17 +21,18 @@ const OSSettingsTable = ({
   resendRequest,
   onProfileResent,
 }: IOSSettingsTableProps) => {
+  const { t } = useTranslation("hosts");
   // useMemo prevents tooltip flashing during host data refetch
   const tableConfig = useMemo(
     () =>
-      generateTableHeaders(canResendProfiles, resendRequest, onProfileResent),
-    [canResendProfiles, resendRequest, onProfileResent]
+      generateTableHeaders(canResendProfiles, resendRequest, onProfileResent, t),
+    [canResendProfiles, resendRequest, onProfileResent, t]
   );
 
   return (
     <div className={baseClass}>
       <TableContainer
-        resultsTitle="settings"
+        resultsTitle={t("osSettingsModal.settings")}
         defaultSortHeader="name"
         columnConfigs={tableConfig}
         data={tableData}

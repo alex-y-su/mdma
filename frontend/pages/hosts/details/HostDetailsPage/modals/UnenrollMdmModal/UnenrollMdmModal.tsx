@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { useTranslation } from "react-i18next";
 
 import DataError from "components/DataError";
 import Button from "components/buttons/Button";
@@ -31,6 +32,7 @@ const UnenrollMdmModal = ({
   enrollmentStatus,
   onClose,
 }: IUnenrollMdmModalProps) => {
+  const { t } = useTranslation("hosts");
   const [requestState, setRequestState] = useState<
     undefined | "unenrolling" | "error"
   >(undefined);
@@ -48,12 +50,11 @@ const UnenrollMdmModal = ({
       const successMessage =
         isIPadOrIPhone(hostPlatform) || isAndroid(hostPlatform) ? (
           <>
-            <b>{hostName}</b> will be unenrolled next time this host checks in.
+            <b>{hostName}</b> {t("modals.unenrollMdm.successMessage.mobile")}
           </>
         ) : (
           <>
-            MDM will be turned off for <b>{hostName}</b> next time this host
-            checks in.
+            {t("modals.unenrollMdm.successMessage.macosPrefix")} <b>{hostName}</b> {t("modals.unenrollMdm.successMessage.macosSuffix")}
           </>
         );
       renderFlash("success", successMessage);
@@ -61,10 +62,10 @@ const UnenrollMdmModal = ({
     } catch (unenrollMdmError: unknown) {
       const errorMessage =
         isIPadOrIPhone(hostPlatform) || isAndroid(hostPlatform) ? (
-          "Couldn't unenroll. Please try again."
+          t("modals.unenrollMdm.errorMessage.mobile")
         ) : (
           <>
-            Failed to turn off MDM for <b>{hostName}</b>. Please try again.
+            {t("modals.unenrollMdm.errorMessage.macosPrefix")} <b>{hostName}</b>. {t("modals.unenrollMdm.errorMessage.macosSuffix")}
           </>
         );
       renderFlash("error", errorMessage);
@@ -76,27 +77,19 @@ const UnenrollMdmModal = ({
     if (isBYODManualEnrollment(enrollmentStatus)) {
       return (
         <p>
-          To re-enroll, go to <b>Hosts &gt; Add hosts &gt; iOS/iPadOS</b> and
-          share the link with end user.
+          {t("modals.unenrollMdm.reenrollInstructions.iosManual")}
         </p>
       );
     } else if (isBYODAccountDrivenUserEnrollment(enrollmentStatus)) {
       return (
         <p>
-          To re-enroll, ask your end user to navigate to{" "}
-          <b>
-            Settings &gt; General &gt; VPN &amp; Device Management &gt; Sign in
-            to Work or School Account...
-          </b>{" "}
-          on their host and to log in with their work email.
+          {t("modals.unenrollMdm.reenrollInstructions.iosAccountDriven")}
         </p>
       );
     } else if (isAutomaticDeviceEnrollment(enrollmentStatus)) {
       return (
         <p>
-          To re-enroll, make sure that the host is still in Apple Business
-          Manager (ABM). The host will automatically enroll after it&apos;s
-          reset.
+          {t("modals.unenrollMdm.reenrollInstructions.iosAutomatic")}
         </p>
       );
     }
@@ -107,7 +100,7 @@ const UnenrollMdmModal = ({
     if (isIPadOrIPhone(hostPlatform)) {
       return (
         <>
-          <p>Settings configured by Fleet will be removed.</p>
+          <p>{t("modals.unenrollMdm.description.ios")}</p>
           {generateIosOrIpadosDescription()}
         </>
       );
@@ -115,20 +108,18 @@ const UnenrollMdmModal = ({
     if (isAndroid(hostPlatform)) {
       return (
         <>
-          <p>Company data and OS settings (work profile) will be deleted.</p>
+          <p>{t("modals.unenrollMdm.description.android")}</p>
           <p>
-            To re-enroll, go to <b>Hosts &gt; Add hosts &gt; Android</b> and
-            share the link with end user.
+            {t("modals.unenrollMdm.reenrollInstructions.android")}
           </p>
         </>
       );
     }
     return (
       <>
-        <p>Settings configured by Fleet will be removed.</p>
+        <p>{t("modals.unenrollMdm.description.macos")}</p>
         <p>
-          To turn on MDM again, ask the device user to follow the{" "}
-          <b>Turn on MDM</b> instructions on their <b>My device</b> page.
+          {t("modals.unenrollMdm.reenrollInstructions.macos")}
         </p>
       </>
     );
@@ -141,8 +132,8 @@ const UnenrollMdmModal = ({
 
     const buttonText =
       isIPadOrIPhone(hostPlatform) || isAndroid(hostPlatform)
-        ? "Unenroll"
-        : "Turn off";
+        ? t("modals.unenrollMdm.confirmButton.mobile")
+        : t("modals.unenrollMdm.confirmButton.macos");
 
     return (
       <>
@@ -159,7 +150,7 @@ const UnenrollMdmModal = ({
             {buttonText}
           </Button>
           <Button onClick={onClose} variant="inverse-alert">
-            Cancel
+            {t("modals.unenrollMdm.cancelButton")}
           </Button>
         </div>
       </>
@@ -168,8 +159,8 @@ const UnenrollMdmModal = ({
 
   const title =
     isIPadOrIPhone(hostPlatform) || isAndroid(hostPlatform)
-      ? "Unenroll"
-      : "Turn off MDM";
+      ? t("modals.unenrollMdm.title.mobile")
+      : t("modals.unenrollMdm.title.macos");
 
   return (
     <Modal

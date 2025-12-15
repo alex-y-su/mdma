@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useTranslation } from "react-i18next";
 
 import { isEnrolledInMdm, MdmEnrollmentStatus } from "interfaces/mdm";
 import permissions from "utilities/permissions";
@@ -35,6 +36,7 @@ const HostActionsDropdown = ({
   hostScriptsEnabled = false,
   onSelect,
 }: IHostActionsDropdownProps) => {
+  const { t } = useTranslation("hosts");
   const {
     isPremiumTier = false,
     isGlobalAdmin = false,
@@ -86,7 +88,7 @@ const HostActionsDropdown = ({
       <ActionsDropdown
         className={`${baseClass}__host-actions-dropdown`}
         onChange={onSelect}
-        placeholder="Actions"
+        placeholder={t("actionsDropdown.placeholder")}
         options={options}
         menuAlign="right"
         variant="brand-button"

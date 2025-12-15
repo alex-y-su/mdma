@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import { ProfileScope } from "interfaces/mdm";
 
@@ -19,6 +20,7 @@ const OSSettingsNameCell = ({
   scope,
   managedAccount,
 }: IOSSettingsNameCellProps) => {
+  const { t } = useTranslation("hosts");
   return (
     <div className={baseClass}>
       <TooltipTruncatedTextCell
@@ -30,7 +32,7 @@ const OSSettingsNameCell = ({
           className={`${baseClass}__scope-tooltip`}
           tipContent={
             <>
-              Scoped to local user account:
+              {t("osSettingsModal.nameCell.scopedToUser")}
               <br />
               <b>{managedAccount}</b>
             </>

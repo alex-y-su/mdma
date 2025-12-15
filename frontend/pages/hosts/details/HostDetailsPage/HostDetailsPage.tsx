@@ -936,7 +936,7 @@ const HostDetailsPage = ({
       pathname: PATHS.HOST_DETAILS(hostIdFromURL),
     },
     {
-      name: t("details.software"),
+      name: t("details.software.title"),
       title: "software",
       pathname: PATHS.HOST_SOFTWARE(hostIdFromURL),
     },
@@ -1048,10 +1048,10 @@ const HostDetailsPage = ({
           <>
             <TabList>
               <Tab>
-                <TabText>Inventory</TabText>
+                <TabText>{t("details.inventory")}</TabText>
               </Tab>
               <Tab>
-                <TabText>Library</TabText>
+                <TabText>{t("details.library")}</TabText>
               </Tab>
             </TabList>
             <TabPanel>
@@ -1087,13 +1087,13 @@ const HostDetailsPage = ({
               {isBYODAccountDrivenUserEnrollment(host.mdm.enrollment_status) ||
               isAndroidHost ? (
                 <EmptyTable
-                  header="Software library is currently not supported on this host."
+                  header={t("details.software.libraryNotSupported")}
                   info={
                     <>
-                      Software install is coming soon.{" "}
+                      {t("details.software.installComingSoon")}{" "}
                       <CustomLink
                         newTab
-                        text="Learn more"
+                        text={t("details.software.learnMore")}
                         url={
                           isAndroidHost
                             ? ANDROID_SW_INSTALL_LEARN_MORE_LINK

@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { noop } from "lodash";
+import { useTranslation } from "react-i18next";
 
 import { IHostUpcomingActivity } from "interfaces/activity";
 import activitiesAPI from "services/entities/activities";
@@ -29,6 +30,7 @@ const CancelActivityModal = ({
   onSuccessCancel,
   onExit,
 }: ICancelActivityModalProps) => {
+  const { t } = useTranslation("hosts");
   const { renderFlash } = useContext(NotificationContext);
   const [isCanceling, setIsCanceling] = React.useState(false);
 
@@ -38,7 +40,7 @@ const CancelActivityModal = ({
     setIsCanceling(true);
     try {
       await activitiesAPI.cancelHostActivity(hostId, activity.uuid);
-      renderFlash("success", "Activity successfully canceled.");
+      renderFlash("success", t("modals.cancelActivity.successMessage"));
       onSuccessCancel(activity);
     } catch (err) {
       renderFlash("error", getErrorMessage(err));
@@ -50,15 +52,14 @@ const CancelActivityModal = ({
   return (
     <Modal
       className={baseClass}
-      title="Cancel activity"
+      title={t("modals.cancelActivity.title")}
       onExit={onExit}
       isContentDisabled={isCanceling}
     >
       <>
         <div className={`${baseClass}__content`}>
           <p>
-            If the activity is happening on the host it will still complete.
-            Results won&apos;t appear in Fleet.
+            {t("modals.cancelActivity.description")}
           </p>
           <ActivityItemComponent
             tab="upcoming"
@@ -75,10 +76,10 @@ const CancelActivityModal = ({
             variant="alert"
             onClick={onAttemptyCancel}
           >
-            Cancel activity
+            {t("modals.cancelActivity.confirmButton")}
           </Button>
           <Button variant="inverse-alert" onClick={onExit}>
-            Back
+            {t("modals.cancelActivity.cancelButton")}
           </Button>
         </div>
       </>

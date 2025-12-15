@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import { IHostMdmProfile, MdmProfileStatus } from "interfaces/mdm";
 
@@ -103,16 +104,25 @@ const OSSettingsIndicator = ({
   profiles,
   onClick,
 }: IOSSettingsIndicatorProps): JSX.Element => {
+  const { t } = useTranslation("hosts");
+
   if (!profiles.length) {
     // the caller should ensure that this never happens, but just in case we return a default
     // to make it more obvious that something is wrong.
     // https://fleetdm.com/handbook/company/why-this-way#why-make-it-obvious-when-stuff-breaks
-    return <span className={`${baseClass} info-flex__data`}>Unavailable</span>;
+    return <span className={`${baseClass} info-flex__data`}>{t("osSettings.unavailable")}</span>;
   }
 
   const displayStatus = getHostProfilesStatusForDisplay(profiles);
 
   const statusDisplayOption = STATUS_DISPLAY_OPTIONS[displayStatus];
+
+  const displayStatusMap = {
+    Failed: t("osSettings.failed"),
+    Pending: t("osSettings.pending"),
+    Verifying: t("osSettings.verifying"),
+    Verified: t("osSettings.verified"),
+  };
 
   return (
     <span className={`${baseClass} info-flex__data`}>
@@ -122,7 +132,7 @@ const OSSettingsIndicator = ({
         variant="text-link"
         className={`${baseClass}__button`}
       >
-        {displayStatus}
+        {displayStatusMap[displayStatus]}
       </Button>
     </span>
   );

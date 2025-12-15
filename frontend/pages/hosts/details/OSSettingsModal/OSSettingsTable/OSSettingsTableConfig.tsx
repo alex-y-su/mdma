@@ -1,5 +1,6 @@
 import React from "react";
 import { Column } from "react-table";
+import { TFunction } from "i18next";
 
 import { IStringCellProps } from "interfaces/datatable_config";
 import { IHostMdmData } from "interfaces/host";
@@ -42,11 +43,12 @@ export type OsSettingsTableStatusValue =
 const generateTableConfig = (
   canResendProfiles: boolean,
   resendRequest: (profileUUID: string) => Promise<void>,
-  onProfileResent: () => void
+  onProfileResent: () => void,
+  t: TFunction
 ): ITableColumnConfig[] => {
   return [
     {
-      Header: "Name",
+      Header: t("osSettingsModal.name"),
       disableSortBy: true,
       accessor: "name",
       Cell: (cellProps: ITableStringCellProps) => {
@@ -60,7 +62,7 @@ const generateTableConfig = (
       },
     },
     {
-      Header: "Status",
+      Header: t("osSettingsModal.status"),
       disableSortBy: true,
       accessor: "status",
       Cell: (cellProps: ITableStringCellProps) => {
@@ -75,7 +77,7 @@ const generateTableConfig = (
       },
     },
     {
-      Header: "Error",
+      Header: t("osSettingsModal.error"),
       disableSortBy: true,
       accessor: "detail",
       Cell: (cellProps: ITableStringCellProps) => {

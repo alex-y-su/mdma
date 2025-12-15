@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import Button from "components/buttons/Button";
 import Modal from "components/Modal";
@@ -11,30 +12,30 @@ export interface IInfoModalProps {
 const baseClass = "device-user-info";
 
 const InfoModal = ({ onCancel }: IInfoModalProps): JSX.Element => {
+  const { t } = useTranslation("hosts");
   return (
     <Modal
-      title="Welcome to Fleet"
+      title={t("deviceUser.infoModal.title")}
       onExit={onCancel}
       className={`${baseClass}__modal`}
     >
       <div>
         <p>
-          Your organization uses Fleet to check if all devices meet its security
-          policies.
+          {t("deviceUser.infoModal.paragraph1")}
         </p>
-        <p>With Fleet, you and your team can secure your device, together.</p>
+        <p>{t("deviceUser.infoModal.paragraph2")}</p>
         <p>
-          Want to know what your organization can see?&nbsp;
+          {t("deviceUser.infoModal.transparencyPrompt")}&nbsp;
           <CustomLink
             url="https://fleetdm.com/transparency"
-            text="Read about transparency"
+            text={t("deviceUser.infoModal.transparencyLink")}
             newTab
             multiline
           />
         </p>
         <div className="modal-cta-wrap">
           <Button type="button" onClick={onCancel}>
-            OK
+            {t("deviceUser.infoModal.ok")}
           </Button>
         </div>
       </div>

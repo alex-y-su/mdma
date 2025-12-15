@@ -1,5 +1,6 @@
 import React from "react";
 import classnames from "classnames";
+import { useTranslation } from "react-i18next";
 
 import { IGetHostCertificatesResponse } from "services/entities/hosts";
 
@@ -47,6 +48,8 @@ const CertificatesCard = ({
   onPreviousPage,
   onSortChange,
 }: ICertificatesProps) => {
+  const { t } = useTranslation("hosts");
+
   const renderContent = () => {
     if (isError) {
       return isMyDevicePage ? (
@@ -80,7 +83,7 @@ const CertificatesCard = ({
       borderRadiusSize="xxlarge"
       paddingSize="xlarge"
     >
-      <CardHeader header="Certificates" />
+      <CardHeader header={t("certificates.title")} />
       {renderContent()}
     </Card>
   );

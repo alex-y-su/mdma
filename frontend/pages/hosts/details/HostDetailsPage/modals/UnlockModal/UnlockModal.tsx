@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { AxiosError } from "axios";
 import { useQuery } from "react-query";
+import { useTranslation } from "react-i18next";
 
 import { NotificationContext } from "context/notification";
 import { getErrorReason } from "interfaces/errors";
@@ -29,6 +30,7 @@ const UnlockModal = ({
   onSuccess,
   onClose,
 }: IUnlockModalProps) => {
+  const { t } = useTranslation("hosts");
   const { renderFlash } = useContext(NotificationContext);
   const [isUnlocking, setIsUnlocking] = React.useState(false);
 
@@ -54,7 +56,7 @@ const UnlockModal = ({
       onSuccess();
       renderFlash(
         "success",
-        "Unlocking host or will unlock when it comes online."
+        t("modals.unlock.successMessage")
       );
     } catch (e) {
       renderFlash("error", getErrorReason(e));
@@ -74,10 +76,10 @@ const UnlockModal = ({
         <>
           {/* TODO: replace with DataSet component */}
           <p>
-            When the host is returned, use the 6-digit PIN to unlock the host.
+            {t("modals.unlock.pinDescription")}
           </p>
           <div className={`${baseClass}__pin`}>
-            <b>PIN</b>
+            <b>{t("modals.unlock.pinLabel")}</b>
             <span>{macUnlockData.unlock_pin}</span>
           </div>
         </>
@@ -87,7 +89,7 @@ const UnlockModal = ({
     if (isIPadOrIPhone(platform)) {
       return (
         <p>
-          This will disable Lost Mode. End users will be able to use the host.
+          {t("modals.unlock.descriptionIos")}
         </p>
       );
     }
@@ -95,7 +97,7 @@ const UnlockModal = ({
     return (
       <>
         <p>
-          Are you sure you&apos;re ready to unlock <b>{hostName}</b>?
+          {t("modals.unlock.confirmMessage")} <b>{hostName}</b>?
         </p>
       </>
     );
@@ -106,7 +108,7 @@ const UnlockModal = ({
       return (
         <>
           <Button type="button" onClick={onClose}>
-            Done
+            {t("modals.unlock.buttonDone")}
           </Button>
         </>
       );
@@ -120,17 +122,17 @@ const UnlockModal = ({
           className="delete-loading"
           isLoading={isUnlocking}
         >
-          Unlock
+          {t("modals.unlock.buttonUnlock")}
         </Button>
         <Button onClick={onClose} variant="inverse">
-          Cancel
+          {t("modals.unlock.buttonCancel")}
         </Button>
       </>
     );
   };
 
   return (
-    <Modal className={baseClass} title="Unlock host" onExit={onClose}>
+    <Modal className={baseClass} title={t("modals.unlock.title")} onExit={onClose}>
       <>
         <div className={`${baseClass}__modal-content`}>
           {renderModalContent()}

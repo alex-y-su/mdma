@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 // @ts-ignore
 import InputField from "components/forms/fields/InputField";
@@ -18,6 +19,7 @@ const AutoEnrollMdmModal = ({
   host: { platform, os_version },
   onCancel,
 }: IAutoEnrollMdmModalProps): JSX.Element => {
+  const { t } = useTranslation("hosts");
   let isMacOsSonomaOrLater = false;
   if (platform === "darwin" && os_version.startsWith("macOS ")) {
     const [major] = os_version

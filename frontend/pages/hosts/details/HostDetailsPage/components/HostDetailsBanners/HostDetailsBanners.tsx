@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useTranslation } from "react-i18next";
 import { AppContext } from "context/app";
 
 import { DiskEncryptionStatus, MdmEnrollmentStatus } from "interfaces/mdm";
@@ -41,6 +42,7 @@ const HostDetailsBanners = ({
   diskIsEncrypted,
   diskEncryptionKeyAvailable,
 }: IHostBannersBaseProps) => {
+  const { t } = useTranslation("hosts");
   const { config } = useContext(AppContext);
 
   const isMdmUnenrolled = mdmEnrollmentStatus === "Off" || !mdmEnrollmentStatus;
@@ -58,9 +60,7 @@ const HostDetailsBanners = ({
   const actionRequiredBanner = (
     <div className={baseClass}>
       <InfoBanner color="yellow">
-        Disk encryption: Requires action from the end user. Ask the user to
-        follow <b>Disk encryption</b> instructions on their <b>My device</b>{" "}
-        page.
+        {t("banners.diskEncryption.actionRequired")}
       </InfoBanner>
     </div>
   );
@@ -69,9 +69,7 @@ const HostDetailsBanners = ({
     return (
       <div className={baseClass}>
         <InfoBanner color="yellow">
-          To enforce settings, OS updates, disk encryption, and more, ask the
-          end user to follow the <strong>Turn on MDM</strong> instructions on
-          their <strong>My device</strong> page.
+          {t("banners.turnOnMdm")}
         </InfoBanner>
       </div>
     );
@@ -80,8 +78,7 @@ const HostDetailsBanners = ({
     return (
       <div className={baseClass}>
         <InfoBanner color="yellow">
-          Disk encryption: Requires action from the end user. Ask the end user
-          to log out of their device or restart it.
+          {t("banners.diskEncryption.macActionRequired")}
         </InfoBanner>
       </div>
     );
@@ -101,15 +98,13 @@ const HostDetailsBanners = ({
             cta={
               <CustomLink
                 url={`${LEARN_MORE_ABOUT_BASE_LINK}/mdm-disk-encryption`}
-                text="Guide"
+                text={t("banners.diskEncryption.guide")}
                 variant="banner-link"
                 newTab
               />
             }
           >
-            Disk encryption: Disk encryption is off. Currently, to turn on{" "}
-            <b>full</b> disk encryption, the end user has to re-install their
-            operating system.
+            {t("banners.diskEncryption.linuxOffRequiresReinstall")}
           </InfoBanner>
         </div>
       );

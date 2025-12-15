@@ -1,32 +1,34 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const TooltipInnerContentActionRequired = (props: {
   isDeviceUser: boolean;
   profileName: string;
 }) => {
+  const { t } = useTranslation("hosts");
   const { isDeviceUser, profileName } = props;
   const instructions = profileName ? (
     <>
-      <b>{profileName}</b> instructions
+      <b>{profileName}</b> {t("osSettingsModal.actionRequired.instructions")}
     </>
   ) : (
-    <>instructions</>
+    <>{t("osSettingsModal.actionRequired.instructions")}</>
   );
 
   if (isDeviceUser) {
     return (
       <>
-        Follow the {instructions}
+        {t("osSettingsModal.actionRequired.followThe")} {instructions}
         <br />
-        on your <b>My device</b> page.
+        {t("osSettingsModal.actionRequired.onYour")} <b>{t("osSettingsModal.actionRequired.myDevice")}</b> {t("osSettingsModal.actionRequired.page")}.
       </>
     );
   }
 
   return (
     <>
-      Ask the end user to follow the {instructions} on their <b>My device</b>{" "}
-      page.
+      {t("osSettingsModal.actionRequired.askEndUser")} {instructions} {t("osSettingsModal.actionRequired.onTheir")} <b>{t("osSettingsModal.actionRequired.myDevice")}</b>{" "}
+      {t("osSettingsModal.actionRequired.page")}.
     </>
   );
 };

@@ -1,5 +1,6 @@
 import React from "react";
 import { useQuery } from "react-query";
+import { useTranslation } from "react-i18next";
 
 import { IHostEncrpytionKeyResponse } from "interfaces/host";
 import hostAPI from "services/entities/hosts";
@@ -25,6 +26,8 @@ const DiskEncryptionKeyModal = ({
   hostId,
   onCancel,
 }: IDiskEncryptionKeyModal) => {
+  const { t } = useTranslation("hosts");
+
   const { data: encryptionKey, error: encryptionKeyError } = useQuery<
     IHostEncrpytionKeyResponse,
     unknown,
@@ -39,12 +42,12 @@ const DiskEncryptionKeyModal = ({
 
   const recoveryText =
     platform === "darwin"
-      ? "Use this key to log in to the host if you forgot the password."
-      : "Use this key to unlock the encrypted drive.";
+      ? t("modals.diskEncryptionKey.recoveryTextDarwin")
+      : t("modals.diskEncryptionKey.recoveryTextOther");
 
   return (
     <Modal
-      title="Disk encryption key"
+      title={t("modals.diskEncryptionKey.title")}
       onExit={onCancel}
       onEnter={onCancel}
       className={baseClass}
@@ -59,11 +62,11 @@ const DiskEncryptionKeyModal = ({
             <CustomLink
               newTab
               url={`${LEARN_MORE_ABOUT_BASE_LINK}/mdm-disk-encryption`}
-              text="Learn more"
+              text={t("modals.diskEncryptionKey.learnMore")}
             />
           </p>
           <div className="modal-cta-wrap">
-            <Button onClick={onCancel}>Done</Button>
+            <Button onClick={onCancel}>{t("modals.diskEncryptionKey.done")}</Button>
           </div>
         </>
       )}

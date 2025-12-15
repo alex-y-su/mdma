@@ -1,4 +1,5 @@
 import React, { useCallback } from "react";
+import { useTranslation } from "react-i18next";
 
 import { IHostCertificate } from "interfaces/certificates";
 import { IGetHostCertificatesResponse } from "services/entities/hosts";
@@ -38,6 +39,8 @@ const CertificatesTable = ({
   onPreviousPage,
   onSortChange,
 }: ICertificatesTableProps) => {
+  const { t } = useTranslation("hosts");
+
   const tableConfig = generateTableConfig();
 
   const onClickTableRow = (row: any) => {
@@ -66,10 +69,9 @@ const CertificatesTable = ({
 
   const helpText = showHelpText ? (
     <p>
-      Showing certificates in the system and login (user) keychain. To get all
-      certificates, you can query the certificates table.{" "}
+      {t("certificates.helpText")}{" "}
       <CustomLink
-        text="Learn more"
+        text={t("certificates.learnMore")}
         url="https://fleetdm.com/learn-more-about/certificates-query"
         newTab
       />
@@ -88,7 +90,7 @@ const CertificatesTable = ({
       disableMultiRowSelect
       onSelectSingleRow={onClickTableRow}
       renderTableHelpText={() => helpText}
-      renderCount={() => <TableCount name="certificates" count={data.count} />}
+      renderCount={() => <TableCount name={t("certificates.name")} count={data.count} />}
       pageSize={pageSize}
       pageIndex={page}
       defaultSortHeader={sortHeader}

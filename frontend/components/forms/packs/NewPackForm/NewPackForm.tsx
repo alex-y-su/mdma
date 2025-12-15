@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import classnames from "classnames";
+import { useTranslation } from "react-i18next";
 
 import Button from "components/buttons/Button";
 import { IQuery } from "interfaces/query";
@@ -35,6 +36,7 @@ const NewPackForm = ({
   isPremiumTier,
   isUpdatingPack,
 }: INewPackForm): JSX.Element => {
+  const { t } = useTranslation("queries");
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [packName, setPackName] = useState("");
   const [packDescription, setPackDescription] = useState("");
@@ -61,7 +63,7 @@ const NewPackForm = ({
     if (packName === "") {
       return setErrors({
         ...errors,
-        name: "Pack name must be present",
+        name: t("packs.create.nameRequired"),
       });
     }
 
@@ -77,19 +79,19 @@ const NewPackForm = ({
   return (
     <>
       <div className={`${baseClass}__header-links`}>
-        <BackButton text="Back to packs" path={PATHS.MANAGE_PACKS} />
+        <BackButton text={t("packs.edit.backButton")} path={PATHS.MANAGE_PACKS} />
       </div>
       <form
         className={newPackFormClass}
         onSubmit={onFormSubmit}
         autoComplete="off"
       >
-        <h1>New pack</h1>
+        <h1>{t("packs.create.title")}</h1>
         <InputField
           onChange={onChangePackName}
           value={packName}
-          placeholder="Name"
-          label="Name"
+          placeholder={t("packs.create.namePlaceholder")}
+          label={t("packs.create.nameLabel")}
           name="name"
           error={errors.name}
           inputWrapperClass={`${baseClass}__pack-title`}
@@ -99,13 +101,13 @@ const NewPackForm = ({
           onChange={onChangePackDescription}
           value={packDescription}
           inputWrapperClass={`${baseClass}__pack-description`}
-          label="Description"
+          label={t("packs.create.descriptionLabel")}
           name="description"
-          placeholder="Add a description of your pack"
+          placeholder={t("packs.create.descriptionPlaceholder")}
           type="textarea"
         />
         <SelectTargetsDropdown
-          label="Select pack targets"
+          label={t("packs.create.targetsLabel")}
           name="selected-pack-targets"
           onFetchTargets={onFetchTargets}
           onSelect={onChangePackTargets}
@@ -115,7 +117,7 @@ const NewPackForm = ({
         />
         <div className={`${baseClass}__pack-buttons`}>
           <Button type="submit" isLoading={isUpdatingPack}>
-            Save query pack
+            {t("packs.create.saveButton")}
           </Button>
         </div>
       </form>

@@ -80,7 +80,8 @@ interface IPackQueriesTableData extends IScheduledQuery {
 // NOTE: cellProps come from react-table
 // more info here https://react-table.tanstack.com/docs/api/useTable#cell-properties
 const generateTableHeaders = (
-  actionSelectHandler: (value: string, scheduled_query: IScheduledQuery) => void
+  actionSelectHandler: (value: string, scheduled_query: IScheduledQuery) => void,
+  t: any
 ): IDataColumn[] => {
   return [
     {
@@ -105,7 +106,7 @@ const generateTableHeaders = (
       disableHidden: true,
     },
     {
-      title: "Query",
+      title: t("packs.columns.query"),
       Header: (cellProps) => (
         <HeaderCell
           value={cellProps.column.title}
@@ -118,8 +119,8 @@ const generateTableHeaders = (
       ),
     },
     {
-      title: "Frequency",
-      Header: "Frequency",
+      title: t("packs.columns.frequency"),
+      Header: t("packs.columns.frequency"),
       disableSortBy: false,
       accessor: "interval",
       Cell: (cellProps: ICellProps) => (
@@ -130,7 +131,7 @@ const generateTableHeaders = (
       ),
     },
     {
-      title: "Platform",
+      title: t("packs.columns.platform"),
       Header: (cellProps) => (
         <HeaderCell
           value={cellProps.column.title}
@@ -143,8 +144,8 @@ const generateTableHeaders = (
       ),
     },
     {
-      title: "Logging",
-      Header: "Logging",
+      title: t("packs.columns.logging"),
+      Header: t("packs.columns.logging"),
       disableSortBy: false,
       accessor: "logging_string",
       Cell: (cellProps: ICellProps) => (
@@ -156,17 +157,9 @@ const generateTableHeaders = (
         return (
           <div>
             <TooltipWrapper
-              tipContent={
-                <>
-                  This is the average performance
-                  <br />
-                  impact across all hosts where
-                  <br />
-                  this query was scheduled.
-                </>
-              }
+              tipContent={t("packs.performanceImpactTooltip")}
             >
-              Performance impact
+              {t("packs.columns.performanceImpact")}
             </TooltipWrapper>
           </div>
         );
@@ -178,7 +171,7 @@ const generateTableHeaders = (
       ),
     },
     {
-      title: "Actions",
+      title: t("packs.columns.actions"),
       Header: "",
       disableSortBy: true,
       accessor: "actions",
@@ -188,7 +181,7 @@ const generateTableHeaders = (
           onChange={(value: string) =>
             actionSelectHandler(value, cellProps.row.original)
           }
-          placeholder="Actions"
+          placeholder={t("packs.columns.actions")}
           variant="small-button"
         />
       ),
@@ -250,15 +243,15 @@ const generateVersionString = (version: string | undefined): string => {
   return "Any";
 };
 
-const generateActionDropdownOptions = (): IDropdownOption[] => {
+const generateActionDropdownOptions = (t: any): IDropdownOption[] => {
   const dropdownOptions = [
     {
-      label: "Edit",
+      label: t("packs.actions.edit"),
       disabled: false,
       value: "edit",
     },
     {
-      label: "Remove",
+      label: t("packs.actions.remove"),
       disabled: false,
       value: "remove",
     },
@@ -267,7 +260,8 @@ const generateActionDropdownOptions = (): IDropdownOption[] => {
 };
 
 const enhancePackQueriesData = (
-  packQueries: IScheduledQuery[]
+  packQueries: IScheduledQuery[],
+  t: any
 ): IPackQueriesTableData[] => {
   return packQueries.map((query) => {
     const scheduledQueryPerformance = {
@@ -293,7 +287,7 @@ const enhancePackQueriesData = (
       created_at: query.created_at,
       updated_at: query.updated_at,
       query_name: query.query_name,
-      actions: generateActionDropdownOptions(),
+      actions: generateActionDropdownOptions(t),
       performance: [
         getPerformanceImpactDescription(scheduledQueryPerformance),
         query.query_id,
@@ -304,14 +298,15 @@ const enhancePackQueriesData = (
 };
 
 const generateDataSet = (
-  queries: IScheduledQuery[]
+  queries: IScheduledQuery[],
+  t: any
 ): IPackQueriesTableData[] => {
   // Cannot pass undefined to enhancePackQueriesData
   if (!queries) {
     return queries;
   }
 
-  return [...enhancePackQueriesData(queries)];
+  return [...enhancePackQueriesData(queries, t)];
 };
 
 export { generateTableHeaders, generateDataSet };

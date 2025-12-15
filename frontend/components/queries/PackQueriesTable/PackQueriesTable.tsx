@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import simpleSearch from "utilities/simple_search";
 import { IScheduledQuery } from "interfaces/scheduled_query";
@@ -30,6 +31,7 @@ const PackQueriesTable = ({
   scheduledQueries,
   isLoadingPackQueries,
 }: IPackQueriesTableProps): JSX.Element => {
+  const { t } = useTranslation("queries");
   const [querySearchText, setQuerySearchText] = useState("");
 
   // NOTE: this is called once on the initial rendering. The initial render of
@@ -68,8 +70,8 @@ const PackQueriesTable = ({
     }
   };
 
-  const tableHeaders = generateTableHeaders(onActionSelection);
-  const tableData = generateDataSet(getQueries());
+  const tableHeaders = generateTableHeaders(onActionSelection, t);
+  const tableData = generateDataSet(getQueries(), t);
 
   return (
     <div className={`${baseClass}`}>
@@ -80,26 +82,26 @@ const PackQueriesTable = ({
           isLoading={isLoadingPackQueries}
           defaultSortHeader="name"
           defaultSortDirection="asc"
-          inputPlaceHolder="Search queries"
+          inputPlaceHolder={t("packs.queries.searchPlaceholder")}
           onQueryChange={onTableQueryChange}
-          resultsTitle="queries"
+          resultsTitle={t("packs.queries.title").toLowerCase()}
           emptyComponent={() =>
             EmptyTable({
-              header: "No queries match your search criteria",
-              info: "Try a different search.",
+              header: t("packs.queries.noMatchTitle"),
+              info: t("packs.queries.noMatchInfo"),
             })
           }
           showMarkAllPages={false}
           actionButton={{
             name: "add query",
-            buttonText: "Add query",
+            buttonText: t("packs.queries.addButton"),
             iconSvg: "plus",
             variant: "inverse",
             onClick: onAddPackQuery,
           }}
           primarySelectAction={{
             name: "remove query",
-            buttonText: "Remove",
+            buttonText: t("packs.queries.removeButton"),
             iconSvg: "close",
             variant: "inverse",
             onClick: onRemovePackQueries,
@@ -110,10 +112,10 @@ const PackQueriesTable = ({
         />
       ) : (
         <div className={`${baseClass}__no-queries`}>
-          <p>Your pack has no queries.</p>
+          <p>{t("packs.queries.noQueries")}</p>
           <Button onClick={onAddPackQuery} variant="inverse" iconStroke>
             <>
-              Add query
+              {t("packs.queries.addButton")}
               <Icon name="plus" />
             </>
           </Button>

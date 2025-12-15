@@ -31,32 +31,39 @@ jobs:
           direct_prompt: |
             You are implementing GitHub issue #${{ github.event.issue.number }}.
 
-            CRITICAL INSTRUCTIONS - READ CAREFULLY:
+            ABSOLUTE REQUIREMENTS - NO EXCEPTIONS:
 
             1. First, read the FULL issue using: gh issue view ${{ github.event.issue.number }}
 
-            2. This is an i18n task. You must:
+            2. This is an i18n task. You MUST:
                - Add `useTranslation` hook to React components
                - Replace ALL hardcoded strings with `t()` calls
                - Add translation keys to BOTH frontend/locales/ AND assets/locales/ JSON files
                - Follow the exact translation key structure provided in the issue
                - Use the Russian translations provided in the issue
 
-            3. Translate ALL components listed in the issue - not just a few. Check the issue for the complete list.
+            3. YOU MUST IMPLEMENT EVERY SINGLE COMPONENT LISTED IN THE ISSUE.
+               - Do NOT skip components because they are "complex" or "large"
+               - Do NOT suggest "follow-up tasks" for remaining work
+               - Do NOT stop early or do partial work
+               - Count the components in the issue and ensure you modify ALL of them
+               - If the issue lists 15 components, you must modify all 15
 
-            4. After implementing ALL changes:
+            4. After implementing ALL changes (every single component):
                - Create a new branch: git checkout -b claude/issue-${{ github.event.issue.number }}
                - Commit all changes with a descriptive message
                - Push the branch: git push -u origin claude/issue-${{ github.event.issue.number }}
-               - Create a PR: gh pr create --base main --title "..." --body "..."
-               - Comment on issue #${{ github.event.issue.number }} with the PR link
 
-            DO NOT STOP until you have:
-            ✓ Modified ALL component files listed in the issue
-            ✓ Updated ALL translation JSON files (both en and ru, in both locations)
-            ✓ Pushed your branch to origin
-            ✓ Created a Pull Request
-            ✓ Commented on the issue with the PR link
+            COMPLETION CHECKLIST - ALL MUST BE TRUE:
+            ✓ EVERY component file listed in the issue has been modified
+            ✓ ALL translation JSON files updated (en and ru, in both frontend/locales/ and assets/locales/)
+            ✓ Branch pushed to origin
+
+            FORBIDDEN:
+            ✗ Skipping components
+            ✗ Partial implementations
+            ✗ Suggesting "follow-up" work
+            ✗ Stopping before ALL components are done
 
           # Allow all necessary tools
           allowed_tools: "Bash,Read,Write,Edit,Glob,Grep,WebFetch"

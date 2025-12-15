@@ -183,6 +183,13 @@
     "integration": "Интеграция"
   },
   "modals": {
+    "add": {
+      "title": "Добавить ПО",
+      "allTeamsMessage": "Пожалуйста, сначала выберите команду. ПО нельзя добавить, когда выбрано",
+      "allTeams": "Все команды",
+      "isSelected": "выбрано",
+      "doneButton": "Готово"
+    },
     "delete": {
       "title": "Удалить ПО",
       "confirmText": "Вы уверены, что хотите удалить",
@@ -232,5 +239,27 @@
       "successNameChangedSuffix": "в",
       "saveButton": "Сохранить"
     }
+  },
+  "search": {
+    "byCve": "Поиск по CVE",
+    "byName": "Поиск по названию"
+  },
+  "emptyStates": {
+    "softwareInventoryDisabled": {
+      "header": "Инвентаризация ПО отключена",
+      "info": "Пользователи с ролью администратора могут",
+      "linkText": "включить инвентаризацию ПО"
+    },
+    "noSoftwareDetected": {
+      "header": "{{tableName}} не обнаружено",
+      "infoInstallable": "Установите ПО на ваши устройства, чтобы увидеть версии.",
+      "infoExpecting": "Ожидали увидеть {{softwareType}}? Проверьте позже.",
+      "infoAndroid": "Может потребоваться до 24 часов для Android, чтобы сообщить о ПО."
+    },
+    "noItemsMatch": {
+      "header": "Нет элементов, соответствующих текущим критериям поиска"
+    },
+    "installableSoftware": "устанавливаемое ПО",
+    "vulnerableSoftware": "уязвимое ПО"
   }
 }

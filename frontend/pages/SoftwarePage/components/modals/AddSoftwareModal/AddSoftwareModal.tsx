@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import Modal from "components/Modal";
 import Button from "components/buttons/Button";
@@ -11,14 +12,16 @@ interface IAllTeamsMessageProps {
 }
 
 const AllTeamsMessage = ({ onExit }: IAllTeamsMessageProps) => {
+  const { t } = useTranslation("software");
+
   return (
     <>
       <p>
-        Please select a team first. Software can&apos;t be added when{" "}
-        <b>All teams</b> is selected.
+        {t("modals.add.allTeamsMessage")}{" "}
+        <b>{t("modals.add.allTeams")}</b> {t("modals.add.isSelected")}.
       </p>
       <div className="modal-cta-wrap">
-        <Button onClick={onExit}>Done</Button>
+        <Button onClick={onExit}>{t("modals.add.doneButton")}</Button>
       </div>
     </>
   );
@@ -30,13 +33,15 @@ interface IAddSoftwareModalProps {
 }
 
 const AddSoftwareModal = ({ onExit, isFreeTier }: IAddSoftwareModalProps) => {
+  const { t } = useTranslation("software");
+
   const renderModalContent = () => {
     if (isFreeTier) {
       return (
         <>
           <PremiumFeatureMessage alignment="left" />{" "}
           <div className="modal-cta-wrap">
-            <Button onClick={onExit}>Done</Button>
+            <Button onClick={onExit}>{t("modals.add.doneButton")}</Button>
           </div>
         </>
       );
@@ -46,7 +51,7 @@ const AddSoftwareModal = ({ onExit, isFreeTier }: IAddSoftwareModalProps) => {
   };
 
   return (
-    <Modal title="Add software" onExit={onExit} className={baseClass}>
+    <Modal title={t("modals.add.title")} onExit={onExit} className={baseClass}>
       {renderModalContent()}
     </Modal>
   );

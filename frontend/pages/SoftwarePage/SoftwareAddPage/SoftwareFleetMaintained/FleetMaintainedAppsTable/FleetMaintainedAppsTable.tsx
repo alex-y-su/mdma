@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { InjectedRouter } from "react-router";
 
 import PATHS from "router/paths";
@@ -20,22 +21,26 @@ import { generateTableConfig } from "./FleetMaintainedAppsTableConfig";
 
 const baseClass = "fleet-maintained-apps-table";
 
-const EmptyFleetAppsTable = () => (
-  <EmptyTable
-    graphicName="empty-search-question"
-    header="No items match the current search criteria"
-    info={
-      <>
-        Can&apos;t find app?{" "}
-        <CustomLink
-          newTab
-          url="https://fleetdm.com/feature-request"
-          text="File an issue on GitHub"
-        />
-      </>
-    }
-  />
-);
+const EmptyFleetAppsTable = () => {
+  const { t } = useTranslation("software");
+
+  return (
+    <EmptyTable
+      graphicName="empty-search-question"
+      header={t("emptyStates.noItemsMatch.header")}
+      info={
+        <>
+          Can&apos;t find app?{" "}
+          <CustomLink
+            newTab
+            url="https://fleetdm.com/feature-request"
+            text={t("table.helpLink")}
+          />
+        </>
+      }
+    />
+  );
+};
 
 /** Used to convert FleetMaintainedApp API response which has separate entries
  * for Windows FMA and macOS FMA into table friendly format that combines
@@ -95,6 +100,8 @@ const FleetMaintainedAppsTable = ({
   orderKey,
   currentPage,
 }: IFleetMaintainedAppsTableProps) => {
+  const { t } = useTranslation("software");
+
   const determineQueryParamChange = useCallback(
     (newTableQuery: ITableQueryData) => {
       const changedEntry = Object.entries(newTableQuery).find(([key, val]) => {
@@ -190,7 +197,7 @@ const FleetMaintainedAppsTable = ({
       isAllPagesSelected={false}
       disableNextPage={!data?.meta.has_next_results}
       searchable
-      inputPlaceHolder="Search by name"
+      inputPlaceHolder={t("search.byName")}
       onQueryChange={onQueryChange}
       renderCount={renderCount}
     />

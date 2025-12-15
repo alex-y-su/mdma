@@ -26,22 +26,40 @@ jobs:
         uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          prompt: |
-            REPO: ${{ github.repository }}
-            ISSUE NUMBER: ${{ github.event.issue.number }}
-            ISSUE TITLE: ${{ github.event.issue.title }}
 
-            Please implement this issue. Read the full issue description using `gh issue view`.
+          # Use direct_prompt for issue implementation
+          direct_prompt: |
+            You are implementing GitHub issue #${{ github.event.issue.number }}.
 
-            Instructions:
-            1. Read the issue details thoroughly
-            2. Create a new branch from main for this work
-            3. Implement the changes as described in the issue
-            4. Commit your changes with clear commit messages
-            5. Push the branch and create a PR targeting main
+            CRITICAL INSTRUCTIONS - READ CAREFULLY:
 
-            Use the repository's CLAUDE.md for guidance on style and conventions.
+            1. First, read the FULL issue using: gh issue view ${{ github.event.issue.number }}
 
-            After creating the PR, comment on the original issue with a link to the PR.
+            2. This is an i18n task. You must:
+               - Add `useTranslation` hook to React components
+               - Replace ALL hardcoded strings with `t()` calls
+               - Add translation keys to BOTH frontend/locales/ AND assets/locales/ JSON files
+               - Follow the exact translation key structure provided in the issue
+               - Use the Russian translations provided in the issue
 
-          claude_args: '--allowed-tools "Bash(git *),Bash(gh issue *),Bash(gh pr *),Bash(npm *),Read,Write,Edit,Glob,Grep"'
+            3. Translate ALL components listed in the issue - not just a few. Check the issue for the complete list.
+
+            4. After implementing ALL changes:
+               - Create a new branch: git checkout -b claude/issue-${{ github.event.issue.number }}
+               - Commit all changes with a descriptive message
+               - Push the branch: git push -u origin claude/issue-${{ github.event.issue.number }}
+               - Create a PR: gh pr create --base main --title "..." --body "..."
+               - Comment on issue #${{ github.event.issue.number }} with the PR link
+
+            DO NOT STOP until you have:
+            ✓ Modified ALL component files listed in the issue
+            ✓ Updated ALL translation JSON files (both en and ru, in both locations)
+            ✓ Pushed your branch to origin
+            ✓ Created a Pull Request
+            ✓ Commented on the issue with the PR link
+
+          # Allow all necessary tools
+          allowed_tools: "Bash,Read,Write,Edit,Glob,Grep,WebFetch"
+
+          # Increase max turns for larger tasks
+          max_turns: 200

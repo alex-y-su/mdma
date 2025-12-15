@@ -1,4 +1,5 @@
 import React, { useCallback, useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { InjectedRouter } from "react-router";
 import { Location } from "history";
 import { AppContext } from "context/app";
@@ -64,6 +65,7 @@ const SaveAsNewQueryModal = ({
   initialQueryData,
   onExit,
 }: ISaveAsNewQueryModal) => {
+  const { t } = useTranslation("queries");
   const { renderFlash } = useContext(NotificationContext);
   const { isPremiumTier } = useContext(AppContext);
 
@@ -183,7 +185,7 @@ const SaveAsNewQueryModal = ({
   };
 
   return (
-    <Modal title="Save as new" onExit={onExit}>
+    <Modal title={t("modals.saveAsNew.title")} onExit={onExit}>
       <form onSubmit={handleSave} className={baseClass}>
         <InputField
           name="queryName"
@@ -192,14 +194,14 @@ const SaveAsNewQueryModal = ({
           value={formData.queryName}
           error={formErrors.queryName}
           inputClassName={`${baseClass}__name`}
-          label="Name"
+          label={t("modals.saveAsNew.nameLabel")}
           autofocus
           ignore1password
           parseTarget
         />
         {isPremiumTier && (userTeams?.length || 0) > 1 && (
           <div className="form-field">
-            <div className="form-field__label">Team</div>
+            <div className="form-field__label">{t("modals.saveAsNew.teamLabel")}</div>
             <TeamsDropdown
               asFormField
               currentUserTeams={userTeams || []}
@@ -216,10 +218,10 @@ const SaveAsNewQueryModal = ({
             // empty SQL error handled by parent
             disabled={Object.keys(formErrors).length > 0 || isSaving}
           >
-            Save
+            {t("modals.saveAsNew.save")}
           </Button>
           <Button onClick={onExit} variant="inverse">
-            Cancel
+            {t("modals.saveAsNew.cancel")}
           </Button>
         </div>
       </form>

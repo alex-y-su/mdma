@@ -276,6 +276,32 @@
       "guide": "Guide"
     }
   },
+  "diskEncryption": {
+    "chrome": {
+      "default": "Fleet does not check for disk encryption on Chromebooks, as they are encrypted by default."
+    },
+    "darwin": {
+      "enabled": {
+        "line1": "The disk is encrypted. The user must enter their",
+        "line2": "password when they start their computer."
+      },
+      "disabled": {
+        "line1": "The disk might be encrypted, but FileVault is off. The",
+        "line2": "disk can be accessed without entering a password."
+      }
+    },
+    "windows": {
+      "enabled": {
+        "line1": "The disk is encrypted. If recently turned on,",
+        "line2": "encryption could take awhile."
+      },
+      "disabled": "The disk is unencrypted."
+    },
+    "linux": {
+      "enabled": "The disk is encrypted.",
+      "unknown": "The disk may be encrypted."
+    }
+  },
   "header": {
     "hostname": "Hostname",
     "platform": "Platform",
@@ -286,10 +312,36 @@
     "lastFetched": "Last fetched"
   },
   "summary": {
+    "status": "Status",
+    "issues": "Issues",
+    "team": "Team",
+    "noTeam": "No team",
     "osSettings": "OS settings",
     "bootstrapPackage": "Bootstrap package",
+    "diskSpace": "Disk space",
+    "diskSpaceAndroidTooltip": "Includes internal and removable storage (e.g. microSD card).",
     "diskEncryption": "Disk encryption",
-    "mdm": "MDM"
+    "diskEncryptionStatus": {
+      "alwaysOn": "Always on",
+      "on": "On",
+      "off": "Off",
+      "unknown": "Unknown"
+    },
+    "mdm": "MDM",
+    "memory": "Memory",
+    "processorType": "Processor type",
+    "operatingSystem": "Operating system",
+    "osMeetsRequirement": "Meets minimum version requirement.",
+    "osDoesNotMeetRequirement": "Does not meet minimum version requirement.",
+    "deadlineToUpdate": "Deadline to update",
+    "agent": "Agent",
+    "agentOsquery": "osquery",
+    "agentOrbit": "Orbit",
+    "agentFleetDesktop": "Fleet Desktop",
+    "scheduledMaintenance": "Scheduled maintenance",
+    "endUserTimezone": "End user's time zone",
+    "timezoneUnavailable": "End user's timezone unavailable",
+    "displayingInUTC": "Displaying in UTC"
   },
   "activityItems": {
     "canceledInstall": "Canceled software install",

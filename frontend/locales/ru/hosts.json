@@ -276,6 +276,32 @@
       "guide": "Руководство"
     }
   },
+  "diskEncryption": {
+    "chrome": {
+      "default": "Fleet не проверяет шифрование диска на Chromebook, так как они зашифрованы по умолчанию."
+    },
+    "darwin": {
+      "enabled": {
+        "line1": "Диск зашифрован. Пользователь должен ввести",
+        "line2": "пароль при запуске компьютера."
+      },
+      "disabled": {
+        "line1": "Диск может быть зашифрован, но FileVault отключён.",
+        "line2": "Доступ к диску возможен без ввода пароля."
+      }
+    },
+    "windows": {
+      "enabled": {
+        "line1": "Диск зашифрован. Если шифрование только включено,",
+        "line2": "процесс может занять некоторое время."
+      },
+      "disabled": "Диск не зашифрован."
+    },
+    "linux": {
+      "enabled": "Диск зашифрован.",
+      "unknown": "Диск может быть зашифрован."
+    }
+  },
   "header": {
     "hostname": "Имя хоста",
     "platform": "Платформа",
@@ -286,10 +312,36 @@
     "lastFetched": "Последний запрос"
   },
   "summary": {
+    "status": "Статус",
+    "issues": "Проблемы",
+    "team": "Команда",
+    "noTeam": "Без команды",
     "osSettings": "Настройки ОС",
     "bootstrapPackage": "Пакет начальной загрузки",
+    "diskSpace": "Дисковое пространство",
+    "diskSpaceAndroidTooltip": "Включает внутреннюю и съемную память (например, microSD-карту).",
     "diskEncryption": "Шифрование диска",
-    "mdm": "MDM"
+    "diskEncryptionStatus": {
+      "alwaysOn": "Всегда включено",
+      "on": "Включено",
+      "off": "Отключено",
+      "unknown": "Неизвестно"
+    },
+    "mdm": "MDM",
+    "memory": "Память",
+    "processorType": "Тип процессора",
+    "operatingSystem": "Операционная система",
+    "osMeetsRequirement": "Соответствует минимальным требованиям к версии.",
+    "osDoesNotMeetRequirement": "Не соответствует минимальным требованиям к версии.",
+    "deadlineToUpdate": "Крайний срок обновления",
+    "agent": "Агент",
+    "agentOsquery": "osquery",
+    "agentOrbit": "Orbit",
+    "agentFleetDesktop": "Fleet Desktop",
+    "scheduledMaintenance": "Запланированное обслуживание",
+    "endUserTimezone": "Часовой пояс пользователя",
+    "timezoneUnavailable": "Часовой пояс пользователя недоступен",
+    "displayingInUTC": "Отображение в UTC"
   },
   "activityItems": {
     "canceledInstall": "Установка ПО отменена",

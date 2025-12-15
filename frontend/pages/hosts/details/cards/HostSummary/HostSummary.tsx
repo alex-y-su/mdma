@@ -1,6 +1,7 @@
 import React from "react";
 import classnames from "classnames";
 import { formatInTimeZone } from "date-fns-tz";
+import { useTranslation } from "react-i18next";
 import {
   IHostMdmProfile,
   BootstrapPackageStatus,
@@ -67,42 +68,45 @@ interface IHostSummaryProps {
   className?: string;
 }
 
-const DISK_ENCRYPTION_MESSAGES = {
+const getDiskEncryptionMessages = (t: any) => ({
   darwin: {
     enabled: (
       <>
-        The disk is encrypted. The user must enter their
-        <br /> password when they start their computer.
+        {t("diskEncryption.darwin.enabled.line1")}
+        <br /> {t("diskEncryption.darwin.enabled.line2")}
       </>
     ),
     disabled: (
       <>
-        The disk might be encrypted, but FileVault is off. The
-        <br /> disk can be accessed without entering a password.
+        {t("diskEncryption.darwin.disabled.line1")}
+        <br /> {t("diskEncryption.darwin.disabled.line2")}
       </>
     ),
   },
   windows: {
     enabled: (
       <>
-        The disk is encrypted. If recently turned on,
-        <br /> encryption could take awhile.
+        {t("diskEncryption.windows.enabled.line1")}
+        <br /> {t("diskEncryption.windows.enabled.line2")}
       </>
     ),
-    disabled: "The disk is unencrypted.",
+    disabled: t("diskEncryption.windows.disabled"),
   },
   linux: {
-    enabled: "The disk is encrypted.",
-    unknown: "The disk may be encrypted.",
+    enabled: t("diskEncryption.linux.enabled"),
+    unknown: t("diskEncryption.linux.unknown"),
   },
-};
+});
 
 const getHostDiskEncryptionTooltipMessage = (
   platform: DiskEncryptionSupportedPlatform, // TODO: improve this type
-  diskEncryptionEnabled = false
+  diskEncryptionEnabled = false,
+  t: any
 ) => {
+  const DISK_ENCRYPTION_MESSAGES = getDiskEncryptionMessages(t);
+
   if (platform === "chrome") {
-    return "Fleet does not check for disk encryption on Chromebooks, as they are encrypted by default.";
+    return t("diskEncryption.chrome.default");
   }
 
   if (
@@ -135,6 +139,7 @@ const HostSummary = ({
   osSettings,
   className,
 }: IHostSummaryProps): JSX.Element => {
+  const { t } = useTranslation("hosts");
   const classNames = classnames(baseClass, className);
 
   const {
@@ -150,7 +155,7 @@ const HostSummary = ({
 
   const renderIssues = () => (
     <DataSet
-      title="Issues"
+      title={t("summary.issues")}
       value={
         <IssuesIndicator
           totalIssuesCount={summaryData.issues.total_issues_count}
@@ -166,12 +171,12 @@ const HostSummary = ({
 
   const renderHostTeam = () => (
     <DataSet
-      title="Team"
+      title={t("summary.team")}
       value={
         summaryData.team_name !== "---" ? (
           `${summaryData.team_name}`
         ) : (
-          <span className="no-team">No team</span>
+          <span className="no-team">{t("summary.noTeam")}</span>
         )
       }
     />
@@ -187,11 +192,11 @@ const HostSummary = ({
     }
 
     const title = isAndroidHost ? (
-      <TooltipWrapper tipContent="Includes internal and removable storage (e.g. microSD card).">
-        Disk space
+      <TooltipWrapper tipContent={t("summary.diskSpace.androidTooltip")}>
+        {t("summary.diskSpace")}
       </TooltipWrapper>
     ) : (
-      "Disk space"
+      t("summary.diskSpace")
     );
 
     return (
@@ -216,34 +221,35 @@ const HostSummary = ({
     }
     const tooltipMessage = getHostDiskEncryptionTooltipMessage(
       platform,
-      diskEncryptionEnabled
+      diskEncryptionEnabled,
+      t
     );
 
     let statusText;
     switch (true) {
       case isChromeHost:
-        statusText = "Always on";
+        statusText = t("summary.diskEncryption.status.alwaysOn");
         break;
       case diskEncryptionEnabled === true:
-        statusText = "On";
+        statusText = t("summary.diskEncryption.status.on");
         break;
       case diskEncryptionEnabled === false:
-        statusText = "Off";
+        statusText = t("summary.diskEncryption.status.off");
         break;
       case (diskEncryptionEnabled === null ||
         diskEncryptionEnabled === undefined) &&
         platformSupportsDiskEncryption(platform, os_version):
-        statusText = "Unknown";
+        statusText = t("summary.diskEncryption.status.unknown");
         break;
       default:
         // something unexpected happened on the way to this component, display whatever we got or
         // "Unknown" to draw attention to the issue.
-        statusText = diskEncryptionEnabled || "Unknown";
+        statusText = diskEncryptionEnabled || t("summary.diskEncryption.status.unknown");
     }
 
     return (
       <DataSet
-        title="Disk encryption"
+        title={t("summary.diskEncryption.title")}
         value={
           <TooltipWrapper tipContent={tooltipMessage}>
             {statusText}
@@ -268,7 +274,7 @@ const HostSummary = ({
       );
       return (
         <DataSet
-          title="Operating system"
+          title={t("summary.operatingSystem")}
           value={versionForRender}
           className={`${baseClass}__os-data-set`}
         />
@@ -284,7 +290,7 @@ const HostSummary = ({
 
     return (
       <DataSet
-        title="Operating system"
+        title={t("summary.operatingSystem")}
         value={
           <>
             {!osVersionRequirementMet && (
@@ -293,12 +299,12 @@ const HostSummary = ({
             <TooltipWrapper
               tipContent={
                 osVersionRequirementMet ? (
-                  "Meets minimum version requirement."
+                  t("summary.os.meetsRequirement")
                 ) : (
                   <>
-                    Does not meet minimum version requirement.
+                    {t("summary.os.doesNotMeetRequirement")}
                     <br />
-                    Deadline to update: {osVersionRequirement.deadline}
+                    {t("summary.os.deadlineToUpdate")}: {osVersionRequirement.deadline}
                   </>
                 )
               }
@@ -317,25 +323,25 @@ const HostSummary = ({
     }
 
     if (isChromeHost) {
-      return <DataSet title="Agent" value={summaryData.osquery_version} />;
+      return <DataSet title={t("summary.agent")} value={summaryData.osquery_version} />;
     }
 
     if (summaryData.orbit_version !== DEFAULT_EMPTY_CELL_VALUE) {
       return (
         <DataSet
-          title="Agent"
+          title={t("summary.agent")}
           value={
             <TooltipWrapper
               tipContent={
                 <>
-                  osquery: {summaryData.osquery_version}
+                  {t("summary.agent.osquery")}: {summaryData.osquery_version}
                   <br />
-                  Orbit: {summaryData.orbit_version}
+                  {t("summary.agent.orbit")}: {summaryData.orbit_version}
                   {summaryData.fleet_desktop_version !==
                     DEFAULT_EMPTY_CELL_VALUE && (
                     <>
                       <br />
-                      Fleet Desktop: {summaryData.fleet_desktop_version}
+                      {t("summary.agent.fleetDesktop")}: {summaryData.fleet_desktop_version}
                     </>
                   )}
                 </>
@@ -347,7 +353,7 @@ const HostSummary = ({
         />
       );
     }
-    return <DataSet title="Osquery" value={summaryData.osquery_version} />;
+    return <DataSet title={t("summary.agent.osquery")} value={summaryData.osquery_version} />;
   };
 
   const renderMaintenanceWindow = ({
@@ -366,21 +372,21 @@ const HostSummary = ({
     const tip =
       timezone && timezone !== "UTC" ? (
         <>
-          End user&apos;s time zone:
+          {t("summary.maintenance.endUserTimezone")}:
           <br />
           (GMT{starts_at.slice(-6)}) {timezone.replace("_", " ")}
         </>
       ) : (
         <>
-          End user&apos;s timezone unavailable.
+          {t("summary.maintenance.timezoneUnavailable")}.
           <br />
-          Displaying in UTC.
+          {t("summary.maintenance.displayingInUTC")}.
         </>
       );
 
     return (
       <DataSet
-        title="Scheduled maintenance"
+        title={t("summary.maintenance.scheduledMaintenance")}
         value={
           <TooltipWrapper tipContent={tip}>{formattedStartsAt}</TooltipWrapper>
         }
@@ -427,7 +433,7 @@ const HostSummary = ({
     >
       {!isIosOrIpadosHost && !isAndroidHost && (
         <DataSet
-          title="Status"
+          title={t("summary.status")}
           value={
             <StatusIndicator
               value={status || ""} // temporary work around of integration test bug
@@ -449,7 +455,7 @@ const HostSummary = ({
         hostSettings &&
         hostSettings.length > 0 && (
           <DataSet
-            title="OS settings"
+            title={t("summary.osSettings")}
             value={
               <OSSettingsIndicator
                 profiles={hostSettings}
@@ -460,7 +466,7 @@ const HostSummary = ({
         )}
       {bootstrapPackageData?.status && !isIosOrIpadosHost && !isAndroidHost && (
         <DataSet
-          title="Bootstrap package"
+          title={t("summary.bootstrapPackage")}
           value={
             <BootstrapPackageIndicator
               status={bootstrapPackageData.status}
@@ -473,12 +479,12 @@ const HostSummary = ({
       {renderDiskEncryptionSummary()}
       {!isIosOrIpadosHost && (
         <DataSet
-          title="Memory"
+          title={t("summary.memory")}
           value={wrapFleetHelper(humanHostMemory, summaryData.memory)}
         />
       )}
       {!isIosOrIpadosHost && (
-        <DataSet title="Processor type" value={summaryData.cpu_type} />
+        <DataSet title={t("summary.processorType")} value={summaryData.cpu_type} />
       )}
       {renderOperatingSystemSummary()}
       {renderAgentSummary()}

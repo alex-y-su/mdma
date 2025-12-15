@@ -15,7 +15,7 @@ import TableDataError from "components/DataError";
 import EmptyTable from "components/EmptyTable";
 import CustomLink from "components/CustomLink";
 
-import munkiVersionsTableHeaders from "./MunkiVersionsTableConfig";
+import generateMunkiVersionsTableHeaders from "./MunkiVersionsTableConfig";
 import generateMunkiIssuesTableHeaders from "./MunkiIssuesTableConfig";
 
 interface IMunkiCardProps {
@@ -41,9 +41,14 @@ const Munki = ({
   const { t } = useTranslation();
   const [navTabIndex, setNavTabIndex] = useState<number>(0);
 
-  const tableHeaders = useMemo(
-    () => generateMunkiIssuesTableHeaders(selectedTeamId),
-    [selectedTeamId]
+  const issuesTableHeaders = useMemo(
+    () => generateMunkiIssuesTableHeaders(selectedTeamId, t),
+    [selectedTeamId, t]
+  );
+
+  const versionsTableHeaders = useMemo(
+    () => generateMunkiVersionsTableHeaders(t),
+    [t]
   );
 
   const onTabChange = (index: number) => {
@@ -76,7 +81,7 @@ const Munki = ({
                 <TableDataError verticalPaddingSize="pad-large" />
               ) : (
                 <TableContainer
-                  columnConfigs={tableHeaders}
+                  columnConfigs={issuesTableHeaders}
                   data={munkiIssuesData || []}
                   isLoading={isMacAdminsFetching}
                   defaultSortHeader={DEFAULT_SORT_HEADER}
@@ -102,7 +107,7 @@ const Munki = ({
                 <TableDataError verticalPaddingSize="pad-large" />
               ) : (
                 <TableContainer
-                  columnConfigs={munkiVersionsTableHeaders}
+                  columnConfigs={versionsTableHeaders}
                   data={munkiVersionsData || []}
                   isLoading={isMacAdminsFetching}
                   defaultSortHeader={DEFAULT_SORT_HEADER}

@@ -119,14 +119,14 @@ const Mdm = ({
   }, [mdmSolutions]);
 
   const solutionsTableHeaders = useMemo(
-    () => generateSolutionsTableHeaders(),
-    []
+    () => generateSolutionsTableHeaders(t),
+    [t]
   );
   const statusTableHeaders = useMemo(
-    () => generateStatusTableHeaders(selectedTeamId),
-    [selectedTeamId]
+    () => generateStatusTableHeaders(selectedTeamId, t),
+    [selectedTeamId, t]
   );
-  const solutionsDataSet = generateSolutionsDataSet(rolledupMdmSolutionsData);
+  const solutionsDataSet = generateSolutionsDataSet(rolledupMdmSolutionsData, t);
   const statusDataSet = generateStatusDataSet(
     mdmStatusData,
     selectedPlatformLabelId

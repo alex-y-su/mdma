@@ -1,4 +1,5 @@
 import React from "react";
+import { TFunction } from "i18next";
 
 import { IMacadminsResponse } from "interfaces/host";
 
@@ -22,21 +23,21 @@ interface IHeaderProps {
   };
 }
 
-const munkiVersionsTableHeaders = [
+const generateMunkiVersionsTableHeaders = (t?: TFunction) => [
   {
-    title: "Version",
-    Header: "Version",
+    title: t?.("tableHeaders.version") || "Version",
+    Header: t?.("tableHeaders.version") || "Version",
     disableSortBy: true,
     accessor: "version",
     Cell: (cellProps: ICellProps) => <TextCell value={cellProps.cell.value} />,
   },
   {
-    title: "Hosts",
-    Header: "Hosts",
+    title: t?.("tableHeaders.hosts") || "Hosts",
+    Header: t?.("tableHeaders.hosts") || "Hosts",
     disableSortBy: true,
     accessor: "hosts_count",
     Cell: (cellProps: ICellProps) => <TextCell value={cellProps.cell.value} />,
   },
 ];
 
-export default munkiVersionsTableHeaders;
+export default generateMunkiVersionsTableHeaders;

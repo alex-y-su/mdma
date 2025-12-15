@@ -1,4 +1,5 @@
 import React from "react";
+import { TFunction } from "i18next";
 
 import {
   IMdmStatusCardData,
@@ -21,10 +22,11 @@ type IHostCountCellProps = INumberCellProps<IMdmStatusCardData>;
 type IViewAllHostsLinkProps = CellProps<IMdmStatusCardData>;
 
 export const generateStatusTableHeaders = (
-  teamId?: number
+  teamId?: number,
+  t?: TFunction
 ): IMdmStatusTableConfig[] => [
   {
-    Header: "Status",
+    Header: t?.("tableHeaders.status") || "Status",
     disableSortBy: true,
     accessor: "status",
     Cell: ({ cell: { value: status } }: IMdmStatusCellProps) =>
@@ -38,7 +40,7 @@ export const generateStatusTableHeaders = (
     sortType: "hasLength",
   },
   {
-    Header: "Hosts",
+    Header: t?.("tableHeaders.hosts") || "Hosts",
     disableSortBy: true,
     accessor: "hosts",
     Cell: (cellProps: IHostCountCellProps) => (

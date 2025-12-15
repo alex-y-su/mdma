@@ -154,5 +154,102 @@
   "operatingSystems": {
     "emptyHeader": "Не обнаружено операционных систем {{platform}}",
     "emptyInfo": "Этот отчёт обновляется каждый час для защиты производительности ваших устройств."
+  },
+  "hostCountCard": {
+    "notSupported": "Не поддерживается"
+  },
+  "mdmSolutionModal": {
+    "done": "Готово",
+    "unknownSolution": "Неизвестное MDM-решение",
+    "resultsTitle": "MDM",
+    "columns": {
+      "serverUrl": "URL сервера",
+      "serverUrlTooltip": "URL MDM-сервера используется для подключения устройств к MDM-сервису. Для кроссплатформенных MDM-решений у каждой операционной системы свой URL.",
+      "hosts": "Устройства"
+    }
+  },
+  "activityDetails": {
+    "automationModal": {
+      "title": "Детали",
+      "webhookLabel": "TAU Fleet будет отправлять JSON-данные на этот URL при каждом новом событии активности:",
+      "done": "Готово"
+    },
+    "appStoreModal": {
+      "title": "Детали",
+      "name": "Название",
+      "appStoreId": "ID App Store",
+      "googlePlayId": "ID Google Play",
+      "selfService": "Самообслуживание",
+      "yes": "Да",
+      "no": "Нет",
+      "done": "Готово"
+    },
+    "librarySoftwareModal": {
+      "title": "Детали ПО",
+      "name": "Название",
+      "packageName": "Имя пакета",
+      "selfService": "Самообслуживание",
+      "target": "Цель",
+      "includeAny": "включить любые",
+      "excludeAny": "исключить любые",
+      "allHosts": "Все устройства",
+      "labels": "метки",
+      "yes": "Да",
+      "no": "Нет",
+      "done": "Готово"
+    },
+    "runScriptModal": {
+      "title": "Детали скрипта",
+      "scriptContent": "Содержимое скрипта:",
+      "statusRunning": "Скрипт выполняется или будет выполнен, когда устройство появится в сети.",
+      "statusSuccess": "Код завершения: 0 (Скрипт выполнен успешно.)",
+      "statusFailed": "Код завершения: {{exitCode}} (Скрипт завершился с ошибкой.)",
+      "statusError": "Ошибка: {{message}}",
+      "timeout": "Тайм-аут. TAU Fleet остановил скрипт {{timeoutValue}}для защиты производительности устройства.",
+      "after": "через",
+      "timeoutTooltip": "Тайм-аут можно настроить, обновив параметры агента.",
+      "outputLabel": "{{outputRecorded}}, когда {{hostname}} выполнил скрипт{{wasAdHoc}}:",
+      "outputRecorded": "Записанный вывод",
+      "outputTooltip": "TAU Fleet записывает последние 10 000 символов для предотвращения простоев.",
+      "above": " выше",
+      "dataError": "Закройте это окно и попробуйте снова.",
+      "done": "Готово"
+    },
+    "scriptBatchHostCountCell": {
+      "cancel": "Отменить"
+    }
+  },
+  "tableHeaders": {
+    "name": "Название",
+    "version": "Версия",
+    "hosts": "Устройства",
+    "status": "Статус",
+    "issue": "Проблема",
+    "type": "Тип",
+    "serverUrl": "URL сервера",
+    "vulnerabilities": "Уязвимости",
+    "notSupported": "Не поддерживается",
+    "unknown": "Неизвестно",
+    "actions": "Действия"
+  },
+  "munkiIssues": {
+    "issueTooltip": "Проблемы, выявленные при последнем запуске Munki на каждом устройстве."
+  },
+  "osVersions": {
+    "vulnerabilitiesTooltip": "Уязвимости в Linux в настоящее время поддерживаются для Ubuntu, Debian и Amazon Linux.",
+    "chromebookUpdatesInfo": "Chromebook автоматически получают обновления от Google до даты истечения срока автоматического обновления.",
+    "learnMore": "Узнать больше",
+    "osVendorUpdatesInfo": "{{osVendor}} выпускает обновления и исправления для поддерживаемых операционных систем.",
+    "seeSupportedOs": "Посмотреть поддерживаемые операционные системы",
+    "lastUpdatedLabel": "операционные системы"
+  },
+  "platforms": {
+    "macOS": "macOS",
+    "Windows": "Windows",
+    "Linux": "Linux",
+    "ChromeOS": "ChromeOS",
+    "iOS": "iOS",
+    "iPadOS": "iPadOS",
+    "Android": "Android"
   }
 }

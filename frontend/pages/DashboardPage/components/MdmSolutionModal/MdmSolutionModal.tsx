@@ -16,7 +16,6 @@ const baseClass = "mdm-solution-modal";
 
 const SOLUTIONS_DEFAULT_SORT_HEADER = "hosts_count";
 const DEFAULT_SORT_DIRECTION = "desc";
-const DEFAULT_TITLE = "Unknown MDM solution";
 
 interface IMdmSolutionModalProps {
   mdmSolutions: IMdmSolution[];
@@ -44,7 +43,7 @@ const MdmSolutionModal = ({
   return (
     <Modal
       className={baseClass}
-      title={mdmSolutions[0].name || DEFAULT_TITLE}
+      title={mdmSolutions[0].name || t("mdmSolutionModal.unknownSolution")}
       width="large"
       onExit={onCancel}
       onEnter={onCancel}
@@ -58,7 +57,7 @@ const MdmSolutionModal = ({
             data={solutionsDataSet}
             defaultSortHeader={SOLUTIONS_DEFAULT_SORT_HEADER}
             defaultSortDirection={DEFAULT_SORT_DIRECTION}
-            resultsTitle="MDM"
+            resultsTitle={t("mdmSolutionModal.resultsTitle")}
             showMarkAllPages={false}
             isAllPagesSelected={false}
             disableCount

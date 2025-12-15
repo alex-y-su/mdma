@@ -1,4 +1,5 @@
 import React from "react";
+import { TFunction } from "i18next";
 
 import { IMdmSolution } from "interfaces/mdm";
 import { noop } from "lodash";
@@ -40,10 +41,10 @@ interface IDataColumn {
   disableSortBy?: boolean;
 }
 
-export const generateSolutionsTableHeaders = (): IDataColumn[] => [
+export const generateSolutionsTableHeaders = (t?: TFunction): IDataColumn[] => [
   {
-    title: "Name",
-    Header: "Name",
+    title: t?.("tableHeaders.name") || "Name",
+    Header: t?.("tableHeaders.name") || "Name",
     disableSortBy: true,
     accessor: "displayName",
     Cell: (cellProps: ICellProps) => (
@@ -51,8 +52,8 @@ export const generateSolutionsTableHeaders = (): IDataColumn[] => [
     ),
   },
   {
-    title: "Hosts",
-    Header: "Hosts",
+    title: t?.("tableHeaders.hosts") || "Hosts",
+    Header: t?.("tableHeaders.hosts") || "Hosts",
     disableSortBy: true,
     accessor: "hosts_count",
     Cell: (cellProps: ICellProps) => <TextCell value={cellProps.cell.value} />,
@@ -60,12 +61,13 @@ export const generateSolutionsTableHeaders = (): IDataColumn[] => [
 ];
 
 export const generateSolutionsDataSet = (
-  solutions: IMdmSolutionTableData[]
+  solutions: IMdmSolutionTableData[],
+  t?: TFunction
 ): IMdmSolutionTableData[] => {
   return solutions.map((solution) => {
     return {
       ...solution,
-      displayName: solution.name || "Unknown",
+      displayName: solution.name || t?.("tableHeaders.unknown") || "Unknown",
     };
   });
 };

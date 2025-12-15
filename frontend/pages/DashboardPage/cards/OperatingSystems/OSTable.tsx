@@ -32,8 +32,8 @@ const OSTable = ({
   const { t } = useTranslation();
 
   const columnConfigs = useMemo(
-    () => generateTableHeaders(currentTeamId, undefined),
-    [currentTeamId]
+    () => generateTableHeaders(currentTeamId, undefined, undefined, t),
+    [currentTeamId, t]
   );
 
   const showPaginationControls = osVersions.length > PAGE_SIZE;

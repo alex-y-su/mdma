@@ -1,4 +1,5 @@
 import React, { useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import PATHS from "router/paths";
 
 import { getPathWithQueryParams } from "utilities/url";
@@ -38,6 +39,7 @@ const PlatformHostCounts = ({
   selectedPlatform,
   totalHostCount,
 }: IPlatformHostCountsProps): JSX.Element => {
+  const { t } = useTranslation("dashboard");
   // Only hide card if count is 0 but there are other platform counts
   const hidePlatformCard = (platformCount: number) => {
     return platformCount === 0 && totalHostCount && totalHostCount > 0;
@@ -66,7 +68,7 @@ const PlatformHostCounts = ({
       <HostCountCard
         iconName="darwin"
         count={macCount}
-        title="macOS"
+        title={t("platforms.macOS")}
         path={getPathWithQueryParams(PATHS.MANAGE_HOSTS_LABEL(macLabelId), {
           team_id: teamId,
         })}
@@ -88,7 +90,7 @@ const PlatformHostCounts = ({
       <HostCountCard
         iconName="windows"
         count={windowsCount}
-        title="Windows"
+        title={t("platforms.Windows")}
         path={getPathWithQueryParams(PATHS.MANAGE_HOSTS_LABEL(windowsLabelId), {
           team_id: teamId,
         })}
@@ -110,7 +112,7 @@ const PlatformHostCounts = ({
       <HostCountCard
         iconName="linux"
         count={linuxCount}
-        title="Linux"
+        title={t("platforms.Linux")}
         path={getPathWithQueryParams(PATHS.MANAGE_HOSTS_LABEL(linuxLabelId), {
           team_id: teamId,
         })}
@@ -133,7 +135,7 @@ const PlatformHostCounts = ({
       <HostCountCard
         iconName="chrome"
         count={chromeCount}
-        title="ChromeOS"
+        title={t("platforms.ChromeOS")}
         path={getPathWithQueryParams(PATHS.MANAGE_HOSTS_LABEL(chromeLabelId), {
           team_id: teamId,
         })}
@@ -156,7 +158,7 @@ const PlatformHostCounts = ({
       <HostCountCard
         iconName="iOS"
         count={iosCount}
-        title="iOS"
+        title={t("platforms.iOS")}
         path={getPathWithQueryParams(PATHS.MANAGE_HOSTS_LABEL(iosLabelId), {
           team_id: teamId,
         })}
@@ -179,7 +181,7 @@ const PlatformHostCounts = ({
       <HostCountCard
         iconName="iPadOS"
         count={ipadosCount}
-        title="iPadOS"
+        title={t("platforms.iPadOS")}
         path={getPathWithQueryParams(PATHS.MANAGE_HOSTS_LABEL(ipadosLabelId), {
           team_id: teamId,
         })}
@@ -202,7 +204,7 @@ const PlatformHostCounts = ({
       <HostCountCard
         iconName="android"
         count={androidCount}
-        title="Android"
+        title={t("platforms.Android")}
         path={PATHS.MANAGE_HOSTS_LABEL(androidLabelId).concat(
           teamId !== undefined ? `?team_id=${teamId}` : ""
         )}

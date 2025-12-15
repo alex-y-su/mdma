@@ -58,7 +58,7 @@ const Software = ({
   softwarePageIndex,
 }: ISoftwareCardProps): JSX.Element => {
   const { t } = useTranslation();
-  const tableHeaders = useMemo(() => generateTableHeaders(teamId), [teamId]);
+  const tableHeaders = useMemo(() => generateTableHeaders(teamId, t), [teamId, t]);
 
   const handleRowSelect = (row: IRowProps) => {
     const path = getPathWithQueryParams(PATHS.MANAGE_HOSTS, {

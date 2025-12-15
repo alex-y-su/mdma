@@ -6,6 +6,7 @@
 import React from "react";
 import { CellProps, Column, HeaderProps } from "react-table";
 import { InjectedRouter } from "react-router";
+import { TFunction } from "i18next";
 
 import { getPathWithQueryParams } from "utilities/url";
 import PATHS from "router/paths";
@@ -55,10 +56,11 @@ interface IOSTableConfigOptions {
 const generateDefaultTableHeaders = (
   teamId?: number,
   router?: InjectedRouter,
-  configOptions?: IOSTableConfigOptions
+  configOptions?: IOSTableConfigOptions,
+  t?: TFunction
 ): ITableColumnConfig[] => [
   {
-    Header: "Name",
+    Header: t?.("tableHeaders.name") || "Name",
     disableSortBy: true,
     accessor: "name_only",
     Cell: (cellProps: INameCellProps) => {
@@ -97,7 +99,7 @@ const generateDefaultTableHeaders = (
     },
   },
   {
-    Header: "Version",
+    Header: t?.("tableHeaders.version") || "Version",
     disableSortBy: true,
     Cell: (cellProps: IVersionCellProps) => {
       const { version, name_only } = cellProps.row.original;
@@ -118,12 +120,11 @@ const generateDefaultTableHeaders = (
         <TooltipWrapper
           tipContent={
             <>
-              Vulnerabilities on Linux are currently supported <br />
-              for Ubuntu, Debian, and Amazon Linux.
+              {t?.("osVersions.vulnerabilitiesTooltip") || "Vulnerabilities on Linux are currently supported for Ubuntu, Debian, and Amazon Linux."}
             </>
           }
         >
-          Vulnerabilities
+          {t?.("tableHeaders.vulnerabilities") || "Vulnerabilities"}
         </TooltipWrapper>
       );
       return (
@@ -141,7 +142,7 @@ const generateDefaultTableHeaders = (
         platform !== "windows" &&
         !isLinuxLike(platform)
       ) {
-        return <TextCell value="Not supported" grey />;
+        return <TextCell value={t?.("tableHeaders.notSupported") || "Not supported"} grey />;
       }
       return (
         <VulnerabilitiesCell
@@ -154,7 +155,7 @@ const generateDefaultTableHeaders = (
   {
     Header: (cellProps: IHostHeaderProps) => (
       <HeaderCell
-        value="Hosts"
+        value={t?.("tableHeaders.hosts") || "Hosts"}
         disableSortBy={false}
         isSortedDesc={cellProps.column.isSortedDesc}
       />
@@ -195,9 +196,10 @@ const generateDefaultTableHeaders = (
 const generateTableHeaders = (
   teamId?: number,
   router?: InjectedRouter,
-  configOptions?: IOSTableConfigOptions
+  configOptions?: IOSTableConfigOptions,
+  t?: TFunction
 ): ITableColumnConfig[] => {
-  let tableConfig = generateDefaultTableHeaders(teamId, router, configOptions);
+  let tableConfig = generateDefaultTableHeaders(teamId, router, configOptions, t);
 
   if (!configOptions?.includeName) {
     tableConfig = tableConfig.filter(

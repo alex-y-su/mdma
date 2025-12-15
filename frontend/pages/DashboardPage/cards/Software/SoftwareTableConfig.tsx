@@ -1,4 +1,5 @@
 import React from "react";
+import { TFunction } from "i18next";
 import { ISoftware } from "interfaces/software";
 
 import TextCell from "components/TableContainer/DataTable/TextCell";
@@ -32,10 +33,10 @@ interface IDataColumn {
   disableSortBy?: boolean;
 }
 
-const generateTableHeaders = (teamId?: number): IDataColumn[] => [
+const generateTableHeaders = (teamId?: number, t?: TFunction): IDataColumn[] => [
   {
-    title: "Name",
-    Header: "Name",
+    title: t?.("tableHeaders.name") || "Name",
+    Header: t?.("tableHeaders.name") || "Name",
     disableSortBy: true,
     accessor: "name",
     Cell: (cellProps: ICellProps) => (
@@ -47,8 +48,8 @@ const generateTableHeaders = (teamId?: number): IDataColumn[] => [
     ),
   },
   {
-    title: "Version",
-    Header: "Version",
+    title: t?.("tableHeaders.version") || "Version",
+    Header: t?.("tableHeaders.version") || "Version",
     disableSortBy: true,
     accessor: "version",
     Cell: (cellProps: ICellProps) => (
@@ -60,14 +61,14 @@ const generateTableHeaders = (teamId?: number): IDataColumn[] => [
     ),
   },
   {
-    title: "Hosts",
-    Header: "Hosts",
+    title: t?.("tableHeaders.hosts") || "Hosts",
+    Header: t?.("tableHeaders.hosts") || "Hosts",
     disableSortBy: true,
     accessor: "hosts_count",
     Cell: (cellProps: ICellProps) => <TextCell value={cellProps.cell.value} />,
   },
   {
-    title: "Actions",
+    title: t?.("tableHeaders.actions") || "Actions",
     Header: "",
     disableSortBy: true,
     accessor: "id",

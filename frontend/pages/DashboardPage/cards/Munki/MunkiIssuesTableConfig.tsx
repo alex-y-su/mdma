@@ -1,5 +1,6 @@
 import React from "react";
 import { capitalize } from "lodash";
+import { TFunction } from "i18next";
 
 import { IMunkiIssuesAggregate } from "interfaces/macadmins";
 import HeaderCell from "components/TableContainer/DataTable/HeaderCell";
@@ -35,17 +36,17 @@ interface IDataColumn {
   disableSortBy?: boolean;
 }
 
-const generateMunkiIssuesTableHeaders = (teamId?: number): IDataColumn[] => [
+const generateMunkiIssuesTableHeaders = (teamId?: number, t?: TFunction): IDataColumn[] => [
   {
-    title: "Issue",
+    title: t?.("tableHeaders.issue") || "Issue",
     Header: (): JSX.Element => {
       const titleWithToolTip = (
         <TooltipWrapper
           tipContent={
-            <>Issues reported the last time Munki ran on each host.</>
+            <>{t?.("munkiIssues.issueTooltip") || "Issues reported the last time Munki ran on each host."}</>
           }
         >
-          Issue
+          {t?.("tableHeaders.issue") || "Issue"}
         </TooltipWrapper>
       );
       return <HeaderCell value={titleWithToolTip} disableSortBy />;
@@ -57,8 +58,8 @@ const generateMunkiIssuesTableHeaders = (teamId?: number): IDataColumn[] => [
     ),
   },
   {
-    title: "Type",
-    Header: "Type",
+    title: t?.("tableHeaders.type") || "Type",
+    Header: t?.("tableHeaders.type") || "Type",
     disableSortBy: true,
     accessor: "type",
     Cell: (cellProps: ICellProps) => (
@@ -66,11 +67,11 @@ const generateMunkiIssuesTableHeaders = (teamId?: number): IDataColumn[] => [
     ),
   },
   {
-    title: "Hosts",
+    title: t?.("tableHeaders.hosts") || "Hosts",
     Header: (headerProps: IHeaderProps): JSX.Element => {
       return (
         <HeaderCell
-          value="Hosts"
+          value={t?.("tableHeaders.hosts") || "Hosts"}
           isSortedDesc={headerProps.column.isSortedDesc}
         />
       );

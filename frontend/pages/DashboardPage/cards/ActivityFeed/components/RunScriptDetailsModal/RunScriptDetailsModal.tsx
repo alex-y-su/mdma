@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useQuery } from "react-query";
+import { useTranslation } from "react-i18next";
 
 import scriptsAPI, { IScriptResultResponse } from "services/entities/scripts";
 
@@ -16,45 +17,60 @@ const baseClass = "run-script-details-modal";
 
 interface IScriptContentProps {
   content: string;
+  t: (key: string) => string;
 }
 
-const ScriptContent = ({ content }: IScriptContentProps) => {
+const ScriptContent = ({ content, t }: IScriptContentProps) => {
   return (
-    <Textarea label="Script content:" variant="code">
+    <Textarea label={t("activityDetails.runScriptModal.scriptContent")} variant="code">
       {content}
     </Textarea>
   );
 };
 
-const StatusMessageRunning = () => (
+interface IStatusMessageComponentProps {
+  t: (key: string) => string;
+}
+
+const StatusMessageRunning = ({ t }: IStatusMessageComponentProps) => (
   <IconStatusMessage
     className={`${baseClass}__status-message`}
     iconName="pending-outline"
-    message="Script is running or will run when the host comes online."
+    message={t("activityDetails.runScriptModal.statusRunning")}
   />
 );
 
-const StatusMessageSuccess = () => (
+const StatusMessageSuccess = ({ t }: IStatusMessageComponentProps) => (
   <IconStatusMessage
     className={`${baseClass}__status-message`}
     iconName="success-outline"
-    message="Exit code: 0 (Script ran successfully.)"
+    message={t("activityDetails.runScriptModal.statusSuccess")}
   />
 );
 
-const StatusMessageFailed = ({ exitCode }: { exitCode: number }) => (
+interface IStatusMessageFailedProps {
+  exitCode: number;
+  t: (key: string, params?: any) => string;
+}
+
+const StatusMessageFailed = ({ exitCode, t }: IStatusMessageFailedProps) => (
   <IconStatusMessage
     className={`${baseClass}__status-message`}
     iconName="error-outline"
-    message={`Exit code: ${exitCode} (Script failed.)`}
+    message={t("activityDetails.runScriptModal.statusFailed", { exitCode })}
   />
 );
 
-const StatusMessageError = ({ message }: { message: React.ReactNode }) => (
+interface IStatusMessageErrorProps {
+  message: React.ReactNode;
+  t: (key: string, params?: any) => string;
+}
+
+const StatusMessageError = ({ message, t }: IStatusMessageErrorProps) => (
   <IconStatusMessage
     className={`${baseClass}__status-message`}
     iconName="error-outline"
-    message={<>Error: {message}</>}
+    message={<>{t("activityDetails.runScriptModal.statusError", { message })}</>}
   />
 );
 
@@ -62,25 +78,27 @@ interface IStatusMessageProps {
   hostTimeout: boolean;
   exitCode: number | null;
   message: string;
+  t: (key: string, params?: any) => string;
 }
 
 const StatusMessage = ({
   hostTimeout,
   exitCode,
   message,
+  t,
 }: IStatusMessageProps) => {
   switch (exitCode) {
     case null:
       return !hostTimeout ? (
         // Expected API message: "A script is already running on this host. Please wait about 1 minute to let it finish."
-        <StatusMessageRunning />
+        <StatusMessageRunning t={t} />
       ) : (
-        // Expected API message: "Fleet hasn’t heard from the host in over 1 minute. Fleet doesn’t know if the script ran because the host went offline."
-        <StatusMessageError message={message} />
+        // Expected API message: "Fleet hasn't heard from the host in over 1 minute. Fleet doesn't know if the script ran because the host went offline."
+        <StatusMessageError message={message} t={t} />
       );
     case -2:
       // Expected API message: "Scripts are disabled for this host. To run scripts, deploy the fleetd agent with scripts enabled."
-      return <StatusMessageError message={message} />;
+      return <StatusMessageError message={message} t={t} />;
     case -1: {
       // message should look like: "Timeout. Fleet stopped the script after 600 seconds to protect host performance.";
       const timeOutValue = message.match(/(\d+\s(?:seconds))/);
@@ -88,8 +106,8 @@ const StatusMessage = ({
       // should always be there, but handle cleanly if not
       const varText = timeOutValue ? (
         <>
-          after{" "}
-          <TooltipWrapper tipContent="Timeout can be configured by updating agent options.">
+          {t("activityDetails.runScriptModal.after")}{" "}
+          <TooltipWrapper tipContent={t("activityDetails.runScriptModal.timeoutTooltip")}>
             {timeOutValue[0]}
           </TooltipWrapper>{" "}
         </>
@@ -97,18 +115,17 @@ const StatusMessage = ({
 
       const modMessage = (
         <>
-          Timeout. Fleet stopped the script {varText}to protect host
-          performance.
+          {t("activityDetails.runScriptModal.timeout", { timeoutValue: varText })}
         </>
       );
-      return <StatusMessageError message={modMessage} />;
+      return <StatusMessageError message={modMessage} t={t} />;
     }
     case 0:
       // Expected API message: ""
-      return <StatusMessageSuccess />;
+      return <StatusMessageSuccess t={t} />;
     default:
       // Expected API message: ""
-      return <StatusMessageFailed exitCode={exitCode} />;
+      return <StatusMessageFailed exitCode={exitCode} t={t} />;
   }
 };
 
@@ -116,26 +133,32 @@ interface IScriptOutputProps {
   output: string;
   hostname: string;
   wasAdHoc: boolean;
+  t: (key: string, params?: any) => string;
 }
 
 const ScriptOutput = ({
   output,
   hostname,
   wasAdHoc = false,
+  t,
 }: IScriptOutputProps) => (
   <div className={`${baseClass}__script-result`}>
     <Textarea
       label={
         <>
-          The{" "}
-          <TooltipWrapper
-            tipContent="Fleet records the last 10,000 characters to prevent downtime."
-            tooltipClass={`${baseClass}__output-tooltip`}
-            delayInMs={500}
-          >
-            output recorded
-          </TooltipWrapper>{" "}
-          when <b>{hostname}</b> ran the script{wasAdHoc && " above"}:
+          {t("activityDetails.runScriptModal.outputLabel", {
+            outputRecorded: (
+              <TooltipWrapper
+                tipContent={t("activityDetails.runScriptModal.outputTooltip")}
+                tooltipClass={`${baseClass}__output-tooltip`}
+                delayInMs={500}
+              >
+                {t("activityDetails.runScriptModal.outputRecorded")}
+              </TooltipWrapper>
+            ),
+            hostname: <b>{hostname}</b>,
+            wasAdHoc: wasAdHoc ? t("activityDetails.runScriptModal.above") : "",
+          })}
         </>
       }
       variant="code"
@@ -155,6 +178,8 @@ const RunScriptDetailsModal = ({
   onCancel,
   isHidden = false,
 }: IRunScriptDetailsModalProps) => {
+  const { t } = useTranslation("dashboard");
+
   // For scrollable modal
   const [isTopScrolling, setIsTopScrolling] = useState(false);
   const topDivRef = useRef<HTMLDivElement>(null);
@@ -187,7 +212,7 @@ const RunScriptDetailsModal = ({
     if (isLoading) {
       content = <Spinner />;
     } else if (isError) {
-      content = <DataError description="Close this modal and try again." />;
+      content = <DataError description={t("activityDetails.runScriptModal.dataError")} />;
     } else if (data) {
       const hostTimedOut =
         data.exit_code === null && data.host_timeout === true;
@@ -204,13 +229,15 @@ const RunScriptDetailsModal = ({
             hostTimeout={data.host_timeout}
             exitCode={data.exit_code}
             message={data.output}
+            t={t}
           />
-          {ranAdHocScript && <ScriptContent content={data.script_contents} />}
+          {ranAdHocScript && <ScriptContent content={data.script_contents} t={t} />}
           {showOutputText && (
             <ScriptOutput
               hostname={data.hostname}
               output={data.output}
               wasAdHoc={ranAdHocScript}
+              t={t}
             />
           )}
         </>
@@ -230,12 +257,12 @@ const RunScriptDetailsModal = ({
   const renderFooter = () => (
     <ModalFooter
       isTopScrolling={isTopScrolling}
-      primaryButtons={<Button onClick={onCancel}>Done</Button>}
+      primaryButtons={<Button onClick={onCancel}>{t("activityDetails.runScriptModal.done")}</Button>}
     />
   );
   return (
     <Modal
-      title="Script details"
+      title={t("activityDetails.runScriptModal.title")}
       onExit={onCancel}
       onEnter={onCancel}
       className={baseClass}

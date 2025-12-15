@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import CustomLink from "components/CustomLink";
 import Button from "components/buttons/Button";
@@ -22,6 +23,8 @@ const ScriptBatchHostCountCell = ({
   onClickCancel,
   teamId,
 }: IScriptBatchHostCountCellProps) => {
+  const { t } = useTranslation("dashboard");
+
   const hostPath = `${PATHS.MANAGE_HOSTS}?${buildQueryStringFromParams({
     script_batch_execution_status: status,
     script_batch_execution_id: batchExecutionId,
@@ -39,7 +42,7 @@ const ScriptBatchHostCountCell = ({
         onClick={onClickCancel}
         variant="inverse"
       >
-        Cancel
+        {t("activityDetails.scriptBatchHostCountCell.cancel")}
       </Button>
     );
   };

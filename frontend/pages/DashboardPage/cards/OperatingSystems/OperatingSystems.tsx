@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useQuery } from "react-query";
+import { useTranslation } from "react-i18next";
 
 import {
   OS_END_OF_LIFE_LINK_BY_PLATFORM,
@@ -43,6 +44,8 @@ const OperatingSystems = ({
   setTitleDetail,
   setTitleDescription,
 }: IOperatingSystemsCardProps): JSX.Element => {
+  const { t } = useTranslation("dashboard");
+
   const { data: osInfo, error, isLoading } = useQuery<
     IOSVersionsResponse,
     AxiosError,
@@ -74,11 +77,10 @@ const OperatingSystems = ({
     if (selectedPlatform === "chrome") {
       return (
         <p>
-          Chromebooks automatically receive updates from Google until their
-          auto-update expiration date.{" "}
+          {t("osVersions.chromebookUpdatesInfo")}{" "}
           <CustomLink
             url="https://fleetdm.com/learn-more-about/chromeos-updates"
-            text="Learn more"
+            text={t("osVersions.learnMore")}
             newTab
             multiline
           />
@@ -92,11 +94,10 @@ const OperatingSystems = ({
     )
       return (
         <p>
-          {OS_VENDOR_BY_PLATFORM[selectedPlatform]} releases updates and fixes
-          for supported operating systems.{" "}
+          {OS_VENDOR_BY_PLATFORM[selectedPlatform]} {t("osVersions.osVendorUpdatesInfo")}{" "}
           <CustomLink
             url={OS_END_OF_LIFE_LINK_BY_PLATFORM[selectedPlatform]}
-            text="See supported operating systems"
+            text={t("osVersions.seeSupportedOs")}
             newTab
             multiline
           />
@@ -107,7 +108,7 @@ const OperatingSystems = ({
   const titleDetail = osInfo?.counts_updated_at ? (
     <LastUpdatedText
       lastUpdatedAt={osInfo?.counts_updated_at}
-      whatToRetrieve="operating systems"
+      whatToRetrieve={t("osVersions.lastUpdatedLabel")}
     />
   ) : null;
 

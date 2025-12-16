@@ -109,9 +109,7 @@ const TargetsInput = ({
                 <div className="empty-search">
                   <div className="empty-search__inner">
                     <h4>{t("targets.noMatchingHosts")}</h4>
-                    <p>
-                      {t("targets.expectingHostsMessage")}
-                    </p>
+                    <p>{t("targets.expectingHostsMessage")}</p>
                   </div>
                 </div>
               )}

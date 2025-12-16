@@ -107,7 +107,11 @@ const generateTableHeaders = (
       Header: (headerProps: IHeaderProps): JSX.Element => {
         const titleWithTooltip = (
           <TooltipWrapper
-            tipContent={t ? t("vulnerabilities.severityTooltip") : "The worst case impact across different environments (CVSS version 3.x base score)."}
+            tipContent={
+              t
+                ? t("vulnerabilities.severityTooltip")
+                : "The worst case impact across different environments (CVSS version 3.x base score)."
+            }
           >
             {t ? t("vulnerabilities.severity") : "Severity"}
           </TooltipWrapper>
@@ -126,17 +130,25 @@ const generateTableHeaders = (
       ),
     },
     {
-      title: t ? t("vulnerabilities.probabilityOfExploit") : "Probability of exploit",
+      title: t
+        ? t("vulnerabilities.probabilityOfExploit")
+        : "Probability of exploit",
       accessor: "epss_probability",
       disableSortBy: false,
       Header: (headerProps: IHeaderProps): JSX.Element => {
         const titleWithTooltip = (
           <TooltipWrapper
             className="epss_probability"
-            tipContent={t ? t("vulnerabilities.probabilityTooltip") : "The probability that this vulnerability will be exploited in the next 30 days (EPSS probability). This data is reported by FIRST.org."}
+            tipContent={
+              t
+                ? t("vulnerabilities.probabilityTooltip")
+                : "The probability that this vulnerability will be exploited in the next 30 days (EPSS probability). This data is reported by FIRST.org."
+            }
             fixedPositionStrategy
           >
-            {t ? t("vulnerabilities.probabilityOfExploit") : "Probability of exploit"}
+            {t
+              ? t("vulnerabilities.probabilityOfExploit")
+              : "Probability of exploit"}
           </TooltipWrapper>
         );
         return (
@@ -162,7 +174,11 @@ const generateTableHeaders = (
       Header: (headerProps: IHeaderProps): JSX.Element => {
         const titleWithTooltip = (
           <TooltipWrapper
-            tipContent={t ? t("vulnerabilities.publishedTooltip") : "The date this vulnerability was published in the National Vulnerability Database (NVD)."}
+            tipContent={
+              t
+                ? t("vulnerabilities.publishedTooltip")
+                : "The date this vulnerability was published in the National Vulnerability Database (NVD)."
+            }
           >
             {t ? t("vulnerabilities.published") : "Published"}
           </TooltipWrapper>
@@ -193,7 +209,11 @@ const generateTableHeaders = (
       Header: (headerProps: IHeaderProps): JSX.Element => {
         const titleWithTooltip = (
           <TooltipWrapper
-            tipContent={t ? t("vulnerabilities.detectedTooltip") : "The date this vulnerability first appeared on a host."}
+            tipContent={
+              t
+                ? t("vulnerabilities.detectedTooltip")
+                : "The date this vulnerability first appeared on a host."
+            }
           >
             {t ? t("vulnerabilities.detected") : "Detected"}
           </TooltipWrapper>

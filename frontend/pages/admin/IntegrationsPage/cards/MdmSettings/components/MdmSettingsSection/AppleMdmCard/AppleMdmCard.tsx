@@ -21,7 +21,11 @@ const TurnOnAppleMdmCard = ({ onClickTurnOn }: ITurnOnAppleMdmCardProps) => {
     <SectionCard
       className={baseClass}
       header={t("integrations.mdm.apple.turn_on_header")}
-      cta={<Button onClick={onClickTurnOn}>{t("integrations.mdm.apple.turn_on")}</Button>}
+      cta={
+        <Button onClick={onClickTurnOn}>
+          {t("integrations.mdm.apple.turn_on")}
+        </Button>
+      }
     >
       {t("integrations.mdm.apple.turn_on_content")}
     </SectionCard>

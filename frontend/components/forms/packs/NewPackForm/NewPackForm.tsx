@@ -79,7 +79,10 @@ const NewPackForm = ({
   return (
     <>
       <div className={`${baseClass}__header-links`}>
-        <BackButton text={t("packs.edit.backButton")} path={PATHS.MANAGE_PACKS} />
+        <BackButton
+          text={t("packs.edit.backButton")}
+          path={PATHS.MANAGE_PACKS}
+        />
       </div>
       <form
         className={newPackFormClass}

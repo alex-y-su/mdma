@@ -54,10 +54,7 @@ const UnlockModal = ({
     try {
       await hostAPI.unlockHost(id);
       onSuccess();
-      renderFlash(
-        "success",
-        t("modals.unlock.successMessage")
-      );
+      renderFlash("success", t("modals.unlock.successMessage"));
     } catch (e) {
       renderFlash("error", getErrorReason(e));
     }
@@ -75,9 +72,7 @@ const UnlockModal = ({
       return (
         <>
           {/* TODO: replace with DataSet component */}
-          <p>
-            {t("modals.unlock.pinDescription")}
-          </p>
+          <p>{t("modals.unlock.pinDescription")}</p>
           <div className={`${baseClass}__pin`}>
             <b>{t("modals.unlock.pinLabel")}</b>
             <span>{macUnlockData.unlock_pin}</span>
@@ -87,11 +82,7 @@ const UnlockModal = ({
     }
 
     if (isIPadOrIPhone(platform)) {
-      return (
-        <p>
-          {t("modals.unlock.descriptionIos")}
-        </p>
-      );
+      return <p>{t("modals.unlock.descriptionIos")}</p>;
     }
 
     return (
@@ -132,7 +123,11 @@ const UnlockModal = ({
   };
 
   return (
-    <Modal className={baseClass} title={t("modals.unlock.title")} onExit={onClose}>
+    <Modal
+      className={baseClass}
+      title={t("modals.unlock.title")}
+      onExit={onClose}
+    >
       <>
         <div className={`${baseClass}__modal-content`}>
           {renderModalContent()}

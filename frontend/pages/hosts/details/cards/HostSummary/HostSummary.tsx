@@ -244,7 +244,8 @@ const HostSummary = ({
       default:
         // something unexpected happened on the way to this component, display whatever we got or
         // "Unknown" to draw attention to the issue.
-        statusText = diskEncryptionEnabled || t("summary.diskEncryption.status.unknown");
+        statusText =
+          diskEncryptionEnabled || t("summary.diskEncryption.status.unknown");
     }
 
     return (
@@ -304,7 +305,8 @@ const HostSummary = ({
                   <>
                     {t("summary.os.doesNotMeetRequirement")}
                     <br />
-                    {t("summary.os.deadlineToUpdate")}: {osVersionRequirement.deadline}
+                    {t("summary.os.deadlineToUpdate")}:{" "}
+                    {osVersionRequirement.deadline}
                   </>
                 )
               }
@@ -323,7 +325,12 @@ const HostSummary = ({
     }
 
     if (isChromeHost) {
-      return <DataSet title={t("summary.agent")} value={summaryData.osquery_version} />;
+      return (
+        <DataSet
+          title={t("summary.agent")}
+          value={summaryData.osquery_version}
+        />
+      );
     }
 
     if (summaryData.orbit_version !== DEFAULT_EMPTY_CELL_VALUE) {
@@ -341,7 +348,8 @@ const HostSummary = ({
                     DEFAULT_EMPTY_CELL_VALUE && (
                     <>
                       <br />
-                      {t("summary.agent.fleetDesktop")}: {summaryData.fleet_desktop_version}
+                      {t("summary.agent.fleetDesktop")}:{" "}
+                      {summaryData.fleet_desktop_version}
                     </>
                   )}
                 </>
@@ -353,7 +361,12 @@ const HostSummary = ({
         />
       );
     }
-    return <DataSet title={t("summary.agent.osquery")} value={summaryData.osquery_version} />;
+    return (
+      <DataSet
+        title={t("summary.agent.osquery")}
+        value={summaryData.osquery_version}
+      />
+    );
   };
 
   const renderMaintenanceWindow = ({
@@ -484,7 +497,10 @@ const HostSummary = ({
         />
       )}
       {!isIosOrIpadosHost && (
-        <DataSet title={t("summary.processorType")} value={summaryData.cpu_type} />
+        <DataSet
+          title={t("summary.processorType")}
+          value={summaryData.cpu_type}
+        />
       )}
       {renderOperatingSystemSummary()}
       {renderAgentSummary()}

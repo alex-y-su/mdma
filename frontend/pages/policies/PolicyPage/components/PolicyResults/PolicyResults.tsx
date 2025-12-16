@@ -127,7 +127,9 @@ const PolicyResults = ({
           variant="inverse"
         >
           <>
-            {tableType === "errors" ? t("results.exportErrors") : t("results.exportResults")}
+            {tableType === "errors"
+              ? t("results.exportErrors")
+              : t("results.exportResults")}
             <Icon name="download" color="ui-fleet-black-75" />
           </>
         </Button>
@@ -169,7 +171,9 @@ const PolicyResults = ({
         <p className="no-results-message">
           {t("results.noResults")}
           <span>
-            {t("results.noResultsExpecting", { plural: targetsTotalCount > 1 ? "s" : "" })}
+            {t("results.noResultsExpecting", {
+              plural: targetsTotalCount > 1 ? "s" : "",
+            })}
           </span>
         </p>
       );
@@ -177,7 +181,9 @@ const PolicyResults = ({
 
     return (
       <div className={`${baseClass}__results-table-container`}>
-        <InfoBanner dangerouslySetInnerHTML={{ __html: t("results.passFailInfo") }} />
+        <InfoBanner>
+          <div dangerouslySetInnerHTML={{ __html: t("results.passFailInfo") }} />
+        </InfoBanner>
         <div className={`${baseClass}__results-table-header`}>
           <span className={`${baseClass}__results-meta`}>
             <span className={`${baseClass}__results-count`}>

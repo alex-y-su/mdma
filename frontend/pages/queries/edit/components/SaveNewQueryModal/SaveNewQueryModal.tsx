@@ -267,7 +267,9 @@ const SaveNewQueryModal = ({
           inactiveText={t("modals.saveNew.automationsOff")}
           helpText={
             <>
-              {t("modals.saveNew.automationsHelpText", { not: !automationsEnabled ? "not " : "" })}
+              {t("modals.saveNew.automationsHelpText", {
+                not: !automationsEnabled ? "not " : "",
+              })}
               <b>
                 <LogDestinationIndicator
                   logDestination={config?.logging.result.plugin || ""}

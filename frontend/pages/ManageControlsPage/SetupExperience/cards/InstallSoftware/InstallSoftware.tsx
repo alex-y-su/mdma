@@ -177,7 +177,9 @@ const InstallSoftware = ({
           <GenericMsgWithNavButton
             header={t("controls.setupExperience.installSoftware.noSoftware")}
             info={t("controls.setupExperience.installSoftware.addDescription")}
-            buttonText={t("controls.setupExperience.installSoftware.addSoftware")}
+            buttonText={t(
+              "controls.setupExperience.installSoftware.addSoftware"
+            )}
             path={PATHS.ADMIN_INTEGRATIONS_MDM}
             router={router}
           />

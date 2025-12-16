@@ -23,7 +23,11 @@ const TurnOnAndroidMdmCard = ({
     <SectionCard
       className={baseClass}
       header={t("integrations.mdm.android.turn_on_header")}
-      cta={<Button onClick={onClickTurnOn}>{t("integrations.mdm.android.turn_on")}</Button>}
+      cta={
+        <Button onClick={onClickTurnOn}>
+          {t("integrations.mdm.android.turn_on")}
+        </Button>
+      }
     >
       {t("integrations.mdm.android.turn_on_content")}
     </SectionCard>

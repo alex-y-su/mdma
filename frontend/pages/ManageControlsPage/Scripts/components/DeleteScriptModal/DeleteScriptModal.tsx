@@ -63,9 +63,7 @@ const DeleteScriptModal = ({
         <p>
           {t("controls.scripts.modals.delete.message", { name: scriptName })}
         </p>
-        <p>
-          {t("controls.scripts.modals.delete.warning")}
-        </p>
+        <p>{t("controls.scripts.modals.delete.warning")}</p>
         <div className="modal-cta-wrap">
           <Button
             type="button"

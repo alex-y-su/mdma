@@ -17,9 +17,9 @@ const SetupSoftwareStatusCell = ({ status }: ISetupSoftwareStatusCell) => {
   const { t } = useTranslation("common");
 
   const serverToUiStatus = (
-    status: SetupStepStatus
+    statusValue: SetupStepStatus
   ): { label: string; icon: IconNames | "spinner" } => {
-    switch (status) {
+    switch (statusValue) {
       case "pending":
         return { label: t("setupStatus.pending"), icon: "pending-outline" };
       case "running":

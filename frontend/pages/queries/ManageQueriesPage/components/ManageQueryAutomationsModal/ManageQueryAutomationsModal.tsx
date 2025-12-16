@@ -164,7 +164,9 @@ const ManageQueryAutomationsModal = ({
           </div>
         )}
         <div className={`${baseClass}__log-destination form-field`}>
-          <div className="form-field__label">{t("modals.manageAutomations.logDestination")}</div>
+          <div className="form-field__label">
+            {t("modals.manageAutomations.logDestination")}
+          </div>
           <div className={`${baseClass}__selection`}>
             <LogDestinationIndicator
               logDestination={logDestination}

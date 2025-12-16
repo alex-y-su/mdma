@@ -41,9 +41,7 @@ const RerunScriptModal = ({
       onEnter={() => onRerun(scriptId)}
     >
       <>
-        <p>
-          {t("controls.scripts.modals.rerun.message")}
-        </p>
+        <p>{t("controls.scripts.modals.rerun.message")}</p>
         <p>This may cause the script to run more than once on some hosts.</p>
         <div className="modal-cta-wrap">
           <Button type="button" onClick={() => onRerun(scriptId)}>

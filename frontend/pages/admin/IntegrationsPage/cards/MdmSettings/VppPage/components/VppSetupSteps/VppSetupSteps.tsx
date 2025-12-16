@@ -34,15 +34,11 @@ const VppSetupSteps = ({ extendendSteps = false }: IVppSetupStepsProps) => {
       </li>
       <li>
         <span>2.</span>
-        <p>
-          {t("mdmSettings.vpp.setup.step2")}
-        </p>
+        <p>{t("mdmSettings.vpp.setup.step2")}</p>
       </li>
       <li>
         <span>3.</span>
-        <p>
-          {t("mdmSettings.vpp.setup.step3")}
-        </p>
+        <p>{t("mdmSettings.vpp.setup.step3")}</p>
       </li>
       <li>
         <span>4.</span>

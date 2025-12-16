@@ -54,7 +54,9 @@ const UnenrollMdmModal = ({
           </>
         ) : (
           <>
-            {t("modals.unenrollMdm.successMessage.macosPrefix")} <b>{hostName}</b> {t("modals.unenrollMdm.successMessage.macosSuffix")}
+            {t("modals.unenrollMdm.successMessage.macosPrefix")}{" "}
+            <b>{hostName}</b>{" "}
+            {t("modals.unenrollMdm.successMessage.macosSuffix")}
           </>
         );
       renderFlash("success", successMessage);
@@ -65,7 +67,8 @@ const UnenrollMdmModal = ({
           t("modals.unenrollMdm.errorMessage.mobile")
         ) : (
           <>
-            {t("modals.unenrollMdm.errorMessage.macosPrefix")} <b>{hostName}</b>. {t("modals.unenrollMdm.errorMessage.macosSuffix")}
+            {t("modals.unenrollMdm.errorMessage.macosPrefix")} <b>{hostName}</b>
+            . {t("modals.unenrollMdm.errorMessage.macosSuffix")}
           </>
         );
       renderFlash("error", errorMessage);
@@ -75,23 +78,13 @@ const UnenrollMdmModal = ({
 
   const generateIosOrIpadosDescription = () => {
     if (isBYODManualEnrollment(enrollmentStatus)) {
-      return (
-        <p>
-          {t("modals.unenrollMdm.reenrollInstructions.iosManual")}
-        </p>
-      );
+      return <p>{t("modals.unenrollMdm.reenrollInstructions.iosManual")}</p>;
     } else if (isBYODAccountDrivenUserEnrollment(enrollmentStatus)) {
       return (
-        <p>
-          {t("modals.unenrollMdm.reenrollInstructions.iosAccountDriven")}
-        </p>
+        <p>{t("modals.unenrollMdm.reenrollInstructions.iosAccountDriven")}</p>
       );
     } else if (isAutomaticDeviceEnrollment(enrollmentStatus)) {
-      return (
-        <p>
-          {t("modals.unenrollMdm.reenrollInstructions.iosAutomatic")}
-        </p>
-      );
+      return <p>{t("modals.unenrollMdm.reenrollInstructions.iosAutomatic")}</p>;
     }
     return null;
   };
@@ -109,18 +102,14 @@ const UnenrollMdmModal = ({
       return (
         <>
           <p>{t("modals.unenrollMdm.description.android")}</p>
-          <p>
-            {t("modals.unenrollMdm.reenrollInstructions.android")}
-          </p>
+          <p>{t("modals.unenrollMdm.reenrollInstructions.android")}</p>
         </>
       );
     }
     return (
       <>
         <p>{t("modals.unenrollMdm.description.macos")}</p>
-        <p>
-          {t("modals.unenrollMdm.reenrollInstructions.macos")}
-        </p>
+        <p>{t("modals.unenrollMdm.reenrollInstructions.macos")}</p>
       </>
     );
   };

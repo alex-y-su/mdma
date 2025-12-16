@@ -412,12 +412,16 @@ const PackageForm = ({
               position="left"
             >
               <Button type="submit" disabled={isSubmitDisabled}>
-                {isEditingSoftware ? t("forms.package.save") : t("forms.package.addSoftware")}
+                {isEditingSoftware
+                  ? t("forms.package.save")
+                  : t("forms.package.addSoftware")}
               </Button>
             </TooltipWrapper>
           ) : (
             <Button type="submit" disabled={isSubmitDisabled}>
-              {isEditingSoftware ? t("forms.package.save") : t("forms.package.addSoftware")}
+              {isEditingSoftware
+                ? t("forms.package.save")
+                : t("forms.package.addSoftware")}
             </Button>
           )}
 

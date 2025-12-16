@@ -58,9 +58,7 @@ const CancelActivityModal = ({
     >
       <>
         <div className={`${baseClass}__content`}>
-          <p>
-            {t("modals.cancelActivity.description")}
-          </p>
+          <p>{t("modals.cancelActivity.description")}</p>
           <ActivityItemComponent
             tab="upcoming"
             activity={activity}

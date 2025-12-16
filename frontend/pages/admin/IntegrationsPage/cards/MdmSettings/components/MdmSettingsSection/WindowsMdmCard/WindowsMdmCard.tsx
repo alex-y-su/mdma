@@ -22,7 +22,11 @@ const TurnOnWindowsMdmCard = ({
     <SectionCard
       className={baseClass}
       header={t("integrations.mdm.windows.turn_on_header")}
-      cta={<Button onClick={onClickTurnOn}>{t("integrations.mdm.windows.turn_on")}</Button>}
+      cta={
+        <Button onClick={onClickTurnOn}>
+          {t("integrations.mdm.windows.turn_on")}
+        </Button>
+      }
     >
       {t("integrations.mdm.windows.turn_on_content")}
     </SectionCard>

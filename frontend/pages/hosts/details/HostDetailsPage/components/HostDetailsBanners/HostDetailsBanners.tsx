@@ -68,9 +68,7 @@ const HostDetailsBanners = ({
   if (showTurnOnMdmInfoBanner) {
     return (
       <div className={baseClass}>
-        <InfoBanner color="yellow">
-          {t("banners.turnOnMdm")}
-        </InfoBanner>
+        <InfoBanner color="yellow">{t("banners.turnOnMdm")}</InfoBanner>
       </div>
     );
   }

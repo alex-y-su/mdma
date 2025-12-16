@@ -509,7 +509,11 @@ const EditQueryForm = ({
       );
     }
 
-    return <h1 className={`${baseClass}__query-name no-hover`}>{t("create.title")}</h1>;
+    return (
+      <h1 className={`${baseClass}__query-name no-hover`}>
+        {t("create.title")}
+      </h1>
+    );
   };
 
   const editDescription = () => {
@@ -746,7 +750,9 @@ const EditQueryForm = ({
                     {t("modals.saveNew.automationsOn")}
                     {lastEditedQueryFrequency === 0 && (
                       <TooltipWrapper
-                        tipContent={t("modals.saveNew.automationsPausedTooltip")}
+                        tipContent={t(
+                          "modals.saveNew.automationsPausedTooltip"
+                        )}
                         position="right"
                         tipOffset={9}
                         showArrow
@@ -760,7 +766,9 @@ const EditQueryForm = ({
                 inactiveText={t("modals.saveNew.automationsOff")}
                 helpText={
                   <>
-                    {t("modals.saveNew.automationsHelpText", { not: !lastEditedQueryAutomationsEnabled ? "not " : "" })}
+                    {t("modals.saveNew.automationsHelpText", {
+                      not: !lastEditedQueryAutomationsEnabled ? "not " : "",
+                    })}
                     <b>
                       <LogDestinationIndicator
                         logDestination={config?.logging.result.plugin || ""}

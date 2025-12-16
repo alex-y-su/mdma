@@ -21,7 +21,11 @@ const SelfServiceHeader = ({
           {contactUrl && (
             <span>
               {t("selfService.needHelp")}{" "}
-              <CustomLink url={contactUrl} text={t("selfService.reachOutToIT")} newTab />
+              <CustomLink
+                url={contactUrl}
+                text={t("selfService.reachOutToIT")}
+                newTab
+              />
             </span>
           )}
         </>

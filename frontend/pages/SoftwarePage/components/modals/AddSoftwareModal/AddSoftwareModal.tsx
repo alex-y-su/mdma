@@ -17,8 +17,8 @@ const AllTeamsMessage = ({ onExit }: IAllTeamsMessageProps) => {
   return (
     <>
       <p>
-        {t("modals.add.allTeamsMessage")}{" "}
-        <b>{t("modals.add.allTeams")}</b> {t("modals.add.isSelected")}.
+        {t("modals.add.allTeamsMessage")} <b>{t("modals.add.allTeams")}</b>{" "}
+        {t("modals.add.isSelected")}.
       </p>
       <div className="modal-cta-wrap">
         <Button onClick={onExit}>{t("modals.add.doneButton")}</Button>

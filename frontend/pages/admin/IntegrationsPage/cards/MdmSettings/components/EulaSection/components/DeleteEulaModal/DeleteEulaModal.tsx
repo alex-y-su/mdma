@@ -22,9 +22,7 @@ const DeleteEulaModal = ({ onDelete, onCancel }: IDeleteEulaModalProps) => {
       onEnter={() => onDelete()}
     >
       <>
-        <p>
-          {t("integrations.eula.delete_modal_content")}
-        </p>
+        <p>{t("integrations.eula.delete_modal_content")}</p>
         <div className="modal-cta-wrap">
           <Button type="button" onClick={() => onDelete()} variant="alert">
             {t("common:delete")}

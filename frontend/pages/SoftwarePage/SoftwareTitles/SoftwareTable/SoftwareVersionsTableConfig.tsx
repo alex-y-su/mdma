@@ -39,7 +39,10 @@ const generateTableHeaders = (
   const softwareTableHeaders: ISoftwareVersionsTableConfig[] = [
     {
       Header: (cellProps: ITableHeaderProps) => (
-        <HeaderCell value={t ? t("columns.name") : "Name"} isSortedDesc={cellProps.column.isSortedDesc} />
+        <HeaderCell
+          value={t ? t("columns.name") : "Name"}
+          isSortedDesc={cellProps.column.isSortedDesc}
+        />
       ),
       disableSortBy: false,
       accessor: "name",
@@ -90,7 +93,12 @@ const generateTableHeaders = (
         if (
           ["ipados_apps", "ios_apps"].includes(cellProps.row.original.source)
         ) {
-          return <TextCell value={t ? t("columns.notSupported") : "Not supported"} grey />;
+          return (
+            <TextCell
+              value={t ? t("columns.notSupported") : "Not supported"}
+              grey
+            />
+          );
         }
         return <VulnerabilitiesCell vulnerabilities={cellProps.cell.value} />;
       },

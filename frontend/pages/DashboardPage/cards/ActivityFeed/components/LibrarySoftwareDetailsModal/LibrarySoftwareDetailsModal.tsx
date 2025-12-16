@@ -1,5 +1,6 @@
 import React from "react";
-import { TFunction, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
+import type { TFunction } from "i18next";
 
 import { IActivityDetails } from "interfaces/activity";
 import { ILabelSoftwareTitle } from "interfaces/label";
@@ -26,12 +27,21 @@ export const TargetTitle = ({
   let suffix = "";
 
   if (labelIncludeAny) {
-    suffix = ` (${t?.("activityDetails.librarySoftwareModal.includeAny") || "include any"})`;
+    suffix = ` (${
+      t?.("activityDetails.librarySoftwareModal.includeAny") || "include any"
+    })`;
   } else if (labelExcludeAny) {
-    suffix = ` (${t?.("activityDetails.librarySoftwareModal.excludeAny") || "exclude any"})`;
+    suffix = ` (${
+      t?.("activityDetails.librarySoftwareModal.excludeAny") || "exclude any"
+    })`;
   }
 
-  return <>{t?.("activityDetails.librarySoftwareModal.target") || "Target"}{suffix}</>;
+  return (
+    <>
+      {t?.("activityDetails.librarySoftwareModal.target") || "Target"}
+      {suffix}
+    </>
+  );
 };
 
 // Shared with global activity VPP details modal
@@ -41,7 +51,9 @@ export const TargetValue = ({
   t,
 }: ITargetValueProps) => {
   if (!labelIncludeAny && !labelExcludeAny) {
-    return <>{t?.("activityDetails.librarySoftwareModal.allHosts") || "All hosts"}</>;
+    return (
+      <>{t?.("activityDetails.librarySoftwareModal.allHosts") || "All hosts"}</>
+    );
   }
 
   let labels: ILabelSoftwareTitle[] = [];
@@ -66,7 +78,8 @@ export const TargetValue = ({
         </>
       ))}
     >
-      {labels.length} {t?.("activityDetails.librarySoftwareModal.labels") || "labels"}
+      {labels.length}{" "}
+      {t?.("activityDetails.librarySoftwareModal.labels") || "labels"}
     </TooltipWrapper>
   );
 };
@@ -97,10 +110,17 @@ const LibrarySoftwareDetailsModal = ({
             title={t("activityDetails.librarySoftwareModal.name")}
             value={details.software_display_name || details.software_title}
           />
-          <DataSet title={t("activityDetails.librarySoftwareModal.packageName")} value={details.software_package} />
+          <DataSet
+            title={t("activityDetails.librarySoftwareModal.packageName")}
+            value={details.software_package}
+          />
           <DataSet
             title={t("activityDetails.librarySoftwareModal.selfService")}
-            value={details.self_service ? t("activityDetails.librarySoftwareModal.yes") : t("activityDetails.librarySoftwareModal.no")}
+            value={
+              details.self_service
+                ? t("activityDetails.librarySoftwareModal.yes")
+                : t("activityDetails.librarySoftwareModal.no")
+            }
           />
           <DataSet
             title={
@@ -120,7 +140,9 @@ const LibrarySoftwareDetailsModal = ({
           />
         </div>
         <div className="modal-cta-wrap">
-          <Button onClick={onCancel}>{t("activityDetails.librarySoftwareModal.done")}</Button>
+          <Button onClick={onCancel}>
+            {t("activityDetails.librarySoftwareModal.done")}
+          </Button>
         </div>
       </>
     </Modal>

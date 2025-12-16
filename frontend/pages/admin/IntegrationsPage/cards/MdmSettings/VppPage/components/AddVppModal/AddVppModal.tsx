@@ -69,7 +69,11 @@ const AddVppModal = ({ onCancel, onAdded }: IAddVppModalProps) => {
           message={t("mdmSettings.vpp.addModal.contentToken")}
           graphicName="file-vpp"
           buttonType="brand-inverse-icon"
-          buttonMessage={isUploading ? t("mdmSettings.vpp.addModal.uploading") : t("mdmSettings.vpp.addModal.upload")}
+          buttonMessage={
+            isUploading
+              ? t("mdmSettings.vpp.addModal.uploading")
+              : t("mdmSettings.vpp.addModal.upload")
+          }
           fileDetails={tokenFile ? { name: tokenFile.name } : undefined}
           onFileUpload={onSelectFile}
         />

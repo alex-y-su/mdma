@@ -20,7 +20,9 @@ export interface ISetupExperienceCardProps {
 const SETUP_EXPERIENCE_NAV_ITEMS: ISideNavItem<ISetupExperienceCardProps>[] = [
   {
     get title() {
-      return `1. ${i18n.t("controls.setupExperience.navItems.endUserAuth", { ns: "settings" })}`;
+      return `1. ${i18n.t("controls.setupExperience.navItems.endUserAuth", {
+        ns: "settings",
+      })}`;
     },
     urlSection: "end-user-auth",
     path: PATHS.CONTROLS_END_USER_AUTHENTICATION,
@@ -28,7 +30,10 @@ const SETUP_EXPERIENCE_NAV_ITEMS: ISideNavItem<ISetupExperienceCardProps>[] = [
   },
   {
     get title() {
-      return `2. ${i18n.t("controls.setupExperience.navItems.bootstrapPackage", { ns: "settings" })}`;
+      return `2. ${i18n.t(
+        "controls.setupExperience.navItems.bootstrapPackage",
+        { ns: "settings" }
+      )}`;
     },
     urlSection: "bootstrap-package",
     path: PATHS.CONTROLS_BOOTSTRAP_PACKAGE,
@@ -36,7 +41,9 @@ const SETUP_EXPERIENCE_NAV_ITEMS: ISideNavItem<ISetupExperienceCardProps>[] = [
   },
   {
     get title() {
-      return `3. ${i18n.t("controls.setupExperience.navItems.installSoftware", { ns: "settings" })}`;
+      return `3. ${i18n.t("controls.setupExperience.navItems.installSoftware", {
+        ns: "settings",
+      })}`;
     },
     urlSection: "install-software",
     path: PATHS.CONTROLS_INSTALL_SOFTWARE("macos"),
@@ -44,7 +51,9 @@ const SETUP_EXPERIENCE_NAV_ITEMS: ISideNavItem<ISetupExperienceCardProps>[] = [
   },
   {
     get title() {
-      return `4. ${i18n.t("controls.setupExperience.navItems.runScript", { ns: "settings" })}`;
+      return `4. ${i18n.t("controls.setupExperience.navItems.runScript", {
+        ns: "settings",
+      })}`;
     },
     urlSection: "run-script",
     path: PATHS.CONTROLS_RUN_SCRIPT,
@@ -52,7 +61,9 @@ const SETUP_EXPERIENCE_NAV_ITEMS: ISideNavItem<ISetupExperienceCardProps>[] = [
   },
   {
     get title() {
-      return `5. ${i18n.t("controls.setupExperience.navItems.setupAssistant", { ns: "settings" })}`;
+      return `5. ${i18n.t("controls.setupExperience.navItems.setupAssistant", {
+        ns: "settings",
+      })}`;
     },
     urlSection: "setup-assistant",
     path: PATHS.CONTROLS_SETUP_ASSISTANT,

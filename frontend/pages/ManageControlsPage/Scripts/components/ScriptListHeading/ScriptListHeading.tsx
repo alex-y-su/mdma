@@ -14,7 +14,9 @@ const ScriptListHeading = ({ onClickAddScript }: IScriptListHeading) => {
   const { t } = useTranslation("settings");
   return (
     <div className={baseClass}>
-      <span className={`${baseClass}__heading-title`}>{t("controls.scripts.title")}</span>
+      <span className={`${baseClass}__heading-title`}>
+        {t("controls.scripts.title")}
+      </span>
       <span className={`${baseClass}__heading-actions`}>
         <GitOpsModeTooltipWrapper
           position="left"

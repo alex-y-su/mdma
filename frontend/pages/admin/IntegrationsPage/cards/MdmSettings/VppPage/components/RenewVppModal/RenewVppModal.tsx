@@ -49,10 +49,7 @@ const RenewVppModal = ({
 
     try {
       await mdmAppleAPI.renewVppToken(tokenId, tokenFile);
-      renderFlash(
-        "success",
-        t("mdmSettings.vpp.renewModal.renewSuccess")
-      );
+      renderFlash("success", t("mdmSettings.vpp.renewModal.renewSuccess"));
       onRenewedToken();
     } catch (e) {
       renderFlash("error", getErrorMessage(e));

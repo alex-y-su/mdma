@@ -77,7 +77,9 @@ const getPolicyRefreshTime = (ms: number, t: any): string => {
 const getTooltip = (osqueryPolicyMs: number, t: any): JSX.Element => {
   return (
     <>
-      {t("results.policyRefresh", { time: getPolicyRefreshTime(osqueryPolicyMs, t) })}
+      {t("results.policyRefresh", {
+        time: getPolicyRefreshTime(osqueryPolicyMs, t),
+      })}
     </>
   );
 };
@@ -138,12 +140,20 @@ const generateTableHeaders = (
                       offset={8}
                       positionStrategy="fixed"
                     >
-                      {t ? t("columns.criticalTooltip") : "This policy has been marked as critical."}
+                      {t
+                        ? t("columns.criticalTooltip")
+                        : "This policy has been marked as critical."}
                     </ReactTooltip5>
                   </div>
                 )}
                 {viewingTeamPolicies && team_id === null && (
-                  <InheritedBadge tooltipContent={t ? t("results.inheritedTooltip") : "This policy runs on all hosts."} />
+                  <InheritedBadge
+                    tooltipContent={
+                      t
+                        ? t("results.inheritedTooltip")
+                        : "This policy runs on all hosts."
+                    }
+                  />
                 )}
               </>
             }
@@ -171,9 +181,13 @@ const generateTableHeaders = (
           const count = parseInt(cellProps.cell.value.toString(), 10);
           return (
             <LinkCell
-              value={t ? t("columns.hosts", { count }) : `${cellProps.cell.value} host${
-                cellProps.cell.value.toString() === "1" ? "" : "s"
-              }`}
+              value={
+                t
+                  ? t("columns.hosts", { count })
+                  : `${cellProps.cell.value} host${
+                      cellProps.cell.value.toString() === "1" ? "" : "s"
+                    }`
+              }
               path={getPathWithQueryParams(PATHS.MANAGE_HOSTS, {
                 policy_id: id,
                 policy_response: PolicyResponse.PASSING,
@@ -194,7 +208,9 @@ const generateTableHeaders = (
               offset={8}
               positionStrategy="fixed"
             >
-              {t ? getTooltip(next_update_ms, t) : getTooltip(next_update_ms, (key: string) => key)}
+              {t
+                ? getTooltip(next_update_ms, t)
+                : getTooltip(next_update_ms, (key: string) => key)}
             </ReactTooltip5>
           </div>
         );
@@ -216,9 +232,13 @@ const generateTableHeaders = (
           const count = parseInt(cellProps.cell.value.toString(), 10);
           return (
             <LinkCell
-              value={t ? t("columns.hosts", { count }) : `${cellProps.cell.value} host${
-                cellProps.cell.value.toString() === "1" ? "" : "s"
-              }`}
+              value={
+                t
+                  ? t("columns.hosts", { count })
+                  : `${cellProps.cell.value} host${
+                      cellProps.cell.value.toString() === "1" ? "" : "s"
+                    }`
+              }
               path={getPathWithQueryParams(PATHS.MANAGE_HOSTS, {
                 policy_id: id,
                 policy_response: PolicyResponse.FAILING,
@@ -239,7 +259,9 @@ const generateTableHeaders = (
               offset={8}
               positionStrategy="fixed"
             >
-              {t ? getTooltip(next_update_ms, t) : getTooltip(next_update_ms, (key: string) => key)}
+              {t
+                ? getTooltip(next_update_ms, t)
+                : getTooltip(next_update_ms, (key: string) => key)}
             </ReactTooltip5>
           </div>
         );

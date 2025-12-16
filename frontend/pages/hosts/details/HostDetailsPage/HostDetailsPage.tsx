@@ -554,12 +554,12 @@ const HostDetailsPage = ({
   );
 
   const featuresConfig = host?.team_id
-    ? teams?.find((t) => t.id === host.team_id)?.features
+    ? teams?.find((team) => team.id === host.team_id)?.features
     : config?.features;
 
   const getOSVersionRequirementFromMDMConfig = (hostPlatform: string) => {
     const mdmConfig = host?.team_id
-      ? teams?.find((t) => t.id === host.team_id)?.mdm
+      ? teams?.find((team) => team.id === host.team_id)?.mdm
       : config?.mdm;
 
     switch (hostPlatform) {

@@ -27,7 +27,9 @@ const ScriptPackageUploader = ({
   };
 
   const buttonType = forModal ? "brand-inverse-icon" : undefined;
-  const buttonMessage = forModal ? "Choose file" : t("controls.scripts.addScript");
+  const buttonMessage = forModal
+    ? "Choose file"
+    : t("controls.scripts.addScript");
   const extension = selectedFile?.name.match(/(sh|ps1)$/i)?.[1];
   let graphicName: ISupportedGraphicNames[];
   switch (extension) {

@@ -105,7 +105,10 @@ const generateTableHeaders = (
   const softwareTableHeaders: ISoftwareTitlesTableConfig[] = [
     {
       Header: (cellProps: ITableHeaderProps) => (
-        <HeaderCell value={t ? t("columns.name") : "Name"} isSortedDesc={cellProps.column.isSortedDesc} />
+        <HeaderCell
+          value={t ? t("columns.name") : "Name"}
+          isSortedDesc={cellProps.column.isSortedDesc}
+        />
       ),
       disableSortBy: false,
       accessor: "name",
@@ -168,7 +171,12 @@ const generateTableHeaders = (
           cellProps.row.original.source === "tgz_packages";
 
         if (vulnDetectionNotSupported) {
-          return <TextCell value={t ? t("columns.notSupported") : "Not supported"} grey />;
+          return (
+            <TextCell
+              value={t ? t("columns.notSupported") : "Not supported"}
+              grey
+            />
+          );
         }
         const vulnerabilities = getVulnerabilities(
           cellProps.row.original.versions ?? []

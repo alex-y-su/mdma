@@ -174,7 +174,10 @@ const DiskEncryption = ({
 
   return (
     <div className={baseClass}>
-      <SectionHeader title={t("controls.osSettings.diskEncryption.title")} alignLeftHeaderVertically />
+      <SectionHeader
+        title={t("controls.osSettings.diskEncryption.title")}
+        alignLeftHeaderVertically
+      />
       <PageDescription
         variant="right-panel"
         content={

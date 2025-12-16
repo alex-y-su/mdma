@@ -82,7 +82,11 @@ const CertificateDetailsModal = ({
   const showSignatureSection = Boolean(signing_algorithm);
 
   return (
-    <Modal className={baseClass} title={t("certificates.modal.title")} onExit={onExit}>
+    <Modal
+      className={baseClass}
+      title={t("certificates.modal.title")}
+      onExit={onExit}
+    >
       <>
         <div className={`${baseClass}__content`}>
           {showSubjectSection && (
@@ -238,7 +242,11 @@ const CertificateDetailsModal = ({
                 title={t("certificates.modal.certificateAuthority")}
                 value={
                   <TooltipTruncatedText
-                    value={certificate_authority ? t("certificates.modal.yes") : t("certificates.modal.no")}
+                    value={
+                      certificate_authority
+                        ? t("certificates.modal.yes")
+                        : t("certificates.modal.no")
+                    }
                   />
                 }
                 orientation="horizontal"

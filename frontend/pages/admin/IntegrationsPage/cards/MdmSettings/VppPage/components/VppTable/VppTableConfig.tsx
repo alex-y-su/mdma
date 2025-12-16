@@ -25,9 +25,21 @@ type ITableHeaderProps = IHeaderProps<IMdmVppToken>;
 const getDefaultActionOptions = (): IDropdownOption[] => {
   const t = i18n.getFixedT(null, "settings");
   return [
-    { value: "editTeams", label: t("mdmSettings.vpp.table.actions.editTeams"), disabled: false },
-    { value: "renew", label: t("mdmSettings.vpp.table.actions.renew"), disabled: false },
-    { value: "delete", label: t("mdmSettings.vpp.table.actions.delete"), disabled: false },
+    {
+      value: "editTeams",
+      label: t("mdmSettings.vpp.table.actions.editTeams"),
+      disabled: false,
+    },
+    {
+      value: "renew",
+      label: t("mdmSettings.vpp.table.actions.renew"),
+      disabled: false,
+    },
+    {
+      value: "delete",
+      label: t("mdmSettings.vpp.table.actions.delete"),
+      disabled: false,
+    },
   ];
 };
 

@@ -20,9 +20,7 @@ const InfoModal = ({ onCancel }: IInfoModalProps): JSX.Element => {
       className={`${baseClass}__modal`}
     >
       <div>
-        <p>
-          {t("deviceUser.infoModal.paragraph1")}
-        </p>
+        <p>{t("deviceUser.infoModal.paragraph1")}</p>
         <p>{t("deviceUser.infoModal.paragraph2")}</p>
         <p>
           {t("deviceUser.infoModal.transparencyPrompt")}&nbsp;

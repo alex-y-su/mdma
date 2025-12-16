@@ -52,7 +52,11 @@ const AppStoreDetailsModal = ({
           />
           <DataSet
             title={t("activityDetails.appStoreModal.selfService")}
-            value={details.self_service ? t("activityDetails.appStoreModal.yes") : t("activityDetails.appStoreModal.no")}
+            value={
+              details.self_service
+                ? t("activityDetails.appStoreModal.yes")
+                : t("activityDetails.appStoreModal.no")
+            }
           />
           <DataSet
             title={
@@ -72,7 +76,9 @@ const AppStoreDetailsModal = ({
           />
         </div>
         <div className="modal-cta-wrap">
-          <Button onClick={onCancel}>{t("activityDetails.appStoreModal.done")}</Button>
+          <Button onClick={onCancel}>
+            {t("activityDetails.appStoreModal.done")}
+          </Button>
         </div>
       </>
     </Modal>

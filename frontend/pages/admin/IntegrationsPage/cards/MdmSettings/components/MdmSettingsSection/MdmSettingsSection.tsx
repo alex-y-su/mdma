@@ -78,10 +78,7 @@ const MdmSettingsSection = ({
   };
 
   return (
-    <SettingsSection
-      title={t("integrations.mdm.title")}
-      className={baseClass}
-    >
+    <SettingsSection title={t("integrations.mdm.title")} className={baseClass}>
       {renderContent()}
     </SettingsSection>
   );

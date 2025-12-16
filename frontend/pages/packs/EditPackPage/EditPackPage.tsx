@@ -168,10 +168,7 @@ const EditPacksPage = ({
             reasonIncludes: "Duplicate entry",
           })
         ) {
-          renderFlash(
-            "error",
-            t("packs.edit.duplicateNameError")
-          );
+          renderFlash("error", t("packs.edit.duplicateNameError"));
         } else {
           renderFlash("error", t("packs.edit.updateError"));
         }
@@ -207,7 +204,9 @@ const EditPacksPage = ({
   const onRemovePackQuerySubmit = () => {
     setIsUpdatingPack(true);
     const queryOrQueries =
-      selectedPackQueryIds.length === 1 ? t("packs.manage.query") : t("packs.manage.queries");
+      selectedPackQueryIds.length === 1
+        ? t("packs.manage.query")
+        : t("packs.manage.queries");
 
     const promises = selectedPackQueryIds.map((id: number) => {
       return scheduledQueriesAPI.destroy(id);
@@ -237,7 +236,10 @@ const EditPacksPage = ({
     <MainContent className={baseClass}>
       <>
         <div className={`${baseClass}__header-links`}>
-          <BackButton text={t("packs.edit.backButton")} path={PATHS.MANAGE_PACKS} />
+          <BackButton
+            text={t("packs.edit.backButton")}
+            path={PATHS.MANAGE_PACKS}
+          />
         </div>
         {storedPack && storedPackQueries && (
           <EditPackForm

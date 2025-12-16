@@ -27,7 +27,9 @@ const RefetchButton = ({ isFetching, onClick }: IRefetchButtonProps) => {
     [`${baseClass}__resending`]: isFetching,
   });
 
-  const buttonText = isFetching ? t("osSettingsModal.errorCell.resending") : t("osSettingsModal.errorCell.resend");
+  const buttonText = isFetching
+    ? t("osSettingsModal.errorCell.resending")
+    : t("osSettingsModal.errorCell.resend");
 
   // add additonal props when we need to display a tooltip for the button
 
@@ -73,10 +75,15 @@ const formatAndroidProfileNotAppliedError = (
  * certificate profiles. It return a JSX element with the formatted message or null if
  * the detail does not match any of the expected patterns.
  */
-const formatDetailCertificateError = (detail: IHostMdmProfile["detail"], t: (key: string) => string) => {
+const formatDetailCertificateError = (
+  detail: IHostMdmProfile["detail"],
+  t: (key: string) => string
+) => {
   const formattedCertificatesPath = (
     <b>
-      {t("osSettingsModal.errorCell.settings")} {">"} {t("osSettingsModal.errorCell.integrations")} {">"} {t("osSettingsModal.errorCell.certificates")}
+      {t("osSettingsModal.errorCell.settings")} {">"}{" "}
+      {t("osSettingsModal.errorCell.integrations")} {">"}{" "}
+      {t("osSettingsModal.errorCell.certificates")}
     </b>
   );
 
@@ -86,8 +93,13 @@ const formatDetailCertificateError = (detail: IHostMdmProfile["detail"], t: (key
   if (matchTokenErr?.groups) {
     return (
       <>
-        {t("osSettingsModal.errorCell.couldntGetCert")} <b>{t("osSettingsModal.errorCell.apiToken")}</b>{" "}
-        {t("osSettingsModal.errorCell.configuredIn")} <b>{matchTokenErr.groups.ca}</b> {t("osSettingsModal.errorCell.certAuthorityInvalid")} {t("osSettingsModal.errorCell.pleaseGoTo")} {formattedCertificatesPath}, {t("osSettingsModal.errorCell.correctAndResend")}.
+        {t("osSettingsModal.errorCell.couldntGetCert")}{" "}
+        <b>{t("osSettingsModal.errorCell.apiToken")}</b>{" "}
+        {t("osSettingsModal.errorCell.configuredIn")}{" "}
+        <b>{matchTokenErr.groups.ca}</b>{" "}
+        {t("osSettingsModal.errorCell.certAuthorityInvalid")}{" "}
+        {t("osSettingsModal.errorCell.pleaseGoTo")} {formattedCertificatesPath},{" "}
+        {t("osSettingsModal.errorCell.correctAndResend")}.
       </>
     );
   }
@@ -101,13 +113,15 @@ const formatDetailCertificateError = (detail: IHostMdmProfile["detail"], t: (key
   if (matchProfileIdErr?.groups || matchDeletedProfileErr?.groups) {
     return (
       <>
-        {t("osSettingsModal.errorCell.couldntGetCert")} <b>{t("osSettingsModal.errorCell.profileGuid")}</b>{" "}
+        {t("osSettingsModal.errorCell.couldntGetCert")}{" "}
+        <b>{t("osSettingsModal.errorCell.profileGuid")}</b>{" "}
         {t("osSettingsModal.errorCell.configuredIn")}{" "}
         <b>
           {matchProfileIdErr?.groups?.ca || matchDeletedProfileErr?.groups?.ca}
         </b>{" "}
-        {t("osSettingsModal.errorCell.certAuthorityDoesntExist")} {t("osSettingsModal.errorCell.pleaseGoTo")}{" "}
-        {formattedCertificatesPath}, {t("osSettingsModal.errorCell.correctAndResend")}.
+        {t("osSettingsModal.errorCell.certAuthorityDoesntExist")}{" "}
+        {t("osSettingsModal.errorCell.pleaseGoTo")} {formattedCertificatesPath},{" "}
+        {t("osSettingsModal.errorCell.correctAndResend")}.
       </>
     );
   }
@@ -118,10 +132,15 @@ const formatDetailCertificateError = (detail: IHostMdmProfile["detail"], t: (key
   if (matchFleetVarErr?.groups) {
     return (
       <>
-        {t("osSettingsModal.errorCell.fleetCouldntPopulate")} {matchFleetVarErr.groups.field} {t("osSettingsModal.errorCell.because")}{" "}
-        <b>{matchFleetVarErr.groups.ca}</b> {t("osSettingsModal.errorCell.certAuthorityDoesntExist")} {t("osSettingsModal.errorCell.pleaseGoTo")}{" "}
+        {t("osSettingsModal.errorCell.fleetCouldntPopulate")}{" "}
+        {matchFleetVarErr.groups.field} {t("osSettingsModal.errorCell.because")}{" "}
+        <b>{matchFleetVarErr.groups.ca}</b>{" "}
+        {t("osSettingsModal.errorCell.certAuthorityDoesntExist")}{" "}
+        {t("osSettingsModal.errorCell.pleaseGoTo")}{" "}
         <b>
-          {t("osSettingsModal.errorCell.settings")} {">"} {t("osSettingsModal.errorCell.integrations")} {">"} {t("osSettingsModal.errorCell.certificates")}
+          {t("osSettingsModal.errorCell.settings")} {">"}{" "}
+          {t("osSettingsModal.errorCell.integrations")} {">"}{" "}
+          {t("osSettingsModal.errorCell.certificates")}
         </b>
         , {t("osSettingsModal.errorCell.addAndResendProfile")}.
       </>
@@ -136,7 +155,10 @@ const formatDetailCertificateError = (detail: IHostMdmProfile["detail"], t: (key
  * host IdP email profiles. It returns a JSX element with the formatted message or null if
  * the detail does not match any of the expected patterns.
  */
-const formatDetailIdpEmailError = (detail: IHostMdmProfile["detail"], t: (key: string) => string) => {
+const formatDetailIdpEmailError = (
+  detail: IHostMdmProfile["detail"],
+  t: (key: string) => string
+) => {
   if (detail.includes("There is no IdP email for this host.")) {
     return (
       <>

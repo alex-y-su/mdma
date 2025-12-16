@@ -27,9 +27,7 @@ const IosOrIpadLockPreview = () => {
       className={`${baseClass}__ios-ipad-lock-preview`}
     >
       <h3>{t("modals.lock.endUserExperience")}</h3>
-      <p>
-        {t("modals.lock.organizationNameNote")}
-      </p>
+      <p>{t("modals.lock.organizationNameNote")}</p>
       <img src={IphoneLockPreview} alt="iPhone with a lock screen message" />
     </Card>
   );
@@ -71,25 +69,23 @@ const LockModal = ({
   const renderDescription = () => {
     if (isIPadOrIPhone(platform)) {
       // if (true) {
-      return (
-        <p>
-          {t("modals.lock.descriptionIos")}
-        </p>
-      );
+      return <p>{t("modals.lock.descriptionIos")}</p>;
     }
 
     return (
       <>
         <p>{t("modals.lock.description")}</p>
-        {platform === "darwin" && (
-          <p>{t("modals.lock.generatePin")}</p>
-        )}
+        {platform === "darwin" && <p>{t("modals.lock.generatePin")}</p>}
       </>
     );
   };
 
   return (
-    <Modal className={baseClass} title={t("modals.lock.title")} onExit={onClose}>
+    <Modal
+      className={baseClass}
+      title={t("modals.lock.title")}
+      onExit={onClose}
+    >
       <>
         <div className={`${baseClass}__modal-content`}>
           <div className={`${baseClass}__description`}>

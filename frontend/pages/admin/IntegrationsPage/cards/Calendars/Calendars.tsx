@@ -172,10 +172,7 @@ const Calendars = (): JSX.Element => {
 
     try {
       await configAPI.update({ integrations: destination });
-      renderFlash(
-        "success",
-        t("integrations.calendars.saveSuccess")
-      );
+      renderFlash("success", t("integrations.calendars.saveSuccess"));
       refetchConfig();
     } catch (e) {
       renderFlash("error", t("integrations.calendars.saveError"));

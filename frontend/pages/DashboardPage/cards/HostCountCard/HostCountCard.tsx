@@ -51,7 +51,9 @@ const HostCountCard = ({
 
   const renderCount = () => {
     return notSupported ? (
-      <div className={`${baseClass}__not-supported-text`}>{t("hostCountCard.notSupported")}</div>
+      <div className={`${baseClass}__not-supported-text`}>
+        {t("hostCountCard.notSupported")}
+      </div>
     ) : (
       <div
         className={`${baseClass}__count ${baseClass}__count--${kebabCase(

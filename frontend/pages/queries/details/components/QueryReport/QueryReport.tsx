@@ -105,13 +105,7 @@ const QueryReport = ({
     if (isClipped) {
       return (
         <>
-          <TooltipWrapper
-            tipContent={
-              <>
-                {t("report.clippedTooltip")}
-              </>
-            }
-          >
+          <TooltipWrapper tipContent={<>{t("report.clippedTooltip")}</>}>
             {generateResultsCountText(t("report.results"), count)}
           </TooltipWrapper>
         </>

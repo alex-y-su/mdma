@@ -179,7 +179,9 @@ const TurnOffAndroidMdm = ({ onClickTurnOff }: ITurnOffAndroidMdmProps) => {
         }
         value={data.android_enterprise_id}
       />
-      <Button onClick={onClickTurnOff}>{t("mdmSettings.android.turnOffButton")}</Button>
+      <Button onClick={onClickTurnOff}>
+        {t("mdmSettings.android.turnOffButton")}
+      </Button>
     </>
   );
 };

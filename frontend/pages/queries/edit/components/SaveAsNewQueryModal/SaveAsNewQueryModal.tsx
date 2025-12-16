@@ -159,7 +159,10 @@ const SaveAsNewQueryModal = ({
     try {
       const { query: newQuery } = await queryAPI.create(createBody);
       setIsSaving(false);
-      renderFlash("success", t("modals.saveAsNewQuery.success", { name: newQuery.name }));
+      renderFlash(
+        "success",
+        t("modals.saveAsNewQuery.success", { name: newQuery.name })
+      );
       router.push(
         getPathWithQueryParams(PATHS.QUERY_DETAILS(newQuery.id), {
           team_id: newQuery.team_id,
@@ -171,11 +174,16 @@ const SaveAsNewQueryModal = ({
       if (reason.includes("already exists")) {
         let teamText;
         if (teamId !== APP_CONTEXT_ALL_TEAMS_ID) {
-          teamText = teamName ? t("editPage.teamText", { teamName }) : "this team";
+          teamText = teamName
+            ? t("editPage.teamText", { teamName })
+            : "this team";
         } else {
           teamText = t("editPage.allTeams");
         }
-        errFlash = t("modals.saveAsNewQuery.duplicateError", { name: queryName, team: teamText });
+        errFlash = t("modals.saveAsNewQuery.duplicateError", {
+          name: queryName,
+          team: teamText,
+        });
       } else if (reason.includes(INVALID_PLATFORMS_REASON)) {
         errFlash = INVALID_PLATFORMS_FLASH_MESSAGE;
       }
@@ -201,7 +209,9 @@ const SaveAsNewQueryModal = ({
         />
         {isPremiumTier && (userTeams?.length || 0) > 1 && (
           <div className="form-field">
-            <div className="form-field__label">{t("modals.saveAsNewQuery.teamLabel")}</div>
+            <div className="form-field__label">
+              {t("modals.saveAsNewQuery.teamLabel")}
+            </div>
             <TeamsDropdown
               asFormField
               currentUserTeams={userTeams || []}

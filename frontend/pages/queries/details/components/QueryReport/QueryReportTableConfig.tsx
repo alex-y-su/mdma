@@ -32,7 +32,10 @@ const _unshiftHostname = (headers: IQueryReportTableColumnConfig[]) => {
     // remove hostname header from headers
     const [displayNameHeader] = newHeaders.splice(displayNameIndex, 1);
     // reformat title and insert at start of headers array
-    newHeaders.unshift({ ...displayNameHeader, id: i18n.t("queries:report.tableHost") });
+    newHeaders.unshift({
+      ...displayNameHeader,
+      id: i18n.t("queries:report.tableHost"),
+    });
   }
   // TODO: Remove after v5 when host_hostname is removed rom API response.
   const hostNameIndex = headers.findIndex((h) => h.id === "host_hostname");

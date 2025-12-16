@@ -151,14 +151,21 @@ const EndUserMigrationSection = ({ router }: IEndUserMigrationSectionProps) => {
           className={`${baseClass}__abm-connect-message`}
           header={t("mdmSettings.endUserMigration.connectHeader")}
           info={t("mdmSettings.endUserMigration.connectInfo")}
-          primaryButton={<Button onClick={onClickConnect}>{t("mdmSettings.endUserMigration.connect")}</Button>}
+          primaryButton={
+            <Button onClick={onClickConnect}>
+              {t("mdmSettings.endUserMigration.connect")}
+            </Button>
+          }
         />
       </div>
     );
   }
 
   return (
-    <SettingsSection className={baseClass} title={t("mdmSettings.endUserMigration.title")}>
+    <SettingsSection
+      className={baseClass}
+      title={t("mdmSettings.endUserMigration.title")}
+    >
       <form>
         <p>{t("mdmSettings.endUserMigration.description")}</p>
         {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
@@ -179,7 +186,9 @@ const EndUserMigrationSection = ({ router }: IEndUserMigrationSectionProps) => {
         />
         <div className={`form ${formClasses}`}>
           <div className={`form-field ${baseClass}__mode-field`}>
-            <div className="form-field__label">{t("mdmSettings.endUserMigration.mode")}</div>
+            <div className="form-field__label">
+              {t("mdmSettings.endUserMigration.mode")}
+            </div>
             <Radio
               disabled={!formData.isEnabled || isGitOpsModeEnabled}
               checked={formData.mode === "voluntary"}
@@ -206,16 +215,17 @@ const EndUserMigrationSection = ({ router }: IEndUserMigrationSectionProps) => {
               ? t("mdmSettings.endUserMigration.voluntaryDescription")
               : t("mdmSettings.endUserMigration.forcedDescription")}
           </p>
-          <p>
-            {t("mdmSettings.endUserMigration.editOrgInfo")}
-          </p>
+          <p>{t("mdmSettings.endUserMigration.editOrgInfo")}</p>
           <InputField
             readOnly={!formData.isEnabled || isGitOpsModeEnabled}
             name="webhook_url"
             label={t("mdmSettings.endUserMigration.webhookUrl")}
             value={formData.webhookUrl}
             onChange={onChangeWebhookUrl}
-            error={!isValidWebhookUrl && t("mdmSettings.endUserMigration.validation.validUrl")}
+            error={
+              !isValidWebhookUrl &&
+              t("mdmSettings.endUserMigration.validation.validUrl")
+            }
             helpText={t("mdmSettings.endUserMigration.webhookUrlHelp")}
           />
         </div>

@@ -299,10 +299,7 @@ const DeviceUserPage = ({
               }, REFETCH_HOST_DETAILS_POLLING_INTERVAL);
             } else {
               resetHostRefetchStates();
-              renderFlash(
-                "error",
-                t("detailsPage.banners.offlineRefetch")
-              );
+              renderFlash("error", t("detailsPage.banners.offlineRefetch"));
             }
           } else {
             const totalElapsedTime = Date.now() - refetchStartTime;
@@ -314,17 +311,11 @@ const DeviceUserPage = ({
                 }, REFETCH_HOST_DETAILS_POLLING_INTERVAL);
               } else {
                 resetHostRefetchStates();
-                renderFlash(
-                  "error",
-                  t("detailsPage.banners.offlineRefetch")
-                );
+                renderFlash("error", t("detailsPage.banners.offlineRefetch"));
               }
             } else {
               resetHostRefetchStates();
-              renderFlash(
-                "error",
-                t("detailsPage.banners.refetchTrouble")
-              );
+              renderFlash("error", t("detailsPage.banners.refetchTrouble"));
             }
           }
         } else {
@@ -559,7 +550,7 @@ const DeviceUserPage = ({
     let tabPaths = (isPremiumTier
       ? PREMIUM_TAB_PATHS
       : FREE_TAB_PATHS
-    ).map((t) => t(deviceAuthToken));
+    ).map((pathFn) => pathFn(deviceAuthToken));
     if (!hasSelfService) {
       tabPaths = tabPaths.filter((path) => !path.includes("self-service"));
     }

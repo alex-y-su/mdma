@@ -24,7 +24,9 @@ const RemovePackQueryModal = ({
 }: IRemovePackQueryModalProps): JSX.Element => {
   const { t } = useTranslation("queries");
   const queryOrQueries =
-    selectedQuery || selectedQueryIds?.length === 1 ? t("packs.manage.query") : t("packs.manage.queries");
+    selectedQuery || selectedQueryIds?.length === 1
+      ? t("packs.manage.query")
+      : t("packs.manage.queries");
   return (
     <Modal
       title={t("packs.modals.removeQuery.title")}

@@ -29,7 +29,8 @@ const QueryAutomationsStatusIndicator = ({
       ? {
           tooltipText: (
             <>
-              <strong>{t("automations.title")}</strong> {t("automations.pausedMessage")}
+              <strong>{t("automations.title")}</strong>{" "}
+              {t("automations.pausedMessage")}
             </>
           ),
         }

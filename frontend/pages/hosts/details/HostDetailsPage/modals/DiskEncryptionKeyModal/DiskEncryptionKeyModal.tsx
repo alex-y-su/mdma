@@ -66,7 +66,9 @@ const DiskEncryptionKeyModal = ({
             />
           </p>
           <div className="modal-cta-wrap">
-            <Button onClick={onCancel}>{t("modals.diskEncryptionKey.done")}</Button>
+            <Button onClick={onCancel}>
+              {t("modals.diskEncryptionKey.done")}
+            </Button>
           </div>
         </>
       )}

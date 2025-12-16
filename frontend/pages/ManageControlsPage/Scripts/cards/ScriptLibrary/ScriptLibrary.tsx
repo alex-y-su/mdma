@@ -180,7 +180,10 @@ const ScriptLibrary = ({ router, teamId, location }: IScriptLibraryProps) => {
 
   return (
     <div className={baseClass}>
-      <SectionHeader title={t("controls.scripts.library")} alignLeftHeaderVertically />
+      <SectionHeader
+        title={t("controls.scripts.library")}
+        alignLeftHeaderVertically
+      />
       {config.server_settings.scripts_disabled && renderScriptsDisabledBanner()}
       {renderScriptsList()}
       {!isLoading && currentPage === 0 && !scripts?.length && (

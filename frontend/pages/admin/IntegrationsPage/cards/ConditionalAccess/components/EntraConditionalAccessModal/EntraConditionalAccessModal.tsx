@@ -28,7 +28,9 @@ interface IFormErrors {
 const validate = (formData: IFormData, t: any) => {
   const errs: IFormErrors = {};
   if (!formData[MSETID]) {
-    errs[MSETID] = t("integrations.conditionalAccess.entra.validation.tenantIdRequired");
+    errs[MSETID] = t(
+      "integrations.conditionalAccess.entra.validation.tenantIdRequired"
+    );
   }
   return errs;
 };

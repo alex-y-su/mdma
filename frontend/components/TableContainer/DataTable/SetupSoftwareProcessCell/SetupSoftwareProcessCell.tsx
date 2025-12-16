@@ -15,7 +15,8 @@ const SetupSoftwareProcessCell = ({ name }: ISetupSoftwareProcessCell) => {
     <span className={baseClass}>
       <SoftwareIcon name={name || ""} size="small" />
       <div>
-        {t("setupProcess.install")} <b>{name || t("setupProcess.unknownSoftware")}</b>
+        {t("setupProcess.install")}{" "}
+        <b>{name || t("setupProcess.unknownSoftware")}</b>
       </div>
     </span>
   );

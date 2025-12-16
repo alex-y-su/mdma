@@ -385,10 +385,7 @@ const SoftwareSelfService = ({
       },
       onError: () => {
         pendingSoftwareIdsRef.current = new Set();
-        renderFlash(
-          "error",
-          t("selfService.errorCheckingPending")
-        );
+        renderFlash("error", t("selfService.errorCheckingPending"));
       },
     }
   );
@@ -441,11 +438,19 @@ const SoftwareSelfService = ({
         // We only show toast message if API returns an error
         renderFlash(
           "error",
-          isScriptPackage ? t("selfService.errorRun") : t("selfService.errorInstall")
+          isScriptPackage
+            ? t("selfService.errorRun")
+            : t("selfService.errorInstall")
         );
       }
     },
-    [deviceToken, onInstallOrUninstall, registerUserSoftwareAction, renderFlash, t]
+    [
+      deviceToken,
+      onInstallOrUninstall,
+      registerUserSoftwareAction,
+      renderFlash,
+      t,
+    ]
   );
 
   const onClickUninstallAction = useCallback(
@@ -485,7 +490,13 @@ const SoftwareSelfService = ({
         renderFlash("error", t("selfService.errorUpdate"));
       }
     },
-    [deviceToken, registerUserSoftwareAction, onInstallOrUninstall, renderFlash, t]
+    [
+      deviceToken,
+      registerUserSoftwareAction,
+      onInstallOrUninstall,
+      renderFlash,
+      t,
+    ]
   );
 
   const onClickUpdateAll = useCallback(async () => {
@@ -522,7 +533,9 @@ const SoftwareSelfService = ({
           id: `update-error-${software.id}`,
           alertType: "error",
           isVisible: true,
-          message: t("selfService.errorUpdateSoftware", { name: software.name }),
+          message: t("selfService.errorUpdateSoftware", {
+            name: software.name,
+          }),
           persistOnPageChange: false,
         })
       );

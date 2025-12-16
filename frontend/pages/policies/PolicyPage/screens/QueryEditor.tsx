@@ -75,7 +75,7 @@ const QueryEditor = ({
     if (storedPolicyError) {
       renderFlash(
         "error",
-        t ? "Something went wrong retrieving your policy. Please try again." : "Something went wrong retrieving your policy. Please try again."
+        "Something went wrong retrieving your policy. Please try again."
       );
     }
   }, []);

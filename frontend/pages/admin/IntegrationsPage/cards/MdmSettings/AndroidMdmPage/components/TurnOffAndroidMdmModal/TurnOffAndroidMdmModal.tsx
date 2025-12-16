@@ -37,14 +37,14 @@ const TurnOffAndroidMdmModal = ({
   };
 
   return (
-    <Modal title={t("mdmSettings.android.turnOffModalTitle")} className={baseClass} onExit={onExit}>
+    <Modal
+      title={t("mdmSettings.android.turnOffModalTitle")}
+      className={baseClass}
+      onExit={onExit}
+    >
       <>
-        <p>
-          {t("mdmSettings.android.turnOffModalWarning1")}
-        </p>
-        <p>
-          {t("mdmSettings.android.turnOffModalWarning2")}
-        </p>
+        <p>{t("mdmSettings.android.turnOffModalWarning1")}</p>
+        <p>{t("mdmSettings.android.turnOffModalWarning2")}</p>
         <div className="modal-cta-wrap">
           <Button onClick={onTurnOffAndroidMdm} variant="alert">
             {t("mdmSettings.android.turnOffConfirm")}

@@ -48,9 +48,7 @@ const NoResults = ({
   // Collecting results state only shows if caching is enabled
   if (collectingResults && !disabledCaching) {
     const collectingResultsInfo = () => (
-      <>
-        {t("noResults.collectingMessage", { time: readableCheckbackTime })}
-      </>
+      <>{t("noResults.collectingMessage", { time: readableCheckbackTime })}</>
     );
 
     return (
@@ -69,36 +67,24 @@ const NoResults = ({
         if (disabledCachingGlobally) {
           return (
             <>
-              <div>
-                {t("noResults.preventsSaving")}
-              </div>
-              <div>
-                &nbsp; • {t("noResults.globallyDisabled")}
-              </div>
+              <div>{t("noResults.preventsSaving")}</div>
+              <div>&nbsp; • {t("noResults.globallyDisabled")}</div>
             </>
           );
         }
         if (discardDataEnabled) {
           return (
             <>
-              <div>
-                {t("noResults.preventsSaving")}
-              </div>
-              <div>
-                &nbsp; • {t("noResults.discardDataEnabled")}
-              </div>
+              <div>{t("noResults.preventsSaving")}</div>
+              <div>&nbsp; • {t("noResults.discardDataEnabled")}</div>
             </>
           );
         }
         if (!loggingSnapshot) {
           return (
             <>
-              <div>
-                {t("noResults.preventsSaving")}
-              </div>
-              <div>
-                &nbsp; • {t("noResults.loggingNotSnapshot")}
-              </div>
+              <div>{t("noResults.preventsSaving")}</div>
+              <div>&nbsp; • {t("noResults.loggingNotSnapshot")}</div>
             </>
           );
         }
@@ -116,12 +102,7 @@ const NoResults = ({
       ];
     }
     if (!queryInterval) {
-      return [
-        t("noResults.nothingToReport"),
-        <>
-          {t("noResults.noSchedule")}
-        </>,
-      ];
+      return [t("noResults.nothingToReport"), <>{t("noResults.noSchedule")}</>];
     }
     // No errors will be reported in V1
     // if (errorsOnly) {
@@ -132,12 +113,7 @@ const NoResults = ({
     //     </>
     //   );
     // }
-    return [
-      t("noResults.nothingToReportYet"),
-      <>
-        {t("noResults.noDataYet")}
-      </>,
-    ];
+    return [t("noResults.nothingToReportYet"), <>{t("noResults.noDataYet")}</>];
   };
 
   const [emptyHeader, emptyDetails] = getNoResultsInfo();

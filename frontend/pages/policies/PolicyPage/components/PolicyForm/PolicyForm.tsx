@@ -636,9 +636,7 @@ const PolicyForm = ({
           isLeftLabel
           disabled={gitOpsModeEnabled}
         >
-          <TooltipWrapper
-            tipContent={t("create.criticalTooltip")}
-          >
+          <TooltipWrapper tipContent={t("create.criticalTooltip")}>
             {t("details.critical")}
           </TooltipWrapper>
         </Checkbox>

@@ -29,10 +29,7 @@ const WipeModal = ({ id, hostName, onSuccess, onClose }: IWipeModalProps) => {
     try {
       await hostAPI.wipeHost(id);
       onSuccess();
-      renderFlash(
-        "success",
-        t("modals.wipe.successMessage")
-      );
+      renderFlash("success", t("modals.wipe.successMessage"));
     } catch (e) {
       renderFlash("error", getErrorReason(e));
     }
@@ -41,7 +38,11 @@ const WipeModal = ({ id, hostName, onSuccess, onClose }: IWipeModalProps) => {
   };
 
   return (
-    <Modal className={baseClass} title={t("modals.wipe.title")} onExit={onClose}>
+    <Modal
+      className={baseClass}
+      title={t("modals.wipe.title")}
+      onExit={onClose}
+    >
       <>
         <div className={`${baseClass}__modal-content`}>
           <p>{t("modals.wipe.description")}</p>

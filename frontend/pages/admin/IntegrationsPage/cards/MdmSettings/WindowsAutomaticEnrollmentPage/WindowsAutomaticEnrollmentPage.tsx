@@ -50,12 +50,8 @@ const WindowsAutomaticEnrollmentPage = () => {
             </>
           }
         />
-        <p>
-          {t("mdmSettings.windows.entraWarning1")}
-        </p>
-        <p>
-          {t("mdmSettings.windows.entraWarning2")}
-        </p>
+        <p>{t("mdmSettings.windows.entraWarning1")}</p>
+        <p>{t("mdmSettings.windows.entraWarning2")}</p>
         {/* Ideally we'd use the native browser list styles and css to display
         the list numbers but this does not allow us to style the list items as we'd
         like so we write the numbers in the JSX instead. */}
@@ -70,16 +66,12 @@ const WindowsAutomaticEnrollmentPage = () => {
           </li>
           <li>
             <span>2.</span>
-            <p>
-              {t("mdmSettings.windows.entraStep2")}
-            </p>
+            <p>{t("mdmSettings.windows.entraStep2")}</p>
           </li>
           <li>
             <span>3.</span>
             <div>
-              <p>
-                {t("mdmSettings.windows.entraStep3")}
-              </p>
+              <p>{t("mdmSettings.windows.entraStep3")}</p>
               <InfoBanner
                 className={`${baseClass}__cloud-customer-banner`}
                 color="purple"
@@ -87,24 +79,18 @@ const WindowsAutomaticEnrollmentPage = () => {
               >
                 <div className={`${baseClass}__banner-content`}>
                   <Icon name="error-outline" color="ui-fleet-black-75" />
-                  <p>
-                    {t("mdmSettings.windows.entraCloudBanner")}
-                  </p>
+                  <p>{t("mdmSettings.windows.entraCloudBanner")}</p>
                 </div>
               </InfoBanner>
             </div>
           </li>
           <li>
             <span>4.</span>
-            <p>
-              {t("mdmSettings.windows.entraStep4")}
-            </p>
+            <p>{t("mdmSettings.windows.entraStep4")}</p>
           </li>
           <li>
             <span>5.</span>
-            <p>
-              {t("mdmSettings.windows.entraStep5")}
-            </p>
+            <p>{t("mdmSettings.windows.entraStep5")}</p>
           </li>
           <li>
             <span>6.</span>
@@ -113,9 +99,7 @@ const WindowsAutomaticEnrollmentPage = () => {
           <li>
             <span>7.</span>
             <div>
-              <p>
-                {t("mdmSettings.windows.entraStep7")}
-              </p>
+              <p>{t("mdmSettings.windows.entraStep7")}</p>
               <div className={`${baseClass}__url-inputs-wrapper`}>
                 <InputField
                   inputWrapperClass={`${baseClass}__url-input`}
@@ -142,33 +126,23 @@ const WindowsAutomaticEnrollmentPage = () => {
           </li>
           <li>
             <span>8.</span>
-            <p>
-              {t("mdmSettings.windows.entraStep8")}
-            </p>
+            <p>{t("mdmSettings.windows.entraStep8")}</p>
           </li>
           <li>
             <span>9.</span>
-            <p>
-              {t("mdmSettings.windows.entraStep9")}
-            </p>
+            <p>{t("mdmSettings.windows.entraStep9")}</p>
           </li>
           <li>
             <span>10.</span>
-            <p>
-              {t("mdmSettings.windows.entraStep10")}
-            </p>
+            <p>{t("mdmSettings.windows.entraStep10")}</p>
           </li>
           <li>
             <span>11.</span>
-            <p>
-              {t("mdmSettings.windows.entraStep11")}
-            </p>
+            <p>{t("mdmSettings.windows.entraStep11")}</p>
           </li>
           <li>
             <span>12.</span>
-            <p>
-              {t("mdmSettings.windows.entraStep12")}
-            </p>
+            <p>{t("mdmSettings.windows.entraStep12")}</p>
           </li>
           <li>
             <span>13.</span>
@@ -185,21 +159,15 @@ const WindowsAutomaticEnrollmentPage = () => {
           </li>
           <li>
             <span>14.</span>
-            <p>
-              {t("mdmSettings.windows.entraStep14")}
-            </p>
+            <p>{t("mdmSettings.windows.entraStep14")}</p>
           </li>
           <li>
             <span>15.</span>
-            <p>
-              {t("mdmSettings.windows.entraStep15")}
-            </p>
+            <p>{t("mdmSettings.windows.entraStep15")}</p>
           </li>
           <li>
             <span>16.</span>
-            <p>
-              {t("mdmSettings.windows.entraStep16")}
-            </p>
+            <p>{t("mdmSettings.windows.entraStep16")}</p>
           </li>
         </ol>
       </>

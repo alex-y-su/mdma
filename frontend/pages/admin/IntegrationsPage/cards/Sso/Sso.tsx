@@ -59,22 +59,33 @@ const validate = (formData: ISsoFormData, t: any) => {
 
   if (enableSso) {
     if (idpImageUrl && !validUrl({ url: idpImageUrl })) {
-      errors.idp_image_url = t("settings:integrations.sso.errors.invalid_url", { url: idpImageUrl });
+      errors.idp_image_url = t("settings:integrations.sso.errors.invalid_url", {
+        url: idpImageUrl,
+      });
     }
 
     if (!metadata) {
       if (!metadataUrl) {
-        errors.metadata_url = t("settings:integrations.sso.errors.metadata_url_required");
-        errors.metadata = t("settings:integrations.sso.errors.metadata_required");
+        errors.metadata_url = t(
+          "settings:integrations.sso.errors.metadata_url_required"
+        );
+        errors.metadata = t(
+          "settings:integrations.sso.errors.metadata_required"
+        );
       } else if (
         !validUrl({ url: metadataUrl, protocols: ["http", "https"] })
       ) {
-        errors.metadata_url = t("settings:integrations.sso.errors.invalid_url", { url: metadataUrl });
+        errors.metadata_url = t(
+          "settings:integrations.sso.errors.invalid_url",
+          { url: metadataUrl }
+        );
       }
     }
 
     if (!entityId) {
-      errors.entity_id = t("settings:integrations.sso.errors.entity_id_required");
+      errors.entity_id = t(
+        "settings:integrations.sso.errors.entity_id_required"
+      );
     }
 
     if (!idpName) {

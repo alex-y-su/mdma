@@ -100,7 +100,7 @@ const AccountPage = ({ router }: IAccountPageProps): JSX.Element | null => {
           : "";
         accountUpdatedFlashMessage += `: ${t("account.emailConfirmationSent", {
           senderAddress: senderAddressMessage,
-          email: updated.email
+          email: updated.email,
         })}`;
         setPendingEmail(updated.email);
       }
@@ -185,7 +185,8 @@ const AccountPage = ({ router }: IAccountPageProps): JSX.Element | null => {
         <>
           <InfoBanner>
             <p>
-              <strong>{t("account.apiTokenExpires")}</strong> {t("account.apiTokenInfo")}&nbsp;
+              <strong>{t("account.apiTokenExpires")}</strong>{" "}
+              {t("account.apiTokenInfo")}&nbsp;
               <CustomLink
                 url="https://fleetdm.com/docs/using-fleet/fleetctl-cli?utm_medium=fleetui&utm_campaign=get-api-token#using-fleetctl-with-an-api-only-user"
                 text={t("account.apiOnlyUserLink")}

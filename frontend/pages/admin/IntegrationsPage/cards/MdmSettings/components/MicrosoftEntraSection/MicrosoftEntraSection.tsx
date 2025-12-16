@@ -27,7 +27,10 @@ const MicrosoftEntraSection = ({
   };
 
   return (
-    <SettingsSection title={t("mdmSettings.windows.entraPageTitle")} className={baseClass}>
+    <SettingsSection
+      title={t("mdmSettings.windows.entraPageTitle")}
+      className={baseClass}
+    >
       {!isPremiumTier ? (
         <PremiumFeatureMessage alignment="left" />
       ) : (

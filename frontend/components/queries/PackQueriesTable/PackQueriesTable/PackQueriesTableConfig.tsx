@@ -80,7 +80,10 @@ interface IPackQueriesTableData extends IScheduledQuery {
 // NOTE: cellProps come from react-table
 // more info here https://react-table.tanstack.com/docs/api/useTable#cell-properties
 const generateTableHeaders = (
-  actionSelectHandler: (value: string, scheduled_query: IScheduledQuery) => void,
+  actionSelectHandler: (
+    value: string,
+    scheduled_query: IScheduledQuery
+  ) => void,
   t: any
 ): IDataColumn[] => {
   return [
@@ -156,9 +159,7 @@ const generateTableHeaders = (
       Header: () => {
         return (
           <div>
-            <TooltipWrapper
-              tipContent={t("packs.performanceImpactTooltip")}
-            >
+            <TooltipWrapper tipContent={t("packs.performanceImpactTooltip")}>
               {t("packs.columns.performanceImpact")}
             </TooltipWrapper>
           </div>

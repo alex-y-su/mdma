@@ -49,12 +49,8 @@ const DeleteVppModal = ({
       isContentDisabled={isDeleting}
     >
       <>
-        <p>
-          {t("mdmSettings.vpp.deleteModal.warning", { orgName })}
-        </p>
-        <p>
-          {t("mdmSettings.vpp.deleteModal.reEnableInfo")}
-        </p>
+        <p>{t("mdmSettings.vpp.deleteModal.warning", { orgName })}</p>
+        <p>{t("mdmSettings.vpp.deleteModal.reEnableInfo")}</p>
 
         <div className="modal-cta-wrap">
           <Button

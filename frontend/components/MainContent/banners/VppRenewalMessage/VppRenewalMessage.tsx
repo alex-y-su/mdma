@@ -26,9 +26,7 @@ const VppRenewalMessage = ({ expired }: IVppRenewalMessageProps) => {
         />
       }
     >
-      {expired
-        ? t("vpp.expiredMessage")
-        : t("vpp.expiringMessage")}
+      {expired ? t("vpp.expiredMessage") : t("vpp.expiringMessage")}
     </InfoBanner>
   );
 };

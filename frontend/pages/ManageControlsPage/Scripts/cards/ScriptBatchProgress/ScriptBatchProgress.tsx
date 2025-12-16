@@ -211,7 +211,10 @@ const ScriptBatchProgress = ({
   return (
     <>
       <div className={baseClass}>
-        <SectionHeader title={t("controls.scripts.batchDetails.progress")} alignLeftHeaderVertically />
+        <SectionHeader
+          title={t("controls.scripts.batchDetails.progress")}
+          alignLeftHeaderVertically
+        />
         <TabNav secondary>
           <Tabs
             selectedIndex={STATUS_BY_INDEX.indexOf(selectedStatus)}

@@ -162,7 +162,9 @@ const Secrets = () => {
           info={t("controls.secrets.addSecretDescription")}
           primaryButton={
             canEdit ? (
-              <Button onClick={onClickAddSecret}>{t("controls.secrets.addSecret")}</Button>
+              <Button onClick={onClickAddSecret}>
+                {t("controls.secrets.addSecret")}
+              </Button>
             ) : undefined
           }
         />

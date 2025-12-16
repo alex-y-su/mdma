@@ -54,8 +54,10 @@ const PerformanceImpactCell = ({
         return t("performanceImpact.denylistedTooltip");
       case "Undetermined":
         return t("performanceImpact.undeterminedTooltip", {
-          queryType: isHostSpecific ? t("performanceImpact.the") : t("performanceImpact.this"),
-          hostSuffix: isHostSpecific ? t("performanceImpact.onThisHost") : ""
+          queryType: isHostSpecific
+            ? t("performanceImpact.the")
+            : t("performanceImpact.this"),
+          hostSuffix: isHostSpecific ? t("performanceImpact.onThisHost") : "",
         });
       default:
         return null;
@@ -76,7 +78,13 @@ const PerformanceImpactCell = ({
           {indicator === "Excessive" && t("performanceImpact.excessive")}
           {indicator === "Undetermined" && t("performanceImpact.undetermined")}
           {indicator === "Denylisted" && t("performanceImpact.denylisted")}
-          {!["Minimal", "Considerable", "Excessive", "Undetermined", "Denylisted"].includes(indicator) && indicator}
+          {![
+            "Minimal",
+            "Considerable",
+            "Excessive",
+            "Undetermined",
+            "Denylisted",
+          ].includes(indicator) && indicator}
         </span>
       </span>
       <ReactTooltip

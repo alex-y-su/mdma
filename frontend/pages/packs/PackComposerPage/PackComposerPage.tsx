@@ -53,20 +53,14 @@ const PackComposerPage = ({ router }: IPackComposerPageProps): JSX.Element => {
         pack: { id: packID },
       } = await create(formData);
       router.push(PATHS.PACK(packID));
-      renderFlash(
-        "success",
-        t("packs.create.success")
-      );
+      renderFlash("success", t("packs.create.success"));
     } catch (e) {
       if (
         getErrorReason(e, {
           reasonIncludes: "Duplicate entry",
         })
       ) {
-        renderFlash(
-          "error",
-          t("packs.create.duplicateNameError")
-        );
+        renderFlash("error", t("packs.create.duplicateNameError"));
       } else {
         renderFlash("error", t("packs.create.error"));
       }

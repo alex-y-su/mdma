@@ -162,9 +162,7 @@ const PackQueryEditorModal = ({
       return;
     }
     if (frequency > MAX_OSQUERY_SCHEDULED_QUERY_INTERVAL) {
-      setErrorFrequency(
-        t("packs.modals.queryEditor.errors.frequencyMax")
-      );
+      setErrorFrequency(t("packs.modals.queryEditor.errors.frequencyMax"));
       return;
     }
 
@@ -253,7 +251,9 @@ const PackQueryEditorModal = ({
             className={`${editQuery?.name ? "save" : "add-query"}-loading`}
             isLoading={isUpdatingPack}
           >
-            {editQuery?.name ? t("packs.modals.queryEditor.saveButton") : t("packs.modals.queryEditor.addButton")}
+            {editQuery?.name
+              ? t("packs.modals.queryEditor.saveButton")
+              : t("packs.modals.queryEditor.addButton")}
           </Button>
           <Button onClick={onCancel} variant="inverse">
             {t("packs.modals.queryEditor.cancelButton")}

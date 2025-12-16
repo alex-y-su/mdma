@@ -106,11 +106,15 @@ const FailedEndUserInfoCard = ({
         <TooltipWrapper
           showArrow
           position="top"
-          tipContent={t("integrations.identity_provider.error_tooltip", { details })}
+          tipContent={t("integrations.identity_provider.error_tooltip", {
+            details,
+          })}
           underline={false}
           className={`${baseClass}__received-tooltip`}
         >
-          {t("integrations.identity_provider.failed_to_receive", { timeAgo: dateAgo(receivedAt) })}
+          {t("integrations.identity_provider.failed_to_receive", {
+            timeAgo: dateAgo(receivedAt),
+          })}
         </TooltipWrapper>
       </p>
     </SectionCard>

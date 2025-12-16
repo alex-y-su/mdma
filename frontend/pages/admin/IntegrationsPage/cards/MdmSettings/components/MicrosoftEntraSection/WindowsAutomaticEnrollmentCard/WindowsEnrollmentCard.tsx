@@ -19,7 +19,8 @@ const WindowsAutomaticEnrollmentCard = ({
       header={t("mdmSettings.windows.enrollmentCard.header")}
       cta={
         <Button onClick={viewDetails} variant="inverse" iconStroke>
-          {t("mdmSettings.windows.enrollmentCard.details")} <Icon name="chevron-right" color="ui-fleet-black-75" />
+          {t("mdmSettings.windows.enrollmentCard.details")}{" "}
+          <Icon name="chevron-right" color="ui-fleet-black-75" />
         </Button>
       }
     >

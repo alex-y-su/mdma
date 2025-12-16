@@ -214,13 +214,12 @@ const generateStatus = (
     return t ? t("settings:admin.users.statusValues.noAccess") : "No access";
   }
 
-  return type === "invite"
-    ? t
+  if (type === "invite") {
+    return t
       ? t("settings:admin.users.statusValues.invitePending")
-      : "Invite pending"
-    : t
-    ? t("settings:admin.users.statusValues.active")
-    : "Active";
+      : "Invite pending";
+  }
+  return t ? t("settings:admin.users.statusValues.active") : "Active";
 };
 
 const generateActionDropdownOptions = (

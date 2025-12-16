@@ -29,7 +29,8 @@ const FORM_VALIDATION_CONFIG: Record<
             query === undefined || query === "" || validateQuery(query).valid
           );
         },
-        message: (formData) => validateQuery(formData.preInstallQuery).error || "",
+        message: (formData) =>
+          validateQuery(formData.preInstallQuery).error || "",
       },
     ],
   },

@@ -178,6 +178,8 @@
       }
     },
     "integrations": {
+      "updateSuccess": "Настройки успешно обновлены.",
+      "updateError": "Не удалось обновить настройки",
       "navItems": {
         "ticketDestinations": "Системы заявок",
         "mdm": "MDM",
@@ -188,6 +190,49 @@
         "identityProvider": "Провайдер идентификации (IdP)",
         "hostStatusWebhook": "Вебхук статуса устройства",
         "conditionalAccess": "Условный доступ"
+      },
+      "addIntegrationModal": {
+        "title": "Добавить систему заявок",
+        "destinationLabel": "Система заявок",
+        "suggestDestination": "Предложить новую систему"
+      },
+      "deleteIntegrationModal": {
+        "title": "Удалить интеграцию",
+        "message": "Это действие удалит",
+        "integrationSuffix": "интеграцию.",
+        "automationsWarning": "Автоматизации, использующие эту интеграцию, будут отключены.",
+        "deleteButton": "Удалить",
+        "cancelButton": "Отмена"
+      },
+      "integrationForm": {
+        "testingConnection": "Проверка подключения",
+        "urlLabel": "Адрес",
+        "urlError": "{{url}} не является корректным HTTPS адресом",
+        "usernameLabel": "Имя пользователя",
+        "emailLabel": "Email",
+        "apiTokenLabel": "API-токен",
+        "projectKeyLabel": "Ключ проекта",
+        "projectKeyTooltip": {
+          "line1": "Чтобы найти ключ проекта Jira, перейдите в свой проект в",
+          "line2": "Jira. Ключ проекта находится в URL. Например, в",
+          "line3": "\"jira.example.com/projects/JRAEXAMPLE,\"",
+          "line4": "\"JRAEXAMPLE\" - это ключ вашего проекта."
+        },
+        "groupIdLabel": "ID группы",
+        "groupIdTooltip": {
+          "line1": "Чтобы найти ID группы Zendesk, выберите",
+          "adminPath1": "Администратор",
+          "adminPath2": "Люди",
+          "adminPath3": "Группы",
+          "line2": "Найдите группу и выберите её.",
+          "line3": "ID группы появится в поле поиска."
+        },
+        "addButton": "Добавить",
+        "completeFieldsTooltip": {
+          "line1": "Заполните все поля, чтобы сохранить",
+          "line2": "интеграцию."
+        },
+        "cancelButton": "Отмена"
       },
       "ticketDestinations": {
         "title": "Системы заявок",

@@ -13,13 +13,17 @@ interface IAggregateDisplayOption {
 const AGGREGATE_STATUS_DISPLAY_OPTIONS: IAggregateDisplayOption[] = [
   {
     value: "verified",
-    text: i18n.t("controls.osSettings.profileStatus.verified", { ns: "settings" }),
+    text: i18n.t("controls.osSettings.profileStatus.verified", {
+      ns: "settings",
+    }),
     iconName: "success",
     tooltipText: <>These hosts applied all OS settings. Fleet verified.</>,
   },
   {
     value: "verifying",
-    text: i18n.t("controls.osSettings.diskEncryption.status.verifying", { ns: "settings" }),
+    text: i18n.t("controls.osSettings.diskEncryption.status.verifying", {
+      ns: "settings",
+    }),
     iconName: "successPartial",
     tooltipText: (
       <>
@@ -30,7 +34,9 @@ const AGGREGATE_STATUS_DISPLAY_OPTIONS: IAggregateDisplayOption[] = [
   },
   {
     value: "pending",
-    text: i18n.t("controls.osSettings.profileStatus.pending", { ns: "settings" }),
+    text: i18n.t("controls.osSettings.profileStatus.pending", {
+      ns: "settings",
+    }),
     iconName: "pendingPartial",
     tooltipText: (
       <>
@@ -41,7 +47,9 @@ const AGGREGATE_STATUS_DISPLAY_OPTIONS: IAggregateDisplayOption[] = [
   },
   {
     value: "failed",
-    text: i18n.t("controls.osSettings.profileStatus.failed", { ns: "settings" }),
+    text: i18n.t("controls.osSettings.profileStatus.failed", {
+      ns: "settings",
+    }),
     iconName: "error",
     tooltipText: (
       <>

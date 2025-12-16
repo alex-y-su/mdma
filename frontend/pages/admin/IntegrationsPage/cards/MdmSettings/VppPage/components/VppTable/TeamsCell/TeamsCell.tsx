@@ -12,7 +12,10 @@ const baseClass = "teams-cell";
 
 const NUM_TEAMS_IN_TOOLTIP = 3;
 
-const generateCell = (teams: ITokenTeam[] | null, t: (key: string, options?: any) => string) => {
+const generateCell = (
+  teams: ITokenTeam[] | null,
+  t: (key: string, options?: any) => string
+) => {
   if (!teams) {
     return <TextCell value="---" grey />;
   }
@@ -33,7 +36,10 @@ const generateCell = (teams: ITokenTeam[] | null, t: (key: string, options?: any
   return <TextCell value={text} italic={italicize} />;
 };
 
-const condenseTeams = (teams: ITokenTeam[], t: (key: string, options?: any) => string) => {
+const condenseTeams = (
+  teams: ITokenTeam[],
+  t: (key: string, options?: any) => string
+) => {
   const condensed =
     (teams?.length &&
       teams
@@ -43,11 +49,19 @@ const condenseTeams = (teams: ITokenTeam[], t: (key: string, options?: any) => s
     [];
 
   return teams.length > NUM_TEAMS_IN_TOOLTIP
-    ? condensed.concat(t("mdmSettings.vpp.moreTeams", { count: teams.length - NUM_TEAMS_IN_TOOLTIP }))
+    ? condensed.concat(
+        t("mdmSettings.vpp.moreTeams", {
+          count: teams.length - NUM_TEAMS_IN_TOOLTIP,
+        })
+      )
     : condensed;
 };
 
-const generateTooltip = (teams: ITokenTeam[] | null, tooltipId: string, t: (key: string, options?: any) => string) => {
+const generateTooltip = (
+  teams: ITokenTeam[] | null,
+  tooltipId: string,
+  t: (key: string, options?: any) => string
+) => {
   if (teams === null || teams.length <= 1) {
     return null;
   }

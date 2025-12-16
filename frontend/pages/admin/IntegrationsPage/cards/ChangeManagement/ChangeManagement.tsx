@@ -44,9 +44,13 @@ const validate = (formData: IChangeManagementFormData, t: any) => {
   const { gitOpsModeEnabled, repoURL } = formData;
   if (gitOpsModeEnabled) {
     if (!repoURL) {
-      errs.repository_url = t("integrations.changeManagement.validation.repoUrlRequired");
+      errs.repository_url = t(
+        "integrations.changeManagement.validation.repoUrlRequired"
+      );
     } else if (!validUrl({ url: repoURL, protocols: ["http", "https"] })) {
-      errs.repository_url = t("integrations.changeManagement.validation.repoUrlProtocol");
+      errs.repository_url = t(
+        "integrations.changeManagement.validation.repoUrlProtocol"
+      );
     }
   }
   return errs;
@@ -127,7 +131,10 @@ const ChangeManagement = () => {
       renderFlash("success", t("integrations.changeManagement.updateSuccess"));
     } catch (e) {
       const message = getErrorReason(e);
-      renderFlash("error", message || t("integrations.changeManagement.updateError"));
+      renderFlash(
+        "error",
+        message || t("integrations.changeManagement.updateError")
+      );
     } finally {
       setIsUpdating(false);
     }
@@ -177,7 +184,9 @@ const ChangeManagement = () => {
           value={gitOpsModeEnabled}
           parseTarget
         >
-          <TooltipWrapper tipContent={t("integrations.changeManagement.gitOpsModeTooltip")}>
+          <TooltipWrapper
+            tipContent={t("integrations.changeManagement.gitOpsModeTooltip")}
+          >
             {t("integrations.changeManagement.enableGitOpsMode")}
           </TooltipWrapper>
         </Checkbox>

@@ -29,9 +29,7 @@ const CancelScriptBatchModal = ({
     >
       <>
         <div className={`${baseClass}__content`}>
-          <p>
-            {t("controls.scripts.modals.cancel.message")}
-          </p>
+          <p>{t("controls.scripts.modals.cancel.message")}</p>
           <p>
             If this script is currently running on a host, it will complete, but
             results won&rsquo;t appear in Fleet.

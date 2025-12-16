@@ -22,7 +22,10 @@ interface IScriptContentProps {
 
 const ScriptContent = ({ content, t }: IScriptContentProps) => {
   return (
-    <Textarea label={t("activityDetails.runScriptModal.scriptContent")} variant="code">
+    <Textarea
+      label={t("activityDetails.runScriptModal.scriptContent")}
+      variant="code"
+    >
       {content}
     </Textarea>
   );
@@ -70,7 +73,9 @@ const StatusMessageError = ({ message, t }: IStatusMessageErrorProps) => (
   <IconStatusMessage
     className={`${baseClass}__status-message`}
     iconName="error-outline"
-    message={<>{t("activityDetails.runScriptModal.statusError", { message })}</>}
+    message={
+      <>{t("activityDetails.runScriptModal.statusError", { message })}</>
+    }
   />
 );
 
@@ -107,7 +112,9 @@ const StatusMessage = ({
       const varText = timeOutValue ? (
         <>
           {t("activityDetails.runScriptModal.after")}{" "}
-          <TooltipWrapper tipContent={t("activityDetails.runScriptModal.timeoutTooltip")}>
+          <TooltipWrapper
+            tipContent={t("activityDetails.runScriptModal.timeoutTooltip")}
+          >
             {timeOutValue[0]}
           </TooltipWrapper>{" "}
         </>
@@ -115,7 +122,9 @@ const StatusMessage = ({
 
       const modMessage = (
         <>
-          {t("activityDetails.runScriptModal.timeout", { timeoutValue: varText })}
+          {t("activityDetails.runScriptModal.timeout", {
+            timeoutValue: varText,
+          })}
         </>
       );
       return <StatusMessageError message={modMessage} t={t} />;
@@ -212,7 +221,11 @@ const RunScriptDetailsModal = ({
     if (isLoading) {
       content = <Spinner />;
     } else if (isError) {
-      content = <DataError description={t("activityDetails.runScriptModal.dataError")} />;
+      content = (
+        <DataError
+          description={t("activityDetails.runScriptModal.dataError")}
+        />
+      );
     } else if (data) {
       const hostTimedOut =
         data.exit_code === null && data.host_timeout === true;
@@ -231,7 +244,9 @@ const RunScriptDetailsModal = ({
             message={data.output}
             t={t}
           />
-          {ranAdHocScript && <ScriptContent content={data.script_contents} t={t} />}
+          {ranAdHocScript && (
+            <ScriptContent content={data.script_contents} t={t} />
+          )}
           {showOutputText && (
             <ScriptOutput
               hostname={data.hostname}
@@ -257,7 +272,11 @@ const RunScriptDetailsModal = ({
   const renderFooter = () => (
     <ModalFooter
       isTopScrolling={isTopScrolling}
-      primaryButtons={<Button onClick={onCancel}>{t("activityDetails.runScriptModal.done")}</Button>}
+      primaryButtons={
+        <Button onClick={onCancel}>
+          {t("activityDetails.runScriptModal.done")}
+        </Button>
+      }
     />
   );
   return (

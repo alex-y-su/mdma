@@ -32,17 +32,17 @@ const EmptySoftwareTable = ({
   const { t } = useTranslation("software");
 
   const generateTypeText = (
-    tableName: string,
-    softwareFilter?: ISoftwareDropdownFilterVal,
-    vulnFilters?: ISoftwareVulnFiltersParams
+    tableNameValue: string,
+    softwareFilterValue?: ISoftwareDropdownFilterVal,
+    vulnFiltersValue?: ISoftwareVulnFiltersParams
   ) => {
-    if (softwareFilter === "installableSoftware") {
+    if (softwareFilterValue === "installableSoftware") {
       return t("emptyStates.installableSoftware");
     }
-    if (vulnFilters?.vulnerable) {
+    if (vulnFiltersValue?.vulnerable) {
       return t("emptyStates.vulnerableSoftware");
     }
-    return tableName;
+    return tableNameValue;
   };
 
   const softwareTypeText = generateTypeText(
@@ -76,7 +76,9 @@ const EmptySoftwareTable = ({
       };
     }
 
-    let info = t("emptyStates.noSoftwareDetected.infoExpecting", { softwareType: softwareTypeText });
+    let info = t("emptyStates.noSoftwareDetected.infoExpecting", {
+      softwareType: softwareTypeText,
+    });
     if (isAndroid(platform || "")) {
       info = `${info} ${t("emptyStates.noSoftwareDetected.infoAndroid")}`;
     }

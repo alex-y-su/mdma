@@ -20,14 +20,18 @@ const TooltipInnerContentActionRequired = (props: {
       <>
         {t("osSettingsModal.actionRequired.followThe")} {instructions}
         <br />
-        {t("osSettingsModal.actionRequired.onYour")} <b>{t("osSettingsModal.actionRequired.myDevice")}</b> {t("osSettingsModal.actionRequired.page")}.
+        {t("osSettingsModal.actionRequired.onYour")}{" "}
+        <b>{t("osSettingsModal.actionRequired.myDevice")}</b>{" "}
+        {t("osSettingsModal.actionRequired.page")}.
       </>
     );
   }
 
   return (
     <>
-      {t("osSettingsModal.actionRequired.askEndUser")} {instructions} {t("osSettingsModal.actionRequired.onTheir")} <b>{t("osSettingsModal.actionRequired.myDevice")}</b>{" "}
+      {t("osSettingsModal.actionRequired.askEndUser")} {instructions}{" "}
+      {t("osSettingsModal.actionRequired.onTheir")}{" "}
+      <b>{t("osSettingsModal.actionRequired.myDevice")}</b>{" "}
       {t("osSettingsModal.actionRequired.page")}.
     </>
   );

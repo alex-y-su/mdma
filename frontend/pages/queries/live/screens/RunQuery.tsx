@@ -161,10 +161,7 @@ const RunQuery = ({
 
   const onRunQuery = debounce(async () => {
     if (!lastEditedQueryBody) {
-      renderFlash(
-        "error",
-        t("liveQuery.runError")
-      );
+      renderFlash("error", t("liveQuery.runError"));
       return false;
     }
 
@@ -184,20 +181,11 @@ const RunQuery = ({
     } catch (campaignError: any) {
       const err = campaignError.toString();
       if (err.includes("no hosts targeted")) {
-        renderFlash(
-          "error",
-          t("liveQuery.noHostsTargeted")
-        );
+        renderFlash("error", t("liveQuery.noHostsTargeted"));
       } else if (err.includes("resource already created")) {
-        renderFlash(
-          "error",
-          t("liveQuery.alreadyCreated")
-        );
+        renderFlash("error", t("liveQuery.alreadyCreated"));
       } else if (err.includes("forbidden") || err.includes("unauthorized")) {
-        renderFlash(
-          "error",
-          t("liveQuery.forbidden")
-        );
+        renderFlash("error", t("liveQuery.forbidden"));
       } else {
         renderFlash("error", t("liveQuery.genericError"));
       }

@@ -55,6 +55,8 @@ class InputField extends Component {
     min: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     /** Only effective on input type number */
     max: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    /** Translation function from withTranslation HOC */
+    t: PropTypes.func,
   };
 
   static defaultProps = {
@@ -158,7 +160,9 @@ class InputField extends Component {
     return (
       <div className={wrapperClasses}>
         {this.state.copied && (
-          <span className={copiedConfirmationClasses}>{t("messages.copiedToClipboard")}</span>
+          <span className={copiedConfirmationClasses}>
+            {t("messages.copiedToClipboard")}
+          </span>
         )}
         <Button variant="icon" onClick={onClickCopy} size="small" iconStroke>
           {copyButtonValue}

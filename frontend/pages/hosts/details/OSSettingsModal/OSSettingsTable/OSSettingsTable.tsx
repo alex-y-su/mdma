@@ -25,7 +25,12 @@ const OSSettingsTable = ({
   // useMemo prevents tooltip flashing during host data refetch
   const tableConfig = useMemo(
     () =>
-      generateTableHeaders(canResendProfiles, resendRequest, onProfileResent, t),
+      generateTableHeaders(
+        canResendProfiles,
+        resendRequest,
+        onProfileResent,
+        t
+      ),
     [canResendProfiles, resendRequest, onProfileResent, t]
   );
 

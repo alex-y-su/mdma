@@ -386,9 +386,7 @@ const UserForm = ({
       <>
         {isPremiumTier && (
           <InfoBanner className={`${baseClass}__user-permissions-info`}>
-            <p>
-              {t("admin.users.forms.globalUserInfo")}
-            </p>
+            <p>{t("admin.users.forms.globalUserInfo")}</p>
             <CustomLink
               url="https://fleetdm.com/docs/using-fleet/permissions#user-permissions"
               text={t("admin.users.forms.learnMorePermissions")}
@@ -442,9 +440,7 @@ const UserForm = ({
           (isModifiedByGlobalAdmin ? (
             <>
               <InfoBanner className={`${baseClass}__user-permissions-info`}>
-                <p>
-                  {t("admin.users.forms.teamUserInfo")}
-                </p>
+                <p>{t("admin.users.forms.teamUserInfo")}</p>
                 <CustomLink
                   url="https://fleetdm.com/docs/using-fleet/permissions#team-member-permissions"
                   text={t("admin.users.forms.learnMorePermissions")}
@@ -486,7 +482,9 @@ const UserForm = ({
     <div className="form-field">
       {isModifiedByGlobalAdmin ? (
         <>
-          <div className="form-field__label">{t("admin.users.forms.account")}</div>
+          <div className="form-field__label">
+            {t("admin.users.forms.account")}
+          </div>
           <Radio
             className={`${baseClass}__radio-input`}
             label={t("admin.users.forms.createUser")}
@@ -506,11 +504,9 @@ const UserForm = ({
             name="new-user-type"
             onChange={onRadioChange("newUserType")}
             tooltip={
-              smtpConfigured || sesConfigured ? (
-                ""
-              ) : (
-                t("admin.users.forms.inviteUserTooltip")
-              )
+              smtpConfigured || sesConfigured
+                ? ""
+                : t("admin.users.forms.inviteUserTooltip")
             }
           />
         </>
@@ -560,16 +556,16 @@ const UserForm = ({
 
   const renderAuthenticationSection = () => (
     <div className="form-field">
-      <div className="form-field__label">{t("admin.users.forms.authentication")}</div>
+      <div className="form-field__label">
+        {t("admin.users.forms.authentication")}
+      </div>
       <Radio
         className={`${baseClass}__radio-input`}
         label={
           canUseSso ? (
             t("admin.users.forms.singleSignOn")
           ) : (
-            <TooltipWrapper
-              tipContent={t("admin.users.forms.ssoNotEnabled")}
-            >
+            <TooltipWrapper tipContent={t("admin.users.forms.ssoNotEnabled")}>
               {t("admin.users.forms.singleSignOn")}
             </TooltipWrapper>
           )
@@ -604,13 +600,19 @@ const UserForm = ({
         onChange={onInputChange}
         onBlur={onInputBlur}
         parseTarget
-        placeholder={isNewUser ? t("admin.users.forms.password") : t("admin.users.forms.passwordPlaceholder")}
+        placeholder={
+          isNewUser
+            ? t("admin.users.forms.password")
+            : t("admin.users.forms.passwordPlaceholder")
+        }
         value={formData.password || ""}
         type="password"
         helpText={t("admin.users.forms.passwordHelp")}
         blockAutoComplete
         tooltip={
-          isNewUser ? t("admin.users.forms.temporaryPasswordTooltip") : undefined
+          isNewUser
+            ? t("admin.users.forms.temporaryPasswordTooltip")
+            : undefined
         }
       />
     </div>
@@ -621,7 +623,9 @@ const UserForm = ({
     <div className="form-field">
       {/* Renders missing password heading when inviting a user */}
       {formData.newUserType === NewUserType.AdminInvited && (
-        <div className="form-field__label">{t("admin.users.forms.password")}</div>
+        <div className="form-field__label">
+          {t("admin.users.forms.password")}
+        </div>
       )}
       <Checkbox
         name="mfa_enabled"
@@ -754,7 +758,9 @@ const UserForm = ({
             isLoading={isUpdatingUsers}
             disabled={Object.keys(formErrors).length > 0}
           >
-            {isNewUser ? t("admin.users.forms.add") : t("admin.users.forms.save")}
+            {isNewUser
+              ? t("admin.users.forms.add")
+              : t("admin.users.forms.save")}
           </Button>
         </>
       }

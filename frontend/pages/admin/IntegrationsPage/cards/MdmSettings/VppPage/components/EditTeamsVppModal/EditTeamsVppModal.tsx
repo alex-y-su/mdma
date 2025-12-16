@@ -123,10 +123,10 @@ export const getOptions = (
   const allOptions = [
     allTeamsOption,
     ...availableTeams
-      .filter((t) => t.id !== APP_CONTEXT_ALL_TEAMS_ID)
-      .map((t) => ({
-        label: t.name,
-        value: t.id,
+      .filter((team) => team.id !== APP_CONTEXT_ALL_TEAMS_ID)
+      .map((team) => ({
+        label: team.name,
+        value: team.id,
       })),
   ];
 
@@ -152,8 +152,8 @@ export const getOptions = (
 
   // Case 3: If ANY other token is assigned real teams (not all teams/not unassigned)...
   const anotherAssigned = tokens
-    .filter((t) => t.id !== currentToken.id)
-    .some((t) => !isTokenAllTeams(t) && !isTokenUnassigned(t));
+    .filter((token) => token.id !== currentToken.id)
+    .some((token) => !isTokenAllTeams(token) && !isTokenUnassigned(token));
 
   // If so, and we're not actively changing this token to "All teams", REMOVE "All teams" option
   let filteredOptions = allOptions;
@@ -252,11 +252,11 @@ const EditTeamsVppModal = ({
     >
       <>
         <p>
-          {t("mdmSettings.vpp.editTeamsModal.description", { orgName: currentToken.org_name })}
+          {t("mdmSettings.vpp.editTeamsModal.description", {
+            orgName: currentToken.org_name,
+          })}
         </p>
-        <p>
-          {t("mdmSettings.vpp.editTeamsModal.warning")}
-        </p>
+        <p>{t("mdmSettings.vpp.editTeamsModal.warning")}</p>
         <form onSubmit={onSave} className={baseClass} autoComplete="off">
           <TooltipWrapper
             position="top"
@@ -281,7 +281,9 @@ const EditTeamsVppModal = ({
                 isDropdownDisabled ? `${baseClass}__form-field--disabled` : ""
               }`}
               tooltip={
-                isDropdownDisabled ? undefined : t("mdmSettings.vpp.editTeamsModal.dropdownTooltip")
+                isDropdownDisabled
+                  ? undefined
+                  : t("mdmSettings.vpp.editTeamsModal.dropdownTooltip")
               }
               helpText={t("mdmSettings.vpp.editTeamsModal.helpText")}
               disabled={isDropdownDisabled}

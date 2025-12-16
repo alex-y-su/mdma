@@ -89,7 +89,10 @@ const ManagePacksPage = ({ router }: IManagePacksPageProps): JSX.Element => {
 
   const onDeletePackSubmit = useCallback(() => {
     setIsUpdatingPack(true);
-    const packOrPacks = selectedPackIds.length === 1 ? t("packs.manage.pack") : t("packs.manage.packs");
+    const packOrPacks =
+      selectedPackIds.length === 1
+        ? t("packs.manage.pack")
+        : t("packs.manage.packs");
 
     const promises = selectedPackIds.map((id: number) => {
       return packsAPI.destroy(id);
@@ -97,13 +100,13 @@ const ManagePacksPage = ({ router }: IManagePacksPageProps): JSX.Element => {
 
     return Promise.all(promises)
       .then(() => {
-        renderFlash("success", t("packs.manage.deleteSuccess", { packOrPacks }));
+        renderFlash(
+          "success",
+          t("packs.manage.deleteSuccess", { packOrPacks })
+        );
       })
       .catch(() => {
-        renderFlash(
-          "error",
-          t("packs.manage.deleteError", { packOrPacks })
-        );
+        renderFlash("error", t("packs.manage.deleteError", { packOrPacks }));
       })
       .finally(() => {
         refetchPacks();
@@ -114,8 +117,13 @@ const ManagePacksPage = ({ router }: IManagePacksPageProps): JSX.Element => {
 
   const onEnableDisablePackSubmit = useCallback(
     (selectedTablePackIds: number[], disablePack: boolean) => {
-      const packOrPacks = selectedPackIds.length === 1 ? t("packs.manage.pack") : t("packs.manage.packs");
-      const enableOrDisable = disablePack ? t("packs.status.disabled").toLowerCase() : t("packs.status.enabled").toLowerCase();
+      const packOrPacks =
+        selectedPackIds.length === 1
+          ? t("packs.manage.pack")
+          : t("packs.manage.packs");
+      const enableOrDisable = disablePack
+        ? t("packs.status.disabled").toLowerCase()
+        : t("packs.status.enabled").toLowerCase();
 
       const promises = selectedTablePackIds.map((id: number) => {
         return packsAPI.update(id, { disabled: disablePack });
@@ -125,13 +133,19 @@ const ManagePacksPage = ({ router }: IManagePacksPageProps): JSX.Element => {
         .then(() => {
           renderFlash(
             "success",
-            t("packs.manage.enableDisableSuccess", { enableOrDisable, packOrPacks })
+            t("packs.manage.enableDisableSuccess", {
+              enableOrDisable,
+              packOrPacks,
+            })
           );
         })
         .catch(() => {
           renderFlash(
             "error",
-            t("packs.manage.enableDisableError", { enableOrDisable, packOrPacks })
+            t("packs.manage.enableDisableError", {
+              enableOrDisable,
+              packOrPacks,
+            })
           );
         })
         .finally(() => {
@@ -161,9 +175,7 @@ const ManagePacksPage = ({ router }: IManagePacksPageProps): JSX.Element => {
                 <span>{t("packs.title")}</span>
               </h1>
               <div className={`${baseClass}__description`}>
-                <p>
-                  {t("packs.manage.description")}
-                </p>
+                <p>{t("packs.manage.description")}</p>
               </div>
             </div>
           </div>

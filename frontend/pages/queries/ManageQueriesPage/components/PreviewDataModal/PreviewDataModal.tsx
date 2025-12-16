@@ -37,12 +37,14 @@ const PreviewDataModal = ({
   };
 
   return (
-    <Modal title={t("modals.previewData.title")} onExit={onCancel} className={baseClass}>
+    <Modal
+      title={t("modals.previewData.title")}
+      onExit={onCancel}
+      className={baseClass}
+    >
       <div className={`${baseClass}__preview-modal`}>
         <p>
-          <TooltipWrapper
-            tipContent={t("modals.previewData.snapshotTooltip")}
-          >
+          <TooltipWrapper tipContent={t("modals.previewData.snapshotTooltip")}>
             {t("modals.previewData.description")}
           </TooltipWrapper>
         </p>

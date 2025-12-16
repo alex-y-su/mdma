@@ -84,7 +84,11 @@ const AddSecretModal = ({ onCancel, onSave }: AddSecretModalProps) => {
   };
 
   return (
-    <Modal title={t("controls.secrets.modals.add.title")} onExit={onCancel} className={baseClass}>
+    <Modal
+      title={t("controls.secrets.modals.add.title")}
+      onExit={onCancel}
+      className={baseClass}
+    >
       <form className={`${baseClass}__add-secret-form`}>
         <InputField
           onChange={onInputChange}

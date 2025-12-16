@@ -94,7 +94,8 @@ const OperatingSystems = ({
     )
       return (
         <p>
-          {OS_VENDOR_BY_PLATFORM[selectedPlatform]} {t("osVersions.osVendorUpdatesInfo")}{" "}
+          {OS_VENDOR_BY_PLATFORM[selectedPlatform]}{" "}
+          {t("osVersions.osVendorUpdatesInfo")}{" "}
           <CustomLink
             url={OS_END_OF_LIFE_LINK_BY_PLATFORM[selectedPlatform]}
             text={t("osVersions.seeSupportedOs")}

@@ -78,7 +78,10 @@ const EditCertAuthorityModal = ({
         certAuthority.id,
         editPatchData
       );
-      renderFlash("success", t("certificateAuthorities.editModal.successMessage"));
+      renderFlash(
+        "success",
+        t("certificateAuthorities.editModal.successMessage")
+      );
       onExit();
     } catch (e) {
       renderFlash("error", getErrorMessage(e, t));

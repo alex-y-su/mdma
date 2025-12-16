@@ -196,7 +196,10 @@ const AddCertAuthorityModal = ({
     setIsAdding(true);
     try {
       await certificatesAPI.addCertificateAuthority(addCertAuthorityData);
-      renderFlash("success", t("certificateAuthorities.addModal.successMessage"));
+      renderFlash(
+        "success",
+        t("certificateAuthorities.addModal.successMessage")
+      );
       onExit();
     } catch (e) {
       renderFlash("error", getErrorMessage(e, t));

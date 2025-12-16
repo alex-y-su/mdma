@@ -134,7 +134,9 @@ const SetupAssistant = ({
         <GenericMsgWithNavButton
           header={t("controls.setupExperience.setupAssistant.noProfile")}
           info={t("controls.setupExperience.setupAssistant.uploadDescription")}
-          buttonText={t("controls.setupExperience.setupAssistant.uploadProfile")}
+          buttonText={t(
+            "controls.setupExperience.setupAssistant.uploadProfile"
+          )}
           path={PATHS.ADMIN_INTEGRATIONS_MDM}
           router={router}
         />

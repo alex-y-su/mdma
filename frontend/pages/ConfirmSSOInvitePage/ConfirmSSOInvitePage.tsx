@@ -58,7 +58,10 @@ const ConfirmSSOInvitePage = ({
   };
 
   return (
-    <AuthenticationFormWrapper className={baseClass} header={t("ssoInvite.title")}>
+    <AuthenticationFormWrapper
+      className={baseClass}
+      header={t("ssoInvite.title")}
+    >
       <>
         <p className={`${baseClass}__description`}>
           {t("ssoInvite.description")}

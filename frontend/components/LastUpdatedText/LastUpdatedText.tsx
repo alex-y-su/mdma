@@ -41,7 +41,9 @@ const LastUpdatedText = ({
     );
   }
 
-  const tooltipContent = customTooltipText || t("lastUpdated.fleetPeriodicallyQueries", { whatToRetrieve });
+  const tooltipContent =
+    customTooltipText ||
+    t("lastUpdated.fleetPeriodicallyQueries", { whatToRetrieve });
 
   return (
     <span className={baseClass}>

@@ -20,7 +20,9 @@ const AppleAutomaticEnrollmentCard = ({
   const { t } = useTranslation("settings");
 
   const AppleMdmDisabledCard = (
-    <SectionCard header={t("mdmSettings.abm.appleEnrollmentCard.disabledHeader")}>
+    <SectionCard
+      header={t("mdmSettings.abm.appleEnrollmentCard.disabledHeader")}
+    >
       {t("mdmSettings.abm.appleEnrollmentCard.disabledMessage")}
     </SectionCard>
   );

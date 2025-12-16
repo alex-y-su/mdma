@@ -40,7 +40,10 @@ const ApiOnlyUser = ({ router }: IApiOnlyUserProps): JSX.Element => {
   }, []);
 
   return (
-    <AuthenticationFormWrapper header={t("auth:apiOnlyUser.title")} className={baseClass}>
+    <AuthenticationFormWrapper
+      header={t("auth:apiOnlyUser.title")}
+      className={baseClass}
+    >
       <>
         <div>
           <p>

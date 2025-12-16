@@ -37,7 +37,8 @@ const ConfirmRunScriptModal = ({
       <form className={`${baseClass}__form`}>
         <p>
           {t("modals.confirmRunScript.message", {
-            scriptName: scriptName || t("modals.confirmRunScript.defaultScriptName"),
+            scriptName:
+              scriptName || t("modals.confirmRunScript.defaultScriptName"),
             hostName,
           })}
         </p>

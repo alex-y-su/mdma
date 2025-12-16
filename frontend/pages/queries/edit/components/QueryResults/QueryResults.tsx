@@ -155,7 +155,9 @@ const QueryResults = ({
   const renderNoResults = () => {
     return (
       <p className="no-results-message">
-        {t("queryResults.noResults", { plural: targetsTotalCount > 1 ? "s" : "" })}
+        {t("queryResults.noResults", {
+          plural: targetsTotalCount > 1 ? "s" : "",
+        })}
       </p>
     );
   };
@@ -194,7 +196,9 @@ const QueryResults = ({
           variant="inverse"
         >
           <>
-            {tableType === "errors" ? t("queryResults.exportErrors") : t("queryResults.exportResults")}
+            {tableType === "errors"
+              ? t("queryResults.exportErrors")
+              : t("queryResults.exportResults")}
             <Icon name="download" />
           </>
         </Button>
@@ -274,10 +278,13 @@ const QueryResults = ({
       {isQueryClipped && (
         <InfoBanner
           color="yellow"
-          cta={<CustomLink url={SUPPORT_LINK} text={t("details.getHelp")} newTab />}
+          cta={
+            <CustomLink url={SUPPORT_LINK} text={t("details.getHelp")} newTab />
+          }
         >
           <div>
-            <b>{t("queryResults.resultsClipped")}</b> {t("queryResults.resultsClippedMessage")}
+            <b>{t("queryResults.resultsClipped")}</b>{" "}
+            {t("queryResults.resultsClippedMessage")}
           </div>
         </InfoBanner>
       )}

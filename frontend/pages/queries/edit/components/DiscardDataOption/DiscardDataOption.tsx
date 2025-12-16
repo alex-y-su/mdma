@@ -31,9 +31,7 @@ const DiscardDataOption = ({
       {disable ? (
         <>
           {t("discardData.globallyDisabledText")}{" "}
-          <TooltipWrapper
-            tipContent={t("discardData.globallyDisabledTooltip")}
-          >
+          <TooltipWrapper tipContent={t("discardData.globallyDisabledTooltip")}>
             {t("discardData.globallyDisabledLink")}
           </TooltipWrapper>{" "}
           <Link

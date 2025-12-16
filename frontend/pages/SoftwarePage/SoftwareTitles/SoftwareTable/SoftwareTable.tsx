@@ -54,7 +54,11 @@ interface IRowProps extends Row {
   };
 }
 
-type ITableConfigGenerator = (router: InjectedRouter, teamId?: number) => void;
+type ITableConfigGenerator = (
+  router: InjectedRouter,
+  teamId?: number,
+  t?: any
+) => any[];
 
 const isSoftwareTitles = (
   data?: ISoftwareTitlesResponse | ISoftwareVersionsResponse

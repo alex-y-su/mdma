@@ -282,10 +282,7 @@ const EditQueryPage = ({
             name: t("editPage.duplicateName", { team: teamErrorText }),
           });
         } else {
-          renderFlash(
-            "error",
-            t("editPage.createError")
-          );
+          renderFlash("error", t("editPage.createError"));
           setBackendValidators({});
         }
       } finally {
@@ -326,10 +323,7 @@ const EditQueryPage = ({
       } else if (reason.includes(INVALID_PLATFORMS_REASON)) {
         renderFlash("error", INVALID_PLATFORMS_FLASH_MESSAGE);
       } else {
-        renderFlash(
-          "error",
-          t("editPage.updateError")
-        );
+        renderFlash("error", t("editPage.updateError"));
       }
     }
 
@@ -396,7 +390,11 @@ const EditQueryPage = ({
           <>
             <div className={`${baseClass}__header-links`}>
               <BackButton
-                text={queryId ? t("editPage.backToReport") : t("editPage.backToQueries")}
+                text={
+                  queryId
+                    ? t("editPage.backToReport")
+                    : t("editPage.backToQueries")
+                }
                 path={backToQueriesPath()}
               />
             </div>

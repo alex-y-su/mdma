@@ -40,7 +40,7 @@
     "query": "Запрос",
     "name": "Название",
     "description": "Описание",
-    "url": "URL",
+    "url": "Адрес",
     "apiToken": "API-токен",
     "secretKey": "Секретный ключ"
   },

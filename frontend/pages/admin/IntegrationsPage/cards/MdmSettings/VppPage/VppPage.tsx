@@ -39,7 +39,9 @@ const AddVppMessage = ({ onAddVpp }: IAddVppMessageProps) => {
     <EmptyTable
       header={t("mdmSettings.vpp.addVppHeader")}
       info={t("mdmSettings.vpp.addVppInfo")}
-      primaryButton={<Button onClick={onAddVpp}>{t("mdmSettings.vpp.addVpp")}</Button>}
+      primaryButton={
+        <Button onClick={onAddVpp}>{t("mdmSettings.vpp.addVpp")}</Button>
+      }
     />
   );
 };
@@ -168,9 +170,7 @@ const VppPage = ({ router }: IVppPageProps) => {
     if (vppTokens) {
       return (
         <>
-          <PageDescription
-            content={t("mdmSettings.vpp.pageDescription")}
-          />
+          <PageDescription content={t("mdmSettings.vpp.pageDescription")} />
           <VppTable
             vppTokens={vppTokens}
             onEditTokenTeam={onEditTokenTeams}
@@ -188,7 +188,10 @@ const VppPage = ({ router }: IVppPageProps) => {
     <MainContent className={baseClass}>
       <>
         <div className={`${baseClass}__header-links`}>
-          <BackButton text={t("mdmSettings.vpp.backToMdm")} path={PATHS.ADMIN_INTEGRATIONS_MDM} />
+          <BackButton
+            text={t("mdmSettings.vpp.backToMdm")}
+            path={PATHS.ADMIN_INTEGRATIONS_MDM}
+          />
         </div>
         <div className={`${baseClass}__page-content`}>
           <div className={`${baseClass}__page-header-section`}>
@@ -196,7 +199,9 @@ const VppPage = ({ router }: IVppPageProps) => {
             {isPremiumTier &&
               vppTokens?.length !== 0 &&
               !!config?.mdm.enabled_and_configured && (
-                <Button onClick={onAddVpp}>{t("mdmSettings.vpp.addVpp")}</Button>
+                <Button onClick={onAddVpp}>
+                  {t("mdmSettings.vpp.addVpp")}
+                </Button>
               )}
           </div>
           <>{renderContent()}</>

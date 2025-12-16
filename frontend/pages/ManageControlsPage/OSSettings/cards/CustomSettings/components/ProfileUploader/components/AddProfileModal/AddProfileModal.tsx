@@ -214,7 +214,10 @@ const AddProfileModal = ({
   };
 
   return (
-    <Modal title={t("controls.osSettings.customSettings.addProfile")} onExit={onDone}>
+    <Modal
+      title={t("controls.osSettings.customSettings.addProfile")}
+      onExit={onDone}
+    >
       <>
         {isPremiumTier && isLoadingLabels && <Spinner />}
         {isPremiumTier && !isLoadingLabels && isErrorLabels && <DataError />}

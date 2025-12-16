@@ -112,7 +112,9 @@ const EndUserAuthSection = ({
         if (ae.status === 422) {
           renderFlash(
             "error",
-            t("integrations.end_user_auth.error_with_reason", { reason: expandErrorReasonRequired(err) })
+            t("integrations.end_user_auth.error_with_reason", {
+              reason: expandErrorReasonRequired(err),
+            })
           );
           return;
         }
@@ -129,9 +131,7 @@ const EndUserAuthSection = ({
 
     return (
       <form>
-        <p>
-          {t("integrations.end_user_auth.description")}
-        </p>
+        <p>{t("integrations.end_user_auth.description")}</p>
         <div
           className={`form ${
             gitOpsModeEnabled ? "disabled-by-gitops-mode" : ""

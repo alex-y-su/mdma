@@ -264,7 +264,10 @@ const QueryDetailsPage = ({
     return (
       <>
         <div className={`${baseClass}__header-links`}>
-          <BackButton text={t("details.backButton")} path={backToQueriesPath()} />
+          <BackButton
+            text={t("details.backButton")}
+            path={backToQueriesPath()}
+          />
         </div>
         {!isLoading && !isApiError && (
           <>
@@ -348,11 +351,7 @@ const QueryDetailsPage = ({
             <div className={`${baseClass}__settings`}>
               <div className={`${baseClass}__automations`}>
                 <TooltipWrapper
-                  tipContent={
-                    <>
-                      {t("details.automationsTooltip")}
-                    </>
-                  }
+                  tipContent={<>{t("details.automationsTooltip")}</>}
                 >
                   {t("details.automationsLabel")}
                 </TooltipWrapper>
@@ -390,8 +389,7 @@ const QueryDetailsPage = ({
           !(
             (currentUser && isGlobalObserver(currentUser)) ||
             isTeamObserver(currentUser, currentTeamId ?? null)
-          ) &&
-            " " + t("details.reportClippedAutomation")
+          ) && ` ${t("details.reportClippedAutomation")}`
         }
       </div>
     </InfoBanner>

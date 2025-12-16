@@ -52,7 +52,8 @@ export const generateSolutionsTableHeaders = (
         <TooltipWrapper
           tipContent={
             <>
-              {t?.("mdmSolutionModal.columns.serverUrlTooltip") || "The MDM server URL is used to connect hosts with the MDM service. For cross-platform MDM solutions, each operating system has a different URL."}
+              {t?.("mdmSolutionModal.columns.serverUrlTooltip") ||
+                "The MDM server URL is used to connect hosts with the MDM service. For cross-platform MDM solutions, each operating system has a different URL."}
             </>
           }
           className="server-url-header"

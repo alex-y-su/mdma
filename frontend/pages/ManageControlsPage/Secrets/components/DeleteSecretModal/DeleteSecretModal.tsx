@@ -61,7 +61,9 @@ const DeleteSecretModal = ({
       <>
         <div className={`${baseClass}__message`}>
           <span>
-            {t("controls.secrets.modals.delete.message", { name: secret?.name })}
+            {t("controls.secrets.modals.delete.message", {
+              name: secret?.name,
+            })}
           </span>
           <br />
           <br />

@@ -126,10 +126,7 @@ const ScriptModalGroup = ({
           // will be defined when this is being called
           script_id: selectedScript.script_id,
         });
-        renderFlash(
-          "success",
-          t("modals.scriptGroup.scriptRunningSuccess")
-        );
+        renderFlash("success", t("modals.scriptGroup.scriptRunningSuccess"));
         refetchHostScripts();
       } catch (e) {
         renderFlash("error", getErrorReason(e));

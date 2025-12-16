@@ -165,7 +165,9 @@ const SelectQueryModal = ({
     if (!queriesFilter && queriesCount === 0) {
       return (
         <div className={`${baseClass}__no-queries`}>
-          <span className="info__header">{t("modals.selectQuery.noQueriesHeader")}</span>
+          <span className="info__header">
+            {t("modals.selectQuery.noQueriesHeader")}
+          </span>
           <span className="info__data">
             {t("modals.selectQuery.noQueriesInfo")}
           </span>

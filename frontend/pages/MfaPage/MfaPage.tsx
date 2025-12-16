@@ -98,19 +98,26 @@ const MfaPage = ({ router, params }: IMfaPage) => {
   if (!shouldFinishMFA) {
     return (
       <AuthenticationFormWrapper className={baseClass}>
-        <Button onClick={onClickFinishLoginButton}>{t("auth:mfa.loginButton")}</Button>
+        <Button onClick={onClickFinishLoginButton}>
+          {t("auth:mfa.loginButton")}
+        </Button>
       </AuthenticationFormWrapper>
     );
   }
 
   if (isExpired) {
     return (
-      <AuthenticationFormWrapper className={baseClass} header={t("auth:mfa.invalidToken.title")}>
+      <AuthenticationFormWrapper
+        className={baseClass}
+        header={t("auth:mfa.invalidToken.title")}
+      >
         <>
           <div className={`${baseClass}__description`}>
             <p>{t("auth:mfa.invalidToken.message")}</p>
           </div>
-          <Button onClick={onClickLoginButton}>{t("auth:mfa.backToLogin")}</Button>
+          <Button onClick={onClickLoginButton}>
+            {t("auth:mfa.backToLogin")}
+          </Button>
         </>
       </AuthenticationFormWrapper>
     );

@@ -81,9 +81,14 @@ const GlobalHostStatusWebhook = ({
 
     if (enableHostStatusWebhook) {
       if (!destination_url) {
-        errors.destination_url = t("integrations.hostStatusWebhook.validation.urlRequired");
+        errors.destination_url = t(
+          "integrations.hostStatusWebhook.validation.urlRequired"
+        );
       } else if (!validUrl({ url: destination_url })) {
-        errors.destination_url = t("integrations.hostStatusWebhook.validation.urlInvalid", { url: destination_url });
+        errors.destination_url = t(
+          "integrations.hostStatusWebhook.validation.urlInvalid",
+          { url: destination_url }
+        );
       }
     }
 
@@ -184,7 +189,9 @@ const GlobalHostStatusWebhook = ({
                   parseTarget
                   onBlur={validateForm}
                   error={formErrors.destination_url}
-                  tooltip={t("integrations.hostStatusWebhook.destinationUrlTooltip")}
+                  tooltip={t(
+                    "integrations.hostStatusWebhook.destinationUrlTooltip"
+                  )}
                 />
                 <Dropdown
                   label={t("integrations.hostStatusWebhook.percentageOfHosts")}
@@ -195,7 +202,9 @@ const GlobalHostStatusWebhook = ({
                   parseTarget
                   searchable={false}
                   onBlur={validateForm}
-                  tooltip={t("integrations.hostStatusWebhook.percentageTooltip")}
+                  tooltip={t(
+                    "integrations.hostStatusWebhook.percentageTooltip"
+                  )}
                 />
                 <Dropdown
                   label={t("integrations.hostStatusWebhook.numberOfDays")}

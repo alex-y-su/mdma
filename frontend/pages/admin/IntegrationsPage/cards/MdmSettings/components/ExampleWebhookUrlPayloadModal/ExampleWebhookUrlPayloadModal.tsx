@@ -26,11 +26,13 @@ const ExampleWebhookUrlPayloadModal = ({
   const { t } = useTranslation("settings");
 
   return (
-    <Modal title={t("integrations.webhook_payload.title")} onExit={onCancel} className={baseClass}>
+    <Modal
+      title={t("integrations.webhook_payload.title")}
+      onExit={onCancel}
+      className={baseClass}
+    >
       <>
-        <p>
-          {t("integrations.webhook_payload.description")}
-        </p>
+        <p>{t("integrations.webhook_payload.description")}</p>
         <pre className={`${baseClass}__endpoint-preview`}>
           POST https://organization.com/send-request-here
         </pre>

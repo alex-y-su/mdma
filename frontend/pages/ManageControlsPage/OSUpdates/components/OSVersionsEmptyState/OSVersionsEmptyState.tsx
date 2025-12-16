@@ -13,11 +13,7 @@ const OSVersionsEmptyState = () => {
       <EmptyTable
         className={`${baseClass}__empty-table`}
         header={t("controls.osUpdates.empty.title")}
-        info={
-          <span>
-            {t("controls.osUpdates.empty.description")}
-          </span>
-        }
+        info={<span>{t("controls.osUpdates.empty.description")}</span>}
       />
     </Card>
   );

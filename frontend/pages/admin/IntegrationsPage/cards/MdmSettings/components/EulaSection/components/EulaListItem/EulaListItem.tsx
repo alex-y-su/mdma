@@ -34,7 +34,7 @@ const EulaListItem = ({ eulaData, onDelete }: IEulaListItemProps) => {
           </span>
           <span className={`${baseClass}__list-item-uploaded`}>
             {t("integrations.eula.uploaded_ago", {
-              timeAgo: formatDistanceToNow(new Date(eulaData.created_at))
+              timeAgo: formatDistanceToNow(new Date(eulaData.created_at)),
             })}
           </span>
         </div>

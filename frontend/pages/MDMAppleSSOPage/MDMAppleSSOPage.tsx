@@ -44,9 +44,7 @@ const DEPSSOLoginPage = ({
     return (
       <AuthenticationFormWrapper header={t("mdmSSO.authRequired")}>
         <div className={`${baseClass} form`}>
-          <p>
-            {t("mdmSSO.orgRequiresAuth")}
-          </p>
+          <p>{t("mdmSSO.orgRequiresAuth")}</p>
           <Button
             className={`${baseClass}__sso-btn`}
             type="button"

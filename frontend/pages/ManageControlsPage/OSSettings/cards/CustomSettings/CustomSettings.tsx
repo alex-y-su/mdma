@@ -208,7 +208,10 @@ const CustomSettings = ({
 
   return (
     <div className={baseClass}>
-      <SectionHeader title={t("controls.osSettings.customSettings.title")} alignLeftHeaderVertically />
+      <SectionHeader
+        title={t("controls.osSettings.customSettings.title")}
+        alignLeftHeaderVertically
+      />
       <PageDescription
         variant="right-panel"
         content={

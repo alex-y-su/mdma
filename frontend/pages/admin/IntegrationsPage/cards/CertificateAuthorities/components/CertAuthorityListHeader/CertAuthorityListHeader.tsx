@@ -18,7 +18,9 @@ const CertAuthorityListHeader = ({
 
   return (
     <div className={baseClass}>
-      <span className={`${baseClass}__name`}>{t("certificateAuthorities.header.title")}</span>
+      <span className={`${baseClass}__name`}>
+        {t("certificateAuthorities.header.title")}
+      </span>
       <span className={`${baseClass}__actions`}>
         <GitOpsModeTooltipWrapper
           position="left"

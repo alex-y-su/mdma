@@ -614,13 +614,13 @@ const ManagePolicyPage = ({
         });
       } else if (successfulUpdates.length > 0) {
         // Only render success message if there are no failures
-        renderFlash("success", DEFAULT_AUTOMATION_UPDATE_SUCCESS_MSG);
+        renderFlash("success", t("manage.automationUpdateSuccess"));
       }
 
       await wait(100); // Wait 100ms to avoid race conditions with refetch
       refetchTeamPolicies();
     } catch {
-      renderFlash("error", DEFAULT_AUTOMATION_UPDATE_ERR_MSG);
+      renderFlash("error", t("manage.automationUpdateError"));
     } finally {
       toggleInstallSoftwareModal();
       setIsUpdatingPolicies(false);
@@ -702,13 +702,13 @@ const ManagePolicyPage = ({
         });
       } else if (successfulUpdates.length > 0) {
         // Only render success message if there are no failures
-        renderFlash("success", DEFAULT_AUTOMATION_UPDATE_SUCCESS_MSG);
+        renderFlash("success", t("manage.automationUpdateSuccess"));
       }
 
       await wait(100); // Wait 100ms to avoid race conditions with refetch
       refetchTeamPolicies();
     } catch {
-      renderFlash("error", DEFAULT_AUTOMATION_UPDATE_ERR_MSG);
+      renderFlash("error", t("manage.automationUpdateError"));
     } finally {
       togglePolicyRunScriptModal();
       setIsUpdatingPolicies(false);
@@ -827,10 +827,7 @@ const ManagePolicyPage = ({
       if (refetchConfig) {
         await refetchConfig();
       }
-      renderFlash(
-        "success",
-        t("manage.conditionalAccessUpdateSuccess")
-      );
+      renderFlash("success", t("manage.conditionalAccessUpdateSuccess"));
     } catch {
       renderFlash("error", t("manage.conditionalAccessUpdateError"));
     } finally {
@@ -911,7 +908,7 @@ const ManagePolicyPage = ({
         "success",
         t("manage.deleteSuccess", {
           count: selectedPolicyIds?.length || 0,
-          entity: t(`manage.policy`, { count: selectedPolicyIds?.length || 0 })
+          entity: t(`manage.policy`, { count: selectedPolicyIds?.length || 0 }),
         })
       );
       setResetSelectedRows(true);
@@ -921,7 +918,7 @@ const ManagePolicyPage = ({
         "error",
         t("manage.deleteError", {
           count: selectedPolicyIds?.length || 0,
-          entity: t(`manage.policy`, { count: selectedPolicyIds?.length || 0 })
+          entity: t(`manage.policy`, { count: selectedPolicyIds?.length || 0 }),
         })
       );
     } finally {
@@ -1124,12 +1121,16 @@ const ManagePolicyPage = ({
       disabledInstallTooltipContent = t("automations.availablePremium");
       disabledCalendarTooltipContent = t("automations.availablePremium");
       disabledRunScriptTooltipContent = t("automations.availablePremium");
-      disabledConditionalAccessTooltipContent = t("automations.availablePremium");
+      disabledConditionalAccessTooltipContent = t(
+        "automations.availablePremium"
+      );
     } else if (isAllTeamsSelected) {
       disabledInstallTooltipContent = t("automations.selectTeamInstall");
       disabledCalendarTooltipContent = t("automations.selectTeamCalendar");
       disabledRunScriptTooltipContent = t("automations.selectTeamScript");
-      disabledConditionalAccessTooltipContent = t("automations.selectTeamConditionalAccess");
+      disabledConditionalAccessTooltipContent = t(
+        "automations.selectTeamConditionalAccess"
+      );
     } else if (
       (isGlobalMaintainer || isTeamMaintainer) &&
       !isCalEventsEnabled

@@ -72,12 +72,16 @@ const generateTableHeaders = (t: TFunction): IDataColumn[] => {
           {cellProps.cell.value.length ? (
             <>
               <Icon name="success" />
-              <span className="status-header-text">{t("policies:columns.yes")}</span>
+              <span className="status-header-text">
+                {t("policies:columns.yes")}
+              </span>
             </>
           ) : (
             <>
               <Icon name="error" />
-              <span className="status-header-text">{t("policies:columns.no")}</span>
+              <span className="status-header-text">
+                {t("policies:columns.no")}
+              </span>
             </>
           )}
         </>
